@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  AppToYou
+
+  Created by Philip Bratov on 24.05.2021.
+  Copyright © 2021 QITTIQ. All rights reserved.
+*/
+"!@#$Password" = "Пароль";
+"!@#$DownloadPhoto" = "Загрузите фото";
+"!@#$YourDownloadPhoto" = "Загрузить фото";
+"!@#$Save" = "Сохранить";
+"!@#$UploadPhotLater" = "Загружу фото позже";
+"!@#$UploadAnotherPhoto" = "Загрузить другое фото";
+"!@#$Let'sGetAcquainted" = "Давайте\nпознакомимся";
+"!@#$MyNameIs" = "Меня зовут...";
+"!@#$CompleteRegistration" = "Завершить регистрацию";
+"!@#$RegisterNow" = "Зарегистрироваться";
+"!@#$EnterYourEmail" = "Введите свой email";
+"!@#$EnterEmail" = "Введите email";
+"!@#$PickAPassword" = "Придумайте пароль";
+"!@#$MinimumSix" = "⃰Минимум 6 символов, 1 цифра и прописная буква";
+"!@#$Register" = "Зарегистрироваться";
+"!@#$ByClicking" = "Нажимая на кнопку продолжить вы соглашаетесь с";
+"!@#$AppWith" = "приложения и с";
+"!@#$TermsOfUse" = "условиями использования";
+"!@#$PrivacyPolicy" = "политикой конфиденциальности";
+"!@#$WeWiilSendYourInstructions" = "Мы пришлем инструкции с дальнейшими действиями на указанный email";
+"!@#$RestorePassword" = "Восстановить пароль";
+"!@#$SignIn" = "Войти в аккаунт";
+"!@#$EnterPassword" = "Введите пароль";
+"!@#$SignInAcc" = "Войти";
+"!@#$DontHaveAnAccount" = "Нет аккаунта?";
+"!@#$Forgot" = "Забыли?";
+"!@#$Or" = "или";

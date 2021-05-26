@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  AppToYou
+
+  Created by Philip Bratov on 24.05.2021.
+  Copyright © 2021 QITTIQ. All rights reserved.
+*/
+"!@#$Password" = "Password";
+"!@#$DownloadPhoto" = "Upload a photo";
+"!@#$YourDownloadPhoto" = "Upload a photo";
+"!@#$Save" = "Save";
+"!@#$UploadPhotLater" = "Upload photo later";
+"!@#$UploadAnotherPhoto" = "Upload another photo";
+"!@#$Let'sGetAcquainted" = "Let's\nget acquainted";
+"!@#$MyNameIs" = "My name is...";
+"!@#$CompleteRegistration" = "Complete registration";
+"!@#$RegisterNow" = "Register now";
+"!@#$EnterYourEmail" = "Enter your email";
+"!@#$EnterEmail" = "Enter email";
+"!@#$PickAPassword" = "Pick a password";
+"!@#$MinimumSix" = "⃰Minimum 6 characters, 1 number and an uppercase letter";
+"!@#$Register" = "Register";
+"!@#$ByClicking" = "By clicking on the continue button you agree to";
+"!@#$AppWith" = "applications and with";
+"!@#$TermsOfUse" = "terms of use";
+"!@#$PrivacyPolicy" = "privacy policy";
+"!@#$WeWiilSendYourInstructions" = "We will send instructions with further actions to the specified email";
+"!@#$RestorePassword" = "Restore password";
+"!@#$SignIn" = "Sign in to your account";
+"!@#$EnterPassword" = "Enter password";
+"!@#$SignInAcc" = "Sign in";
+"!@#$DontHaveAnAccount" = "Don't have an account?";
+"!@#$Forgot" = "Forgot?";
+"!@#$Or" = "or";
