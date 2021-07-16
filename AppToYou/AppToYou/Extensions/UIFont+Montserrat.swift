@@ -14,3 +14,10 @@ extension UIFont {
         return UIFont(name: "Montserrat-Regular", size: size)!
     }
 }
+
+enum CurrentStateTask : Int {
+    case performed // orange
+    case didNotStart // gray
+    case done // green
+    case failed // red
+}

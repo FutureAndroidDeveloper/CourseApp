@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ATYTaskTableViewCell: UITableViewCell {
+class ATYCreateTaskTableViewCell: UITableViewCell {
     private let backContentView : UIView = {
         let view = UIView()
         view.backgroundColor = R.color.backgroundTableCellColor()

@@ -98,7 +98,6 @@ class ATYAuthorizationViewController: UIViewController {
     private let dontHaveAccountStackView = UIStackView()
     private let googleOrFacebookStackView = UIStackView()
 
-
     //MARK:- Lifecycle methods
 
     override func viewDidLoad() {
@@ -159,7 +158,7 @@ class ATYAuthorizationViewController: UIViewController {
         let backChainView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 32))
         backChainView.addSubview(chainImageView)
 
-        passwordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 20);
+        passwordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 20)
         passwordTextField.leftView = backChainView
         passwordTextField.leftViewMode = .always
         passwordTextField.rightView = forgotButton

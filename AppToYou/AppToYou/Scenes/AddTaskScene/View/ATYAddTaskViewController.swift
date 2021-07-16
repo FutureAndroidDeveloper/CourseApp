@@ -14,19 +14,27 @@ class ATYAddTaskViewController: UIViewController {
     let lineView = UIView()
     let chooseTypeTaskLabel = UILabel()
     let selectedView = UIView()
+    
+    var pushVcCallback : ((TypeOfTask) -> Void)?
 
-    let titleStrings = ["Разовое выолнение задачи", "Подсчет повторений", "Таймер", "Текст"]
-    let subtitleStrings = ["с помощью чек-бокса один раз отметьте выполнение задачи",
-                           "укажите количество выполнений и отметьте выполнение задачи необходимым количеством нажатий",
-                           "укажите время, необходимое для выполнения задания, и запустите таймер для его выполнения",
-                           "чтобы выполнить задание, напишите текст заданной заранее длины"]
+    let titleStrings = [R.string.localizable.oneTimeTaskExecution(),
+                        R.string.localizable.countingReps(),
+                        R.string.localizable.timer(),
+                        R.string.localizable.text()]
+
+    let subtitleStrings = [R.string.localizable.useTheCheckbox(),
+                           R.string.localizable.specifyTheNumber(),
+                           R.string.localizable.specifyTheTime(),
+                           R.string.localizable.toCompleteTask()]
 
     let imageArray = [R.image.checkBox(), R.image.countTask(), R.image.timerTask(), R.image.textTask()]
+    let typeTask = [TypeOfTask.checkBox, TypeOfTask.countRepeat, TypeOfTask.timerTask, TypeOfTask.textTask]
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLineView()
+
         configureChooseTaskLabel()
         configureTableView()
         view.backgroundColor = R.color.backgroundTextFieldsColor()
@@ -48,7 +56,7 @@ class ATYAddTaskViewController: UIViewController {
     private func configureChooseTaskLabel() {
         view.addSubview(chooseTypeTaskLabel)
         chooseTypeTaskLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        chooseTypeTaskLabel.text = "Выберите тип задачи"
+        chooseTypeTaskLabel.text = R.string.localizable.selectTheTypeOfTask()
         chooseTypeTaskLabel.tintColor = R.color.titleTextColor()
         chooseTypeTaskLabel.snp.makeConstraints { (make) in
             make.top.equalTo(lineView.snp.bottom).offset(23)
@@ -61,7 +69,7 @@ class ATYAddTaskViewController: UIViewController {
         view.addSubview(tableView)
         tableView.separatorStyle = .none
         tableView.backgroundColor = R.color.backgroundTextFieldsColor()
-        tableView.register(ATYTaskTableViewCell.self, forCellReuseIdentifier: ATYTaskTableViewCell.reuseIdentifier)
+        tableView.register(ATYCreateTaskTableViewCell.self, forCellReuseIdentifier: ATYCreateTaskTableViewCell.reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.snp.makeConstraints { (make) in
@@ -80,7 +88,7 @@ extension ATYAddTaskViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ATYTaskTableViewCell.reuseIdentifier, for: indexPath) as! ATYTaskTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskTableViewCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskTableViewCell
 
         cell.setUp(image: self.imageArray[indexPath.row], titleLabel: self.titleStrings[indexPath.row], subtitleLabel: self.subtitleStrings[indexPath.row])
         selectedView.backgroundColor = R.color.textColorSecondary()
@@ -91,6 +99,10 @@ extension ATYAddTaskViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        self.dismiss(animated: true) { [weak self] in
+            self?.pushVcCallback?((self?.typeTask[indexPath.row])!)
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

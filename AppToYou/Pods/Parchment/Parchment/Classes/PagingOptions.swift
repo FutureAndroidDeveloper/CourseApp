@@ -143,7 +143,7 @@ public struct PagingOptions {
     menuItemSize = .sizeToFit(minWidth: 150, height: 40)
     menuPosition = .top
     menuTransition = .scrollAlongside
-    menuInteraction = .scrolling
+    menuInteraction = .none
     menuInsets = UIEdgeInsets.zero
     menuItemSpacing = 0
     menuItemLabelSpacing = 20

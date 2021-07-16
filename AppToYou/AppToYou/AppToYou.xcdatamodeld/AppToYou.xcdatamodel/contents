@@ -1,18 +1,223 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H15" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDAchievement" representedClassName="CDAchievement" syncable="YES">
+        <attribute name="attribute" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="bonus" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="descriptionName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="range" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="userAchievement" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDUserAchievement" inverseName="achievement" inverseEntity="CDUserAchievement"/>
+    </entity>
+    <entity name="CDCourse" representedClassName="CDCourse" syncable="YES">
+        <attribute name="adminFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="chatEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="chatPath" optional="YES" attributeType="String"/>
+        <attribute name="cost" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="courseDescription" optional="YES" attributeType="String"/>
+        <attribute name="courseName" optional="YES" attributeType="String"/>
+        <attribute name="courseTypeCode" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="durationType" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isInternal" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isOpen" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="likes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="picPath" optional="YES" attributeType="String"/>
+        <attribute name="privacyEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="publicId" optional="YES" attributeType="String"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="usersAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="courseTask" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDCourseTask" inverseName="course" inverseEntity="CDCourseTask"/>
+        <relationship name="courseUser" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDCourseUser" inverseName="course" inverseEntity="CDCourseUser"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="course" inverseEntity="CDUser"/>
+        <relationship name="userTask" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDUserTask" inverseName="course" inverseEntity="CDUserTask"/>
+    </entity>
+    <entity name="CDCourseTask" representedClassName="CDCourseTask" syncable="YES">
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="courseFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="daysCode" optional="YES" attributeType="String"/>
+        <attribute name="editable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="frequencyType" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="infiniteExecution" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="minSanction" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="taskAttribute" optional="YES" attributeType="String"/>
+        <attribute name="taskDescription" optional="YES" attributeType="String"/>
+        <attribute name="taskName" optional="YES" attributeType="String"/>
+        <attribute name="taskSanction" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="taskType" optional="YES" attributeType="String"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="courseTask" inverseEntity="CDCourse"/>
+    </entity>
+    <entity name="CDCourseUser" representedClassName="CDCourseUser" syncable="YES">
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="completedTasksAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="courseFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currentSeries" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="invitationFromFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isFinished" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isPrivateForUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="likeIt" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="maxSeries" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="personalRaiting" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sanctionsAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="userStatusCode" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="courseUser" inverseEntity="CDCourse"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="courseUser" inverseEntity="CDUser"/>
+        <relationship name="userInvitation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="invitationFromFk" inverseEntity="CDUser"/>
+    </entity>
+    <entity name="CDSanction" representedClassName="CDSanction" syncable="YES">
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sanctionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="taskSanction" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="transactionId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="userTaskFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="wasPayed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="userTask" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUserTask" inverseName="sanction" inverseEntity="CDUserTask"/>
+    </entity>
+    <entity name="CDStatistics" representedClassName="CDStatistics" syncable="YES">
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="coinsSpent" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="createdCoursesAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currentDaysSeries" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="finishedCoursesAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="invitedFriendsToTheCourses" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="maxCompletedTasksPerDay" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="maxDaysSeries" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="statistics" inverseEntity="CDUser"/>
+    </entity>
+    <entity name="CDStore" representedClassName="CDStore" syncable="YES">
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="coinsAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="CDTransaction" representedClassName="CDTransaction" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="internalCurrency" optional="YES" attributeType="String"/>
+        <attribute name="purchaseId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="purchaseType" optional="YES" attributeType="String"/>
+        <attribute name="sanctionId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="storeInformation" optional="YES" attributeType="String"/>
+        <attribute name="transactionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="transactionInfo" optional="YES" attributeType="String"/>
+        <attribute name="transactionType" optional="YES" attributeType="String"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userAchievementId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="validationType" optional="YES" attributeType="String"/>
+        <attribute name="walletFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="wallet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDWallet" inverseName="transaction" inverseEntity="CDWallet"/>
+    </entity>
     <entity name="CDUser" representedClassName="CDUser" syncable="YES">
+        <attribute name="authentification" optional="YES" attributeType="String"/>
         <attribute name="avatarPath" optional="YES" attributeType="String"/>
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="loginEmail" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="password" optional="YES" attributeType="String"/>
         <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="uuid" optional="YES" attributeType="String"/>
+        <relationship name="course" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="user" inverseEntity="CDCourse"/>
+        <relationship name="courseUser" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDCourseUser" inverseName="user" inverseEntity="CDCourseUser"/>
+        <relationship name="invitationFromFk" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDCourseUser" inverseName="userInvitation" inverseEntity="CDCourseUser"/>
+        <relationship name="statistics" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDStatistics" inverseName="user" inverseEntity="CDStatistics"/>
+        <relationship name="userAchievement" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDUserAchievement" inverseName="user" inverseEntity="CDUserAchievement"/>
+        <relationship name="userTasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDUserTask" inverseName="user" inverseEntity="CDUserTask"/>
+        <relationship name="vacation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDVacation" inverseName="user" inverseEntity="CDVacation"/>
+        <relationship name="wallet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDWallet" inverseName="user" inverseEntity="CDWallet"/>
     </entity>
-    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
+    <entity name="CDUserAchievement" representedClassName="CDUserAchievement" syncable="YES">
+        <attribute name="achievementFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="completionDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="achievement" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDAchievement" inverseName="userAchievement" inverseEntity="CDAchievement"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="userAchievement" inverseEntity="CDUser"/>
+    </entity>
+    <entity name="CDUserTask" representedClassName="CDUserTask" syncable="YES">
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="courseFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="courseTaskId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="daysCode" optional="YES" attributeType="String"/>
+        <attribute name="editableCourseTask" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="frequencyType" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="minimumCourseTaskSanction" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="taskAttribute" optional="YES" attributeType="String"/>
+        <attribute name="taskCompleteTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="taskDescription" optional="YES" attributeType="String"/>
+        <attribute name="taskName" optional="YES" attributeType="String"/>
+        <attribute name="taskSanction" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="taskType" optional="YES" attributeType="String"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDCourse" inverseName="userTask" inverseEntity="CDCourse"/>
+        <relationship name="sanction" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDSanction" inverseName="userTask" inverseEntity="CDSanction"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="userTasks" inverseEntity="CDUser"/>
+    </entity>
+    <entity name="CDVacation" representedClassName="CDVacation" syncable="YES">
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userFk" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="vacation" inverseEntity="CDUser"/>
+    </entity>
+    <entity name="CDWallet" representedClassName="CDWallet" syncable="YES">
+        <attribute name="backId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="coinsAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="diamondsAmount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tsCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tsUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="transaction" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDTransaction" inverseName="wallet" inverseEntity="CDTransaction"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="wallet" inverseEntity="CDUser"/>
+    </entity>
     <elements>
-        <element name="CDUser" positionX="-63" positionY="-18" width="128" height="163"/>
-        <element name="Entity" positionX="-54" positionY="54" width="128" height="43"/>
+        <element name="CDAchievement" positionX="-691.98828125" positionY="-103.578125" width="128" height="208"/>
+        <element name="CDCourse" positionX="31.37890625" positionY="-81.59765625" width="128" height="388"/>
+        <element name="CDCourseTask" positionX="248.21484375" positionY="-44.84765625" width="128" height="283"/>
+        <element name="CDCourseUser" positionX="-223.63671875" positionY="-207.8203125" width="128" height="328"/>
+        <element name="CDSanction" positionX="176.66796875" positionY="494.89453125" width="128" height="208"/>
+        <element name="CDStatistics" positionX="-770.32421875" positionY="119.7578125" width="128" height="223"/>
+        <element name="CDStore" positionX="319.6484375" positionY="451.1015625" width="128" height="148"/>
+        <element name="CDTransaction" positionX="-756.04296875" positionY="403.6640625" width="128" height="298"/>
+        <element name="CDUser" positionX="-306.95703125" positionY="187.2109375" width="128" height="298"/>
+        <element name="CDUserAchievement" positionX="-516.359375" positionY="62.96875" width="128" height="178"/>
+        <element name="CDUserTask" positionX="-49.890625" positionY="355.6875" width="128" height="358"/>
+        <element name="CDVacation" positionX="-614.8125" positionY="342.4140625" width="128" height="163"/>
+        <element name="CDWallet" positionX="-308.22265625" positionY="553.7265625" width="128" height="163"/>
     </elements>
 </model>

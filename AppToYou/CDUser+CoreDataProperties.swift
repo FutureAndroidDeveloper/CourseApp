@@ -24,8 +24,26 @@ extension CDUser {
     @NSManaged public var loginEmail: String?
     @NSManaged public var name: String?
     @NSManaged public var password: String?
+    @NSManaged public var authentification: String?
     @NSManaged public var id: Int64
 
+    var backId: Int64? {
+        get {
+            self.willAccessValue(forKey: "backId")
+            let value = self.primitiveValue(forKey: "backId") as? Int
+            self.didAccessValue(forKey: "backId")
+
+            return (value != nil) ? Int64(value!) : nil
+        }
+        set {
+            self.willChangeValue(forKey: "backId")
+
+            let value : Int? = (newValue != nil) ? Int(newValue!) : nil
+            self.setPrimitiveValue(value, forKey: "backId")
+
+            self.didChangeValue(forKey: "backId")
+        }
+    }
 }
 
 extension CDUser : Identifiable {

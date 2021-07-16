@@ -17,7 +17,7 @@ class ATYProfileViewController : UIViewController {
         label.font = UIFont.systemFont(ofSize: 50, weight: UIFont.Weight.thin)
         label.textColor = UIColor(red: 95 / 255, green: 102 / 255, blue: 108 / 255, alpha: 1)
         label.textAlignment = .center
-        label.text = "Профиль"
+        label.text = R.string.localizable.profile()
         label.sizeToFit()
 
         view.addSubview(label)

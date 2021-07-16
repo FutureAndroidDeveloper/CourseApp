@@ -11,8 +11,8 @@ import UIKit
 
 class NavigationBarViewController: UIViewController {
     let pagingViewController = NavigationBarPagingViewController(viewControllers: [
-        ATYTodayTasksViewController(name: "Сегодня"),
-        ATYAllTasksViewController(name: "Все задачи")
+        ATYTodayTasksViewController(name: R.string.localizable.today()),
+        ATYAllTasksViewController(name: R.string.localizable.allTasks())
     ])
 
     //MARK:- Lifecycle methods
@@ -20,7 +20,20 @@ class NavigationBarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageView()
-       
+        navigationController?.navigationBar.installBlurEffect()
+    }
+
+    func addBlurEffect() {
+        let bounds = self.navigationController?.navigationBar.bounds
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        visualEffectView.alpha = 0.1
+        visualEffectView.frame = bounds ?? CGRect.zero
+        visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.navigationController?.navigationBar.addSubview(visualEffectView)
+        self.navigationController?.navigationBar.sendSubviewToBack(visualEffectView)
+
+        // Here you can add visual effects to any UIView control.
+        // Replace custom view with navigation bar in the above code to add effects to the custom view.
     }
 
     override func viewDidLayoutSubviews() {
@@ -35,6 +48,7 @@ class NavigationBarViewController: UIViewController {
     private func configurePageView() {
         pagingViewController.borderOptions = .hidden
         pagingViewController.menuBackgroundColor = .clear
+        pagingViewController.contentInteraction = .none
         pagingViewController.indicatorColor = R.color.textColorSecondary() ?? .orange
         pagingViewController.textColor = R.color.textSecondaryColor() ?? .gray
         pagingViewController.selectedTextColor = R.color.titleTextColor() ?? .orange
@@ -56,3 +70,19 @@ class NavigationBarViewController: UIViewController {
     }
 }
 
+extension UINavigationBar {
+    func installBlurEffect() {
+        isTranslucent = true
+        setBackgroundImage(UIImage(), for: .default)
+        let statusBarHeight: CGFloat = UIApplication.shared.statusBarFrame.height
+        var blurFrame = bounds
+        blurFrame.size.height += statusBarHeight
+        blurFrame.origin.y -= statusBarHeight
+        let blurView  = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        blurView.isUserInteractionEnabled = false
+        blurView.frame = blurFrame
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(blurView)
+        blurView.layer.zPosition = -1
+    }
+}

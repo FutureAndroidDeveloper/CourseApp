@@ -140,12 +140,9 @@ class ATYAddPhotoViewController: UIViewController {
         let nav2 = UINavigationController(rootViewController: ATYCoursesViewController())
         let nav3 = UINavigationController(rootViewController: ATYProfileViewController())
 
-//        let pagingVc = PagingViewController(viewControllers: [FirstViewController(), SecondViewController()])
-//        pagingVc.title = "Задачи"
-
-        nav1.title = "Задачи"
-        nav2.title = "Курсы"
-        nav3.title = "Профиль"
+        nav1.title = R.string.localizable.tasks()
+        nav2.title = R.string.localizable.courses()
+        nav3.title = R.string.localizable.profile()
 
         let tabBar = UITabBarController()
         tabBar.view.backgroundColor = R.color.backgroundAppColor()

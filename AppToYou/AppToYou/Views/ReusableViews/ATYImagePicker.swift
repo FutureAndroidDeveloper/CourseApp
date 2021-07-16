@@ -62,23 +62,34 @@ open class ATYImagePicker: NSObject {
         alertController.view.subviews.first?.subviews.first?.subviews.first?.backgroundColor = R.color.backgroundAppColor()
         alertController.view.tintColor = R.color.buttonColor()
 
-            if let action = self.action(for: .camera, title: "Сделать фото") {
-                action.setValue(R.image.vIc_takePhoto(), forKey: "image")
-                alertController.addAction(action)
-            }
-
-            if let action = self.action(for: .photoLibrary, title: "Загрузить из галлереи") {
-                action.setValue(R.image.vIc_gallery(), forKey: "image")
-                alertController.addAction(action)
-            }
-
-
-        let action = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        let action = UIAlertAction(title: "Просмотреть", style: .default, handler: { _ in
+            self.delegate?.showCurrentImage()
+        })
+        action.setValue(R.image.vIc_vision(), forKey: "image")
         alertController.addAction(action)
 
-//        if let cancelBackgroundViewType = NSClassFromString("_UIAlertControlleriOSActionSheetCancelBackgroundView") as? UIView.Type {
-//         //   cancelBackgroundViewType.appearance().subviewsBackgroundColor = STMTheme.current.backgroundTableColor
-//        }
+        if let action = self.action(for: .camera, title: "Сделать фото") {
+            action.setValue(R.image.vIc_takePhoto(), forKey: "image")
+            alertController.addAction(action)
+        }
+
+        if let action = self.action(for: .photoLibrary, title: "Загрузить из галлереи") {
+            action.setValue(R.image.vIc_gallery(), forKey: "image")
+            alertController.addAction(action)
+        }
+        let actionRemove = UIAlertAction(title: "Удалить фото", style: .destructive, handler: { _ in
+            self.delegate?.deleteCurrentImage()
+        })
+        actionRemove.setValue(R.image.vIc_trash(), forKey: "image")
+        alertController.addAction(actionRemove)
+
+
+        let actionCancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        alertController.addAction(actionCancel)
+
+        //        if let cancelBackgroundViewType = NSClassFromString("_UIAlertControlleriOSActionSheetCancelBackgroundView") as? UIView.Type {
+        //         //   cancelBackgroundViewType.appearance().subviewsBackgroundColor = STMTheme.current.backgroundTableColor
+        //        }
 
         self.presentationController?.present(alertController, animated: true)
     }
