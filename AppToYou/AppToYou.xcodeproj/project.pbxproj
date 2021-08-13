@@ -3,14 +3,28 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		61504E968323318951FD0D81 /* Pods_AppToYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */; };
+		6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0B8D6826C675A600F7582C /* ATYCourse.swift */; };
+		6D118EB826A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */; };
+		6D118EBB26A9A51100601F34 /* ATYShareCourseLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D118EBA26A9A51100601F34 /* ATYShareCourseLinkCell.swift */; };
+		6D118EC726A9AFDB00601F34 /* UIImage+Letters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D118EC626A9AFDB00601F34 /* UIImage+Letters.swift */; };
+		6D118ECA26A9B04800601F34 /* ATYCourseParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D118EC926A9B04800601F34 /* ATYCourseParticipantCell.swift */; };
 		6D195BB7268F156A000CA1ED /* ATYTodayTasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D195BB6268F156A000CA1ED /* ATYTodayTasksViewModel.swift */; };
 		6D1F25FC265F991F008489C9 /* ATYTaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1F25FB265F991F008489C9 /* ATYTaskTableViewCell.swift */; };
+		6D21D77026B3E45800F27CC4 /* ATYAchievementListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D21D76F26B3E45800F27CC4 /* ATYAchievementListViewController.swift */; };
+		6D21D77B26B3E4F600F27CC4 /* ATYAchievementListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D21D77926B3E4F600F27CC4 /* ATYAchievementListCell.swift */; };
+		6D21D77C26B3E4F600F27CC4 /* ATYAchievementListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D21D77A26B3E4F600F27CC4 /* ATYAchievementListCell.xib */; };
+		6D21D77F26B3F88800F27CC4 /* ATYAchievementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D21D77E26B3F88800F27CC4 /* ATYAchievementType.swift */; };
 		6D264EFE267C949600FEAAB8 /* ATYTasksForAboutCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D264EFD267C949600FEAAB8 /* ATYTasksForAboutCourseCell.swift */; };
+		6D28977A26B9707D0001995C /* ATYVacationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D28977926B9707D0001995C /* ATYVacationViewController.swift */; };
+		6D2ADD3726B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2ADD3526B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.swift */; };
+		6D2ADD3826B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D2ADD3626B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.xib */; };
+		6D2ADD3C26B92A28009A1DE6 /* ATYYourAccBlockedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2ADD3A26B92A28009A1DE6 /* ATYYourAccBlockedCell.swift */; };
+		6D2ADD3D26B92A28009A1DE6 /* ATYYourAccBlockedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D2ADD3B26B92A28009A1DE6 /* ATYYourAccBlockedCell.xib */; };
 		6D315F4F2668B95800889FD7 /* UIStackView+RemoveFullySubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D315F4E2668B95800889FD7 /* UIStackView+RemoveFullySubviews.swift */; };
 		6D315F522668FA4E00889FD7 /* ATYCreateCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D315F512668FA4E00889FD7 /* ATYCreateCourseCell.swift */; };
 		6D32D84A2664CCED009D62C9 /* ATYRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D32D8492664CCED009D62C9 /* ATYRadioButton.swift */; };
@@ -35,7 +49,6 @@
 		6D3AC1EB26846DDC007AC57D /* CDStore+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3AC1E926846DDC007AC57D /* CDStore+CoreDataProperties.swift */; };
 		6D403477265CF02D00248E9E /* ATYTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D403476265CF02D00248E9E /* ATYTasksViewController.swift */; };
 		6D40347C265CF5B900248E9E /* ATYCoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D40347B265CF5B900248E9E /* ATYCoursesViewController.swift */; };
-		6D40347F265CF5C600248E9E /* ATYProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D40347E265CF5C600248E9E /* ATYProfileViewController.swift */; };
 		6D40348D265D11AF00248E9E /* ATYNavigationViewController+PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D40348C265D11AF00248E9E /* ATYNavigationViewController+PageView.swift */; };
 		6D403494265D151A00248E9E /* ATYAllTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D403493265D151A00248E9E /* ATYAllTasksViewController.swift */; };
 		6D403497265D152E00248E9E /* ATYTodayTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D403496265D152E00248E9E /* ATYTodayTasksViewController.swift */; };
@@ -48,6 +61,13 @@
 		6D40CA5526679BBB00A78CEC /* Date+ToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D40CA5426679BBB00A78CEC /* Date+ToString.swift */; };
 		6D40CA5C2667C18400A78CEC /* ATYEditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D40CA5B2667C18400A78CEC /* ATYEditTaskViewController.swift */; };
 		6D40CA602667CFA200A78CEC /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D40CA5F2667CFA200A78CEC /* UIViewController.swift */; };
+		6D455C1D26C57AE90014BDF2 /* UITableView+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D455C1C26C57AE90014BDF2 /* UITableView+Placeholder.swift */; };
+		6D4928BA26A950EA000E5346 /* ATYBuyingACourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4928B926A950EA000E5346 /* ATYBuyingACourseViewController.swift */; };
+		6D4928C426A95176000E5346 /* ATYHeaderBuyingACourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4928C326A95176000E5346 /* ATYHeaderBuyingACourseCell.swift */; };
+		6D4928C826A952DE000E5346 /* ATYTheCostCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4928C726A952DE000E5346 /* ATYTheCostCourseCell.swift */; };
+		6D4928CE26A994D8000E5346 /* ATYJoinToCloseCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4928CD26A994D8000E5346 /* ATYJoinToCloseCourseViewController.swift */; };
+		6D4BAFE826C2A9DE00090789 /* SHSearchBar in Frameworks */ = {isa = PBXBuildFile; productRef = 6D4BAFE726C2A9DE00090789 /* SHSearchBar */; };
+		6D4BAFEC26C2BF1100090789 /* SearchBar+SHSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4BAFEB26C2BF1100090789 /* SearchBar+SHSearchBar.swift */; };
 		6D4E12E52657ACC600732465 /* ATYDatabaseService+CDUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4E12E42657ACC600732465 /* ATYDatabaseService+CDUser.swift */; };
 		6D4E12EB2657ADA100732465 /* CDUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4E12E92657ADA100732465 /* CDUser+CoreDataClass.swift */; };
 		6D4E12EC2657ADA100732465 /* CDUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4E12EA2657ADA100732465 /* CDUser+CoreDataProperties.swift */; };
@@ -62,10 +82,35 @@
 		6D55ADE026A1C8A900F7DD4A /* ATYEditCourseCountRepeatTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D55ADDF26A1C8A900F7DD4A /* ATYEditCourseCountRepeatTaskViewController.swift */; };
 		6D55ADE426A1C8F500F7DD4A /* ATYEditCourseCountRepeatTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D55ADE326A1C8F500F7DD4A /* ATYEditCourseCountRepeatTaskCell.swift */; };
 		6D55ADE826A1CAC400F7DD4A /* ATYEditCourseCountTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D55ADE726A1CAC400F7DD4A /* ATYEditCourseCountTaskCell.swift */; };
+		6D568EB426B2A8A8000619B2 /* ATYReceivingAnAwardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D568EB226B2A8A8000619B2 /* ATYReceivingAnAwardViewController.swift */; };
+		6D568EB526B2A8A8000619B2 /* ATYReceivingAnAwardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D568EB326B2A8A8000619B2 /* ATYReceivingAnAwardViewController.xib */; };
+		6D568EBA26B2CA63000619B2 /* ATYTakeGiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D568EB826B2CA63000619B2 /* ATYTakeGiftViewController.swift */; };
+		6D568EBB26B2CA63000619B2 /* ATYTakeGiftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D568EB926B2CA63000619B2 /* ATYTakeGiftViewController.xib */; };
+		6D568EC426B2E0D1000619B2 /* ATYProfileSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D568EC326B2E0D1000619B2 /* ATYProfileSignInViewController.swift */; };
+		6D568ECA26B2E113000619B2 /* ATYProfileSignInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D568EC826B2E113000619B2 /* ATYProfileSignInCell.swift */; };
+		6D568ECB26B2E113000619B2 /* ATYProfileSignInCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D568EC926B2E113000619B2 /* ATYProfileSignInCell.xib */; };
+		6D568ECF26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D568ECE26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift */; };
+		6D568ED226B2EAB9000619B2 /* ATYProfileSignInCollectionAchievementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D568ED126B2EAB9000619B2 /* ATYProfileSignInCollectionAchievementCell.swift */; };
+		6D568ED526B2EB15000619B2 /* ATYCollectionAchievementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D568ED426B2EB15000619B2 /* ATYCollectionAchievementCell.swift */; };
+		6D568ED826B2FC56000619B2 /* ATYProfileSignInButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D568ED726B2FC56000619B2 /* ATYProfileSignInButtonsCell.swift */; };
 		6D651CEA2661148E003ACF95 /* ATYCreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D651CE92661148E003ACF95 /* ATYCreateTaskViewController.swift */; };
 		6D651CEF26611F4B003ACF95 /* ATYCreateTaskNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D651CEE26611F4B003ACF95 /* ATYCreateTaskNameCell.swift */; };
 		6D651CF2266122C0003ACF95 /* ATYCreateTaskCountingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D651CF1266122C0003ACF95 /* ATYCreateTaskCountingCell.swift */; };
 		6D6E425B26A0515400F27E6F /* ATYCreateCourseTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E425A26A0515400F27E6F /* ATYCreateCourseTaskViewModel.swift */; };
+		6D6E7EC726B13CBD005C8C62 /* ATYPenaltyForFailureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7EC626B13CBD005C8C62 /* ATYPenaltyForFailureViewController.swift */; };
+		6D6E7ECC26B13CFD005C8C62 /* ATYPenaltyForFailureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7ECA26B13CFD005C8C62 /* ATYPenaltyForFailureCell.swift */; };
+		6D6E7ECD26B13CFD005C8C62 /* ATYPenaltyForFailureCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D6E7ECB26B13CFD005C8C62 /* ATYPenaltyForFailureCell.xib */; };
+		6D6E7ED326B14410005C8C62 /* ATYPenaltyWarningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7ED226B14410005C8C62 /* ATYPenaltyWarningViewController.swift */; };
+		6D6E7ED826B1442B005C8C62 /* ATYPenaltyWarningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7ED626B1442B005C8C62 /* ATYPenaltyWarningCell.swift */; };
+		6D6E7ED926B1442B005C8C62 /* ATYPenaltyWarningCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D6E7ED726B1442B005C8C62 /* ATYPenaltyWarningCell.xib */; };
+		6D6E7EDD26B1579A005C8C62 /* ATYCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D6E7EDC26B1579A005C8C62 /* ATYCardView.xib */; };
+		6D6E7EE026B157BA005C8C62 /* ATYCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7EDF26B157BA005C8C62 /* ATYCardView.swift */; };
+		6D6E7EE726B18489005C8C62 /* ATYProfileWithoutSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7EE626B18489005C8C62 /* ATYProfileWithoutSignInViewController.swift */; };
+		6D6E7EEB26B19045005C8C62 /* ATYStatisticProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D6E7EEA26B19045005C8C62 /* ATYStatisticProfileView.xib */; };
+		6D6E7EF326B19416005C8C62 /* ATYStatisticProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7EF226B19416005C8C62 /* ATYStatisticProfileView.swift */; };
+		6D6E7EF626B1A00B005C8C62 /* ATYProfileWithoutSignInStatisticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7EF526B1A00B005C8C62 /* ATYProfileWithoutSignInStatisticCell.swift */; };
+		6D6E7EF926B1A9C2005C8C62 /* ATYProfileNeedHelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7EF826B1A9C2005C8C62 /* ATYProfileNeedHelpCell.swift */; };
+		6D6E7EFC26B1AC31005C8C62 /* ATYAboutAppCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E7EFB26B1AC31005C8C62 /* ATYAboutAppCell.swift */; };
 		6D6F6AEB269EFDDE009AD9E1 /* ATYCategoryCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6F6AEA269EFDDE009AD9E1 /* ATYCategoryCourseCell.swift */; };
 		6D6F6AF1269F0E45009AD9E1 /* ATYChooseCourseCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6F6AF0269F0E45009AD9E1 /* ATYChooseCourseCategoryViewController.swift */; };
 		6D6F6AF6269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6F6AF5269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift */; };
@@ -73,6 +118,20 @@
 		6D7399B3268B59410026D81D /* ATYDatabaseService+CDCourseTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7399B2268B59410026D81D /* ATYDatabaseService+CDCourseTask.swift */; };
 		6D7399B6268B5CB80026D81D /* ATYDatabaseService+CDCourseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7399B5268B5CB80026D81D /* ATYDatabaseService+CDCourseUser.swift */; };
 		6D7399B9268B60D70026D81D /* ATYDatabaseService+CDUserAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7399B8268B60D70026D81D /* ATYDatabaseService+CDUserAchievement.swift */; };
+		6D79938026BA79220071EF4E /* ATYNavigationBarWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D79937F26BA79220071EF4E /* ATYNavigationBarWalletViewController.swift */; };
+		6D79938326BA794C0071EF4E /* ATYWalletShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D79938226BA794C0071EF4E /* ATYWalletShopViewController.swift */; };
+		6D79938626BA79790071EF4E /* ATYWalletPaymentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D79938526BA79790071EF4E /* ATYWalletPaymentsViewController.swift */; };
+		6D79938926BA79890071EF4E /* ATYWalletHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D79938826BA79890071EF4E /* ATYWalletHistoryViewController.swift */; };
+		6D79938F26BAAE5C0071EF4E /* ATYYourBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D79938E26BAAE5C0071EF4E /* ATYYourBalanceView.swift */; };
+		6D79939226BAAE680071EF4E /* ATYYourBalanceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D79939126BAAE680071EF4E /* ATYYourBalanceView.xib */; };
+		6D79939726BAB4250071EF4E /* ATYShopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D79939526BAB4250071EF4E /* ATYShopCollectionViewCell.swift */; };
+		6D79939826BAB4250071EF4E /* ATYShopCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D79939626BAB4250071EF4E /* ATYShopCollectionViewCell.xib */; };
+		6D7993C726BACE540071EF4E /* ATYPayWalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7993C526BACE540071EF4E /* ATYPayWalletTableViewCell.swift */; };
+		6D7993C826BACE540071EF4E /* ATYPayWalletTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7993C626BACE540071EF4E /* ATYPayWalletTableViewCell.xib */; };
+		6D7993CC26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7993CA26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.swift */; };
+		6D7993CD26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7993CB26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.xib */; };
+		6D7993D126BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7993CF26BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.swift */; };
+		6D7993D226BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D7993D026BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.xib */; };
 		6D8A2809265E3BE800BAAEF5 /* UITableViewCell+ReuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8A2808265E3BE800BAAEF5 /* UITableViewCell+ReuseIdentifier.swift */; };
 		6D8A280E265E465200BAAEF5 /* ATYStackProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8A280D265E465200BAAEF5 /* ATYStackProgressView.swift */; };
 		6D8A281B265E6D6C00BAAEF5 /* PanelTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8A281A265E6D6C00BAAEF5 /* PanelTransition.swift */; };
@@ -99,7 +158,15 @@
 		6D91B86A265BE97200EB2589 /* ATYEnterNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D91B869265BE97200EB2589 /* ATYEnterNameViewController.swift */; };
 		6D91B871265BEBA500EB2589 /* ATYAddPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D91B870265BEBA500EB2589 /* ATYAddPhotoViewController.swift */; };
 		6D91B877265BF4C400EB2589 /* ATYImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D91B876265BF4C400EB2589 /* ATYImagePicker.swift */; };
-		6DA15F91266A113600201DD3 /* ATYSearchBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA15F90266A113600201DD3 /* ATYSearchBarCell.swift */; };
+		6DA07DC926BD2CE900DDC6D4 /* ATYCustomCourseNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA07DC826BD2CE900DDC6D4 /* ATYCustomCourseNavigationBar.swift */; };
+		6DA10EE326AAA4A200A05770 /* ATYProgressInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA10EE126AAA4A200A05770 /* ATYProgressInfoTableViewCell.swift */; };
+		6DA10EE426AAA4A200A05770 /* ATYProgressInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DA10EE226AAA4A200A05770 /* ATYProgressInfoTableViewCell.xib */; };
+		6DA10EEB26AAB4D700A05770 /* ATYProgressParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA10EEA26AAB4D700A05770 /* ATYProgressParticipantViewController.swift */; };
+		6DA10EEE26AABE5000A05770 /* ATYRatingCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA10EED26AABE5000A05770 /* ATYRatingCourseCell.swift */; };
+		6DA10EFA26AAC73E00A05770 /* ATYProgressTaskCourseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA10EF826AAC73E00A05770 /* ATYProgressTaskCourseUserCell.swift */; };
+		6DA10EFB26AAC73E00A05770 /* ATYProgressTaskCourseUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DA10EF926AAC73E00A05770 /* ATYProgressTaskCourseUserCell.xib */; };
+		6DA10EFF26AAD89800A05770 /* ATYAnotherCourseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA10EFD26AAD89800A05770 /* ATYAnotherCourseUserCell.swift */; };
+		6DA10F0026AAD89800A05770 /* ATYAnotherCourseUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DA10EFE26AAD89800A05770 /* ATYAnotherCourseUserCell.xib */; };
 		6DA15F94266A27EE00201DD3 /* ATYCollectionViewTypeCourseTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA15F93266A27EE00201DD3 /* ATYCollectionViewTypeCourseTableCell.swift */; };
 		6DA15F98266A286F00201DD3 /* ATYCollectionViewCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA15F97266A286F00201DD3 /* ATYCollectionViewCourseCell.swift */; };
 		6DA15F9C266A396E00201DD3 /* ATYCourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA15F9B266A396E00201DD3 /* ATYCourseTableViewCell.swift */; };
@@ -110,6 +177,13 @@
 		6DA60DE826809DEE00885650 /* ATYCreateCourseTasksEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA60DE726809DEE00885650 /* ATYCreateCourseTasksEnums.swift */; };
 		6DA60DEC2680A23E00885650 /* ATYDurationCourseTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA60DEB2680A23E00885650 /* ATYDurationCourseTaskCell.swift */; };
 		6DA60DEF2680A5DE00885650 /* ATYCreateCourseTaskMinSanctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA60DEE2680A5DE00885650 /* ATYCreateCourseTaskMinSanctionCell.swift */; };
+		6DA8E20726A6AA11005014DA /* ATYEditCourseTextTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8E20626A6AA11005014DA /* ATYEditCourseTextTaskViewController.swift */; };
+		6DA8E20B26A6AACB005014DA /* ATYEditTextCourseTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8E20A26A6AACB005014DA /* ATYEditTextCourseTaskCell.swift */; };
+		6DA8E20E26A6AB9B005014DA /* ATYEditTextSymbolsCountTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8E20D26A6AB9B005014DA /* ATYEditTextSymbolsCountTaskCell.swift */; };
+		6DA8E21326A6C03D005014DA /* ATYTaskAddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8E21226A6C03D005014DA /* ATYTaskAddedViewController.swift */; };
+		6DA8E21826A6C0D9005014DA /* ATYTaskAddedTitleTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8E21726A6C0D9005014DA /* ATYTaskAddedTitleTextCell.swift */; };
+		6DA8E21C26A6CBDD005014DA /* ATYTaskAddedDescriptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8E21B26A6CBDD005014DA /* ATYTaskAddedDescriptionsCell.swift */; };
+		6DA8E22226A6E7FC005014DA /* ATYGradientImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA8E22126A6E7FC005014DA /* ATYGradientImageView.swift */; };
 		6DAB027E2656500100B72955 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAB027D2656500100B72955 /* AppDelegate.swift */; };
 		6DAB02802656500100B72955 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DAB027F2656500100B72955 /* SceneDelegate.swift */; };
 		6DAB02882656500100B72955 /* AppToYou.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6DAB02862656500100B72955 /* AppToYou.xcdatamodeld */; };
@@ -128,6 +202,16 @@
 		6DC4AE20268DC4480028CDDE /* ATYParser+PrepareToDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC4AE1F268DC4480028CDDE /* ATYParser+PrepareToDisplay.swift */; };
 		6DC4AE24268DC5AE0028CDDE /* ATYUserTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC4AE23268DC5AE0028CDDE /* ATYUserTask.swift */; };
 		6DC4AE27268DD7FB0028CDDE /* String+ToDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC4AE26268DD7FB0028CDDE /* String+ToDateTime.swift */; };
+		6DC56C7426A800A100863F1C /* ATYPaidCoursePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC56C7326A800A100863F1C /* ATYPaidCoursePreviewViewController.swift */; };
+		6DC56C7926A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC56C7826A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift */; };
+		6DC56C7C26A837D200863F1C /* ATYPaidCoursePreviewDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC56C7B26A837D200863F1C /* ATYPaidCoursePreviewDescriptionCell.swift */; };
+		6DC767DD26BBCD7200B8811C /* ATYSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC767DC26BBCD7200B8811C /* ATYSettingsViewController.swift */; };
+		6DC767E826BBCDBA00B8811C /* ATYSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC767E626BBCDBA00B8811C /* ATYSettingsCell.swift */; };
+		6DC767E926BBCDBA00B8811C /* ATYSettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DC767E726BBCDBA00B8811C /* ATYSettingsCell.xib */; };
+		6DC767EE26BBE4C200B8811C /* ATYCourseRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC767ED26BBE4C200B8811C /* ATYCourseRatingViewController.swift */; };
+		6DC767F926BBE51200B8811C /* ATYRatingCourseParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC767F726BBE51200B8811C /* ATYRatingCourseParticipantCell.swift */; };
+		6DC767FA26BBE51200B8811C /* ATYRatingCourseParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6DC767F826BBE51200B8811C /* ATYRatingCourseParticipantCell.xib */; };
+		6DC7680C26BC0F5200B8811C /* ATYNeedAuthorizationForTaskSanctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC7680B26BC0F5200B8811C /* ATYNeedAuthorizationForTaskSanctionViewController.swift */; };
 		6DDA1282265B91B1004124E7 /* ATYAuthorizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA1281265B91B1004124E7 /* ATYAuthorizationViewModel.swift */; };
 		6DDA1287265B91C8004124E7 /* ATYAuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDA1286265B91C8004124E7 /* ATYAuthorizationViewController.swift */; };
 		6DDBE4892666742800F797FD /* ATYSelectTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DDBE4882666742800F797FD /* ATYSelectTimeViewController.swift */; };
@@ -165,9 +249,23 @@
 
 /* Begin PBXFileReference section */
 		05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppToYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D0B8D6826C675A600F7582C /* ATYCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourse.swift; sourceTree = "<group>"; };
+		6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourseParticipantsViewController.swift; sourceTree = "<group>"; };
+		6D118EBA26A9A51100601F34 /* ATYShareCourseLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYShareCourseLinkCell.swift; sourceTree = "<group>"; };
+		6D118EC626A9AFDB00601F34 /* UIImage+Letters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Letters.swift"; sourceTree = "<group>"; };
+		6D118EC926A9B04800601F34 /* ATYCourseParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourseParticipantCell.swift; sourceTree = "<group>"; };
 		6D195BB6268F156A000CA1ED /* ATYTodayTasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTodayTasksViewModel.swift; sourceTree = "<group>"; };
 		6D1F25FB265F991F008489C9 /* ATYTaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTaskTableViewCell.swift; sourceTree = "<group>"; };
+		6D21D76F26B3E45800F27CC4 /* ATYAchievementListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAchievementListViewController.swift; sourceTree = "<group>"; };
+		6D21D77926B3E4F600F27CC4 /* ATYAchievementListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAchievementListCell.swift; sourceTree = "<group>"; };
+		6D21D77A26B3E4F600F27CC4 /* ATYAchievementListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYAchievementListCell.xib; sourceTree = "<group>"; };
+		6D21D77E26B3F88800F27CC4 /* ATYAchievementType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAchievementType.swift; sourceTree = "<group>"; };
 		6D264EFD267C949600FEAAB8 /* ATYTasksForAboutCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTasksForAboutCourseCell.swift; sourceTree = "<group>"; };
+		6D28977926B9707D0001995C /* ATYVacationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYVacationViewController.swift; sourceTree = "<group>"; };
+		6D2ADD3526B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTakeGiftProfileSignInCell.swift; sourceTree = "<group>"; };
+		6D2ADD3626B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYTakeGiftProfileSignInCell.xib; sourceTree = "<group>"; };
+		6D2ADD3A26B92A28009A1DE6 /* ATYYourAccBlockedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYYourAccBlockedCell.swift; sourceTree = "<group>"; };
+		6D2ADD3B26B92A28009A1DE6 /* ATYYourAccBlockedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYYourAccBlockedCell.xib; sourceTree = "<group>"; };
 		6D315F4E2668B95800889FD7 /* UIStackView+RemoveFullySubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+RemoveFullySubviews.swift"; sourceTree = "<group>"; };
 		6D315F512668FA4E00889FD7 /* ATYCreateCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCreateCourseCell.swift; sourceTree = "<group>"; };
 		6D32D8492664CCED009D62C9 /* ATYRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYRadioButton.swift; sourceTree = "<group>"; };
@@ -192,7 +290,6 @@
 		6D3AC1E926846DDC007AC57D /* CDStore+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDStore+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		6D403476265CF02D00248E9E /* ATYTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTasksViewController.swift; sourceTree = "<group>"; };
 		6D40347B265CF5B900248E9E /* ATYCoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCoursesViewController.swift; sourceTree = "<group>"; };
-		6D40347E265CF5C600248E9E /* ATYProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProfileViewController.swift; sourceTree = "<group>"; };
 		6D40348C265D11AF00248E9E /* ATYNavigationViewController+PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ATYNavigationViewController+PageView.swift"; sourceTree = "<group>"; };
 		6D403493265D151A00248E9E /* ATYAllTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAllTasksViewController.swift; sourceTree = "<group>"; };
 		6D403496265D152E00248E9E /* ATYTodayTasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTodayTasksViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +302,12 @@
 		6D40CA5426679BBB00A78CEC /* Date+ToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ToString.swift"; sourceTree = "<group>"; };
 		6D40CA5B2667C18400A78CEC /* ATYEditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEditTaskViewController.swift; sourceTree = "<group>"; };
 		6D40CA5F2667CFA200A78CEC /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		6D455C1C26C57AE90014BDF2 /* UITableView+Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Placeholder.swift"; sourceTree = "<group>"; };
+		6D4928B926A950EA000E5346 /* ATYBuyingACourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYBuyingACourseViewController.swift; sourceTree = "<group>"; };
+		6D4928C326A95176000E5346 /* ATYHeaderBuyingACourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYHeaderBuyingACourseCell.swift; sourceTree = "<group>"; };
+		6D4928C726A952DE000E5346 /* ATYTheCostCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTheCostCourseCell.swift; sourceTree = "<group>"; };
+		6D4928CD26A994D8000E5346 /* ATYJoinToCloseCourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYJoinToCloseCourseViewController.swift; sourceTree = "<group>"; };
+		6D4BAFEB26C2BF1100090789 /* SearchBar+SHSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchBar+SHSearchBar.swift"; sourceTree = "<group>"; };
 		6D4E12E42657ACC600732465 /* ATYDatabaseService+CDUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ATYDatabaseService+CDUser.swift"; sourceTree = "<group>"; };
 		6D4E12E92657ADA100732465 /* CDUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDUser+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		6D4E12EA2657ADA100732465 /* CDUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDUser+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
@@ -219,10 +322,35 @@
 		6D55ADDF26A1C8A900F7DD4A /* ATYEditCourseCountRepeatTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEditCourseCountRepeatTaskViewController.swift; sourceTree = "<group>"; };
 		6D55ADE326A1C8F500F7DD4A /* ATYEditCourseCountRepeatTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEditCourseCountRepeatTaskCell.swift; sourceTree = "<group>"; };
 		6D55ADE726A1CAC400F7DD4A /* ATYEditCourseCountTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEditCourseCountTaskCell.swift; sourceTree = "<group>"; };
+		6D568EB226B2A8A8000619B2 /* ATYReceivingAnAwardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYReceivingAnAwardViewController.swift; sourceTree = "<group>"; };
+		6D568EB326B2A8A8000619B2 /* ATYReceivingAnAwardViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYReceivingAnAwardViewController.xib; sourceTree = "<group>"; };
+		6D568EB826B2CA63000619B2 /* ATYTakeGiftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTakeGiftViewController.swift; sourceTree = "<group>"; };
+		6D568EB926B2CA63000619B2 /* ATYTakeGiftViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYTakeGiftViewController.xib; sourceTree = "<group>"; };
+		6D568EC326B2E0D1000619B2 /* ATYProfileSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProfileSignInViewController.swift; sourceTree = "<group>"; };
+		6D568EC826B2E113000619B2 /* ATYProfileSignInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProfileSignInCell.swift; sourceTree = "<group>"; };
+		6D568EC926B2E113000619B2 /* ATYProfileSignInCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYProfileSignInCell.xib; sourceTree = "<group>"; };
+		6D568ECE26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+BlurEffect.swift"; sourceTree = "<group>"; };
+		6D568ED126B2EAB9000619B2 /* ATYProfileSignInCollectionAchievementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProfileSignInCollectionAchievementCell.swift; sourceTree = "<group>"; };
+		6D568ED426B2EB15000619B2 /* ATYCollectionAchievementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCollectionAchievementCell.swift; sourceTree = "<group>"; };
+		6D568ED726B2FC56000619B2 /* ATYProfileSignInButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProfileSignInButtonsCell.swift; sourceTree = "<group>"; };
 		6D651CE92661148E003ACF95 /* ATYCreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCreateTaskViewController.swift; sourceTree = "<group>"; };
 		6D651CEE26611F4B003ACF95 /* ATYCreateTaskNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCreateTaskNameCell.swift; sourceTree = "<group>"; };
 		6D651CF1266122C0003ACF95 /* ATYCreateTaskCountingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCreateTaskCountingCell.swift; sourceTree = "<group>"; };
 		6D6E425A26A0515400F27E6F /* ATYCreateCourseTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCreateCourseTaskViewModel.swift; sourceTree = "<group>"; };
+		6D6E7EC626B13CBD005C8C62 /* ATYPenaltyForFailureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYPenaltyForFailureViewController.swift; sourceTree = "<group>"; };
+		6D6E7ECA26B13CFD005C8C62 /* ATYPenaltyForFailureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYPenaltyForFailureCell.swift; sourceTree = "<group>"; };
+		6D6E7ECB26B13CFD005C8C62 /* ATYPenaltyForFailureCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYPenaltyForFailureCell.xib; sourceTree = "<group>"; };
+		6D6E7ED226B14410005C8C62 /* ATYPenaltyWarningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYPenaltyWarningViewController.swift; sourceTree = "<group>"; };
+		6D6E7ED626B1442B005C8C62 /* ATYPenaltyWarningCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYPenaltyWarningCell.swift; sourceTree = "<group>"; };
+		6D6E7ED726B1442B005C8C62 /* ATYPenaltyWarningCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYPenaltyWarningCell.xib; sourceTree = "<group>"; };
+		6D6E7EDC26B1579A005C8C62 /* ATYCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYCardView.xib; sourceTree = "<group>"; };
+		6D6E7EDF26B157BA005C8C62 /* ATYCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCardView.swift; sourceTree = "<group>"; };
+		6D6E7EE626B18489005C8C62 /* ATYProfileWithoutSignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProfileWithoutSignInViewController.swift; sourceTree = "<group>"; };
+		6D6E7EEA26B19045005C8C62 /* ATYStatisticProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYStatisticProfileView.xib; sourceTree = "<group>"; };
+		6D6E7EF226B19416005C8C62 /* ATYStatisticProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYStatisticProfileView.swift; sourceTree = "<group>"; };
+		6D6E7EF526B1A00B005C8C62 /* ATYProfileWithoutSignInStatisticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProfileWithoutSignInStatisticCell.swift; sourceTree = "<group>"; };
+		6D6E7EF826B1A9C2005C8C62 /* ATYProfileNeedHelpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProfileNeedHelpCell.swift; sourceTree = "<group>"; };
+		6D6E7EFB26B1AC31005C8C62 /* ATYAboutAppCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAboutAppCell.swift; sourceTree = "<group>"; };
 		6D6F6AEA269EFDDE009AD9E1 /* ATYCategoryCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCategoryCourseCell.swift; sourceTree = "<group>"; };
 		6D6F6AF0269F0E45009AD9E1 /* ATYChooseCourseCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYChooseCourseCategoryViewController.swift; sourceTree = "<group>"; };
 		6D6F6AF5269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYChooseCourseCategoryCell.swift; sourceTree = "<group>"; };
@@ -230,6 +358,20 @@
 		6D7399B2268B59410026D81D /* ATYDatabaseService+CDCourseTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ATYDatabaseService+CDCourseTask.swift"; sourceTree = "<group>"; };
 		6D7399B5268B5CB80026D81D /* ATYDatabaseService+CDCourseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ATYDatabaseService+CDCourseUser.swift"; sourceTree = "<group>"; };
 		6D7399B8268B60D70026D81D /* ATYDatabaseService+CDUserAchievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ATYDatabaseService+CDUserAchievement.swift"; sourceTree = "<group>"; };
+		6D79937F26BA79220071EF4E /* ATYNavigationBarWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYNavigationBarWalletViewController.swift; sourceTree = "<group>"; };
+		6D79938226BA794C0071EF4E /* ATYWalletShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYWalletShopViewController.swift; sourceTree = "<group>"; };
+		6D79938526BA79790071EF4E /* ATYWalletPaymentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYWalletPaymentsViewController.swift; sourceTree = "<group>"; };
+		6D79938826BA79890071EF4E /* ATYWalletHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYWalletHistoryViewController.swift; sourceTree = "<group>"; };
+		6D79938E26BAAE5C0071EF4E /* ATYYourBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYYourBalanceView.swift; sourceTree = "<group>"; };
+		6D79939126BAAE680071EF4E /* ATYYourBalanceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYYourBalanceView.xib; sourceTree = "<group>"; };
+		6D79939526BAB4250071EF4E /* ATYShopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYShopCollectionViewCell.swift; sourceTree = "<group>"; };
+		6D79939626BAB4250071EF4E /* ATYShopCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYShopCollectionViewCell.xib; sourceTree = "<group>"; };
+		6D7993C526BACE540071EF4E /* ATYPayWalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYPayWalletTableViewCell.swift; sourceTree = "<group>"; };
+		6D7993C626BACE540071EF4E /* ATYPayWalletTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYPayWalletTableViewCell.xib; sourceTree = "<group>"; };
+		6D7993CA26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYStatisticPayOnCourseCell.swift; sourceTree = "<group>"; };
+		6D7993CB26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYStatisticPayOnCourseCell.xib; sourceTree = "<group>"; };
+		6D7993CF26BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYHistoryPayTableViewCell.swift; sourceTree = "<group>"; };
+		6D7993D026BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYHistoryPayTableViewCell.xib; sourceTree = "<group>"; };
 		6D8A2808265E3BE800BAAEF5 /* UITableViewCell+ReuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+ReuseIdentifier.swift"; sourceTree = "<group>"; };
 		6D8A280D265E465200BAAEF5 /* ATYStackProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYStackProgressView.swift; sourceTree = "<group>"; };
 		6D8A281A265E6D6C00BAAEF5 /* PanelTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelTransition.swift; sourceTree = "<group>"; };
@@ -258,7 +400,16 @@
 		6D91B869265BE97200EB2589 /* ATYEnterNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEnterNameViewController.swift; sourceTree = "<group>"; };
 		6D91B870265BEBA500EB2589 /* ATYAddPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAddPhotoViewController.swift; sourceTree = "<group>"; };
 		6D91B876265BF4C400EB2589 /* ATYImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYImagePicker.swift; sourceTree = "<group>"; };
-		6DA15F90266A113600201DD3 /* ATYSearchBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYSearchBarCell.swift; sourceTree = "<group>"; };
+		6DA07DC826BD2CE900DDC6D4 /* ATYCustomCourseNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCustomCourseNavigationBar.swift; sourceTree = "<group>"; };
+		6DA10EE126AAA4A200A05770 /* ATYProgressInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProgressInfoTableViewCell.swift; sourceTree = "<group>"; };
+		6DA10EE226AAA4A200A05770 /* ATYProgressInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYProgressInfoTableViewCell.xib; sourceTree = "<group>"; };
+		6DA10EEA26AAB4D700A05770 /* ATYProgressParticipantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProgressParticipantViewController.swift; sourceTree = "<group>"; };
+		6DA10EED26AABE5000A05770 /* ATYRatingCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYRatingCourseCell.swift; sourceTree = "<group>"; };
+		6DA10EF026AAC15700A05770 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		6DA10EF826AAC73E00A05770 /* ATYProgressTaskCourseUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYProgressTaskCourseUserCell.swift; sourceTree = "<group>"; };
+		6DA10EF926AAC73E00A05770 /* ATYProgressTaskCourseUserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYProgressTaskCourseUserCell.xib; sourceTree = "<group>"; };
+		6DA10EFD26AAD89800A05770 /* ATYAnotherCourseUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAnotherCourseUserCell.swift; sourceTree = "<group>"; };
+		6DA10EFE26AAD89800A05770 /* ATYAnotherCourseUserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYAnotherCourseUserCell.xib; sourceTree = "<group>"; };
 		6DA15F93266A27EE00201DD3 /* ATYCollectionViewTypeCourseTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCollectionViewTypeCourseTableCell.swift; sourceTree = "<group>"; };
 		6DA15F97266A286F00201DD3 /* ATYCollectionViewCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCollectionViewCourseCell.swift; sourceTree = "<group>"; };
 		6DA15F9B266A396E00201DD3 /* ATYCourseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourseTableViewCell.swift; sourceTree = "<group>"; };
@@ -269,6 +420,13 @@
 		6DA60DE726809DEE00885650 /* ATYCreateCourseTasksEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCreateCourseTasksEnums.swift; sourceTree = "<group>"; };
 		6DA60DEB2680A23E00885650 /* ATYDurationCourseTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYDurationCourseTaskCell.swift; sourceTree = "<group>"; };
 		6DA60DEE2680A5DE00885650 /* ATYCreateCourseTaskMinSanctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCreateCourseTaskMinSanctionCell.swift; sourceTree = "<group>"; };
+		6DA8E20626A6AA11005014DA /* ATYEditCourseTextTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEditCourseTextTaskViewController.swift; sourceTree = "<group>"; };
+		6DA8E20A26A6AACB005014DA /* ATYEditTextCourseTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEditTextCourseTaskCell.swift; sourceTree = "<group>"; };
+		6DA8E20D26A6AB9B005014DA /* ATYEditTextSymbolsCountTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEditTextSymbolsCountTaskCell.swift; sourceTree = "<group>"; };
+		6DA8E21226A6C03D005014DA /* ATYTaskAddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTaskAddedViewController.swift; sourceTree = "<group>"; };
+		6DA8E21726A6C0D9005014DA /* ATYTaskAddedTitleTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTaskAddedTitleTextCell.swift; sourceTree = "<group>"; };
+		6DA8E21B26A6CBDD005014DA /* ATYTaskAddedDescriptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYTaskAddedDescriptionsCell.swift; sourceTree = "<group>"; };
+		6DA8E22126A6E7FC005014DA /* ATYGradientImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYGradientImageView.swift; sourceTree = "<group>"; };
 		6DAB027A2656500100B72955 /* AppToYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppToYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DAB027D2656500100B72955 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DAB027F2656500100B72955 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -289,6 +447,16 @@
 		6DC4AE1F268DC4480028CDDE /* ATYParser+PrepareToDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ATYParser+PrepareToDisplay.swift"; sourceTree = "<group>"; };
 		6DC4AE23268DC5AE0028CDDE /* ATYUserTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYUserTask.swift; sourceTree = "<group>"; };
 		6DC4AE26268DD7FB0028CDDE /* String+ToDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ToDateTime.swift"; sourceTree = "<group>"; };
+		6DC56C7326A800A100863F1C /* ATYPaidCoursePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYPaidCoursePreviewViewController.swift; sourceTree = "<group>"; };
+		6DC56C7826A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYPaidCoursePreviewHeaderCell.swift; sourceTree = "<group>"; };
+		6DC56C7B26A837D200863F1C /* ATYPaidCoursePreviewDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYPaidCoursePreviewDescriptionCell.swift; sourceTree = "<group>"; };
+		6DC767DC26BBCD7200B8811C /* ATYSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYSettingsViewController.swift; sourceTree = "<group>"; };
+		6DC767E626BBCDBA00B8811C /* ATYSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYSettingsCell.swift; sourceTree = "<group>"; };
+		6DC767E726BBCDBA00B8811C /* ATYSettingsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYSettingsCell.xib; sourceTree = "<group>"; };
+		6DC767ED26BBE4C200B8811C /* ATYCourseRatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourseRatingViewController.swift; sourceTree = "<group>"; };
+		6DC767F726BBE51200B8811C /* ATYRatingCourseParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYRatingCourseParticipantCell.swift; sourceTree = "<group>"; };
+		6DC767F826BBE51200B8811C /* ATYRatingCourseParticipantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ATYRatingCourseParticipantCell.xib; sourceTree = "<group>"; };
+		6DC7680B26BC0F5200B8811C /* ATYNeedAuthorizationForTaskSanctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYNeedAuthorizationForTaskSanctionViewController.swift; sourceTree = "<group>"; };
 		6DDA1281265B91B1004124E7 /* ATYAuthorizationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAuthorizationViewModel.swift; sourceTree = "<group>"; };
 		6DDA1286265B91C8004124E7 /* ATYAuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAuthorizationViewController.swift; sourceTree = "<group>"; };
 		6DDBE4882666742800F797FD /* ATYSelectTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYSelectTimeViewController.swift; sourceTree = "<group>"; };
@@ -332,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61504E968323318951FD0D81 /* Pods_AppToYou.framework in Frameworks */,
+				6D4BAFE826C2A9DE00090789 /* SHSearchBar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,12 +537,61 @@
 			children = (
 				6D1F25FB265F991F008489C9 /* ATYTaskTableViewCell.swift */,
 				6D315F512668FA4E00889FD7 /* ATYCreateCourseCell.swift */,
-				6DA15F90266A113600201DD3 /* ATYSearchBarCell.swift */,
 				6DA15F93266A27EE00201DD3 /* ATYCollectionViewTypeCourseTableCell.swift */,
 				6DA15F97266A286F00201DD3 /* ATYCollectionViewCourseCell.swift */,
 				6DA15F9B266A396E00201DD3 /* ATYCourseTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		6D21D76C26B3E42E00F27CC4 /* AchievementListScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D21D76E26B3E44100F27CC4 /* ViewModel */,
+				6D21D76D26B3E43D00F27CC4 /* View */,
+			);
+			path = AchievementListScene;
+			sourceTree = "<group>";
+		};
+		6D21D76D26B3E43D00F27CC4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D21D77326B3E49C00F27CC4 /* Cells */,
+				6D21D76F26B3E45800F27CC4 /* ATYAchievementListViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D21D76E26B3E44100F27CC4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6D21D77326B3E49C00F27CC4 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6D21D77926B3E4F600F27CC4 /* ATYAchievementListCell.swift */,
+				6D21D77A26B3E4F600F27CC4 /* ATYAchievementListCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6D28977726B96E040001995C /* VacationScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D28977826B970420001995C /* View */,
+			);
+			path = VacationScene;
+			sourceTree = "<group>";
+		};
+		6D28977826B970420001995C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D28977926B9707D0001995C /* ATYVacationViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		6D403471265CE57600248E9E /* TabBarScene */ = {
@@ -393,7 +611,6 @@
 				6D1F25FA265F990A008489C9 /* Cells */,
 				6D403476265CF02D00248E9E /* ATYTasksViewController.swift */,
 				6D40347B265CF5B900248E9E /* ATYCoursesViewController.swift */,
-				6D40347E265CF5C600248E9E /* ATYProfileViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -472,6 +689,98 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6D4928B626A950B8000E5346 /* BuyingACourseScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D4928B726A950C9000E5346 /* ViewModel */,
+				6D4928B826A950CE000E5346 /* View */,
+			);
+			path = BuyingACourseScene;
+			sourceTree = "<group>";
+		};
+		6D4928B726A950C9000E5346 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6D4928B826A950CE000E5346 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D4928C226A95156000E5346 /* Cells */,
+				6D4928B926A950EA000E5346 /* ATYBuyingACourseViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D4928C226A95156000E5346 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6D4928C326A95176000E5346 /* ATYHeaderBuyingACourseCell.swift */,
+				6D4928C726A952DE000E5346 /* ATYTheCostCourseCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6D4928CA26A994A9000E5346 /* JoinToCloseCourseScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D4928CB26A994B8000E5346 /* ViewModel */,
+				6D4928CC26A994BE000E5346 /* View */,
+			);
+			path = JoinToCloseCourseScene;
+			sourceTree = "<group>";
+		};
+		6D4928CB26A994B8000E5346 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6D4928CC26A994BE000E5346 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D4928CD26A994D8000E5346 /* ATYJoinToCloseCourseViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D4928D126A9A292000E5346 /* CourseParticipantsScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D4928D226A9A2A4000E5346 /* ViewModel */,
+				6D4928D326A9A2A9000E5346 /* View */,
+			);
+			path = CourseParticipantsScene;
+			sourceTree = "<group>";
+		};
+		6D4928D226A9A2A4000E5346 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6D4928D326A9A2A9000E5346 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D4928D826A9A300000E5346 /* Cells */,
+				6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D4928D826A9A300000E5346 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6D118EBA26A9A51100601F34 /* ATYShareCourseLinkCell.swift */,
+				6D118EC926A9B04800601F34 /* ATYCourseParticipantCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		6D4E12C026579B3700732465 /* ATYModel */ = {
@@ -564,6 +873,8 @@
 		6D55ADCC26A18E9600F7DD4A /* EditCourseTasksConditionsScenes */ = {
 			isa = PBXGroup;
 			children = (
+				6DA8E21026A6C014005014DA /* TaskAddedScene */,
+				6DA8E20226A6A9C9005014DA /* EditCourseTextTaskScene */,
 				6D55ADDC26A1C85400F7DD4A /* EditCourseRepeatCountTaskScene */,
 				6D55ADCD26A18EC300F7DD4A /* EditTimerCourseTaskScene */,
 			);
@@ -638,6 +949,47 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		6D568EC026B2E08E000619B2 /* ProfileSignInScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D568EC126B2E0B9000619B2 /* ViewModel */,
+				6D568EC226B2E0BF000619B2 /* View */,
+			);
+			path = ProfileSignInScene;
+			sourceTree = "<group>";
+		};
+		6D568EC126B2E0B9000619B2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6D568EC226B2E0BF000619B2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D568EC726B2E0F1000619B2 /* Cells */,
+				6D568EC326B2E0D1000619B2 /* ATYProfileSignInViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D568EC726B2E0F1000619B2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6D568EC826B2E113000619B2 /* ATYProfileSignInCell.swift */,
+				6D568EC926B2E113000619B2 /* ATYProfileSignInCell.xib */,
+				6D568ED726B2FC56000619B2 /* ATYProfileSignInButtonsCell.swift */,
+				6D568ED126B2EAB9000619B2 /* ATYProfileSignInCollectionAchievementCell.swift */,
+				6D568ED426B2EB15000619B2 /* ATYCollectionAchievementCell.swift */,
+				6D2ADD3526B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.swift */,
+				6D2ADD3626B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.xib */,
+				6D2ADD3A26B92A28009A1DE6 /* ATYYourAccBlockedCell.swift */,
+				6D2ADD3B26B92A28009A1DE6 /* ATYYourAccBlockedCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		6D651CE62661146B003ACF95 /* CreateTaskScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -684,10 +1036,132 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		6D6E7EC426B13C20005C8C62 /* PenaltyForFailureScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7EC526B13C5C005C8C62 /* View */,
+			);
+			path = PenaltyForFailureScene;
+			sourceTree = "<group>";
+		};
+		6D6E7EC526B13C5C005C8C62 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7EC926B13CE6005C8C62 /* Cells */,
+				6D6E7EC626B13CBD005C8C62 /* ATYPenaltyForFailureViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D6E7EC926B13CE6005C8C62 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7ECA26B13CFD005C8C62 /* ATYPenaltyForFailureCell.swift */,
+				6D6E7ECB26B13CFD005C8C62 /* ATYPenaltyForFailureCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6D6E7ED026B143C6005C8C62 /* PenaltyWarningScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7ED126B143FB005C8C62 /* View */,
+			);
+			path = PenaltyWarningScene;
+			sourceTree = "<group>";
+		};
+		6D6E7ED126B143FB005C8C62 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7ED526B14414005C8C62 /* Cells */,
+				6D6E7ED226B14410005C8C62 /* ATYPenaltyWarningViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D6E7ED526B14414005C8C62 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7ED626B1442B005C8C62 /* ATYPenaltyWarningCell.swift */,
+				6D6E7ED726B1442B005C8C62 /* ATYPenaltyWarningCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6D6E7EE326B17DA1005C8C62 /* ProfileWithoutSignInScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7EE526B1842D005C8C62 /* ViewModel */,
+				6D6E7EE426B18428005C8C62 /* View */,
+			);
+			path = ProfileWithoutSignInScene;
+			sourceTree = "<group>";
+		};
+		6D6E7EE426B18428005C8C62 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7EE926B18504005C8C62 /* Cells */,
+				6D6E7EE626B18489005C8C62 /* ATYProfileWithoutSignInViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D6E7EE526B1842D005C8C62 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6D6E7EE926B18504005C8C62 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E7EF526B1A00B005C8C62 /* ATYProfileWithoutSignInStatisticCell.swift */,
+				6D6E7EF826B1A9C2005C8C62 /* ATYProfileNeedHelpCell.swift */,
+				6D6E7EFB26B1AC31005C8C62 /* ATYAboutAppCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		6D6F6AF4269F12D4009AD9E1 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				6D6F6AF5269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6D79937D26BA78E50071EF4E /* MyWalletScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D79937E26BA78F70071EF4E /* View */,
+			);
+			path = MyWalletScene;
+			sourceTree = "<group>";
+		};
+		6D79937E26BA78F70071EF4E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6D79939426BAB4040071EF4E /* Cells */,
+				6D79937F26BA79220071EF4E /* ATYNavigationBarWalletViewController.swift */,
+				6D79938226BA794C0071EF4E /* ATYWalletShopViewController.swift */,
+				6D79938526BA79790071EF4E /* ATYWalletPaymentsViewController.swift */,
+				6D79938826BA79890071EF4E /* ATYWalletHistoryViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6D79939426BAB4040071EF4E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6D79939526BAB4250071EF4E /* ATYShopCollectionViewCell.swift */,
+				6D79939626BAB4250071EF4E /* ATYShopCollectionViewCell.xib */,
+				6D7993C526BACE540071EF4E /* ATYPayWalletTableViewCell.swift */,
+				6D7993C626BACE540071EF4E /* ATYPayWalletTableViewCell.xib */,
+				6D7993CA26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.swift */,
+				6D7993CB26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.xib */,
+				6D7993CF26BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.swift */,
+				6D7993D026BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -762,6 +1236,10 @@
 				6D40CA5F2667CFA200A78CEC /* UIViewController.swift */,
 				6D315F4E2668B95800889FD7 /* UIStackView+RemoveFullySubviews.swift */,
 				6DC4AE26268DD7FB0028CDDE /* String+ToDateTime.swift */,
+				6D118EC626A9AFDB00601F34 /* UIImage+Letters.swift */,
+				6D568ECE26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift */,
+				6D4BAFEB26C2BF1100090789 /* SearchBar+SHSearchBar.swift */,
+				6D455C1C26C57AE90014BDF2 /* UITableView+Placeholder.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -769,6 +1247,7 @@
 		6D91B80B265B9FB400EB2589 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				6DA10EF026AAC15700A05770 /* Lato-Light.ttf */,
 				6D91B811265BA16600EB2589 /* Montserrat-Regular.otf */,
 			);
 			path = Font;
@@ -825,7 +1304,7 @@
 		6D91B860265BE1E800EB2589 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6DC42F542670C457006CB865 /* Controllers */,
+				6DC42F542670C457006CB865 /* ReusableControllers */,
 				6D91B875265BF4AD00EB2589 /* ReusableViews */,
 				6D91B861265BE1F200EB2589 /* Controls */,
 			);
@@ -897,8 +1376,55 @@
 				6D32D85A26651227009D62C9 /* ATYNotificationAboutTaskView.swift */,
 				6DF8285A266F65CE006487B0 /* ATYSearchBarCollectionView.swift */,
 				6DF8286C266FC4F3006487B0 /* ATYPayForCourseView.swift */,
+				6DA8E22126A6E7FC005014DA /* ATYGradientImageView.swift */,
+				6D6E7EDF26B157BA005C8C62 /* ATYCardView.swift */,
+				6D6E7EDC26B1579A005C8C62 /* ATYCardView.xib */,
+				6D6E7EF226B19416005C8C62 /* ATYStatisticProfileView.swift */,
+				6D6E7EEA26B19045005C8C62 /* ATYStatisticProfileView.xib */,
+				6D79938E26BAAE5C0071EF4E /* ATYYourBalanceView.swift */,
+				6D79939126BAAE680071EF4E /* ATYYourBalanceView.xib */,
+				6DA07DC826BD2CE900DDC6D4 /* ATYCustomCourseNavigationBar.swift */,
 			);
 			path = ReusableViews;
+			sourceTree = "<group>";
+		};
+		6DA10ED326AAA3A700A05770 /* ProgressCourseParticipantsScene */ = {
+			isa = PBXGroup;
+			children = (
+				6DA10ED426AAA3C200A05770 /* ViewModel */,
+				6DA10ED526AAA3C600A05770 /* View */,
+			);
+			path = ProgressCourseParticipantsScene;
+			sourceTree = "<group>";
+		};
+		6DA10ED426AAA3C200A05770 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6DA10ED526AAA3C600A05770 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DA10ED626AAA3D300A05770 /* Cells */,
+				6DA10EEA26AAB4D700A05770 /* ATYProgressParticipantViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DA10ED626AAA3D300A05770 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DA10EE126AAA4A200A05770 /* ATYProgressInfoTableViewCell.swift */,
+				6DA10EE226AAA4A200A05770 /* ATYProgressInfoTableViewCell.xib */,
+				6DA10EED26AABE5000A05770 /* ATYRatingCourseCell.swift */,
+				6DA10EF826AAC73E00A05770 /* ATYProgressTaskCourseUserCell.swift */,
+				6DA10EF926AAC73E00A05770 /* ATYProgressTaskCourseUserCell.xib */,
+				6DA10EFD26AAD89800A05770 /* ATYAnotherCourseUserCell.swift */,
+				6DA10EFE26AAD89800A05770 /* ATYAnotherCourseUserCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		6DA60DDC2680913700885650 /* CreateCourseTaskScene */ = {
@@ -934,6 +1460,66 @@
 				6DA60DE726809DEE00885650 /* ATYCreateCourseTasksEnums.swift */,
 				6DA60DEB2680A23E00885650 /* ATYDurationCourseTaskCell.swift */,
 				6DA60DEE2680A5DE00885650 /* ATYCreateCourseTaskMinSanctionCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6DA8E20226A6A9C9005014DA /* EditCourseTextTaskScene */ = {
+			isa = PBXGroup;
+			children = (
+				6DA8E20326A6A9E2005014DA /* ViewModel */,
+				6DA8E20426A6A9E7005014DA /* View */,
+			);
+			path = EditCourseTextTaskScene;
+			sourceTree = "<group>";
+		};
+		6DA8E20326A6A9E2005014DA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6DA8E20426A6A9E7005014DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DA8E20526A6A9FA005014DA /* Cells */,
+				6DA8E20626A6AA11005014DA /* ATYEditCourseTextTaskViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DA8E20526A6A9FA005014DA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DA8E20A26A6AACB005014DA /* ATYEditTextCourseTaskCell.swift */,
+				6DA8E20D26A6AB9B005014DA /* ATYEditTextSymbolsCountTaskCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6DA8E21026A6C014005014DA /* TaskAddedScene */ = {
+			isa = PBXGroup;
+			children = (
+				6DA8E21126A6C026005014DA /* View */,
+			);
+			path = TaskAddedScene;
+			sourceTree = "<group>";
+		};
+		6DA8E21126A6C026005014DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DA8E21626A6C0C1005014DA /* Cells */,
+				6DA8E21226A6C03D005014DA /* ATYTaskAddedViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DA8E21626A6C0C1005014DA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DA8E21726A6C0D9005014DA /* ATYTaskAddedTitleTextCell.swift */,
+				6DA8E21B26A6CBDD005014DA /* ATYTaskAddedDescriptionsCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -993,14 +1579,18 @@
 			path = ATYDatabaseService;
 			sourceTree = "<group>";
 		};
-		6DC42F542670C457006CB865 /* Controllers */ = {
+		6DC42F542670C457006CB865 /* ReusableControllers */ = {
 			isa = PBXGroup;
 			children = (
 				6D6F6AF4269F12D4009AD9E1 /* Cells */,
 				6DC42F552670C472006CB865 /* ATYDetailImageViewController.swift */,
 				6D6F6AF0269F0E45009AD9E1 /* ATYChooseCourseCategoryViewController.swift */,
+				6D568EB226B2A8A8000619B2 /* ATYReceivingAnAwardViewController.swift */,
+				6D568EB326B2A8A8000619B2 /* ATYReceivingAnAwardViewController.xib */,
+				6D568EB826B2CA63000619B2 /* ATYTakeGiftViewController.swift */,
+				6D568EB926B2CA63000619B2 /* ATYTakeGiftViewController.xib */,
 			);
-			path = Controllers;
+			path = ReusableControllers;
 			sourceTree = "<group>";
 		};
 		6DC42F592670D9F6006CB865 /* AboutCourseScene */ = {
@@ -1054,13 +1644,132 @@
 			isa = PBXGroup;
 			children = (
 				6DC4AE23268DC5AE0028CDDE /* ATYUserTask.swift */,
+				6D21D77E26B3F88800F27CC4 /* ATYAchievementType.swift */,
+				6D0B8D6826C675A600F7582C /* ATYCourse.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6DC56C7026A8005800863F1C /* PaidCoursePreviewScene */ = {
+			isa = PBXGroup;
+			children = (
+				6DC56C7226A8007600863F1C /* ViewModel */,
+				6DC56C7126A8006B00863F1C /* View */,
+			);
+			path = PaidCoursePreviewScene;
+			sourceTree = "<group>";
+		};
+		6DC56C7126A8006B00863F1C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DC56C7726A8110900863F1C /* Cells */,
+				6DC56C7326A800A100863F1C /* ATYPaidCoursePreviewViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DC56C7226A8007600863F1C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6DC56C7726A8110900863F1C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DC56C7826A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift */,
+				6DC56C7B26A837D200863F1C /* ATYPaidCoursePreviewDescriptionCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6DC767DA26BBCD5300B8811C /* SettingsScene */ = {
+			isa = PBXGroup;
+			children = (
+				6DC767DB26BBCD5D00B8811C /* View */,
+			);
+			path = SettingsScene;
+			sourceTree = "<group>";
+		};
+		6DC767DB26BBCD5D00B8811C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DC767E026BBCD7500B8811C /* Cells */,
+				6DC767DC26BBCD7200B8811C /* ATYSettingsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DC767E026BBCD7500B8811C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DC767E626BBCDBA00B8811C /* ATYSettingsCell.swift */,
+				6DC767E726BBCDBA00B8811C /* ATYSettingsCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6DC767EB26BBE4A400B8811C /* CourseRatingScene */ = {
+			isa = PBXGroup;
+			children = (
+				6DC767EC26BBE4B100B8811C /* View */,
+			);
+			path = CourseRatingScene;
+			sourceTree = "<group>";
+		};
+		6DC767EC26BBE4B100B8811C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DC767F126BBE4E600B8811C /* Cells */,
+				6DC767ED26BBE4C200B8811C /* ATYCourseRatingViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DC767F126BBE4E600B8811C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DC767F726BBE51200B8811C /* ATYRatingCourseParticipantCell.swift */,
+				6DC767F826BBE51200B8811C /* ATYRatingCourseParticipantCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6DC7680926BC0F2500B8811C /* NeedAuthorizationForTaskSanctionScene */ = {
+			isa = PBXGroup;
+			children = (
+				6DC7680A26BC0F3C00B8811C /* View */,
+			);
+			path = NeedAuthorizationForTaskSanctionScene;
+			sourceTree = "<group>";
+		};
+		6DC7680A26BC0F3C00B8811C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6DC7680B26BC0F5200B8811C /* ATYNeedAuthorizationForTaskSanctionViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		6DDA127F265B9133004124E7 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				6DC7680926BC0F2500B8811C /* NeedAuthorizationForTaskSanctionScene */,
+				6DC767EB26BBE4A400B8811C /* CourseRatingScene */,
+				6DC767DA26BBCD5300B8811C /* SettingsScene */,
+				6D79937D26BA78E50071EF4E /* MyWalletScene */,
+				6D28977726B96E040001995C /* VacationScene */,
+				6D21D76C26B3E42E00F27CC4 /* AchievementListScene */,
+				6D568EC026B2E08E000619B2 /* ProfileSignInScene */,
+				6D6E7EE326B17DA1005C8C62 /* ProfileWithoutSignInScene */,
+				6D6E7ED026B143C6005C8C62 /* PenaltyWarningScene */,
+				6D6E7EC426B13C20005C8C62 /* PenaltyForFailureScene */,
+				6DA10ED326AAA3A700A05770 /* ProgressCourseParticipantsScene */,
+				6D4928D126A9A292000E5346 /* CourseParticipantsScene */,
+				6D4928CA26A994A9000E5346 /* JoinToCloseCourseScene */,
+				6D4928B626A950B8000E5346 /* BuyingACourseScene */,
+				6DC56C7026A8005800863F1C /* PaidCoursePreviewScene */,
 				6D55ADCC26A18E9600F7DD4A /* EditCourseTasksConditionsScenes */,
 				6DA60DDC2680913700885650 /* CreateCourseTaskScene */,
 				6DC42F592670D9F6006CB865 /* AboutCourseScene */,
@@ -1153,6 +1862,9 @@
 			dependencies = (
 			);
 			name = AppToYou;
+			packageProductDependencies = (
+				6D4BAFE726C2A9DE00090789 /* SHSearchBar */,
+			);
 			productName = AppToYou;
 			productReference = 6DAB027A2656500100B72955 /* AppToYou.app */;
 			productType = "com.apple.product-type.application";
@@ -1182,6 +1894,9 @@
 				ru,
 			);
 			mainGroup = 6DAB02712656500100B72955;
+			packageReferences = (
+				6D4BAFE626C2A9DE00090789 /* XCRemoteSwiftPackageReference "SHSearchBar" */,
+			);
 			productRefGroup = 6DAB027B2656500100B72955 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1196,11 +1911,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D568EB526B2A8A8000619B2 /* ATYReceivingAnAwardViewController.xib in Resources */,
 				6D91B849265BB3BB00EB2589 /* Colors.xcassets in Resources */,
+				6D7993C826BACE540071EF4E /* ATYPayWalletTableViewCell.xib in Resources */,
+				6D6E7ECD26B13CFD005C8C62 /* ATYPenaltyForFailureCell.xib in Resources */,
 				6DAB028D2656500100B72955 /* LaunchScreen.storyboard in Resources */,
+				6DA10EFB26AAC73E00A05770 /* ATYProgressTaskCourseUserCell.xib in Resources */,
+				6D79939826BAB4250071EF4E /* ATYShopCollectionViewCell.xib in Resources */,
+				6DA10EE426AAA4A200A05770 /* ATYProgressInfoTableViewCell.xib in Resources */,
+				6D6E7EDD26B1579A005C8C62 /* ATYCardView.xib in Resources */,
+				6D568EBB26B2CA63000619B2 /* ATYTakeGiftViewController.xib in Resources */,
+				6DA10F0026AAD89800A05770 /* ATYAnotherCourseUserCell.xib in Resources */,
+				6DC767FA26BBE51200B8811C /* ATYRatingCourseParticipantCell.xib in Resources */,
+				6DC767E926BBCDBA00B8811C /* ATYSettingsCell.xib in Resources */,
 				6D91B842265BB32200EB2589 /* Localizable.strings in Resources */,
 				6DAB028A2656500100B72955 /* Assets.xcassets in Resources */,
 				6D91B812265BA16800EB2589 /* Montserrat-Regular.otf in Resources */,
+				6D7993D226BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.xib in Resources */,
+				6D568ECB26B2E113000619B2 /* ATYProfileSignInCell.xib in Resources */,
+				6D79939226BAAE680071EF4E /* ATYYourBalanceView.xib in Resources */,
+				6D6E7EEB26B19045005C8C62 /* ATYStatisticProfileView.xib in Resources */,
+				6D21D77C26B3E4F600F27CC4 /* ATYAchievementListCell.xib in Resources */,
+				6D7993CD26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.xib in Resources */,
+				6D2ADD3826B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.xib in Resources */,
+				6D2ADD3D26B92A28009A1DE6 /* ATYYourAccBlockedCell.xib in Resources */,
+				6D6E7ED926B1442B005C8C62 /* ATYPenaltyWarningCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1274,14 +2009,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D32D862266527B5009D62C9 /* ATYSaveTaskCell.swift in Sources */,
+				6D2ADD3726B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.swift in Sources */,
 				6D403494265D151A00248E9E /* ATYAllTasksViewController.swift in Sources */,
+				6DA8E20726A6AA11005014DA /* ATYEditCourseTextTaskViewController.swift in Sources */,
 				6D7399B3268B59410026D81D /* ATYDatabaseService+CDCourseTask.swift in Sources */,
 				6D91B86A265BE97200EB2589 /* ATYEnterNameViewController.swift in Sources */,
 				6DC4AE1C268DC41D0028CDDE /* ATYParser.swift in Sources */,
 				6D403497265D152E00248E9E /* ATYTodayTasksViewController.swift in Sources */,
+				6DA8E21C26A6CBDD005014DA /* ATYTaskAddedDescriptionsCell.swift in Sources */,
 				6D4034A0265D3CF300248E9E /* ATYCalendarCollectionViewCell.swift in Sources */,
 				6D55ADD626A18FAD00F7DD4A /* ATYEditTimerCourseTaskTimeCell.swift in Sources */,
 				6D55ADE826A1CAC400F7DD4A /* ATYEditCourseCountTaskCell.swift in Sources */,
+				6D118EBB26A9A51100601F34 /* ATYShareCourseLinkCell.swift in Sources */,
 				6D6F6AEB269EFDDE009AD9E1 /* ATYCategoryCourseCell.swift in Sources */,
 				6DDD2AB4268C661B00DD9A87 /* ATYDatabaseService+CDWallet.swift in Sources */,
 				6D4E12EC2657ADA100732465 /* CDUser+CoreDataProperties.swift in Sources */,
@@ -1289,10 +2028,15 @@
 				6D8A281B265E6D6C00BAAEF5 /* PanelTransition.swift in Sources */,
 				6D3AC1E026846BE0007AC57D /* CDUserTask+CoreDataClass.swift in Sources */,
 				6DAB029D265666D000B72955 /* ATYDatabaseService.swift in Sources */,
+				6D79938026BA79220071EF4E /* ATYNavigationBarWalletViewController.swift in Sources */,
+				6DA8E20B26A6AACB005014DA /* ATYEditTextCourseTaskCell.swift in Sources */,
+				6D6E7EC726B13CBD005C8C62 /* ATYPenaltyForFailureViewController.swift in Sources */,
 				6DF53967268381990086A64E /* CDVacation+CoreDataClass.swift in Sources */,
+				6DC767DD26BBCD7200B8811C /* ATYSettingsViewController.swift in Sources */,
 				6D40349C265D38CB00248E9E /* ATYCalendarCollectionViewController.swift in Sources */,
 				6D4034A9265D3EEB00248E9E /* UsedDates.swift in Sources */,
 				6DDD2ABA268CA08000DD9A87 /* ATYDatabaseService+CDUserTask.swift in Sources */,
+				6DA10EEE26AABE5000A05770 /* ATYRatingCourseCell.swift in Sources */,
 				6D4E12EB2657ADA100732465 /* CDUser+CoreDataClass.swift in Sources */,
 				6D32D853266501E8009D62C9 /* ATYCreateTaskPeriodCalendarCell.swift in Sources */,
 				6D651CEA2661148E003ACF95 /* ATYCreateTaskViewController.swift in Sources */,
@@ -1301,73 +2045,108 @@
 				6D40CA602667CFA200A78CEC /* UIViewController.swift in Sources */,
 				6D8A282A265E6DAE00BAAEF5 /* DimmPresentationController.swift in Sources */,
 				6D91B864265BE20700EB2589 /* ATYShowHideTextField.swift in Sources */,
+				6D4BAFEC26C2BF1100090789 /* SearchBar+SHSearchBar.swift in Sources */,
+				6D4928BA26A950EA000E5346 /* ATYBuyingACourseViewController.swift in Sources */,
+				6D2ADD3C26B92A28009A1DE6 /* ATYYourAccBlockedCell.swift in Sources */,
 				6D40CA4D2667740600A78CEC /* ATYSelectWeekDaysCell.swift in Sources */,
 				6D3AC1EA26846DDC007AC57D /* CDStore+CoreDataClass.swift in Sources */,
 				6DDBE4892666742800F797FD /* ATYSelectTimeViewController.swift in Sources */,
+				6D568ECF26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift in Sources */,
+				6D6E7ECC26B13CFD005C8C62 /* ATYPenaltyForFailureCell.swift in Sources */,
 				6D8A281F265E6D7C00BAAEF5 /* TransitionDriver.swift in Sources */,
+				6DA8E21326A6C03D005014DA /* ATYTaskAddedViewController.swift in Sources */,
+				6D568EB426B2A8A8000619B2 /* ATYReceivingAnAwardViewController.swift in Sources */,
 				6DC4AE27268DD7FB0028CDDE /* String+ToDateTime.swift in Sources */,
 				6D40CA5526679BBB00A78CEC /* Date+ToString.swift in Sources */,
 				6DC4AE18268DA6A60028CDDE /* ATYCreateTaskViewModel.swift in Sources */,
 				6D8A280E265E465200BAAEF5 /* ATYStackProgressView.swift in Sources */,
+				6DA07DC926BD2CE900DDC6D4 /* ATYCustomCourseNavigationBar.swift in Sources */,
+				6D21D77B26B3E4F600F27CC4 /* ATYAchievementListCell.swift in Sources */,
 				6D40347C265CF5B900248E9E /* ATYCoursesViewController.swift in Sources */,
+				6D4928C826A952DE000E5346 /* ATYTheCostCourseCell.swift in Sources */,
 				6DF82863266FA2A3006487B0 /* ATYDurationCreateCourseCell.swift in Sources */,
+				6D7993CC26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.swift in Sources */,
 				6DF5394926837A5D0086A64E /* CDCourse+CoreDataProperties.swift in Sources */,
 				6D1F25FC265F991F008489C9 /* ATYTaskTableViewCell.swift in Sources */,
+				6D6E7ED326B14410005C8C62 /* ATYPenaltyWarningViewController.swift in Sources */,
 				6D32D8502664FE6D009D62C9 /* UIButton.swift in Sources */,
+				6D6E7EF626B1A00B005C8C62 /* ATYProfileWithoutSignInStatisticCell.swift in Sources */,
 				6D264EFE267C949600FEAAB8 /* ATYTasksForAboutCourseCell.swift in Sources */,
 				6DA60DE02680916D00885650 /* ATYCreateCourseTaskViewController.swift in Sources */,
 				6DAB027E2656500100B72955 /* AppDelegate.swift in Sources */,
 				6D7399B9268B60D70026D81D /* ATYDatabaseService+CDUserAchievement.swift in Sources */,
 				6D55ADE426A1C8F500F7DD4A /* ATYEditCourseCountRepeatTaskCell.swift in Sources */,
 				6D7399B6268B5CB80026D81D /* ATYDatabaseService+CDCourseUser.swift in Sources */,
+				6D79939726BAB4250071EF4E /* ATYShopCollectionViewCell.swift in Sources */,
 				6DDD2AAE268C5BE500DD9A87 /* ATYDatabaseService+CDStatistics.swift in Sources */,
 				6D32D86526652905009D62C9 /* ATYCreateCountRepeatTaskCell.swift in Sources */,
 				6DA60DD92680899700885650 /* ATYShareCourseCell.swift in Sources */,
+				6D7993C726BACE540071EF4E /* ATYPayWalletTableViewCell.swift in Sources */,
 				6D40CA5C2667C18400A78CEC /* ATYEditTaskViewController.swift in Sources */,
 				6D32D85F26651AD5009D62C9 /* ATYCreateSanctionTaskCell.swift in Sources */,
 				6D403477265CF02D00248E9E /* ATYTasksViewController.swift in Sources */,
 				6DF8286D266FC4F3006487B0 /* ATYPayForCourseView.swift in Sources */,
+				6DA8E20E26A6AB9B005014DA /* ATYEditTextSymbolsCountTaskCell.swift in Sources */,
+				6D21D77026B3E45800F27CC4 /* ATYAchievementListViewController.swift in Sources */,
 				6DF53968268381990086A64E /* CDVacation+CoreDataProperties.swift in Sources */,
 				6D3AC1E526846C77007AC57D /* CDSanction+CoreDataClass.swift in Sources */,
 				6DF53959268380100086A64E /* CDUserAchievement+CoreDataProperties.swift in Sources */,
 				6D32D84A2664CCED009D62C9 /* ATYRadioButton.swift in Sources */,
+				6D568ED826B2FC56000619B2 /* ATYProfileSignInButtonsCell.swift in Sources */,
 				6D91B85E265BDEEE00EB2589 /* UITextView.swift in Sources */,
+				6D4928CE26A994D8000E5346 /* ATYJoinToCloseCourseViewController.swift in Sources */,
 				6DA60DEF2680A5DE00885650 /* ATYCreateCourseTaskMinSanctionCell.swift in Sources */,
+				6DA10EE326AAA4A200A05770 /* ATYProgressInfoTableViewCell.swift in Sources */,
 				6DAB02A9265671A100B72955 /* URL.swift in Sources */,
 				6D4E12E52657ACC600732465 /* ATYDatabaseService+CDUser.swift in Sources */,
+				6D4928C426A95176000E5346 /* ATYHeaderBuyingACourseCell.swift in Sources */,
 				6DA60DE826809DEE00885650 /* ATYCreateCourseTasksEnums.swift in Sources */,
+				6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */,
 				6DDD2ABD268CA3DD00DD9A87 /* ATYDatabaseService+CDSanction.swift in Sources */,
 				6D8A2809265E3BE800BAAEF5 /* UITableViewCell+ReuseIdentifier.swift in Sources */,
 				6D55ADDA26A1B3D100F7DD4A /* ATYEditTimerCourseTaskDurationCell.swift in Sources */,
 				6D8A2832265E6DD200BAAEF5 /* DismissAnimation.swift in Sources */,
+				6DA10EEB26AAB4D700A05770 /* ATYProgressParticipantViewController.swift in Sources */,
+				6D568EC426B2E0D1000619B2 /* ATYProfileSignInViewController.swift in Sources */,
 				6D8A2822265E6D8700BAAEF5 /* TransitionDirection.swift in Sources */,
 				6DF53962268381450086A64E /* CDStatistics+CoreDataClass.swift in Sources */,
 				6D8A2838265E6DF900BAAEF5 /* InstantPanGestureRecognizer.swift in Sources */,
+				6DC56C7926A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift in Sources */,
 				6D6E425B26A0515400F27E6F /* ATYCreateCourseTaskViewModel.swift in Sources */,
 				6D91B82D265BAF8800EB2589 /* R.generated.swift in Sources */,
 				6DA15F98266A286F00201DD3 /* ATYCollectionViewCourseCell.swift in Sources */,
+				6DC56C7C26A837D200863F1C /* ATYPaidCoursePreviewDescriptionCell.swift in Sources */,
 				6DF5394E26837C220086A64E /* CDCourseTask+CoreDataClass.swift in Sources */,
 				6D3AC1E626846C77007AC57D /* CDSanction+CoreDataProperties.swift in Sources */,
+				6D79938F26BAAE5C0071EF4E /* ATYYourBalanceView.swift in Sources */,
 				6D7399B0268B4DC60026D81D /* ATYDatabaseService+CDCourse.swift in Sources */,
 				6D91B877265BF4C400EB2589 /* ATYImagePicker.swift in Sources */,
+				6D6E7EFC26B1AC31005C8C62 /* ATYAboutAppCell.swift in Sources */,
 				6DF8285B266F65CE006487B0 /* ATYSearchBarCollectionView.swift in Sources */,
+				6D568ECA26B2E113000619B2 /* ATYProfileSignInCell.swift in Sources */,
 				6DC42F642670E433006CB865 /* ATYHeaderAboutCourseCell.swift in Sources */,
 				6DF5395426837F6F0086A64E /* CDCourseUser+CoreDataProperties.swift in Sources */,
+				6D6E7EF326B19416005C8C62 /* ATYStatisticProfileView.swift in Sources */,
+				6D21D77F26B3F88800F27CC4 /* ATYAchievementType.swift in Sources */,
 				6DF8285F266F7D24006487B0 /* ATYRadioButtonCreateCourseCell.swift in Sources */,
 				6DF5394826837A5D0086A64E /* CDCourse+CoreDataClass.swift in Sources */,
+				6DC767EE26BBE4C200B8811C /* ATYCourseRatingViewController.swift in Sources */,
 				6D195BB7268F156A000CA1ED /* ATYTodayTasksViewModel.swift in Sources */,
+				6D118EB826A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift in Sources */,
 				6DC4AE20268DC4480028CDDE /* ATYParser+PrepareToDisplay.swift in Sources */,
 				6D55ADCA26A16D1600F7DD4A /* ATYReportCourseCell.swift in Sources */,
+				6D7993D126BAEE8B0071EF4E /* ATYHistoryPayTableViewCell.swift in Sources */,
 				6DA60DEC2680A23E00885650 /* ATYDurationCourseTaskCell.swift in Sources */,
 				6DF5395E268380A40086A64E /* CDAchievement+CoreDataProperties.swift in Sources */,
 				6DAB02A62656719D00B72955 /* FileManager.swift in Sources */,
 				6DF53958268380100086A64E /* CDUserAchievement+CoreDataClass.swift in Sources */,
 				6DC42F5E2670E361006CB865 /* ATYAboutCourseViewController.swift in Sources */,
+				6DA10EFA26AAC73E00A05770 /* ATYProgressTaskCourseUserCell.swift in Sources */,
 				6DC42F522670B9E7006CB865 /* ATYEnumsCreateCourseCell.swift in Sources */,
 				6D40348D265D11AF00248E9E /* ATYNavigationViewController+PageView.swift in Sources */,
 				6DDD2AB7268C9CF000DD9A87 /* ATYDatabaseService+CDTransaction.swift in Sources */,
 				6D6F6AF6269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift in Sources */,
-				6DA15F91266A113600201DD3 /* ATYSearchBarCell.swift in Sources */,
+				6DA8E22226A6E7FC005014DA /* ATYGradientImageView.swift in Sources */,
 				6DF5394F26837C220086A64E /* CDCourseTask+CoreDataProperties.swift in Sources */,
 				6DF53963268381450086A64E /* CDStatistics+CoreDataProperties.swift in Sources */,
 				6DDD2AC0268CA55E00DD9A87 /* ATYDatabaseService+CDStore.swift in Sources */,
@@ -1382,45 +2161,64 @@
 				6D6F6AF1269F0E45009AD9E1 /* ATYChooseCourseCategoryViewController.swift in Sources */,
 				6D55AAA326821718004EBECB /* ATYDeleteCourseCell.swift in Sources */,
 				6DAB02882656500100B72955 /* AppToYou.xcdatamodeld in Sources */,
+				6D568EBA26B2CA63000619B2 /* ATYTakeGiftViewController.swift in Sources */,
 				6D32D85726650B2F009D62C9 /* ATYCreateNotificationAboutTaskCell.swift in Sources */,
 				6D32D86F26652EF1009D62C9 /* ATYCreateDurationTaskCell.swift in Sources */,
+				6DC56C7426A800A100863F1C /* ATYPaidCoursePreviewViewController.swift in Sources */,
 				6D315F522668FA4E00889FD7 /* ATYCreateCourseCell.swift in Sources */,
+				6D118ECA26A9B04800601F34 /* ATYCourseParticipantCell.swift in Sources */,
 				6D651CEF26611F4B003ACF95 /* ATYCreateTaskNameCell.swift in Sources */,
 				6DDD2AAB268C5A0800DD9A87 /* ATYDatabaseService+Achievement.swift in Sources */,
 				6D91B809265B9EBD00EB2589 /* UIFont+Montserrat.swift in Sources */,
 				6D54A0AE266E2921006FF63C /* ATYCreateCourseViewController.swift in Sources */,
 				6D91B871265BEBA500EB2589 /* ATYAddPhotoViewController.swift in Sources */,
 				6DF5395D268380A40086A64E /* CDAchievement+CoreDataClass.swift in Sources */,
+				6DA10EFF26AAD89800A05770 /* ATYAnotherCourseUserCell.swift in Sources */,
 				6D3AC1E126846BE0007AC57D /* CDUserTask+CoreDataProperties.swift in Sources */,
+				6DC7680C26BC0F5200B8811C /* ATYNeedAuthorizationForTaskSanctionViewController.swift in Sources */,
 				6D54A0B2266E685F006FF63C /* ATYSelectPhotoCourseCell.swift in Sources */,
 				6D91B84D265BBC2F00EB2589 /* UITextField+RightView.swift in Sources */,
 				6D8A2826265E6DA300BAAEF5 /* PresentationController.swift in Sources */,
 				6DF5395326837F6F0086A64E /* CDCourseUser+CoreDataClass.swift in Sources */,
 				6D3AC1EB26846DDC007AC57D /* CDStore+CoreDataProperties.swift in Sources */,
+				6D28977A26B9707D0001995C /* ATYVacationViewController.swift in Sources */,
 				6DC4AE24268DC5AE0028CDDE /* ATYUserTask.swift in Sources */,
 				6D91B85A265BDBF600EB2589 /* ATYRegistrationViewController.swift in Sources */,
 				6D32D85B26651227009D62C9 /* ATYNotificationAboutTaskView.swift in Sources */,
+				6D79938926BA79890071EF4E /* ATYWalletHistoryViewController.swift in Sources */,
 				6DA15F9C266A396E00201DD3 /* ATYCourseTableViewCell.swift in Sources */,
+				6D79938626BA79790071EF4E /* ATYWalletPaymentsViewController.swift in Sources */,
 				6D651CF2266122C0003ACF95 /* ATYCreateTaskCountingCell.swift in Sources */,
 				6D55ADD126A18F1A00F7DD4A /* ATYEditTimerCourseTaskViewController.swift in Sources */,
 				6DC42F562670C472006CB865 /* ATYDetailImageViewController.swift in Sources */,
 				6D8A2835265E6DE800BAAEF5 /* CGPoint+Velocity.swift in Sources */,
+				6D568ED526B2EB15000619B2 /* ATYCollectionAchievementCell.swift in Sources */,
 				6D40CA4926676E9700A78CEC /* ATYOnceSelectDayCell.swift in Sources */,
 				6DAB02802656500100B72955 /* SceneDelegate.swift in Sources */,
 				6D315F4F2668B95800889FD7 /* UIStackView+RemoveFullySubviews.swift in Sources */,
+				6D79938326BA794C0071EF4E /* ATYWalletShopViewController.swift in Sources */,
+				6D118EC726A9AFDB00601F34 /* UIImage+Letters.swift in Sources */,
 				6DF5396C268381F50086A64E /* CDWallet+CoreDataClass.swift in Sources */,
+				6DC767F926BBE51200B8811C /* ATYRatingCourseParticipantCell.swift in Sources */,
 				6D8A2844265E805500BAAEF5 /* ATYAddTaskTableViewCell.swift in Sources */,
 				6D91B854265BD5CB00EB2589 /* ATYForgotPasswordViewController.swift in Sources */,
 				6D3AC1DB26846AD7007AC57D /* CDTransaction+CoreDataClass.swift in Sources */,
 				6D55AAA626821D5E004EBECB /* ATYUpCreateCourseViewModel.swift in Sources */,
 				6D8A283D265E7ABF00BAAEF5 /* ATYAddTaskViewController.swift in Sources */,
+				6D568ED226B2EAB9000619B2 /* ATYProfileSignInCollectionAchievementCell.swift in Sources */,
+				6D6E7EF926B1A9C2005C8C62 /* ATYProfileNeedHelpCell.swift in Sources */,
+				6DA8E21826A6C0D9005014DA /* ATYTaskAddedTitleTextCell.swift in Sources */,
 				6DDA1282265B91B1004124E7 /* ATYAuthorizationViewModel.swift in Sources */,
 				6D4034A3265D3D4E00248E9E /* UICollectionView+ReuseIdentifier.swift in Sources */,
+				6DC767E826BBCDBA00B8811C /* ATYSettingsCell.swift in Sources */,
 				6D32D86926652B56009D62C9 /* ATYCreateMaxCountSymbolsCell.swift in Sources */,
+				6D6E7EE726B18489005C8C62 /* ATYProfileWithoutSignInViewController.swift in Sources */,
 				6D8A282E265E6DC900BAAEF5 /* PresentAnimation.swift in Sources */,
 				6D3AC1DC26846AD7007AC57D /* CDTransaction+CoreDataProperties.swift in Sources */,
+				6D6E7ED826B1442B005C8C62 /* ATYPenaltyWarningCell.swift in Sources */,
+				6D455C1D26C57AE90014BDF2 /* UITableView+Placeholder.swift in Sources */,
 				6DA15F94266A27EE00201DD3 /* ATYCollectionViewTypeCourseTableCell.swift in Sources */,
-				6D40347F265CF5C600248E9E /* ATYProfileViewController.swift in Sources */,
+				6D6E7EE026B157BA005C8C62 /* ATYCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1579,7 +2377,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.to.you.com.AppToYou;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qittiq.apptoyou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1599,7 +2397,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.to.you.com.AppToYou;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qittiq.apptoyou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1628,6 +2426,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6D4BAFE626C2A9DE00090789 /* XCRemoteSwiftPackageReference "SHSearchBar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Blackjacx/SHSearchBar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6D4BAFE726C2A9DE00090789 /* SHSearchBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D4BAFE626C2A9DE00090789 /* XCRemoteSwiftPackageReference "SHSearchBar" */;
+			productName = SHSearchBar;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6DAB02862656500100B72955 /* AppToYou.xcdatamodeld */ = {

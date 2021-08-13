@@ -18,10 +18,11 @@ class ATYDescriptionAboutCourse: UITableViewCell {
         return label
     }()
 
-    let likeImageView : UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = R.image.likesView()
-        return imageView
+    let likeButton : UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.likesView(), for: .normal)
+        button.setImage(R.image.filledRedLike(), for: .selected)
+        return button
     }()
 
     let labelCountLikes : UILabel = {
@@ -65,7 +66,7 @@ class ATYDescriptionAboutCourse: UITableViewCell {
     let countMembersLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
-        label.textColor = R.color.textSecondaryColor()
+        label.textColor = R.color.textColorSecondary()
         label.text = "(+2)"
         return label
     }()
@@ -73,10 +74,12 @@ class ATYDescriptionAboutCourse: UITableViewCell {
     let countChatMembersLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
-        label.textColor = R.color.textSecondaryColor()
+        label.textColor = R.color.textColorSecondary()
         label.text = "(+2)"
         return label
     }()
+
+    var callbackMembers: (() -> ())?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -89,15 +92,24 @@ class ATYDescriptionAboutCourse: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @objc func likeButtonAction() {
+        likeButton.isSelected = !likeButton.isSelected
+    }
+
+    @objc func membersOfCourseButtonAction() {
+        callbackMembers?()
+    }
+
     private func configure() {
         contentView.addSubview(nameCourseLabel)
-        contentView.addSubview(likeImageView)
+        contentView.addSubview(likeButton)
         contentView.addSubview(labelCountLikes)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(membersOfCourseButton)
         contentView.addSubview(signInChatButton)
 
-        likeImageView.snp.makeConstraints { (make) in
+        likeButton.addTarget(self, action: #selector(likeButtonAction), for: .touchUpInside)
+        likeButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-20)
             make.top.equalToSuperview().offset(5)
             make.width.equalTo(16)
@@ -105,8 +117,8 @@ class ATYDescriptionAboutCourse: UITableViewCell {
         }
 
         labelCountLikes.snp.makeConstraints { (make) in
-            make.trailing.equalTo(likeImageView.snp.leading).offset(-8.5)
-            make.centerY.equalTo(likeImageView)
+            make.trailing.equalTo(likeButton.snp.leading).offset(-8.5)
+            make.centerY.equalTo(likeButton)
             make.width.equalTo(labelCountLikes.intrinsicContentSize.width)
         }
 
@@ -123,7 +135,7 @@ class ATYDescriptionAboutCourse: UITableViewCell {
         }
 
         let spacing : CGFloat = 10
-
+        membersOfCourseButton.addTarget(self, action: #selector(membersOfCourseButtonAction), for: .touchUpInside)
         membersOfCourseButton.semanticContentAttribute = UIApplication.shared
             .userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
         membersOfCourseButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: 0)

@@ -88,7 +88,7 @@ class ATYAuthorizationViewController: UIViewController {
     private let fbButton : UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(fbButtonAction), for: .touchUpInside)
-        button.setImage(R.image.facebook(), for: .normal)
+        button.setImage(R.image.appleSignInImage(), for: .normal)
         return button
     }()
 

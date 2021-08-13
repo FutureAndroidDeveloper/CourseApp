@@ -26,7 +26,7 @@ class ATYEditCourseCountRepeatTaskViewController: UIViewController {
     let lineView = UIView()
     let selectedView = UIView()
 
-    var pushVcCallback : (() -> Void)?
+    var dismissCallback : (() -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +61,8 @@ class ATYEditCourseCountRepeatTaskViewController: UIViewController {
             make.height.equalTo(50)
         }
 
+        tableView.isScrollEnabled = false
+        tableView.alwaysBounceVertical = false
         tableView.separatorStyle = .none
         tableView.backgroundColor = R.color.backgroundTextFieldsColor()
         tableView.register(ATYEditCountCourseTaskTimeCell.self, forCellReuseIdentifier: ATYEditCountCourseTaskTimeCell.reuseIdentifier)
@@ -76,7 +78,9 @@ class ATYEditCourseCountRepeatTaskViewController: UIViewController {
     }
 
     @objc func createTaskButtonAction() {
-
+        self.dismiss(animated: true) { [weak self] in
+            self?.dismissCallback?()
+        }
     }
 }
 

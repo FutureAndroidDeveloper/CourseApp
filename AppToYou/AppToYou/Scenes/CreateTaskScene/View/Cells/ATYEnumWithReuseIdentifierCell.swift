@@ -126,13 +126,13 @@ enum ATYEnumWithReuseIdentifierCellText : Int, CaseIterable {
     }
 }
 
-enum TypeOfTask : Int {
-    case checkBox
-    case countRepeat
-    case timerTask
-    case textTask
-
-    var massive : [UITableViewCell] {
-        return [ATYCreateDescriptionTaskCell()]
-    }
-}
+//enum TypeOfTask : Int {
+//    case checkBox
+//    case countRepeat
+//    case timerTask
+//    case textTask
+//
+//    var massive : [UITableViewCell] {
+//        return [ATYCreateDescriptionTaskCell()]
+//    }
+//}

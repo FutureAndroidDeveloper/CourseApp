@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum TypeCell: Int {
-    case open
-    case close
-    case payment
-}
-
 enum EnumCreateCourseCell: Int, CaseIterable {
     case nameCourse
     case descriptionCourse

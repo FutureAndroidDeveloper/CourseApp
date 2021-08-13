@@ -10,7 +10,7 @@ import UIKit
 
 class ATYCategoryCourseCell: UITableViewCell {
 
-    var massive = [String]()
+    var massive = [ATYCourseCategory]()
 
     var collectionView : UICollectionView!
 
@@ -92,7 +92,7 @@ class ATYCategoryCourseCell: UITableViewCell {
 
 extension ATYCategoryCourseCell : UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.resignFirstResponder()
+        nameTextField.resignFirstResponder()
         self.callBack?()
     }
 }
@@ -110,13 +110,13 @@ extension ATYCategoryCourseCell : UICollectionViewDelegate, UICollectionViewData
 
         cell.labelNameTypeCourse.textColor =  R.color.textSecondaryColor()
 
-        cell.setUp(text: massive[indexPath.row])
+        cell.setUp(text: massive[indexPath.row].title)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let label = UILabel(frame: CGRect.zero)
-                label.text = massive[indexPath.item]
+        label.text = massive[indexPath.item].title
                 label.sizeToFit()
         let width = label.frame.width < 80 ? 80 : label.frame.width
         return CGSize(width: width, height: 36)

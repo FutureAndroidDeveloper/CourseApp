@@ -15,7 +15,7 @@ class ATYAddTaskViewController: UIViewController {
     let chooseTypeTaskLabel = UILabel()
     let selectedView = UIView()
     
-    var pushVcCallback : ((TypeOfTask) -> Void)?
+    var pushVcCallback : ((ATYTaskTypeEnum) -> Void)?
 
     let titleStrings = [R.string.localizable.oneTimeTaskExecution(),
                         R.string.localizable.countingReps(),
@@ -28,7 +28,7 @@ class ATYAddTaskViewController: UIViewController {
                            R.string.localizable.toCompleteTask()]
 
     let imageArray = [R.image.checkBox(), R.image.countTask(), R.image.timerTask(), R.image.textTask()]
-    let typeTask = [TypeOfTask.checkBox, TypeOfTask.countRepeat, TypeOfTask.timerTask, TypeOfTask.textTask]
+    let typeTask = [ATYTaskTypeEnum.CHECKBOX, ATYTaskTypeEnum.RITUAL, ATYTaskTypeEnum.TIMER, ATYTaskTypeEnum.TEXT]
 
 
     override func viewDidLoad() {

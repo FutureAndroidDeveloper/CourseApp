@@ -9,7 +9,8 @@
 import UIKit
 
 class ATYRadioButtonCreateCourse : UITableViewCell {
-    var typeCell : TypeCell?
+    var typeCell : ATYCourseType?
+    var costCallback : ((Int?) -> ())?
 
     let labelHeader : UILabel = {
         let label = UILabel()
@@ -85,6 +86,9 @@ class ATYRadioButtonCreateCourse : UITableViewCell {
 
         }
 
+        payForCourse.callbackText = { [weak self] text in
+            self?.costCallback?(Int(text))
+        }
         contentView.addSubview(payForCourse)
         payForCourse.snp.makeConstraints { (make) in
             make.leading.equalTo(descriptionLabel)

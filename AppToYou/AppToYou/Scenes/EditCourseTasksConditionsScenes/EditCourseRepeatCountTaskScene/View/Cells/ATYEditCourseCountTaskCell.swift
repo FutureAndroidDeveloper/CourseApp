@@ -82,5 +82,7 @@ class ATYEditCourseCountTaskCell: UITableViewCell {
             make.leading.equalTo(minusButton.snp.trailing).offset(12)
             make.height.width.equalTo(20)
         }
+
+        
     }
 }

@@ -12,6 +12,8 @@ class ATYAddPhotoViewController: UIViewController {
 
     private var imagePicker: ATYImagePicker?
 
+    private var image : UIImage?
+
     let downloadPhotoLabel : UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -138,7 +140,7 @@ class ATYAddPhotoViewController: UIViewController {
     private func tabBarConfigure() {
         let nav1 = UINavigationController(rootViewController: NavigationBarViewController())
         let nav2 = UINavigationController(rootViewController: ATYCoursesViewController())
-        let nav3 = UINavigationController(rootViewController: ATYProfileViewController())
+        let nav3 = UINavigationController(rootViewController: ATYProfileSignInViewController())
 
         nav1.title = R.string.localizable.tasks()
         nav2.title = R.string.localizable.courses()
@@ -179,15 +181,20 @@ class ATYAddPhotoViewController: UIViewController {
 
 extension ATYAddPhotoViewController: ATYImagePickerDelegate {
     func deleteCurrentImage() {
-
+        self.image = nil
+        photoImageView.image = R.image.photoSmile()
     }
 
     func showCurrentImage() {
-        
+        if let image = self.image {
+            let presentingViewController = ATYDetailImageViewController(image: image)
+            present(presentingViewController, animated: true)
+        }
     }
 
     func didSelect(image: UIImage?, withPath path: String?) {
         if let newImage = image {
+            self.image = newImage
             self.photoImageView.image = newImage
             self.addPhotoButton.setTitle(R.string.localizable.uploadAnotherPhoto(), for: .normal)
         }

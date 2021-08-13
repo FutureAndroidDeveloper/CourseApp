@@ -86,6 +86,7 @@ class ATYNotificationAboutTaskView: UIView {
             make.width.equalTo(14)
         }
 
+        switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         switchButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-20)
             make.centerY.equalTo(plusButton)

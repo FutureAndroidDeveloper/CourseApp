@@ -10,5 +10,7 @@ target 'AppToYou' do
   pod 'R.swift'
   pod 'SnapKit', '~> 5.0.0'
   pod 'Parchment', '~> 3.0'
-
+  pod 'PopupDialog', '~> 1.1'
+  pod 'Toast-Swift', '~> 5.0.1'
+  pod 'IQKeyboardManagerSwift', '6.3.0'
 end

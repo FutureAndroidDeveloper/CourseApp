@@ -10,14 +10,16 @@ import UIKit
 
 class ATYCreateCourseViewController: UIViewController {
 
+    var callbackCreateCourse : ((ATYCourse?) -> ())?
     var viewModel : ATYUpCreateCourseViewModel
     private var imagePicker: ATYImagePicker?
 
-    var typeCellSelect: TypeCell?
+    var typeCellSelect: ATYCourseType?
     var image : UIImage?
 
     var createCourseTableView = UITableView()
-    var arr = [String]()
+
+    var titleForDoneButton = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +33,10 @@ class ATYCreateCourseViewController: UIViewController {
         switch self.viewModel.interactionMode {
         case .create:
             self.title = "Создание нового курса"
+            titleForDoneButton = "Создать курс"
         case .update:
             self.title = "Редактирование"
+            titleForDoneButton = "Сохранить"
         }
     }
     
@@ -90,11 +94,17 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
             cell.nameLabel.text = "Название курса"
             cell.nameTextField.placeholder = "Например, ментальное здоровье"
+            cell.callbackText = { [weak self] text in
+                self?.viewModel.course.courseName = text
+            }
             return cell
         case .descriptionCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateDescriptionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateDescriptionTaskCell
             cell.nameLabel.text = "Описание курса"
             cell.placeholderLabel.text = "Опишите цели или преимущества вашего курса"
+            cell.callbackText = { [weak self] text in
+                self?.viewModel.course.courseDescription = text
+            }
             return cell
         case .photoCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectPhotoCourse.reuseIdentifier, for: indexPath) as! ATYSelectPhotoCourse
@@ -104,12 +114,12 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             return cell
         case .courseCategory:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYCategoryCourseCell.reuseIdentifier, for: indexPath) as! ATYCategoryCourseCell
-            cell.massive = self.arr
+            cell.massive = self.viewModel.course.courseCategory
             cell.collectionView.reloadData()
             cell.callBack = { [weak self] in
-                let vc = ATYChooseCourseCategoryViewController(categories: self?.arr)
+                let vc = ATYChooseCourseCategoryViewController(categories: self?.viewModel.course.courseCategory)
                 vc.callBack = { [weak self] resultCategories in
-                    self?.arr = resultCategories
+                    self?.viewModel.course.courseCategory = resultCategories
                     self?.createCourseTableView.reloadData()
                 }
                 self?.navigationController?.pushViewController(vc, animated: true)
@@ -117,28 +127,38 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             return cell
         case .radioOpen, .radioClose, .radioNeedPay:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYRadioButtonCreateCourse.reuseIdentifier, for: indexPath) as! ATYRadioButtonCreateCourse
+            cell.costCallback = { [weak self] cost in
+                self?.viewModel.course.coinPrice = cost
+            }
+
             switch EnumCreateCourseCell.init(rawValue: indexPath.row) {
             case .radioOpen:
                 cell.labelHeader.isHidden = false
                 cell.labelTypeCourse.text = "Открытый"
                 cell.descriptionLabel.text = "Любой пользователь приложения может стать участником курса, выполнять его задачи и писать в общем чате"
-                cell.typeCell = .open
+                cell.typeCell = .PUBLIC
             case .radioClose:
                 cell.labelTypeCourse.text = "Закрытый"
                 cell.descriptionLabel.text = "Лишь после одобрения заявки администратором курса, пользователь может стать его участником"
-                cell.typeCell = .close
+                cell.typeCell = .PRIVATE
             case .radioNeedPay:
                 cell.labelTypeCourse.text = "Платный"
                 cell.descriptionLabel.text = "Лишь после оплаты курса, пользователь может стать его участником"
-                cell.typeCell = .payment
+                cell.typeCell = .PAID
             default: break
             }
             cell.radioButtonImageView.image = cell.typeCell == typeCellSelect ? R.image.selectedRadioButton() : R.image.unselectedRadioButton()
-            cell.payForCourse.isHidden = !(cell.typeCell == typeCellSelect && typeCellSelect == .payment)
+            cell.payForCourse.isHidden = !(cell.typeCell == typeCellSelect && typeCellSelect == .PAID)
             cell.layoutSubviews()
             return cell
         case .durationCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYDurationCreateCourse.reuseIdentifier, for: indexPath) as! ATYDurationCreateCourse
+            cell.checkBoxCallback = { [weak self] isSelected in
+                self?.viewModel.course.limited = isSelected ? .UNLIMITED : .LIMITED
+            }
+            cell.callbackDuration = { [weak self] courseDuration in
+                self?.viewModel.course.duration = courseDuration
+            }
             return cell
         case .chatCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateCourseChatCell.reuseIdentifier, for: indexPath) as! ATYCreateCourseChatCell
@@ -150,7 +170,11 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             }
         case .saveCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
-            cell.saveButton.setTitle("Создать курс", for: .normal)
+            cell.saveButton.setTitle(titleForDoneButton, for: .normal)
+            cell.callback = { [weak self] in
+                self?.callbackCreateCourse?(self?.viewModel.course)
+                self?.navigationController?.popViewController(animated: true)
+            }
             return cell
         default: break
         }
@@ -170,7 +194,12 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
         }
 
         if let cell = createCourseTableView.cellForRow(at: indexPath) as? ATYRadioButtonCreateCourse {
-            typeCellSelect = cell.typeCell
+            let type = cell.typeCell
+            typeCellSelect = type
+            self.viewModel.course.courseType = type ?? .PUBLIC
+            if type == .PUBLIC || type == .PRIVATE {
+                self.viewModel.course.coinPrice = nil
+            }
             createCourseTableView.reloadData()
         }
     }
@@ -180,6 +209,7 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
 extension ATYCreateCourseViewController: ATYImagePickerDelegate {
     func deleteCurrentImage() {
         self.image = nil
+        self.viewModel.course.picPath = nil
         createCourseTableView.reloadData()
     }
 
@@ -193,6 +223,7 @@ extension ATYCreateCourseViewController: ATYImagePickerDelegate {
     func didSelect(image: UIImage?, withPath path: String?) {
         if let newImage = image {
             self.image = newImage
+            self.viewModel.course.picPath = path
             createCourseTableView.reloadData()
         }
     }

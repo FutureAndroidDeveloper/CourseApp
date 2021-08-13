@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ATYTakeGiftViewController" customModule="AppToYou" customModuleProvider="target">
+            <connections>
+                <outlet property="thanksButton" destination="3bx-7t-UXA" id="zIm-mv-qk4"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="499"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="maskImage" translatesAutoresizingMaskIntoConstraints="NO" id="JXD-ud-Hdu">
+                    <rect key="frame" x="0.0" y="0.0" width="390" height="499"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bx-7t-UXA">
+                    <rect key="frame" x="32" y="429" width="326" height="50"/>
+                    <color key="backgroundColor" name="ButtonColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="fTr-JM-E9l"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <state key="normal" title="Спасибо!">
+                        <color key="titleColor" name="BackgroundTextFieldsColor"/>
+                    </state>
+                    <connections>
+                        <action selector="thanksButtonAction:" destination="-1" eventType="touchUpInside" id="U3b-gK-NNb"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вам крупно повезло!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsA-tz-317">
+                    <rect key="frame" x="20" y="38" width="350" height="22"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                    <color key="textColor" name="BackgroundTextFieldsColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="giftBoxImage" translatesAutoresizingMaskIntoConstraints="NO" id="n89-I4-66A">
+                    <rect key="frame" x="105" y="92" width="180" height="220"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="180" id="MsT-g7-d7I"/>
+                        <constraint firstAttribute="height" constant="220" id="fz4-Xe-5Rf"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ровно год вы пользуетесь нашим приложением. Мы дарим вам 100 монет!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNP-9y-aUS">
+                    <rect key="frame" x="60" y="332" width="270" height="67"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" name="BackgroundTextFieldsColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="azb-Ch-gP4">
+                    <rect key="frame" x="349" y="16" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="bTA-kQ-61B"/>
+                        <constraint firstAttribute="height" constant="24" id="lgO-Km-hAX"/>
+                    </constraints>
+                    <state key="normal" image="crossImage"/>
+                    <connections>
+                        <action selector="closeButtonAction:" destination="-1" eventType="touchUpInside" id="QpA-SF-8Na"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="BlueColor"/>
+            <constraints>
+                <constraint firstItem="n89-I4-66A" firstAttribute="top" secondItem="hsA-tz-317" secondAttribute="bottom" constant="32" id="19W-DG-Cmb"/>
+                <constraint firstItem="JXD-ud-Hdu" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="KFZ-YY-e77"/>
+                <constraint firstItem="JXD-ud-Hdu" firstAttribute="top" secondItem="hsA-tz-317" secondAttribute="bottom" constant="-60" id="LeB-Vy-7yv"/>
+                <constraint firstItem="n89-I4-66A" firstAttribute="centerX" secondItem="hsA-tz-317" secondAttribute="centerX" id="S3J-Um-eyA"/>
+                <constraint firstItem="JXD-ud-Hdu" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="SMW-64-Juh"/>
+                <constraint firstItem="nNP-9y-aUS" firstAttribute="top" secondItem="n89-I4-66A" secondAttribute="bottom" constant="20" id="Vgi-4I-vbf"/>
+                <constraint firstItem="3bx-7t-UXA" firstAttribute="bottom" secondItem="JXD-ud-Hdu" secondAttribute="bottom" constant="-20" id="W8P-oi-NCP"/>
+                <constraint firstItem="3bx-7t-UXA" firstAttribute="leading" secondItem="JXD-ud-Hdu" secondAttribute="leading" constant="32" id="XZa-Hu-KUB"/>
+                <constraint firstItem="3bx-7t-UXA" firstAttribute="top" secondItem="nNP-9y-aUS" secondAttribute="bottom" constant="30" id="bYk-wO-LFu"/>
+                <constraint firstItem="nNP-9y-aUS" firstAttribute="leading" secondItem="JXD-ud-Hdu" secondAttribute="leading" constant="60" id="cjH-5L-dsU"/>
+                <constraint firstItem="JXD-ud-Hdu" firstAttribute="top" secondItem="azb-Ch-gP4" secondAttribute="bottom" constant="-40" id="gVL-aE-LQm"/>
+                <constraint firstItem="3bx-7t-UXA" firstAttribute="trailing" secondItem="JXD-ud-Hdu" secondAttribute="trailing" constant="-32" id="jN7-af-hot"/>
+                <constraint firstItem="JXD-ud-Hdu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lCk-oj-D9s"/>
+                <constraint firstItem="JXD-ud-Hdu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="oZb-pa-eea"/>
+                <constraint firstItem="azb-Ch-gP4" firstAttribute="trailing" secondItem="JXD-ud-Hdu" secondAttribute="trailing" constant="-17" id="vYx-fP-cRW"/>
+                <constraint firstItem="hsA-tz-317" firstAttribute="trailing" secondItem="JXD-ud-Hdu" secondAttribute="trailing" constant="-20" id="wL9-Lo-Kzb"/>
+                <constraint firstItem="nNP-9y-aUS" firstAttribute="trailing" secondItem="JXD-ud-Hdu" secondAttribute="trailing" constant="-60" id="zFB-5a-oSR"/>
+                <constraint firstItem="hsA-tz-317" firstAttribute="leading" secondItem="JXD-ud-Hdu" secondAttribute="leading" constant="20" id="zh7-aX-Gki"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="33.333333333333336" y="-45.870535714285715"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="crossImage" width="24" height="24"/>
+        <image name="giftBoxImage" width="196" height="231"/>
+        <image name="maskImage" width="335" height="457"/>
+        <namedColor name="BackgroundTextFieldsColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BlueColor">
+            <color red="0.18000000715255737" green="0.28999999165534973" blue="0.44299998879432678" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ButtonColor">
+            <color red="0.81999999284744263" green="0.3529999852180481" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

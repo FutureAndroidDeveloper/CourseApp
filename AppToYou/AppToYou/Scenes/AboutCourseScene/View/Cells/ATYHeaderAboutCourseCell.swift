@@ -36,56 +36,33 @@ class ATYHeaderAboutCourseCell: UITableViewCell {
         return button
     }()
 
-    //Blur
-
-    let durationBlurView: UIVisualEffectView = {
-        let blurView = UIVisualEffectView()
-        blurView.layer.cornerRadius = 14
-        blurView.clipsToBounds = true
-        return blurView
-    }()
-
-    let countOfPeopleBlurView: UIVisualEffectView = {
-        let blurView = UIVisualEffectView()
-        blurView.layer.cornerRadius = 14
-        blurView.clipsToBounds = true
-        return blurView
-    }()
-
-    let closeOrOpenBlurView: UIVisualEffectView = {
-        let blurView = UIVisualEffectView()
-        blurView.layer.cornerRadius = 14
-        blurView.clipsToBounds = true
-        return blurView
-    }()
-
     //Labels
 
-    let durationBlurLabel : UILabel = {
+    let durationLabel : UILabel = {
         let label = UILabel()
-        label.text = "1 месяц"
+        label.text = "1 мес"
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.sizeToFit()
         label.textColor = R.color.backgroundTextFieldsColor()
         return label
     }()
 
-    let countOfPeopleBlurLabel : UILabel = {
+    let countOfPeopleLabel : UILabel = {
         let label = UILabel()
-        label.text = "0"
+        label.text = "1 454"
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.sizeToFit()
         label.textColor = R.color.backgroundTextFieldsColor()
         return label
     }()
 
-    let closeOrOpenBlurLabel : UILabel = {
+    let coinLabel : UILabel = {
         let label = UILabel()
-        label.text = "открыт"
+        label.text = "10"
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.sizeToFit()
         label.textColor = R.color.backgroundTextFieldsColor()
         return label
@@ -93,22 +70,22 @@ class ATYHeaderAboutCourseCell: UITableViewCell {
 
     //Images
 
-    let imageViewBlurOcklock : UIImageView = {
+    let imageViewOcklock : UIImageView = {
         let imageView = UIImageView()
         imageView.image = R.image.timeOclockImage()
         return imageView
     }()
 
-    let imageViewBlurPeople : UIImageView = {
+    let imageViewPeople : UIImageView = {
         let imageView = UIImageView()
         imageView.image = R.image.peopleImage()?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = R.color.backgroundTextFieldsColor()
         return imageView
     }()
 
-    let imageViewBlurOpenClose : UIImageView = {
+    let imageViewCoin : UIImageView = {
         let imageView = UIImageView()
-        imageView.image = R.image.openCourseImage()
+        imageView.image = R.image.coinImage()
         return imageView
     }()
 
@@ -157,88 +134,48 @@ class ATYHeaderAboutCourseCell: UITableViewCell {
             make.width.height.equalTo(40)
         }
 
-        let blurEffect = UIBlurEffect(style: .systemThinMaterialLight)
-        durationBlurView.effect = blurEffect
+        headerImageView.addSubview(imageViewPeople)
+        headerImageView.addSubview(imageViewOcklock)
+        headerImageView.addSubview(imageViewCoin)
+        headerImageView.addSubview(countOfPeopleLabel)
+        headerImageView.addSubview(durationLabel)
+        headerImageView.addSubview(coinLabel)
 
-        let blurEffectSecond = UIBlurEffect(style: .systemThinMaterialLight)
-        countOfPeopleBlurView.effect = blurEffectSecond
+        //Configure constraints blurViews
 
-        let blurEffectThird = UIBlurEffect(style: .systemThinMaterialLight)
-        closeOrOpenBlurView.effect = blurEffectThird
-
-        headerImageView.addSubview(durationBlurView)
-        headerImageView.addSubview(countOfPeopleBlurView)
-        headerImageView.addSubview(closeOrOpenBlurView)
-
-        durationBlurView.contentView.addSubview(durationBlurLabel)
-        countOfPeopleBlurView.contentView.addSubview(countOfPeopleBlurLabel)
-        closeOrOpenBlurView.contentView.addSubview(closeOrOpenBlurLabel)
-
-        durationBlurView.contentView.addSubview(imageViewBlurOcklock)
-        countOfPeopleBlurView.contentView.addSubview(imageViewBlurPeople)
-        closeOrOpenBlurView.contentView.addSubview(imageViewBlurOpenClose)
-
-        //Configure constraints imageView
-
-        imageViewBlurOcklock.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(10)
-            make.top.equalToSuperview().offset(6)
-            make.bottom.equalToSuperview().offset(-6)
-            make.width.height.equalTo(18)
+        imageViewPeople.snp.makeConstraints { (make) in
+            make.top.equalTo(backButton).offset(5)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.width.equalTo(20)
         }
 
-        imageViewBlurPeople.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(10)
-            make.top.equalToSuperview().offset(6)
-            make.bottom.equalToSuperview().offset(-6)
-            make.width.height.equalTo(18)
+        imageViewOcklock.snp.makeConstraints { (make) in
+            make.top.equalTo(imageViewPeople.snp.bottom).offset(6)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.width.equalTo(20)
         }
 
-        imageViewBlurOpenClose.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(10)
-            make.top.equalToSuperview().offset(6)
-            make.bottom.equalToSuperview().offset(-6)
-            make.width.height.equalTo(18)
+        imageViewCoin.snp.makeConstraints { (make) in
+            make.top.equalTo(imageViewOcklock.snp.bottom).offset(6)
+            make.trailing.equalToSuperview().offset(-16)
+            make.height.width.equalTo(20)
         }
 
         //Configure constraints labels
 
-        durationBlurLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(imageViewBlurOcklock.snp.trailing).offset(5.5)
-            make.centerY.equalTo(imageViewBlurOcklock)
-            make.trailing.equalToSuperview().offset(-9)
+        countOfPeopleLabel.snp.makeConstraints { (make) in
+            make.trailing.equalTo(imageViewPeople.snp.leading).offset(-9)
+            make.centerY.equalTo(imageViewPeople)
         }
 
-        countOfPeopleBlurLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(imageViewBlurPeople.snp.trailing).offset(5.5)
-            make.centerY.equalTo(imageViewBlurPeople)
-            make.trailing.equalToSuperview().offset(-9)
+        durationLabel.snp.makeConstraints { (make) in
+            make.trailing.equalTo(imageViewOcklock.snp.leading).offset(-9)
+            make.centerY.equalTo(imageViewOcklock)
         }
 
-        closeOrOpenBlurLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(imageViewBlurOpenClose.snp.trailing).offset(5.5)
-            make.centerY.equalTo(imageViewBlurOpenClose)
-            make.top.equalToSuperview().offset(5)
-            make.trailing.equalToSuperview().offset(-9)
-        }
-
-        //Configure constraints blurViews
-
-        durationBlurView.snp.makeConstraints { (make) in
-            make.top.equalTo(backButton)
-            make.trailing.equalToSuperview().offset(-16)
-        }
-
-        countOfPeopleBlurView.snp.makeConstraints { (make) in
-            make.top.equalTo(durationBlurView.snp.bottom).offset(6)
-            make.trailing.equalToSuperview().offset(-16)
-            make.leading.equalTo(durationBlurView)
-        }
-
-        closeOrOpenBlurView.snp.makeConstraints { (make) in
-            make.top.equalTo(countOfPeopleBlurView.snp.bottom).offset(6)
-            make.trailing.equalToSuperview().offset(-16)
-            make.leading.equalTo(durationBlurView)
+        coinLabel.snp.makeConstraints { (make) in
+            make.trailing.equalTo(imageViewCoin.snp.leading).offset(-9)
+            make.centerY.equalTo(imageViewCoin)
         }
     }
 

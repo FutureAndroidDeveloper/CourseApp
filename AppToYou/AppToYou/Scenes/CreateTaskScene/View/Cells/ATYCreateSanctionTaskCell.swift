@@ -41,6 +41,7 @@ class ATYCreateSanctionTaskCell: UITableViewCell {
     }()
 
     var callbackText: ((String) -> Void)?
+    var questionCallback: (() -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -51,6 +52,10 @@ class ATYCreateSanctionTaskCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc func questionButtonAction() {
+        questionCallback?()
     }
 
     private func configure() {
@@ -86,12 +91,14 @@ class ATYCreateSanctionTaskCell: UITableViewCell {
             make.bottom.equalToSuperview().offset(-15)
         }
 
+        questionButton.addTarget(self, action: #selector(questionButtonAction), for: .touchUpInside)
         questionButton.snp.makeConstraints { (make) in
             make.leading.equalTo(sanctionTextField.snp.trailing).offset(9)
             make.height.width.equalTo(30)
             make.centerY.equalTo(sanctionTextField)
         }
 
+        switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         switchButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-20)
             make.centerY.equalTo(questionButton)

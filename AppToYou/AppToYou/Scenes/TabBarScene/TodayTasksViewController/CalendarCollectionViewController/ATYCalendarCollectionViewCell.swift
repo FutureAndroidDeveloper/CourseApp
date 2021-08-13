@@ -84,9 +84,16 @@ class ATYCalendarCollectionViewCell: UICollectionViewCell {
     }
 
     func setUp() {
-        selectedView.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.6666666667, blue: 0.05490196078, alpha: 1)
+
         dayOfWeekLabel.textColor = .white
         dayOfMonthLabel.textColor = .white
+        if circleView.backgroundColor == R.color.failureColor() {
+            selectedView.backgroundColor = R.color.failureColor()
+        } else if circleView.backgroundColor == R.color.succesColor() {
+            selectedView.backgroundColor = R.color.succesColor()
+        } else {
+            selectedView.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.6666666667, blue: 0.05490196078, alpha: 1)
+        }
         circleView.backgroundColor = .white
     }
 

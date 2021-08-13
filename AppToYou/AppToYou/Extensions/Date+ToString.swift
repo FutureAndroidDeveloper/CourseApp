@@ -14,7 +14,8 @@ public extension Date {
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .current
-        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         return dateFormatter
     }()
 
@@ -37,6 +38,12 @@ public extension Date {
         case localeDayMonth = "dd MMMM, yyyy"
         case currentMonthName = "LLLL"
         case currentYear = "yyyy"
+        case calendarFormat = "EEEE, d MMM yyyy"
+    }
+
+    var ignoringTime: Date? {
+        let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: self)
+        return Calendar.current.date(from: dateComponents)
     }
 
     init(millis: Int64) {
@@ -79,5 +86,9 @@ public extension Date {
         components.day = 1
         components.day -= 1
         return Calendar.current.date(from: components as DateComponents)!
+    }
+
+    func orderedSameDateOnDays(firstDate: Date? , secondDate: Date?) -> Bool {
+        return Calendar.current.compare( firstDate?.ignoringTime ?? Date(), to: secondDate?.ignoringTime ?? Date(), toGranularity: .day) == .orderedSame
     }
 }

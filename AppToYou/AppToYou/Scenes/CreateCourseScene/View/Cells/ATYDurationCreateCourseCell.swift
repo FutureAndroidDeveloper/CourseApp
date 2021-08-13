@@ -10,6 +10,10 @@ import UIKit
 
 class ATYDurationCreateCourse: UITableViewCell {
 
+    var durationCourse = ATYDurationCourse()
+    var callbackDuration : ((ATYDurationCourse) -> ())?
+    var checkBoxCallback : ((Bool) -> ())?
+
     let durationLabel : UILabel = {
         let label = UILabel()
         label.text = "Длительность курса"
@@ -26,27 +30,30 @@ class ATYDurationCreateCourse: UITableViewCell {
         return label
     }()
 
-    var hourTextField : UITextField = {
+    var yearTextField : UITextField = {
         let textField = UITextField()
-        textField.placeholder = "0 " + R.string.localizable.hour()
+        textField.tag = 0
+        textField.placeholder = "0 " + "год"
         textField.backgroundColor = R.color.backgroundTextFieldsColor()
         textField.textColor = R.color.titleTextColor()
         textField.keyboardType = .numberPad
         return textField
     }()
 
-    var minTextField : UITextField = {
+    var monthTextField : UITextField = {
         let textField = UITextField()
-        textField.placeholder = "0 " + R.string.localizable.min()
+        textField.tag = 1
+        textField.placeholder = "0 " + "мес"
         textField.backgroundColor = R.color.backgroundTextFieldsColor()
         textField.textColor = R.color.titleTextColor()
         textField.keyboardType = .numberPad
         return textField
     }()
 
-    var secTextField : UITextField = {
+    var dayTextField : UITextField = {
         let textField = UITextField()
-        textField.placeholder = "0 " + R.string.localizable.sec()
+        textField.tag = 2
+        textField.placeholder = "0 " + "день"
         textField.backgroundColor = R.color.backgroundTextFieldsColor()
         textField.textColor = R.color.titleTextColor()
         textField.keyboardType = .numberPad
@@ -73,12 +80,16 @@ class ATYDurationCreateCourse: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    @objc func checkBoxAction() {
+        checkBoxCallback?(self.checkBox.isSelected)
+    }
+
     private func configure() {
         contentView.addSubview(durationLabel)
         contentView.addSubview(descriptionLabel)
-        contentView.addSubview(hourTextField)
-        contentView.addSubview(minTextField)
-        contentView.addSubview(secTextField)
+        contentView.addSubview(yearTextField)
+        contentView.addSubview(monthTextField)
+        contentView.addSubview(dayTextField)
         contentView.addSubview(checkBox)
         contentView.addSubview(checkBoxLabel)
 
@@ -94,36 +105,37 @@ class ATYDurationCreateCourse: UITableViewCell {
             make.trailing.equalToSuperview().offset(-20)
         }
 
-        hourTextField.layer.cornerRadius = 22.5
-        hourTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
-        hourTextField.snp.makeConstraints { (make) in
+        yearTextField.layer.cornerRadius = 22.5
+        yearTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
+        yearTextField.snp.makeConstraints { (make) in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(15)
             make.leading.equalToSuperview().offset(20)
             make.height.equalTo(45)
             make.width.equalTo(85)
         }
 
-        minTextField.layer.cornerRadius = 22.5
-        minTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
-        minTextField.snp.makeConstraints { (make) in
+        monthTextField.layer.cornerRadius = 22.5
+        monthTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
+        monthTextField.snp.makeConstraints { (make) in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(15)
-            make.leading.equalTo(hourTextField.snp.trailing).offset(12)
+            make.leading.equalTo(yearTextField.snp.trailing).offset(12)
             make.height.equalTo(45)
             make.width.equalTo(85)
         }
 
-        secTextField.layer.cornerRadius = 22.5
-        secTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
-        secTextField.snp.makeConstraints { (make) in
+        dayTextField.layer.cornerRadius = 22.5
+        dayTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
+        dayTextField.snp.makeConstraints { (make) in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(15)
-            make.leading.equalTo(minTextField.snp.trailing).offset(12)
+            make.leading.equalTo(monthTextField.snp.trailing).offset(12)
             make.height.equalTo(45)
             make.width.equalTo(85)
         }
 
+        checkBox.addTarget(self, action: #selector(checkBoxAction), for: .valueChanged)
         checkBox.snp.makeConstraints { (make) in
-            make.top.equalTo(hourTextField.snp.bottom).offset(15)
-            make.leading.equalTo(hourTextField)
+            make.top.equalTo(yearTextField.snp.bottom).offset(15)
+            make.leading.equalTo(yearTextField)
             make.width.height.equalTo(20)
             make.bottom.equalToSuperview().offset(-10)
         }
@@ -133,5 +145,22 @@ class ATYDurationCreateCourse: UITableViewCell {
             make.centerY.equalTo(checkBox)
             make.trailing.equalToSuperview().offset(-20)
         }
+    }
+}
+
+extension ATYDurationCreateCourse: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let number =  Int(textField.text ?? "") ?? 0
+        switch textField.tag {
+        case 0:
+            self.durationCourse.year = number
+        case 1:
+            self.durationCourse.month = number
+        case 2:
+            self.durationCourse.day = number
+        default:
+            break
+        }
+        callbackDuration?(self.durationCourse)
     }
 }

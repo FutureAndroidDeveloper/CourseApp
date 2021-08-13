@@ -48,10 +48,10 @@ class ATYAboutCourseViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = false
         configureNavBar()
     }
-
+    
     override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-            tableView.reloadData()
+        super.viewDidLayoutSubviews()
+        tableView.reloadData()
     }
 
     private func configureTableView() {
@@ -68,10 +68,22 @@ class ATYAboutCourseViewController: UIViewController {
         tableView.register(ATYMembersAboutCourseCell.self, forCellReuseIdentifier: ATYMembersAboutCourseCell.reuseIdentifier)
         tableView.register(ATYShareCourseCell.self, forCellReuseIdentifier: ATYShareCourseCell.reuseIdentifier)
         tableView.register(ATYReportCourseCell.self, forCellReuseIdentifier: ATYReportCourseCell.reuseIdentifier)
+
+
+        tableView.register(UINib(nibName: "ATYAchievementListCell", bundle: nil), forCellReuseIdentifier: ATYAchievementListCell.reuseIdentifier)
+        tableView.register(ATYProfileSignInCollectionAchievementCell.self, forCellReuseIdentifier: ATYProfileSignInCollectionAchievementCell.reuseIdentifier)
+
         tableView.snp.makeConstraints { (make) in
             make.leading.trailing.top.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin)
+            make.bottom.equalToSuperview()
         }
+    }
+
+    private func showTaskAddedPopup() {
+        let child = ATYTaskAddedViewController(type: .oneTask)
+        child.transitioningDelegate = self.transitionThird
+        child.modalPresentationStyle = .custom
+        self.present(child, animated: true)
     }
 
     @objc func tappedBackButton() {
@@ -98,6 +110,10 @@ extension ATYAboutCourseViewController: UITableViewDelegate, UITableViewDataSour
             return cell
         case .description:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYDescriptionAboutCourse.reuseIdentifier, for: indexPath) as! ATYDescriptionAboutCourse
+            cell.callbackMembers = { [weak self] in
+                let vc = ATYCourseParticipantsViewController()
+                self?.navigationController?.pushViewController(vc, animated:  true)
+            }
             return cell
         case .tasksCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYTasksForAboutCourseCell.reuseIdentifier, for: indexPath) as! ATYTasksForAboutCourseCell
@@ -120,18 +136,44 @@ extension ATYAboutCourseViewController: UITableViewDelegate, UITableViewDataSour
                 var child = UIViewController()
                 switch typeTask {
                 case .CHECKBOX:
-                    return
+//                    child = ATYJoinToCloseCourseViewController()
+//                    child.transitioningDelegate = self?.transitionSecond
+
+//                    child = ATYPenaltyWarningViewController()
+//                    child.transitioningDelegate = self?.transitionThird
+//                      child = ATYVacataionViewController()
+//                      child.transitioningDelegate = self?.transitionThird
+
+//                    self?.showViewBlur()
+                break
                 case .RITUAL:
                     child = ATYEditCourseCountRepeatTaskViewController()
+                    (child as! ATYEditCourseCountRepeatTaskViewController).dismissCallback = { [weak self ] in
+                        self?.showTaskAddedPopup()
+                    }
                     child.transitioningDelegate = self?.transitionThird
                 case .TEXT:
-                    return
+                    child = ATYEditCourseTextTaskViewController()
+                    (child as! ATYEditCourseTextTaskViewController).dismissCallback = { [weak self ] in
+                        self?.showTaskAddedPopup()
+                    }
+                    child.transitioningDelegate = self?.transitionSecond
                 case .TIMER:
                     child = ATYEditTimerCourseTaskViewController()
+                    (child as! ATYEditTimerCourseTaskViewController).dismissCallback = { [weak self ] in
+                        self?.showTaskAddedPopup()
+                    }
                     child.transitioningDelegate = self?.transitionSecond
                 default: break
                 }
 
+                child.modalPresentationStyle = .custom
+                self?.present(child, animated: true)
+            }
+
+            cell.addAllTasksCallback = { [weak self] in
+                let child = ATYTaskAddedViewController(type: .allTasks)
+                child.transitioningDelegate = self?.transitionThird
                 child.modalPresentationStyle = .custom
                 self?.present(child, animated: true)
             }
@@ -151,6 +193,12 @@ extension ATYAboutCourseViewController: UITableViewDelegate, UITableViewDataSour
         return UITableViewCell()
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let _ = (tableView.cellForRow(at: indexPath) as? ATYMembersAboutCourseCell) {
+            navigationController?.pushViewController(ATYCourseRatingViewController(), animated: true)
+//            navigationController?.pushViewController(ATYCourseParticipantsViewController(), animated: true)
+        }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

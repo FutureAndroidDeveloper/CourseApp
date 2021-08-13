@@ -29,92 +29,144 @@ final class ATYTodayTasksViewController: UIViewController {
                                         titleLabel: "Медитация",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
+                                        state: .failed, date: Date.dateFormatter.date(from: "2021/08/12")),
                           TemporaryData(typeTask: .RITUAL,
-                                        courseName: "Кулинария",
+                                        courseName: nil,
                                         hasSanction: true,
                                         titleLabel: "Сходить на площадку",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
+                                        state: .performed, date: Date.dateFormatter.date(from: "2021/08/12")),
                           TemporaryData(typeTask: .TEXT,
                                         courseName: "Спорт",
                                         hasSanction: true,
                                         titleLabel: "Отжимания",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
+                                        state: .performed, date: Date.dateFormatter.date(from: "2021/08/12")),
                           TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: "Энергетика",
+                                        courseName: nil,
                                         hasSanction: true,
                                         titleLabel: "Прочитать книгу",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
-                          TemporaryData(typeTask: .CHECKBOX,
+                                        state: .performed, date: Date.dateFormatter.date(from: "2021/08/11")),
+                          TemporaryData(typeTask: .RITUAL,
                                         courseName: "Здоровье",
                                         hasSanction: false,
                                         titleLabel: "Отжимания",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "20 раз",
-                                        state: .didNotStart),
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/11")),
                           TemporaryData(typeTask: .CHECKBOX,
                                         courseName: "Шитье",
                                         hasSanction: false,
                                         titleLabel: "Большой текст тест текст на длину длинный текст",
-                                        firstSubtitleLabel: "Каждый деньфывфывфывфывфы",
-                                        secondSubtitleLabel: "60 минпывафывпвыпваыпфывпфывпыфва",
-                                        state: .didNotStart),
-                          TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: "iOS Курс",
+                                        firstSubtitleLabel: "Каждый день",
+                                        secondSubtitleLabel: "60 мин",
+                                        state: .failed, date: Date.dateFormatter.date(from: "2021/08/10")),
+                          TemporaryData(typeTask: .TIMER,
+                                        courseName: nil,
                                         hasSanction: true,
                                         titleLabel: "Медитация",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
+                                        state: .performed, date: Date.dateFormatter.date(from: "2021/08/10")),
                           TemporaryData(typeTask: .CHECKBOX,
                                         courseName: "Здоровье",
                                         hasSanction: false,
                                         titleLabel: "Приседания",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "10 раз",
-                                        state: .didNotStart),
-                          TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: "Android курс",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/10")),
+                          TemporaryData(typeTask: .TIMER,
+                                        courseName: nil,
                                         hasSanction: false,
                                         titleLabel: "Медитация",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart)]
+                                        state: .failed, date: Date.dateFormatter.date(from: "2021/08/13")),
+                          TemporaryData(typeTask: .TIMER,
+                                        courseName: nil,
+                                        hasSanction: false,
+                                        titleLabel: "Медитация",
+                                        firstSubtitleLabel: "Каждый день",
+                                        secondSubtitleLabel: "60 мин",
+                                        state: .failed, date: Date.dateFormatter.date(from: "2021/08/13")),
+                          TemporaryData(typeTask: .CHECKBOX,
+                                        courseName: nil,
+                                        hasSanction: false,
+                                        titleLabel: "Медитация",
+                                        firstSubtitleLabel: "Каждый день",
+                                        secondSubtitleLabel: "60 мин",
+                                        state: .done, date: Date.dateFormatter.date(from: "2021/08/13")),
+                          TemporaryData(typeTask: .TEXT,
+                                        courseName: nil,
+                                        hasSanction: false,
+                                        titleLabel: "Медитация",
+                                        firstSubtitleLabel: "Каждый день",
+                                        secondSubtitleLabel: "60 мин",
+                                        state: .failed, date: Date.dateFormatter.date(from: "2021/08/13")),
+                          TemporaryData(typeTask: .RITUAL,
+                                        courseName: nil,
+                                        hasSanction: false,
+                                        titleLabel: "Медитация",
+                                        firstSubtitleLabel: "Каждый день",
+                                        secondSubtitleLabel: "60 мин",
+                                        state: .performed, date: Date.dateFormatter.date(from: "2021/08/13"))]
 
     var completedTask = [TemporaryData(typeTask: .CHECKBOX,
                                        courseName: "Электрика",
                                        hasSanction: true,
-                                       titleLabel: "Test text",
+                                       titleLabel: "Велосипед",
                                        firstSubtitleLabel: "пт, cуб, вскр",
                                        secondSubtitleLabel: "60 мин",
-                                       state: .didNotStart),
-                         TemporaryData(typeTask: .CHECKBOX,
+                                       state: .done, date: Date.dateFormatter.date(from: "2021/08/10")),
+                         TemporaryData(typeTask: .TEXT,
                                        courseName: "Машиностроение",
                                        hasSanction: false,
-                                       titleLabel: "Test text",
+                                       titleLabel: "Тех обслуживание",
                                        firstSubtitleLabel: "пт, cуб, вскр",
                                        secondSubtitleLabel: "60 мин",
-                                       state: .didNotStart),
-                         TemporaryData(typeTask: .CHECKBOX,
-                                       courseName: "Медитация",
+                                       state: .done, date: Date.dateFormatter.date(from: "2021/08/10")),
+                         TemporaryData(typeTask: .TIMER,
+                                       courseName: nil,
                                        hasSanction: true,
-                                       titleLabel: "Test text",
+                                       titleLabel: "Пробежка",
                                        firstSubtitleLabel: "пт, cуб, вскр",
                                        secondSubtitleLabel: "60 мин",
-                                       state: .didNotStart),
-                         TemporaryData(typeTask: .CHECKBOX,
+                                       state: .done, date: Date.dateFormatter.date(from: "2021/08/09")),
+                         TemporaryData(typeTask: .RITUAL,
                                        courseName: "Английский",
                                        hasSanction: false,
-                                       titleLabel: "Test text",
+                                       titleLabel: "Учить глаголы",
                                        firstSubtitleLabel: "пт, cуб, вскр",
                                        secondSubtitleLabel: "60 мин",
-                                       state: .didNotStart)]
+                                       state: .done, date: Date.dateFormatter.date(from: "2021/08/09")),
+                         TemporaryData(typeTask: .RITUAL,
+                                       courseName: "Английский",
+                                       hasSanction: false,
+                                       titleLabel: "Учить глаголы",
+                                       firstSubtitleLabel: "пт, cуб, вскр",
+                                       secondSubtitleLabel: "60 мин",
+                                       state: .done, date: Date.dateFormatter.date(from: "2021/08/13")),
+                         TemporaryData(typeTask: .TEXT,
+                                       courseName: "Английский",
+                                       hasSanction: false,
+                                       titleLabel: "Учить глаголы",
+                                       firstSubtitleLabel: "пт, cуб, вскр",
+                                       secondSubtitleLabel: "60 мин",
+                                       state: .done, date: Date.dateFormatter.date(from: "2021/08/13")),
+                         TemporaryData(typeTask: .TIMER,
+                                       courseName: "Английский",
+                                       hasSanction: false,
+                                       titleLabel: "Учить глаголы",
+                                       firstSubtitleLabel: "пт, cуб, вскр",
+                                       secondSubtitleLabel: "60 мин",
+                                       state: .done, date: Date.dateFormatter.date(from: "2021/08/13"))]
+
+    var filteredArrayCurrent = [TemporaryData]()
+    var filteredArrayDoneTasks = [TemporaryData]()
 
     convenience init(name: String) {
         self.init(title: name)
@@ -145,12 +197,9 @@ final class ATYTodayTasksViewController: UIViewController {
         configureTableView()
         configureAddButtonAndTipImage()
 
-        let states = (self.temporaryArray + self.completedTask)
-        let filteredStates = states.compactMap { (temporaryData) -> CurrentStateTask? in
-            return temporaryData.state
-        }
-        progressView.countOfViews = (count: self.temporaryArray.count + self.completedTask.count, typeState: filteredStates)
-        progressView.layoutSubviews()
+        filteredArrayCurrent = temporaryArray.filter( { Calendar.current.compare( $0.date?.ignoringTime ?? Date(), to: Date().ignoringTime ?? Date(), toGranularity: .day) == .orderedSame } )
+        filteredArrayDoneTasks = completedTask.filter( { Calendar.current.compare( $0.date?.ignoringTime ?? Date(), to: Date().ignoringTime ?? Date(), toGranularity: .day) == .orderedSame } )
+        updateProgressView()
     }
 
     func addBlurEffect() {
@@ -159,19 +208,28 @@ final class ATYTodayTasksViewController: UIViewController {
         visualEffectView.frame = bounds ?? CGRect.zero
         visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.navigationController?.navigationBar.addSubview(visualEffectView)
-
-        // Here you can add visual effects to any UIView control.
-        // Replace custom view with navigation bar in the above code to add effects to the custom view.
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel.getData()
+//        self.viewModel.getData()
+
+        self.tipImageView.isHidden = !(filteredArrayCurrent.isEmpty && filteredArrayDoneTasks.isEmpty)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.calendarCollectionViewController.updateData()
+        self.calendarCollectionViewController.dateCallback = { [weak self] dateString in
+            let date = dateString.toDate(dateFormat: .calendarFormat)
+
+            self?.filteredArrayCurrent = self?.temporaryArray.filter({ Calendar.current.compare( $0.date ?? Date(), to: date ?? Date(), toGranularity: .day) == .orderedSame}) ?? []
+
+            self?.filteredArrayDoneTasks = self?.completedTask.filter({ Calendar.current.compare( $0.date ?? Date(), to: date ?? Date(), toGranularity: .day) == .orderedSame}) ?? []
+            self?.tasksTableView.reloadData()
+            self?.updateProgressView()
+            print("CallbackDate: \(String(describing: date))")
+        }
     }
 
     override func viewWillLayoutSubviews() {
@@ -183,6 +241,17 @@ final class ATYTodayTasksViewController: UIViewController {
         typeButton.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
         typeButton.layer.shadowOpacity = 0.5
         typeButton.layer.shadowRadius = 1.0
+
+        self.tipImageView.isHidden = !(filteredArrayCurrent.isEmpty && filteredArrayDoneTasks.isEmpty)
+    }
+
+    private func updateProgressView() {
+        let states = (self.filteredArrayCurrent + self.filteredArrayDoneTasks)
+        let filteredStates = states.compactMap { (temporaryData) -> CurrentStateTask? in
+            return temporaryData.state
+        }
+        progressView.countOfViews = (count: self.filteredArrayCurrent.count + self.filteredArrayDoneTasks.count, typeState: filteredStates)
+        progressView.layoutSubviews()
     }
 
     private func configureAddButtonAndTipImage() {
@@ -199,7 +268,6 @@ final class ATYTodayTasksViewController: UIViewController {
         }
 
         tipImageView.image = R.image.tip()
-        tipImageView.isHidden = true
         view.addSubview(tipImageView)
 
         self.tipImageView.snp.makeConstraints { (make) in
@@ -275,19 +343,22 @@ extension ATYTodayTasksViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? self.viewModel.currentTasksArray.count :  self.viewModel.completedTasksArray.count
+//        return section == 0 ? self.viewModel.currentTasksArray.count :  self.viewModel.completedTasksArray.count
+        return section == 0 ? filteredArrayCurrent.count : filteredArrayDoneTasks.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ATYTaskTableViewCell.reuseIdentifier, for: indexPath) as! ATYTaskTableViewCell
-        let temporary = indexPath.section == 0 ? self.viewModel.currentTasksArray[indexPath.row] :  self.viewModel.completedTasksArray[indexPath.row]
-        cell.setUp(typeTask: temporary.taskType,
-                   courseName: nil,
-                   hasSanction: temporary.taskSanction != 0,
-                   titleLabel: temporary.taskName,
-                   firstSubtitleLabel: temporary.taskDescription ?? "",
-                   secondSubtitleLabel: temporary.taskAttribute,
-                   state: .didNotStart, userOrCourseTask: .user)
+//        let temporary = indexPath.section == 0 ? self.viewModel.currentTasksArray[indexPath.row] :  self.viewModel.completedTasksArray[indexPath.row]
+        let temporary = indexPath.section == 0 ? filteredArrayCurrent[indexPath.row] : filteredArrayDoneTasks[indexPath.row]
+        cell.setUp(typeTask: temporary.typeTask,
+                   courseName: temporary.courseName,
+                   hasSanction: temporary.hasSanction,
+                   titleLabel: temporary.titleLabel,
+                   firstSubtitleLabel: temporary.firstSubtitleLabel,
+                   secondSubtitleLabel: temporary.secondSubtitleLabel,
+                   state: temporary.state,
+                   userOrCourseTask: .user)
         cell.callback = {
             print("callback")
         }
@@ -299,15 +370,20 @@ extension ATYTodayTasksViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel()
-        label.backgroundColor = R.color.backgroundAppColor()
-        label.text = "Выполненные задачи"
-        label.textColor = R.color.textSecondaryColor()
-        label.font = UIFont.systemFont(ofSize: 15)
 
         let view = UIView()
         view.frame = CGRect(origin: .zero, size: .zero)
-        return section == 1 ? label : view
+
+        if !filteredArrayDoneTasks.isEmpty {
+            let label = UILabel()
+            label.backgroundColor = R.color.backgroundAppColor()
+            label.text = "Выполненные задачи"
+            label.textColor = R.color.textSecondaryColor()
+            label.font = UIFont.systemFont(ofSize: 15)
+            return section == 1 ? label : view
+        }
+
+        return view
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -319,24 +395,33 @@ extension ATYTodayTasksViewController: UITableViewDelegate, UITableViewDataSourc
         let delete = UIContextualAction(style: .destructive, title: "") { (action, view, boolValue) in
             boolValue(true)
             if indexPath.section == 0 {
-                self.temporaryArray.remove(at: indexPath.row)
+                self.filteredArrayCurrent.remove(at: indexPath.row)
             } else {
-                self.completedTask.remove(at: indexPath.row)
+                self.filteredArrayDoneTasks.remove(at: indexPath.row)
             }
             self.tasksTableView.deleteRows(at: [indexPath], with: .fade)
+
+
+            if self.filteredArrayCurrent.isEmpty && self.filteredArrayDoneTasks.isEmpty {
+                self.tipImageView.isHidden = false
+            }
+
+            if self.filteredArrayDoneTasks.isEmpty {
+                 self.tasksTableView.reloadData()
+            }
         }
 
         let edit = UIContextualAction(style: .destructive, title: "") { [weak self] (action, view, boolValue) in
             boolValue(true)
-            var typeOfTask = 0
+            var typeOfTask : ATYTaskTypeEnum
 
             if indexPath.section == 0 {
-//                typeOfTask = self?.temporaryArray[indexPath.row].typeTask ?? 0
+                typeOfTask = self?.temporaryArray[indexPath.row].typeTask ?? .CHECKBOX
             } else {
-//                typeOfTask = self?.completedTask[indexPath.row].typeTask ?? 0
+                typeOfTask = self?.completedTask[indexPath.row].typeTask ?? .CHECKBOX
             }
             let vc = ATYEditTaskViewController()
-            vc.types = TypeOfTask.init(rawValue: typeOfTask)
+            vc.types = typeOfTask
             self?.navigationController?.pushViewController(vc, animated: true)
         }
 
@@ -355,14 +440,14 @@ extension ATYTodayTasksViewController : ATYTodayTasksViewModelDelegate {
     }
 }
 
-
 struct TemporaryData {
     let typeTask : ATYTaskTypeEnum
-    let courseName : String
+    let courseName : String?
     let hasSanction : Bool
     let titleLabel : String
     let firstSubtitleLabel : String
     let secondSubtitleLabel : String
     let state : CurrentStateTask
+    let date : Date?
 }
 

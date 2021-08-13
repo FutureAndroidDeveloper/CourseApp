@@ -12,10 +12,12 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
 
     var selectedDateForView = Date()
 
+    var dateCallback : ((String) -> ())?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.register(ATYCalendarCollectionViewCell.self, forCellWithReuseIdentifier: ATYCalendarCollectionViewCell.reuseIdentifier)
-        collectionView.isPagingEnabled = true
+//        collectionView.isPagingEnabled = true
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         view.backgroundColor = R.color.backgroundAppColor()
@@ -128,14 +130,17 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
 
         }
 
+        cell.setUpAnother(indexPath: indexPath)
+
+        if Calendar.current.compare(cell.date!, to: Date(), toGranularity: .day) == .orderedSame {
+            cell.circleView.backgroundColor = R.color.textColorSecondary()
+        }
+
         if Calendar.current.compare(cell.date!, to: selectedDateForView, toGranularity: .day) == .orderedSame {
             cell.setUp()
             print(cell.date!)
             print(selectedDateForView)
-        } else {
-            cell.setUpAnother(indexPath: indexPath)
         }
-
 
         if cell.date ?? Date() > Date() {
             cell.circleView.isHidden = true
@@ -147,10 +152,14 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? ATYCalendarCollectionViewCell {
+            if cell.date ?? Date() > Date() {
+                return
+            }
             UsedDates.shared.displayedDate = cell.date!
             selectedDateForView = cell.date!
             UsedDates.shared.selectdDayOfWeek = Calendar.current.component(.weekday, from: cell.date!)
             print("Selected Date: \(UsedDates.shared.displayedDateString)")
+            dateCallback?(UsedDates.shared.displayedDateString)
             collectionView.reloadData()
         }
     }

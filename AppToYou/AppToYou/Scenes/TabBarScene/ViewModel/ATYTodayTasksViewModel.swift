@@ -20,22 +20,26 @@ class ATYTodayTasksViewModel {
 
     weak var delegate : ATYTodayTasksViewModelDelegate?
 
+//    func getData() {
+//        guard let dbService = try? ATYDatabaseService() else {
+//            return
+//        }
+//
+//        let parser = ATYParser()
+//
+//        guard  let userTasks = dbService.getAllUserTasks() else { return }
+//
+//        let parsedUserTasks = parser.prepareToDisplay(userTasks: userTasks)
+//
+//        self.userTasks = parsedUserTasks
+//
+//        self.currentTasksArray = parsedUserTasks
+////        self.completedTasksArray = self.userTasks?.filter({ $0.taskCompleteTime?.toDate(dateFormat: .simpleDateFormat) ?? Date() >= Date() }) ?? []
+//
+//        self.delegate?.updateData()
+//    }
+
     func getData() {
-        guard let dbService = try? ATYDatabaseService() else {
-            return
-        }
 
-        let parser = ATYParser()
-
-        guard  let userTasks = dbService.getAllUserTasks() else { return }
-
-        let parsedUserTasks = parser.prepareToDisplay(userTasks: userTasks)
-
-        self.userTasks = parsedUserTasks
-
-        self.currentTasksArray = parsedUserTasks
-//        self.completedTasksArray = self.userTasks?.filter({ $0.taskCompleteTime?.toDate(dateFormat: .simpleDateFormat) ?? Date() >= Date() }) ?? []
-
-        self.delegate?.updateData()
     }
 }

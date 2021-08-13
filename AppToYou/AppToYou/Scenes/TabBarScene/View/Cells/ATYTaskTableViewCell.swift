@@ -15,7 +15,7 @@ class ATYTaskTableViewCell: UITableViewCell {
         case course
     }
 
-    private let backContentView : UIView = {
+    let backContentView : UIView = {
         let view = UIView()
         view.backgroundColor = R.color.backgroundTextFieldsColor()
         return view
@@ -69,9 +69,9 @@ class ATYTaskTableViewCell: UITableViewCell {
         return label
     }()
 
-    private let sanctionView : UIView = {
-        let view = UIView()
-        view.backgroundColor = R.color.textColorSecondary()
+    private let sanctionImageView : UIImageView = {
+        let view = UIImageView()
+        view.image = R.image.coinImage()
         return view
     }()
 
@@ -115,6 +115,7 @@ class ATYTaskTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = R.color.backgroundAppColor()
+        selectionStyle = .none
         backgroundColor = R.color.backgroundAppColor()
         switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         configureCell()
@@ -144,7 +145,7 @@ class ATYTaskTableViewCell: UITableViewCell {
                userOrCourseTask: UserOrCourseTask) {
 
         self.typeTask = typeTask
-        switchButton.isHidden = userOrCourseTask == .user
+        switchButton.isHidden = (userOrCourseTask == .user) || typeTask == .CHECKBOX
         var image : UIImage?
         var backgroundButtonColor : UIColor?
 
@@ -169,6 +170,11 @@ class ATYTaskTableViewCell: UITableViewCell {
             image = R.image.text()
         case .TIMER:
             image = R.image.timer()
+            if state == .performed {
+                image = R.image.timerPause()
+                timeLabel.isHidden = false
+            }
+
 //        case 3:
 //            image = R.image.timerPause()
 //            timeLabel.isHidden = false
@@ -182,7 +188,7 @@ class ATYTaskTableViewCell: UITableViewCell {
             }
         }
 
-        self.sanctionView.isHidden = !hasSanction
+        self.sanctionImageView.isHidden = !hasSanction
 
         self.startTaskButton.setImage(image, for: .normal)
         self.startTaskButton.backgroundColor = backgroundButtonColor
@@ -225,7 +231,7 @@ class ATYTaskTableViewCell: UITableViewCell {
         backContentView.addSubview(dotView)
         backContentView.addSubview(secondSubtitle)
         backContentView.addSubview(courseLabel)
-        backContentView.addSubview(sanctionView)
+        backContentView.addSubview(sanctionImageView)
         backContentView.addSubview(timeLabel)
         backContentView.addSubview(minusButton)
         backContentView.addSubview(plusButton)
@@ -284,8 +290,8 @@ class ATYTaskTableViewCell: UITableViewCell {
             make.trailing.equalTo(switchButton.snp.leading).offset(-10)
         }
 
-        sanctionView.layer.cornerRadius = 7
-        sanctionView.snp.makeConstraints { (make) in
+        sanctionImageView.layer.cornerRadius = 7
+        sanctionImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(backContentView.snp.top)
             make.trailing.equalToSuperview().offset(-13)
             make.width.height.equalTo(14)
@@ -294,8 +300,8 @@ class ATYTaskTableViewCell: UITableViewCell {
         courseLabel.layer.cornerRadius = 7
         courseLabel.textAlignment = .center
         courseLabel.snp.makeConstraints { (make) in
-            make.trailing.equalTo(sanctionView.snp.leading).offset(-5)
-            make.centerY.equalTo(sanctionView)
+            make.trailing.equalTo(sanctionImageView.snp.leading).offset(-5)
+            make.centerY.equalTo(sanctionImageView)
         }
 
         timeLabel.snp.makeConstraints { (make) in

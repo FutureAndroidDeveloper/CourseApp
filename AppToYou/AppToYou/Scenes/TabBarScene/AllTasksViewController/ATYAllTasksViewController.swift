@@ -32,43 +32,66 @@ final class ATYAllTasksViewController: UIViewController {
                                         hasSanction: true,
                                         titleLabel: "Медитация",
                                         firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
-                          TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: "Кулинария",
+                                        secondSubtitleLabel: "40 мин",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                          TemporaryData(typeTask: .RITUAL,
+                                        courseName: nil,
                                         hasSanction: true,
                                         titleLabel: "Сходить на площадку",
                                         firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
-                          TemporaryData(typeTask: .CHECKBOX,
+                                        secondSubtitleLabel: "20 мин",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                          TemporaryData(typeTask: .TEXT,
                                         courseName: "Спорт",
                                         hasSanction: true,
                                         titleLabel: "Отжимания",
                                         firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
-                          TemporaryData(typeTask: .CHECKBOX,
+                                        secondSubtitleLabel: "10 мин",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                          TemporaryData(typeTask: .TIMER,
                                         courseName: "Энергетика",
                                         hasSanction: true,
                                         titleLabel: "Прочитать книгу",
                                         firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart),
+                                        secondSubtitleLabel: "30 мин",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
                           TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: "Здоровье",
+                                        courseName: nil,
                                         hasSanction: false,
                                         titleLabel: "Отжимания",
                                         firstSubtitleLabel: "Каждый день",
                                         secondSubtitleLabel: "20 раз",
-                                        state: .didNotStart),
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
                           TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: "Шитье",
-                                        hasSanction: false,
+                                        courseName: nil,
+                                        hasSanction: true,
                                         titleLabel: "Большой текст тест текст на длину длинный текст",
-                                        firstSubtitleLabel: "Каждый деньфывфывфывфывфы",
-                                        secondSubtitleLabel: "60 минпывафывпвыпваыпфывпфывпыфва",
-                                        state: .didNotStart)]
+                                        firstSubtitleLabel: "Каждый день",
+                                        secondSubtitleLabel: "60 мин",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                          TemporaryData(typeTask: .RITUAL,
+                                        courseName: nil,
+                                        hasSanction: false,
+                                        titleLabel: "Прыжки",
+                                        firstSubtitleLabel: "Каждый месяц",
+                                        secondSubtitleLabel: "60 мин",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                          TemporaryData(typeTask: .TIMER,
+                                        courseName: "Автоспорт",
+                                        hasSanction: true,
+                                        titleLabel: "Дрифт",
+                                        firstSubtitleLabel: "Каждый день",
+                                        secondSubtitleLabel: "40 мин",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                          TemporaryData(typeTask: .RITUAL,
+                                        courseName: nil,
+                                        hasSanction: false,
+                                        titleLabel: "Отжимания",
+                                        firstSubtitleLabel: "пн, вт, ср",
+                                        secondSubtitleLabel: "20 раз",
+                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31"))]
+
+    var resultArray = [TemporaryData]()
 
     convenience init(name: String) {
         self.init(title: name)
@@ -89,6 +112,7 @@ final class ATYAllTasksViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        resultArray = temporaryArray
         configureLabelAndSwitch()
         configureTableView()
     }
@@ -97,6 +121,8 @@ final class ATYAllTasksViewController: UIViewController {
         view.addSubview(label)
         view.addSubview(switchButton)
 
+        switchButton.addTarget(self, action: #selector(switchButtonAction), for: .valueChanged)
+        switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         switchButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-20)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.topMargin).offset(20)
@@ -108,6 +134,17 @@ final class ATYAllTasksViewController: UIViewController {
             make.centerY.equalTo(switchButton)
         }
 
+    }
+
+    @objc func switchButtonAction() {
+        switch switchButton.isOn {
+        case true:
+            resultArray = temporaryArray.filter({ $0.courseName == nil })
+        case false:
+            resultArray = temporaryArray
+        }
+        self.futureTasksTableView.reloadData()
+        print(switchButton.isOn)
     }
 
     private func configureTableView() {
@@ -130,14 +167,14 @@ final class ATYAllTasksViewController: UIViewController {
 extension ATYAllTasksViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.temporaryArray.count
+        self.resultArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ATYTaskTableViewCell.reuseIdentifier, for: indexPath) as! ATYTaskTableViewCell
-        let temporary = self.temporaryArray[indexPath.row]
-        cell.setUp(typeTask: .CHECKBOX,
-                   courseName: "temporary.courseName",
+        let temporary = self.resultArray[indexPath.row]
+        cell.setUp(typeTask: temporary.typeTask,
+                   courseName: temporary.courseName,
                    hasSanction: temporary.hasSanction,
                    titleLabel: temporary.titleLabel,
                    firstSubtitleLabel: temporary.firstSubtitleLabel,
@@ -174,14 +211,14 @@ extension ATYAllTasksViewController: UITableViewDelegate, UITableViewDataSource 
         let delete = UIContextualAction(style: .destructive, title: "") { (action, view, boolValue) in
             boolValue(true)
 
-            self.temporaryArray.remove(at: indexPath.row)
+            self.resultArray.remove(at: indexPath.row)
 
             self.futureTasksTableView.deleteRows(at: [indexPath], with: .fade)
         }
 
         let edit = UIContextualAction(style: .destructive, title: "") { (action, view, boolValue) in
             boolValue(true)
-            self.temporaryArray.remove(at: indexPath.row)
+            self.resultArray.remove(at: indexPath.row)
             self.futureTasksTableView.deleteRows(at: [indexPath], with: .fade)
         }
 

@@ -48,7 +48,7 @@ class ATYReportCourseCell: UITableViewCell {
             make.centerY.equalTo(reportImageView)
             make.leading.equalTo(reportImageView.snp.trailing).offset(12)
             make.trailing.equalToSuperview().offset(-20)
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-40)
         }
     }
 }

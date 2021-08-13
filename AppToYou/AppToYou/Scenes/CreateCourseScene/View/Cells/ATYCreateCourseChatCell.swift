@@ -61,6 +61,7 @@ class ATYCreateCourseChatCell: UITableViewCell {
             make.bottom.equalToSuperview().offset(-10)
         }
 
+        switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         switchButton.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-20)
             make.centerY.equalTo(chatLabel)

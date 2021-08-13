@@ -10,16 +10,16 @@ import UIKit
 
 class ATYCreateTaskViewController: UIViewController {
 
-
     var viewModel : ATYCreateTaskViewModel!
 
     var createTaskTableView = UITableView()
     var countOfNotification = 1
 
     private var transition: PanelTransition!
+    private var transitionForQuestionButton: PanelTransition!
     private var datePicker = UIDatePicker()
 
-    var types : TypeOfTask!
+    var types : ATYTaskTypeEnum!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +67,7 @@ class ATYCreateTaskViewController: UIViewController {
         }
 
         self.transition = PanelTransition(y: view.bounds.height * 0.5 , height: view.bounds.height * 0.5)
+        self.transitionForQuestionButton = PanelTransition(y: view.bounds.height * 0.4 , height: view.bounds.height * 0.6)
     }
 
     private func openTimerViewController() {
@@ -85,18 +86,27 @@ class ATYCreateTaskViewController: UIViewController {
 
         present(child, animated: true)
     }
+
+    private func openPenaltyForFailureController() {
+        let child = ATYPenaltyForFailureViewController()
+
+        child.transitioningDelegate = transitionForQuestionButton
+        child.modalPresentationStyle = .custom
+
+        present(child, animated: true)
+    }
 }
 
 extension ATYCreateTaskViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch types {
-        case .checkBox:
+        case .CHECKBOX:
             return ATYEnumWithReuseIdentifierCellCheckBox.allCases.count
-        case .countRepeat:
+        case .RITUAL:
             return ATYEnumWithReuseIdentifierCellCountRepeat.allCases.count
-        case .timerTask:
+        case .TIMER:
             return ATYEnumWithReuseIdentifierCellTimer.allCases.count
-        case .textTask:
+        case .TEXT:
             return ATYEnumWithReuseIdentifierCellText.allCases.count
         default: return 0
         }
@@ -104,7 +114,7 @@ extension ATYCreateTaskViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch types {
-        case .checkBox:
+        case .CHECKBOX:
             self.viewModel.userTask.taskType = .CHECKBOX
             self.viewModel.userTask.taskAttribute = nil
             switch ATYEnumWithReuseIdentifierCellCheckBox(rawValue: indexPath.row){
@@ -163,18 +173,22 @@ extension ATYCreateTaskViewController: UITableViewDelegate, UITableViewDataSourc
                 cell.callbackText = { [weak self] text in
                     self?.viewModel.userTask.taskSanction = Int(text) ?? 0
                 }
+
+                cell.questionCallback = { [weak self] in
+                    self?.openPenaltyForFailureController()
+                }
                     return cell
             case .saveTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
                 cell.setUp(titleForButton: R.string.localizable.createTask())
                 cell.callback = { [weak self] in
-                    self?.viewModel.createUserTask()
+//                    self?.viewModel.createUserTask()
                     self?.navigationController?.popViewController(animated: true)
                 }
                     return cell
             default: break
             }
-        case .countRepeat:
+        case .RITUAL:
             self.viewModel.userTask.taskType = .RITUAL
             switch ATYEnumWithReuseIdentifierCellCountRepeat(rawValue: indexPath.row){
             case .createTaskNameCell:
@@ -221,12 +235,15 @@ extension ATYCreateTaskViewController: UITableViewDelegate, UITableViewDataSourc
                     return cell
             case .createSanctionTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
+                cell.questionCallback = { [weak self] in
+                    self?.openPenaltyForFailureController()
+                }
                     return cell
             case .saveTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
                 cell.setUp(titleForButton: R.string.localizable.createTask())
                 cell.callback = { [weak self] in
-                    self?.viewModel.createUserTask()
+//                    self?.viewModel.createUserTask()
                     self?.navigationController?.popViewController(animated: true)
                 }
                     return cell
@@ -235,7 +252,7 @@ extension ATYCreateTaskViewController: UITableViewDelegate, UITableViewDataSourc
                     return cell
             default: break
             }
-        case .timerTask:
+        case .TIMER:
             self.viewModel.userTask.taskType = .TIMER
             switch ATYEnumWithReuseIdentifierCellTimer(rawValue: indexPath.row){
             case .createTaskNameCell:
@@ -279,12 +296,15 @@ extension ATYCreateTaskViewController: UITableViewDelegate, UITableViewDataSourc
                     return cell
             case .createSanctionTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
+                cell.questionCallback = { [weak self] in
+                    self?.openPenaltyForFailureController()
+                }
                     return cell
             case .saveTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
                 cell.setUp(titleForButton: R.string.localizable.createTask())
                 cell.callback = { [weak self] in
-                    self?.viewModel.createUserTask()
+//                    self?.viewModel.createUserTask()
                     self?.navigationController?.popViewController(animated: true)
                 }
                     return cell
@@ -293,7 +313,7 @@ extension ATYCreateTaskViewController: UITableViewDelegate, UITableViewDataSourc
                     return cell
             default: break
             }
-        case .textTask:
+        case .TEXT:
             self.viewModel.userTask.taskType = .TEXT
             switch ATYEnumWithReuseIdentifierCellText(rawValue: indexPath.row){
             case .createTaskNameCell:
@@ -325,12 +345,15 @@ extension ATYCreateTaskViewController: UITableViewDelegate, UITableViewDataSourc
                     return cell
             case .createSanctionTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
+                cell.questionCallback = { [weak self] in
+                    self?.openPenaltyForFailureController()
+                }
                     return cell
             case .saveTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
                 cell.setUp(titleForButton: R.string.localizable.createTask())
                 cell.callback = { [weak self] in
-                    self?.viewModel.createUserTask()
+//                    self?.viewModel.createUserTask()
                     self?.navigationController?.popViewController(animated: true)
                 }
                     return cell

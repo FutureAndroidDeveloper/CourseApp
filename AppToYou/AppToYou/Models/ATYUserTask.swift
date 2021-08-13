@@ -6,7 +6,8 @@
 //  Copyright © 2021 QITTIQ. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
 struct ATYUserTask {
     var tsCreated: String? = Date().toString(dateFormat: .simpleDateFormat)
     var tsUpdated: String? = Date().toString(dateFormat: .simpleDateFormat)
@@ -49,5 +50,9 @@ enum ATYTaskTypeEnum : String, CaseIterable {
 
     var title: String {
         get { return String(describing: self) }
+    }
+
+    var massive : [UITableViewCell] {
+        return [ATYCreateDescriptionTaskCell()]
     }
 }

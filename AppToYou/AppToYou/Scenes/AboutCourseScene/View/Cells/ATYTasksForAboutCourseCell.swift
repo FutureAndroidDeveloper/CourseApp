@@ -56,6 +56,7 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
 
     var createTaskCallback : (() -> (Void))?
     var selectSwitchButtonCallback : ((ATYTaskTypeEnum?) -> ())?
+    var addAllTasksCallback: (() -> ())?
 
     var completedTask = [TemporaryData(typeTask: .CHECKBOX,
                                        courseName: "Электрика",
@@ -63,28 +64,49 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
                                        titleLabel: "Test text",
                                        firstSubtitleLabel: "пт, cуб",
                                        secondSubtitleLabel: "60 мин",
-                                       state: .didNotStart),
+                                       state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
                          TemporaryData(typeTask: .RITUAL,
                                        courseName: "Машиностроение",
                                        hasSanction: false,
                                        titleLabel: "Test text",
                                        firstSubtitleLabel: "пт, cуб, вскр, ср",
                                        secondSubtitleLabel: "60 мин",
-                                       state: .didNotStart),
+                                       state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
                          TemporaryData(typeTask: .TEXT,
                                        courseName: "Медитация",
                                        hasSanction: true,
                                        titleLabel: "Test text",
                                        firstSubtitleLabel: "ежедневно",
                                        secondSubtitleLabel: "60 мин",
-                                       state: .didNotStart),
+                                       state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
                          TemporaryData(typeTask: .TIMER,
                                        courseName: "Английский",
                                        hasSanction: false,
                                        titleLabel: "Test text",
                                        firstSubtitleLabel: "пт, cуб, вскр",
                                        secondSubtitleLabel: "60 мин",
-                                       state: .didNotStart)]
+                                       state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                         TemporaryData(typeTask: .TIMER,
+                                       courseName: "Английский",
+                                       hasSanction: false,
+                                       titleLabel: "Test text",
+                                       firstSubtitleLabel: "пт, cуб, вскр",
+                                       secondSubtitleLabel: "60 мин",
+                                       state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                         TemporaryData(typeTask: .TIMER,
+                                       courseName: "Английский",
+                                       hasSanction: false,
+                                       titleLabel: "Test text",
+                                       firstSubtitleLabel: "пт, cуб, вскр",
+                                       secondSubtitleLabel: "60 мин",
+                                       state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
+                         TemporaryData(typeTask: .TIMER,
+                                       courseName: "Английский",
+                                       hasSanction: false,
+                                       titleLabel: "Test text",
+                                       firstSubtitleLabel: "пт, cуб, вскр",
+                                       secondSubtitleLabel: "60 мин",
+                                       state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31"))]
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -92,6 +114,7 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
         selectionStyle = .none
         configure()
         tasksTableView.delegate = self
+        tasksTableView.isScrollEnabled = false
         tasksTableView.dataSource = self
         tasksTableView.separatorStyle = .none
         tasksTableView.register(ATYTaskTableViewCell.self, forCellReuseIdentifier: ATYTaskTableViewCell.reuseIdentifier)
@@ -126,6 +149,10 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
         tableViewObserver = nil
     }
 
+    @objc func addTaskButtonAction() {
+        addAllTasksCallback?()
+    }
+
     private func configure() {
         contentView.addSubview(tasksCourseLabel)
         contentView.addSubview(addTasksLabel)
@@ -146,6 +173,7 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
             make.width.equalTo(addTasksLabel.intrinsicContentSize.width)
         }
 
+        addTaskButton.addTarget(self, action: #selector(addTaskButtonAction), for: .touchUpInside)
         addTaskButton.snp.makeConstraints { (make) in
             make.leading.equalTo(addTasksLabel.snp.trailing).offset(6)
             make.width.height.equalTo(15)
@@ -181,7 +209,7 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
 
 extension ATYTasksForAboutCourseCell : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return completedTask.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

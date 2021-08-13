@@ -22,8 +22,8 @@ class ATYCreateTaskCountingCell: UITableViewCell {
 
     var radioButtonOne : UIButton = {
         let button = UIButton()
-        button.setImage(R.image.unselectedRadioButton(), for: .normal)
-        button.setImage(R.image.selectedRadioButton(), for: .selected)
+        button.setImage(R.image.unselectedRadioButton1(), for: .normal)
+        button.setImage(R.image.selectedRadioButton1(), for: .selected)
         button.setTitle(R.string.localizable.daily(), for: .normal)
         button.setTitleColor(R.color.titleTextColor(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -34,8 +34,8 @@ class ATYCreateTaskCountingCell: UITableViewCell {
 
     var radioButtonTwo : UIButton = {
         let button = UIButton()
-        button.setImage(R.image.unselectedRadioButton(), for: .normal)
-        button.setImage(R.image.selectedRadioButton(), for: .selected)
+        button.setImage(R.image.unselectedRadioButton1(), for: .normal)
+        button.setImage(R.image.selectedRadioButton1(), for: .selected)
         button.setTitle(R.string.localizable.onWeekdays(), for: .normal)
         button.setTitleColor(R.color.titleTextColor(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -46,8 +46,8 @@ class ATYCreateTaskCountingCell: UITableViewCell {
 
     var radioButtonThree : UIButton = {
         let button = UIButton()
-        button.setImage(R.image.unselectedRadioButton(), for: .normal)
-        button.setImage(R.image.selectedRadioButton(), for: .selected)
+        button.setImage(R.image.unselectedRadioButton1(), for: .normal)
+        button.setImage(R.image.selectedRadioButton1(), for: .selected)
         button.setTitle(R.string.localizable.monthly(), for: .normal)
         button.setTitleColor(R.color.titleTextColor(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -58,8 +58,8 @@ class ATYCreateTaskCountingCell: UITableViewCell {
 
     var radioButtonFour : UIButton = {
         let button = UIButton()
-        button.setImage(R.image.unselectedRadioButton(), for: .normal)
-        button.setImage(R.image.selectedRadioButton(), for: .selected)
+        button.setImage(R.image.unselectedRadioButton1(), for: .normal)
+        button.setImage(R.image.selectedRadioButton1(), for: .selected)
         button.setTitle(R.string.localizable.everyYear(), for: .normal)
         button.setTitleColor(R.color.titleTextColor(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -70,8 +70,8 @@ class ATYCreateTaskCountingCell: UITableViewCell {
 
     var radioButtonFive : UIButton = {
         let button = UIButton()
-        button.setImage(R.image.unselectedRadioButton(), for: .normal)
-        button.setImage(R.image.selectedRadioButton(), for: .selected)
+        button.setImage(R.image.unselectedRadioButton1(), for: .normal)
+        button.setImage(R.image.selectedRadioButton1(), for: .selected)
         button.setTitle(R.string.localizable.once(), for: .normal)
         button.setTitleColor(R.color.titleTextColor(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -82,8 +82,8 @@ class ATYCreateTaskCountingCell: UITableViewCell {
 
     var radioButtonSix : UIButton = {
         let button = UIButton()
-        button.setImage(R.image.unselectedRadioButton(), for: .normal)
-        button.setImage(R.image.selectedRadioButton(), for: .selected)
+        button.setImage(R.image.unselectedRadioButton1(), for: .normal)
+        button.setImage(R.image.selectedRadioButton1(), for: .selected)
         button.setTitle(R.string.localizable.selectDaysWeek(), for: .normal)
         button.setTitleColor(R.color.titleTextColor(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)

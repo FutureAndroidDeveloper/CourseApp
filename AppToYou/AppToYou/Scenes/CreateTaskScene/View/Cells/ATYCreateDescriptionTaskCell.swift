@@ -25,6 +25,8 @@ class ATYCreateDescriptionTaskCell: UITableViewCell {
         return textView
     }()
 
+    var callbackText: ((String) -> Void)?
+
     let placeholderLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -74,5 +76,6 @@ class ATYCreateDescriptionTaskCell: UITableViewCell {
 extension ATYCreateDescriptionTaskCell : UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty
+        callbackText?(textView.text ?? "")
     }
 }

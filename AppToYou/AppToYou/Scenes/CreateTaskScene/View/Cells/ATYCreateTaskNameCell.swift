@@ -64,7 +64,6 @@ class ATYCreateTaskNameCell: UITableViewCell {
     }
 }
 
-
 extension ATYCreateTaskNameCell: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         callbackText?(textField.text ?? "")

@@ -47,6 +47,8 @@ class ATYPayForCourseView : UIView {
         return label
     }()
 
+    var callbackText: ((String) -> ())?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -78,6 +80,7 @@ class ATYPayForCourseView : UIView {
             make.trailing.equalToSuperview().offset(-10)
         }
 
+        sanctionTextField.delegate = self
         sanctionTextField.layer.cornerRadius = 22.5
         sanctionTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0)
         sanctionTextField.snp.makeConstraints { (make) in
@@ -107,5 +110,11 @@ class ATYPayForCourseView : UIView {
             make.trailing.equalToSuperview().offset(-20)
         }
 
+    }
+}
+
+extension ATYPayForCourseView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        callbackText?(textField.text ?? "")
     }
 }

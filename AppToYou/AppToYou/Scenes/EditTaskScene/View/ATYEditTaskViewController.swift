@@ -10,15 +10,18 @@ import UIKit
 
 class ATYEditTaskViewController: UIViewController {
 
+    var viewModel : ATYCreateTaskViewModel!
+
     var createTaskTableView = UITableView()
     var needShowCalendar = true
     var needShowWeekDays = false
     var countOfNotification = 1
 
     private var transition: PanelTransition!
+    private var transitionForQuestionButton: PanelTransition!
     private var datePicker = UIDatePicker()
 
-    var types : TypeOfTask!
+    var types : ATYTaskTypeEnum!
 
     var hour : String?
     var minute : String?
@@ -30,6 +33,7 @@ class ATYEditTaskViewController: UIViewController {
         view.backgroundColor = R.color.backgroundAppColor()
         configureNavBar()
         configureCreateTaskTableView()
+        viewModel = ATYCreateTaskViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +76,7 @@ class ATYEditTaskViewController: UIViewController {
         }
 
         self.transition = PanelTransition(y: view.bounds.height * 0.5 , height: view.bounds.height * 0.5)
+        self.transitionForQuestionButton = PanelTransition(y: view.bounds.height * 0.4 , height: view.bounds.height * 0.6)
     }
 
     private func openTimerViewController() {
@@ -87,244 +92,299 @@ class ATYEditTaskViewController: UIViewController {
 
         present(child, animated: true)
     }
+
+    private func openPenaltyForFailureController() {
+        let child = ATYPenaltyForFailureViewController()
+
+        child.transitioningDelegate = transitionForQuestionButton
+        child.modalPresentationStyle = .custom
+
+        present(child, animated: true)
+    }
 }
 
 extension ATYEditTaskViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch types {
-        case .checkBox:
+        case .CHECKBOX:
             return needShowCalendar ? ATYEnumWithReuseIdentifierCellCheckBox.allCases.count : ATYEnumWithReuseIdentifierCellCheckBox.allCases.count
-        case .countRepeat:
+        case .RITUAL:
             return needShowCalendar ? ATYEnumWithReuseIdentifierCellCountRepeat.allCases.count : ATYEnumWithReuseIdentifierCellCountRepeat.allCases.count
-        case .timerTask:
+        case .TIMER:
             return needShowCalendar ? ATYEnumWithReuseIdentifierCellTimer.allCases.count : ATYEnumWithReuseIdentifierCellTimer.allCases.count
-        case .textTask:
+        case .TEXT:
             return needShowCalendar ? ATYEnumWithReuseIdentifierCellText.allCases.count : ATYEnumWithReuseIdentifierCellText.allCases.count
         default: return 0
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        switch types {
-//        case .checkBox:
-//            switch ATYEnumWithReuseIdentifierCellCheckBox(rawValue: indexPath.row){
-//            case .createTaskNameCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
-//                return cell
-//            case .createTaskCountingCell:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell
-//                cell.oneRepeatCallback = { [weak self] isNeedOneDay, isNeedWeekDays in
-//                    self?.needShowCalendar = isNeedOneDay
-//                    self?.needShowWeekDays = isNeedWeekDays
-//                    self?.createTaskTableView.reloadData()
-//                }
-//                return cell
-//            case .createTaskPeriodCaledarCell:
-//                if needShowCalendar {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskPeriodCalendarCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskPeriodCalendarCell
-//                    return cell
-//                } else if !needShowWeekDays {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
-//                    return cell
-//                } else {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
-//                        return cell
-//                }
-//
-//            case .createNotificationAboutTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateNotificationAboutTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateNotificationAboutTaskCell
-//                cell.setUp(notificationCount: countOfNotification)
-//                cell.notificationsViews.first?.hourTextField.text = self.hour == nil ? "" : self.hour! + " " + R.string.localizable.hour()
-//                cell.notificationsViews.first?.minTextField.text =  self.minute == nil ? "" : self.minute! + " " + R.string.localizable.min()
-//
-//                cell.callBack = { [weak self] in
-//                    self?.openTimerViewController()
-//                }
-//
-//                cell.plusCallBack = { [weak self] in
-//                    self?.countOfNotification += 1
-//                    self?.createTaskTableView.reloadData()
-//                }
-//                    return cell
-//            case .createSanctionTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
-//                    return cell
-//            case .saveTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
-//                cell.setUp(titleForButton: R.string.localizable.save())
-//                cell.callback = { [weak self] in
-//                    self?.navigationController?.popViewController(animated: true)
-//                }
-//                    return cell
-//            default: break
-//            }
-//        case .countRepeat:
-//            switch ATYEnumWithReuseIdentifierCellCountRepeat(rawValue: indexPath.row){
-//            case .createTaskNameCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
-//                return cell
-//            case .createTaskCountingCell:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell
-//                cell.oneRepeatCallback = { [weak self] isNeedOneDay, isNeedWeekDays in
-//                    self?.needShowCalendar = isNeedOneDay
-//                    self?.needShowWeekDays = isNeedWeekDays
-//                    self?.createTaskTableView.reloadData()
-//                }
-//                return cell
-//            case .createTaskPeriodCaledarCell:
-//                if needShowCalendar {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskPeriodCalendarCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskPeriodCalendarCell
-//                        return cell
-//                } else if !needShowWeekDays {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
-//                        return cell
-//                } else {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
-//                        return cell
-//                }
-//            case .createNotificationAboutTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateNotificationAboutTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateNotificationAboutTaskCell
-//                cell.setUp(notificationCount: countOfNotification)
-//                cell.notificationsViews.first?.hourTextField.text = self.hour == nil ? "" : self.hour! + " " + R.string.localizable.hour()
-//                cell.notificationsViews.first?.minTextField.text =  self.minute == nil ? "" : self.minute! + " " + R.string.localizable.min()
-//
-//                cell.callBack = { [weak self] in
-//                    self?.openTimerViewController()
-//                }
-//
-//                cell.plusCallBack = { [weak self] in
-//                    self?.countOfNotification += 1
-//                    self?.createTaskTableView.reloadData()
-//                }
-//                    return cell
-//            case .createSanctionTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
-//                    return cell
-//            case .saveTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
-//                cell.setUp(titleForButton: R.string.localizable.save())
-//                cell.callback = { [weak self] in
-//                    self?.navigationController?.popViewController(animated: true)
-//                }
-//                    return cell
-//            case .createCountRepeatTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateCountRepeatTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateCountRepeatTaskCell
-//                    return cell
-//            default: break
-//            }
-//        case .timerTask:
-//            switch ATYEnumWithReuseIdentifierCellTimer(rawValue: indexPath.row){
-//            case .createTaskNameCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
-//                return cell
-//            case .createTaskCountingCell:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell
-//                cell.oneRepeatCallback = { [weak self] isNeedOneDay, isNeedWeekDays in
-//                    self?.needShowCalendar = isNeedOneDay
-//                    self?.needShowWeekDays = isNeedWeekDays
-//                    self?.createTaskTableView.reloadData()
-//                }
-//                return cell
-//            case .createTaskPeriodCaledarCell:
-//                if needShowCalendar {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskPeriodCalendarCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskPeriodCalendarCell
-//                        return cell
-//                } else if !needShowWeekDays {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
-//                        return cell
-//                } else {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
-//                        return cell
-//                }
-//            case .createNotificationAboutTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateNotificationAboutTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateNotificationAboutTaskCell
-//                cell.setUp(notificationCount: countOfNotification)
-//                cell.notificationsViews.first?.hourTextField.text = self.hour == nil ? "" : self.hour! + " " + R.string.localizable.hour()
-//                cell.notificationsViews.first?.minTextField.text =  self.minute == nil ? "" : self.minute! + " " + R.string.localizable.min()
-//
-//                cell.callBack = { [weak self] in
-//                    self?.openTimerViewController()
-//                }
-//
-//                cell.plusCallBack = { [weak self] in
-//                    self?.countOfNotification += 1
-//                    self?.createTaskTableView.reloadData()
-//                }
-//                    return cell
-//            case .createSanctionTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
-//                    return cell
-//            case .saveTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
-//                cell.setUp(titleForButton: R.string.localizable.save())
-//                cell.callback = { [weak self] in
-//                    self?.navigationController?.popViewController(animated: true)
-//                }
-//                    return cell
-//            case .createDurationTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateDurationTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateDurationTaskCell
-//                    return cell
-//            default: break
-//            }
-//        case .textTask:
-//            switch ATYEnumWithReuseIdentifierCellText(rawValue: indexPath.row){
-//            case .createTaskNameCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
-//                return cell
-//            case .createDescriptionTaskCell:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateDescriptionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateDescriptionTaskCell
-//                return cell
-//            case .createMaxSymbolsCountCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateMaxCountSymbolsCell.reuseIdentifier, for: indexPath) as! ATYCreateMaxCountSymbolsCell
-//                    return cell
-//            case .createNotificationAboutTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateNotificationAboutTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateNotificationAboutTaskCell
-//                cell.setUp(notificationCount: countOfNotification)
-//                cell.notificationsViews.first?.hourTextField.text = self.hour == nil ? "" : self.hour! + " " + R.string.localizable.hour()
-//                cell.notificationsViews.first?.minTextField.text =  self.minute == nil ? "" : self.minute! + " " + R.string.localizable.min()
-//
-//                cell.callBack = { [weak self] in
-//                    self?.openTimerViewController()
-//                }
-//
-//                cell.plusCallBack = { [weak self] in
-//                    self?.countOfNotification += 1
-//                    self?.createTaskTableView.reloadData()
-//                }
-//                    return cell
-//            case .createSanctionTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
-//                    return cell
-//            case .saveTaskCell:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
-//                cell.setUp(titleForButton: R.string.localizable.save())
-//                cell.callback = { [weak self] in
-//                    self?.navigationController?.popViewController(animated: true)
-//                }
-//                    return cell
-//            case .createTaskPeriodCaledarCell:
-//                if needShowCalendar {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskPeriodCalendarCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskPeriodCalendarCell
-//                        return cell
-//                } else if !needShowWeekDays {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
-//                        return cell
-//                } else {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
-//                        return cell
-//                }
-//            case .createTaskCountingCell:
-//            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell
-//                cell.oneRepeatCallback = { [weak self] isNeedOneDay, isNeedWeekDays in
-//                    self?.needShowCalendar = isNeedOneDay
-//                    self?.needShowWeekDays = isNeedWeekDays
-//                    self?.createTaskTableView.reloadData()
-//                }
-//                return cell
-//            default: break
-//            }
-//        default: break
-//        }
+        switch types {
+        case .CHECKBOX:
+            self.viewModel.userTask.taskType = .CHECKBOX
+            self.viewModel.userTask.taskAttribute = nil
+            switch ATYEnumWithReuseIdentifierCellCheckBox(rawValue: indexPath.row){
+            case .createTaskNameCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
+                cell.callbackText = { [weak self] text in
+                    self?.viewModel.userTask.taskName = text
+                }
+                return cell
+            case .createTaskCountingCell:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell
+                cell.oneRepeatCallback = { [weak self] frequencyType in
+                    self?.viewModel.frequencyType = frequencyType
+                    self?.createTaskTableView.reloadData()
+                }
+                return cell
+            case .createTaskPeriodCaledarCell:
+                if  self.viewModel.frequencyType == .CERTAIN_DAYS {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
+                    cell.callbackResult = { [weak self] resultString in
+                        print(resultString)
+                        self?.viewModel.daysCode = resultString
+                    }
+                    return cell
+                } else if  self.viewModel.frequencyType == .ONCE {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskPeriodCalendarCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskPeriodCalendarCell
+                    cell.startCallback = { [weak self] startDateString in
+                        self?.viewModel.userTask.startDate = startDateString ?? ""
+                    }
+
+                    cell.endCallback = { [weak self] endDateString in
+                        self?.viewModel.userTask.taskCompleteTime = endDateString ?? ""
+                    }
+                        return cell
+                }
+            case .createNotificationAboutTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateNotificationAboutTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateNotificationAboutTaskCell
+                cell.setUp(notificationCount: countOfNotification)
+                cell.notificationsViews.first?.hourTextField.text = self.viewModel.hour == nil ? "" : self.viewModel.hour! + " " + R.string.localizable.hour()
+                cell.notificationsViews.first?.minTextField.text =  self.viewModel.minute == nil ? "" : self.viewModel.minute! + " " + R.string.localizable.min()
+
+                cell.callBack = { [weak self] in
+                    self?.openTimerViewController()
+                }
+
+                cell.plusCallBack = { [weak self] in
+                    self?.countOfNotification += 1
+                    self?.createTaskTableView.reloadData()
+                }
+                    return cell
+            case .createSanctionTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
+                cell.questionCallback = { [weak self] in
+                    self?.openPenaltyForFailureController()
+                }
+
+                cell.callbackText = { [weak self] text in
+                    self?.viewModel.userTask.taskSanction = Int(text) ?? 0
+                }
+                    return cell
+            case .saveTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
+                cell.setUp(titleForButton: "Сохранить")
+                cell.callback = { [weak self] in
+//                    self?.viewModel.createUserTask()
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                    return cell
+            default: break
+            }
+        case .RITUAL:
+            self.viewModel.userTask.taskType = .RITUAL
+            switch ATYEnumWithReuseIdentifierCellCountRepeat(rawValue: indexPath.row){
+            case .createTaskNameCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
+                cell.callbackText = { [weak self] text in
+                    self?.viewModel.userTask.taskName = text
+                }
+                return cell
+            case .createTaskCountingCell:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell
+                cell.oneRepeatCallback = { [weak self] frequencyType in
+                    self?.viewModel.frequencyType = frequencyType
+                    self?.createTaskTableView.reloadData()
+                }
+                return cell
+            case .createTaskPeriodCaledarCell:
+                if self.viewModel.frequencyType == .CERTAIN_DAYS {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
+                    cell.callbackResult = { [weak self] resultString in
+                        self?.viewModel.userTask.daysCode = resultString
+                    }
+                        return cell
+                } else if  self.viewModel.frequencyType == .ONCE {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
+                        return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskPeriodCalendarCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskPeriodCalendarCell
+                        return cell
+                }
+            case .createNotificationAboutTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateNotificationAboutTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateNotificationAboutTaskCell
+                cell.setUp(notificationCount: countOfNotification)
+                cell.notificationsViews.first?.hourTextField.text = self.viewModel.hour == nil ? "" : self.viewModel.hour! + " " + R.string.localizable.hour()
+                cell.notificationsViews.first?.minTextField.text =  self.viewModel.minute == nil ? "" : self.viewModel.minute! + " " + R.string.localizable.min()
+
+                cell.callBack = { [weak self] in
+                    self?.openTimerViewController()
+                }
+
+                cell.plusCallBack = { [weak self] in
+                    self?.countOfNotification += 1
+                    self?.createTaskTableView.reloadData()
+                }
+                    return cell
+            case .createSanctionTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
+                cell.questionCallback = { [weak self] in
+                    self?.openPenaltyForFailureController()
+                }
+                    return cell
+            case .saveTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
+                cell.setUp(titleForButton: "Сохранить")
+                cell.callback = { [weak self] in
+//                    self?.viewModel.createUserTask()
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                    return cell
+            case .createCountRepeatTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateCountRepeatTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateCountRepeatTaskCell
+                    return cell
+            default: break
+            }
+        case .TIMER:
+            self.viewModel.userTask.taskType = .TIMER
+            switch ATYEnumWithReuseIdentifierCellTimer(rawValue: indexPath.row){
+            case .createTaskNameCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
+                cell.callbackText = { [weak self] text in
+                    self?.viewModel.userTask.taskName = text
+                }
+                return cell
+            case .createTaskCountingCell:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell
+                cell.oneRepeatCallback = { [weak self] frequencyType in
+                    self?.viewModel.frequencyType = frequencyType
+                    self?.createTaskTableView.reloadData()
+                }
+                return cell
+            case .createTaskPeriodCaledarCell:
+                if self.viewModel.frequencyType == .CERTAIN_DAYS {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
+                        return cell
+                } else if self.viewModel.frequencyType == .ONCE {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
+                        return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskPeriodCalendarCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskPeriodCalendarCell
+                        return cell
+                }
+            case .createNotificationAboutTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateNotificationAboutTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateNotificationAboutTaskCell
+                cell.setUp(notificationCount: countOfNotification)
+                cell.notificationsViews.first?.hourTextField.text = self.viewModel.hour == nil ? "" : self.viewModel.hour! + " " + R.string.localizable.hour()
+                cell.notificationsViews.first?.minTextField.text =  self.viewModel.minute == nil ? "" : self.viewModel.minute! + " " + R.string.localizable.min()
+
+                cell.callBack = { [weak self] in
+                    self?.openTimerViewController()
+                }
+
+                cell.plusCallBack = { [weak self] in
+                    self?.countOfNotification += 1
+                    self?.createTaskTableView.reloadData()
+                }
+                    return cell
+            case .createSanctionTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
+                cell.questionCallback = { [weak self] in
+                    self?.openPenaltyForFailureController()
+                }
+                    return cell
+            case .saveTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
+                cell.setUp(titleForButton: "Сохранить")
+                cell.callback = { [weak self] in
+//                    self?.viewModel.createUserTask()
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                    return cell
+            case .createDurationTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateDurationTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateDurationTaskCell
+                    return cell
+            default: break
+            }
+        case .TEXT:
+            self.viewModel.userTask.taskType = .TEXT
+            switch ATYEnumWithReuseIdentifierCellText(rawValue: indexPath.row){
+            case .createTaskNameCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskNameCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskNameCell
+                cell.callbackText = { [weak self] text in
+                    self?.viewModel.userTask.taskName = text
+                }
+                return cell
+            case .createDescriptionTaskCell:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateDescriptionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateDescriptionTaskCell
+                return cell
+            case .createMaxSymbolsCountCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateMaxCountSymbolsCell.reuseIdentifier, for: indexPath) as! ATYCreateMaxCountSymbolsCell
+                    return cell
+            case .createNotificationAboutTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateNotificationAboutTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateNotificationAboutTaskCell
+                cell.setUp(notificationCount: countOfNotification)
+                cell.notificationsViews.first?.hourTextField.text = self.viewModel.hour == nil ? "" : self.viewModel.hour! + " " + R.string.localizable.hour()
+                cell.notificationsViews.first?.minTextField.text =  self.viewModel.minute == nil ? "" : self.viewModel.minute! + " " + R.string.localizable.min()
+
+                cell.callBack = { [weak self] in
+                    self?.openTimerViewController()
+                }
+
+                cell.plusCallBack = { [weak self] in
+                    self?.countOfNotification += 1
+                    self?.createTaskTableView.reloadData()
+                }
+                    return cell
+            case .createSanctionTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
+                cell.questionCallback = { [weak self] in
+                    self?.openPenaltyForFailureController()
+                }
+                    return cell
+            case .saveTaskCell:
+                let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
+                cell.setUp(titleForButton: "Сохранить")
+                cell.callback = { [weak self] in
+//                    self?.viewModel.createUserTask()
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                    return cell
+            case .createTaskPeriodCaledarCell:
+                if  self.viewModel.frequencyType == .CERTAIN_DAYS {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
+                        return cell
+                } else if self.viewModel.frequencyType == .ONCE {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
+                        return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskPeriodCalendarCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskPeriodCalendarCell
+                        return cell
+                }
+            case .createTaskCountingCell:
+            let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell
+                cell.oneRepeatCallback = { [weak self] frequencyType in
+                    self?.viewModel.frequencyType = frequencyType
+                    self?.createTaskTableView.reloadData()
+                }
+                return cell
+            default: break
+            }
+        default: break
+        }
 
         return UITableViewCell()
     }
