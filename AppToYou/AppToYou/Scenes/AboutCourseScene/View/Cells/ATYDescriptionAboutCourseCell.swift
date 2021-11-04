@@ -10,6 +10,8 @@ import UIKit
 
 class ATYDescriptionAboutCourse: UITableViewCell {
 
+    var topConstraintButton = NSLayoutConstraint()
+
     let nameCourseLabel : UILabel = {
         let label = UILabel()
         label.text = "Ментальное здоровье"
@@ -92,6 +94,15 @@ class ATYDescriptionAboutCourse: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func setUp(isMyCourse: Bool) {
+        if !isMyCourse {
+            self.membersOfCourseButton.isHidden = true
+            self.topConstraintButton.isActive = false
+            self.topConstraintButton = signInChatButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16)
+            self.topConstraintButton.isActive = true
+        }
+    }
+
     @objc func likeButtonAction() {
         likeButton.isSelected = !likeButton.isSelected
     }
@@ -148,13 +159,14 @@ class ATYDescriptionAboutCourse: UITableViewCell {
             make.height.equalTo(50)
         }
 
+        self.topConstraintButton = signInChatButton.topAnchor.constraint(equalTo: membersOfCourseButton.bottomAnchor, constant: 12)
+        self.topConstraintButton.isActive = true
         signInChatButton.semanticContentAttribute = UIApplication.shared
             .userInterfaceLayoutDirection == .rightToLeft ? .forceLeftToRight : .forceRightToLeft
         signInChatButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: 0)
         signInChatButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: spacing)
         signInChatButton.layer.cornerRadius = 25
         signInChatButton.snp.makeConstraints { (make) in
-            make.top.equalTo(membersOfCourseButton.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
             make.height.equalTo(50)

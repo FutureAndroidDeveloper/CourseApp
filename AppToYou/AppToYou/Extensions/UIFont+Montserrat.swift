@@ -11,7 +11,7 @@ import UIKit
 extension UIFont {
 
     static func Regular(size: CGFloat) -> UIFont {
-        return UIFont(name: "Montserrat-Regular", size: size)!
+        return UIFont.systemFont(ofSize: size)
     }
 }
 

@@ -12,6 +12,8 @@ class ATYHeaderAboutCourseCell: UITableViewCell {
 
     let headerImageView : UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
         imageView.image = R.image.exampleAboutCourse()
         return imageView
     }()
@@ -103,20 +105,53 @@ class ATYHeaderAboutCourseCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func setUp(isMyCourse: Bool,
+               countOfPeople: Int,
+               duration: ATYDurationCourse,
+               price: Int?,
+               typeOfCourse: ATYCourseType, imagePath: String?) {
+        self.editButton.isHidden = !isMyCourse
+        self.countOfPeopleLabel.text = String(countOfPeople)
+        let year = duration.year == 0 ? "" : "\(duration.year) год"
+        let month = duration.month == 0 ? "" : "\(duration.month) месяц"
+        let day = duration.day == 0 ? "" : "\(duration.day) день"
+        self.durationLabel.text = year + " " + month + " " + day
+        if let price = price {
+            self.coinLabel.text = String(price)
+        } else {
+            self.coinLabel.isHidden = true
+            self.imageViewCoin.isHidden = true
+        }
+
+        let myCourse = isMyCourse ? "| мой курс" : ""
+        switch typeOfCourse {
+        case .PUBLIC:
+            myCourseLabel.text = "открытый курс " + myCourse
+        case .PRIVATE:
+            myCourseLabel.text = "закрытый курс " + myCourse
+        case .PAID:
+            myCourseLabel.text = "платный курс " + myCourse
+        }
+
+        self.headerImageView.image = UIImage(imageName: imagePath ?? "")
+    }
+
     private func configure() {
         contentView.addSubview(headerImageView)
         contentView.addSubview(myCourseLabel)
         contentView.addSubview(editButton)
         contentView.addSubview(backButton)
 
-        myCourseLabel.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(20)
-            make.bottom.equalToSuperview().offset(-5)
-        }
-
+        headerImageView.layer.cornerRadius = 20
         headerImageView.snp.makeConstraints { (make) in
             make.leading.top.trailing.equalToSuperview()
-            make.bottom.equalTo(myCourseLabel.snp.top).offset(-11)
+            make.height.equalTo(170)
+        }
+
+        myCourseLabel.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(20)
+            make.top.equalTo(headerImageView.snp.bottom).offset(24)
+            make.bottom.equalToSuperview()
         }
 
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
@@ -125,7 +160,6 @@ class ATYHeaderAboutCourseCell: UITableViewCell {
             make.centerY.equalTo(headerImageView.snp.bottom).offset(5)
             make.width.height.equalTo(38)
         }
-
 
         backButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         backButton.snp.makeConstraints { (make) in

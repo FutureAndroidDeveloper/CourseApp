@@ -10,6 +10,8 @@ import UIKit
 
 class ATYTasksForAboutCourseCell : UITableViewCell {
 
+    var topConstraintTableView = NSLayoutConstraint()
+
     let tasksCourseLabel : UILabel = {
         let label = UILabel()
         label.text = "Задания курса"
@@ -122,6 +124,15 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
         addObserver()
     }
 
+    func setUp(isMyCourse: Bool) {
+        if !isMyCourse {
+            self.createTaskButton.isHidden = true
+            self.topConstraintTableView.isActive = false
+            self.topConstraintTableView = tasksTableView.topAnchor.constraint(equalTo: chooseTasksLabel.bottomAnchor, constant: 26)
+            self.topConstraintTableView.isActive = true
+        }
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -140,8 +151,9 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
     func addObserver() {
         tableViewObserver = tasksTableView.observe(\.contentSize, changeHandler: { [weak self] (tableView, change) in
             self?.tasksTableView.invalidateIntrinsicContentSize()
+            self?.applianceTableViewHeightConstraint.isActive = false
             self?.applianceTableViewHeightConstraint.constant = self?.tasksTableView.contentSize.height ?? 0
-            self?.layoutIfNeeded()
+            self?.applianceTableViewHeightConstraint.isActive = true
         })
     }
 
@@ -163,12 +175,14 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
 
         tasksCourseLabel.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(20)
+            make.height.equalTo(20)
             make.top.equalToSuperview().offset(10)
             make.trailing.equalToSuperview()
         }
 
         addTasksLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(tasksCourseLabel)
+            make.height.equalTo(20)
             make.top.equalTo(tasksCourseLabel.snp.bottom).offset(8)
             make.width.equalTo(addTasksLabel.intrinsicContentSize.width)
         }
@@ -183,27 +197,31 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
         chooseTasksLabel.snp.makeConstraints { (make) in
             make.trailing.equalToSuperview().offset(-20)
             make.centerY.equalTo(addTaskButton)
+            make.height.equalTo(20)
             make.width.equalTo(chooseTasksLabel.intrinsicContentSize.width)
         }
 
         createTaskButton.addTarget(self, action: #selector(createTaskButtonAction), for: .touchUpInside)
         createTaskButton.layer.cornerRadius = 25
         createTaskButton.snp.makeConstraints { (make) in
-            make.top.equalTo(chooseTasksLabel.snp.bottom).offset(26)
+            make.top.equalTo(addTasksLabel.snp.bottom).offset(26)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
             make.height.equalTo(50)
         }
 
-        tasksTableView.snp.makeConstraints { (make) in
-            make.top.equalTo(createTaskButton.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.bottom.equalToSuperview().offset(-10)
-        }
+        self.topConstraintTableView = tasksTableView.topAnchor.constraint(equalTo: createTaskButton.bottomAnchor, constant: 20)
+        self.topConstraintTableView.isActive = true
 
         self.applianceTableViewHeightConstraint = self.tasksTableView.heightAnchor.constraint(equalToConstant: 90)
         self.applianceTableViewHeightConstraint.isActive = true
+
+        tasksTableView.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(20)
+//            make.height.equalTo(300)
+            make.trailing.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-10)
+        }
     }
 }
 

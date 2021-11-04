@@ -15,7 +15,7 @@ struct ATYCourse {
     var diamondPrice : Int?
     var courseCategory : [ATYCourseCategory] = []
     var duration : ATYDurationCourse = .init(year: 0, month: 0, day: 0)
-    var limited : ATYDurationType = .UNLIMITED
+    var limited : ATYDurationType = .LIMITED
     var isInternal: Bool = false
     var isOpen: Bool = false
     var courseType: ATYCourseType = .PUBLIC

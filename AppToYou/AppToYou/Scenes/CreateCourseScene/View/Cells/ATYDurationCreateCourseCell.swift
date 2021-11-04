@@ -93,6 +93,10 @@ class ATYDurationCreateCourse: UITableViewCell {
         contentView.addSubview(checkBox)
         contentView.addSubview(checkBoxLabel)
 
+        yearTextField.delegate = self
+        monthTextField.delegate = self
+        dayTextField.delegate = self
+
         durationLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(20)

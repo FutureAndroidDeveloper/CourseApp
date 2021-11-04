@@ -1,8 +1,8 @@
 PODS:
-  - CoreStore (8.0.1)
+  - CoreStore (8.1.0)
   - DynamicBlurView (4.1.0)
   - IQKeyboardManagerSwift (6.3.0)
-  - Parchment (3.0.1)
+  - Parchment (3.1.0)
   - PopupDialog (1.1.1):
     - DynamicBlurView (~> 4.0)
   - R.swift (5.4.0):
@@ -33,10 +33,10 @@ SPEC REPOS:
     - Toast-Swift
 
 SPEC CHECKSUMS:
-  CoreStore: b8ed5be7d39af83a235878e4c8555134591badf4
+  CoreStore: 497ade3103f1ffd95d09c2658f9008d10c7d3082
   DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
   IQKeyboardManagerSwift: a8228c257614af98743b4cd8584637025f36358f
-  Parchment: 466a1cfb6151780db8acb4bbedc2d9c6bfa1e2ff
+  Parchment: 6250722ed0456d68f6bae03118eda722a28486f3
   PopupDialog: 720c92befd8bc23c13442254945213db5612f149
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
@@ -45,4 +45,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 33944d89d7d752d5bae8acd14fbaee50b9eaf9b5
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

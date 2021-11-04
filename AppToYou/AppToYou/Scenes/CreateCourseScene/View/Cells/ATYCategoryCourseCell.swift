@@ -24,6 +24,7 @@ class ATYCategoryCourseCell: UITableViewCell {
 
     let nameTextField : UITextField = {
         let textField = UITextField()
+        textField.tag = 5
         textField.placeholder = "Выберите из списка"
         textField.backgroundColor = R.color.backgroundTextFieldsColor()
         textField.textColor = R.color.titleTextColor()
@@ -79,7 +80,7 @@ class ATYCategoryCourseCell: UITableViewCell {
         let arrowView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         arrowView.addSubview(arrowImageView)
         nameTextField.rightView = arrowView
-        nameTextField.delegate = self
+//        nameTextField.delegate = self
         nameTextField.rightViewMode = .always
         nameTextField.snp.makeConstraints { (make) in
             make.top.equalTo(nameLabel.snp.bottom).offset(10)
@@ -90,12 +91,15 @@ class ATYCategoryCourseCell: UITableViewCell {
     }
 }
 
-extension ATYCategoryCourseCell : UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        nameTextField.resignFirstResponder()
-        self.callBack?()
-    }
-}
+//extension ATYCategoryCourseCell : UITextFieldDelegate {
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        if textField.tag == 5 {
+//            self.endEditing(true)
+//            textField.resignFirstResponder()
+//            self.callBack?()
+//        }
+//    }
+//}
 
 extension ATYCategoryCourseCell : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

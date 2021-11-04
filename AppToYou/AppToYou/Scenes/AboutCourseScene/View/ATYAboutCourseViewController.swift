@@ -19,10 +19,24 @@ class ATYAboutCourseViewController: UIViewController {
         case reportCourse
     }
 
+    var viewModel: ATYAboutCourseViewModel!
+
+    var isMyCourse : Bool!
+
     private var transition: PanelTransition!
     private var transitionSecond: PanelTransition!
     private var transitionThird: PanelTransition!
 
+    init(isMyCourse: Bool, course: ATYCourse) {
+        super.init(nibName: nil, bundle: nil)
+        self.isMyCourse = isMyCourse
+        self.viewModel = ATYAboutCourseViewModel(course: course)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let tableView = UITableView()
     
     override func viewDidLoad() {
@@ -100,6 +114,13 @@ extension ATYAboutCourseViewController: UITableViewDelegate, UITableViewDataSour
         switch AboutCourseTypeCell.init(rawValue: indexPath.row) {
         case .header:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYHeaderAboutCourseCell.reuseIdentifier, for: indexPath) as! ATYHeaderAboutCourseCell
+            let course = self.viewModel.course
+            cell.setUp(isMyCourse: self.isMyCourse,
+                       countOfPeople: course.usersAmount ?? 0,
+                       duration: course.duration,
+                       price: course.coinPrice,
+                       typeOfCourse: course.courseType,
+                       imagePath: course.picPath)
             cell.callbackBackButton = { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }
@@ -110,6 +131,7 @@ extension ATYAboutCourseViewController: UITableViewDelegate, UITableViewDataSour
             return cell
         case .description:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYDescriptionAboutCourse.reuseIdentifier, for: indexPath) as! ATYDescriptionAboutCourse
+            cell.setUp(isMyCourse: self.isMyCourse)
             cell.callbackMembers = { [weak self] in
                 let vc = ATYCourseParticipantsViewController()
                 self?.navigationController?.pushViewController(vc, animated:  true)
@@ -117,6 +139,7 @@ extension ATYAboutCourseViewController: UITableViewDelegate, UITableViewDataSour
             return cell
         case .tasksCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYTasksForAboutCourseCell.reuseIdentifier, for: indexPath) as! ATYTasksForAboutCourseCell
+            cell.setUp(isMyCourse: self.isMyCourse)
             cell.createTaskCallback = { [weak self] in
                 let child = ATYAddTaskViewController()
                 let vc = ATYCreateCourseTaskViewController()

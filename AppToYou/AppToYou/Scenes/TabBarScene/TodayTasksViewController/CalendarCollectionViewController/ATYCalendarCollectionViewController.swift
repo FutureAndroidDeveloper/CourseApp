@@ -59,15 +59,15 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
 
     func selectCell(cell: ATYCalendarCollectionViewCell) {
         if let selectedCellDate = cell.date {
-            displayDate(date: selectedCellDate)
+//            displayDate(date: selectedCellDate)
         }
     }
 
-    func displayDate(date: Date) {
-        UsedDates.shared.displayedDate = date
-        UsedDates.shared.selectdDayOfWeek = Calendar.current.component(.weekday, from: date) //so that if the selected date is Wednesday, it keeps selecting Wednesday next week
-        print(UsedDates.shared.displayedDateString)
-    }
+//    func displayDate(date: Date) {
+//        UsedDates.shared.displayedDate = date
+//        UsedDates.shared.selectdDayOfWeek = Calendar.current.component(.weekday, from: date) //so that if the selected date is Wednesday, it keeps selecting Wednesday next week
+//        print(UsedDates.shared.displayedDateString)
+//    }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 9999
@@ -75,16 +75,16 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
 
     func scrollToDate(date: Date)
     {
-        print("will scroll to today")
-        let startDate = UsedDates.shared.startDate
-        let cal = Calendar.current
-        if let numberOfDays = cal.dateComponents([.day], from: startDate, to: date).day {
-            let extraDays: Int = numberOfDays % 7 // will = 0 for Mondays, 1 for Tuesday, etc ..
-            let scrolledNumberOfDays = numberOfDays - extraDays
-            let firstMondayIndexPath = IndexPath(row: scrolledNumberOfDays, section: 0)
-            collectionView.scrollToItem(at: firstMondayIndexPath, at: .left , animated: false)
-        }
-        displayDate(date: date)
+//        print("will scroll to today")
+//        let startDate = Date()
+//        let cal = Calendar.current
+//        if let numberOfDays = cal.dateComponents([.day], from: startDate, to: date).day {
+//            let extraDays: Int = numberOfDays % 7 // will = 0 for Mondays, 1 for Tuesday, etc ..
+//            let scrolledNumberOfDays = numberOfDays - extraDays
+//            let firstMondayIndexPath = IndexPath(row: scrolledNumberOfDays, section: 0)
+//            collectionView.scrollToItem(at: firstMondayIndexPath, at: .left , animated: false)
+//        }
+//        displayDate(date: date)
     }
 
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -107,8 +107,8 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
         let middleIndex = visibleCells.count / 2
         let middleCell = visibleCells[middleIndex] as! ATYCalendarCollectionViewCell
 
-        let displayedDate = UsedDates.shared.getDateOfAnotherDayOfTheSameWeek(selectedDate: middleCell.date!, requiredDayOfWeek: UsedDates.shared.selectdDayOfWeek)
-        displayDate(date: displayedDate)
+//        let displayedDate = UsedDates.shared.getDateOfAnotherDayOfTheSameWeek(selectedDate: middleCell.date!, requiredDayOfWeek: UsedDates.shared.selectdDayOfWeek)
+//        displayDate(date: displayedDate)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -117,7 +117,7 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
 
         var addedDaysDateComp = DateComponents()
         addedDaysDateComp.day = addedDays//calculating the date of the given cell
-        let currentCellDate = Calendar.current.date(byAdding: addedDaysDateComp , to: UsedDates.shared.startDate)
+        let currentCellDate = Calendar.current.date(byAdding: addedDaysDateComp , to: Date())
 
         if let cellDate = currentCellDate {
             cell.date = cellDate
@@ -126,7 +126,7 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
             cell.dayOfMonthLabel.text = String(describing: dayOfMonth)
 
             let dayOfWeek = Calendar.current.component(.weekday, from: cellDate)
-            cell.dayOfWeekLabel.text = String(describing: UsedDates.shared.getDayOfWeekLetterFromDayOfWeekNumber(dayOfWeekNumber: dayOfWeek))
+            cell.dayOfWeekLabel.text = ""
 
         }
 
@@ -155,12 +155,12 @@ class ATYCalendarCollectionViewController: UICollectionViewController {
             if cell.date ?? Date() > Date() {
                 return
             }
-            UsedDates.shared.displayedDate = cell.date!
-            selectedDateForView = cell.date!
-            UsedDates.shared.selectdDayOfWeek = Calendar.current.component(.weekday, from: cell.date!)
-            print("Selected Date: \(UsedDates.shared.displayedDateString)")
-            dateCallback?(UsedDates.shared.displayedDateString)
-            collectionView.reloadData()
+//            UsedDates.shared.displayedDate = cell.date!
+//            selectedDateForView = cell.date!
+//            UsedDates.shared.selectdDayOfWeek = Calendar.current.component(.weekday, from: cell.date!)
+//            print("Selected Date: \(UsedDates.shared.displayedDateString)")
+//            dateCallback?(UsedDates.shared.displayedDateString)
+//            collectionView.reloadData()
         }
     }
 

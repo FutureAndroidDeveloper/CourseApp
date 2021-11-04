@@ -124,11 +124,12 @@ class ATYRadioButtonCreateCourse : UITableViewCell {
                 make.top.equalTo(radioButtonImageView.snp.bottom).offset(6)
                 make.leading.equalTo(labelTypeCourse)
                 make.trailing.equalToSuperview().offset(-21)
-
             }
+
             payForCourse.snp.makeConstraints { (make) in
                 make.bottom.equalToSuperview().offset(-16)
             }
         }
+
     }
 }

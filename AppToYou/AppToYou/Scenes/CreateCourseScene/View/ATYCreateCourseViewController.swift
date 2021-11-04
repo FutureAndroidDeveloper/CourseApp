@@ -38,6 +38,8 @@ class ATYCreateCourseViewController: UIViewController {
             self.title = "Редактирование"
             titleForDoneButton = "Сохранить"
         }
+        self.viewModel.delegate = self
+        self.typeCellSelect = self.viewModel.course.courseType
     }
     
     required init?(coder: NSCoder) {
@@ -95,7 +97,7 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             cell.nameLabel.text = "Название курса"
             cell.nameTextField.placeholder = "Например, ментальное здоровье"
             cell.callbackText = { [weak self] text in
-                self?.viewModel.course.courseName = text
+                self?.viewModel.course.courseName = text.replacingOccurrences(of: " ", with: "")
             }
             return cell
         case .descriptionCourse:
@@ -103,7 +105,7 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             cell.nameLabel.text = "Описание курса"
             cell.placeholderLabel.text = "Опишите цели или преимущества вашего курса"
             cell.callbackText = { [weak self] text in
-                self?.viewModel.course.courseDescription = text
+                self?.viewModel.course.courseDescription = text.replacingOccurrences(of: " ", with: "")
             }
             return cell
         case .photoCourse:
@@ -116,7 +118,9 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYCategoryCourseCell.reuseIdentifier, for: indexPath) as! ATYCategoryCourseCell
             cell.massive = self.viewModel.course.courseCategory
             cell.collectionView.reloadData()
+            cell.nameTextField.delegate = self
             cell.callBack = { [weak self] in
+                self?.createCourseTableView.resignFirstResponder()
                 let vc = ATYChooseCourseCategoryViewController(categories: self?.viewModel.course.courseCategory)
                 vc.callBack = { [weak self] resultCategories in
                     self?.viewModel.course.courseCategory = resultCategories
@@ -172,7 +176,7 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
             cell.saveButton.setTitle(titleForDoneButton, for: .normal)
             cell.callback = { [weak self] in
-                self?.callbackCreateCourse?(self?.viewModel.course)
+                self?.viewModel.createCourse()
                 self?.navigationController?.popViewController(animated: true)
             }
             return cell
@@ -203,7 +207,6 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             createCourseTableView.reloadData()
         }
     }
-
 }
 
 extension ATYCreateCourseViewController: ATYImagePickerDelegate {
@@ -226,5 +229,27 @@ extension ATYCreateCourseViewController: ATYImagePickerDelegate {
             self.viewModel.course.picPath = path
             createCourseTableView.reloadData()
         }
+    }
+}
+
+extension ATYCreateCourseViewController : ATYUpCreateCourseViewModelDelegate {
+    func checkProperty(errorMessage: String?) {
+        self.showAlertCountSelectedCourseCategory(text: errorMessage ?? "")
+    }
+
+    func createCourse(course: ATYCourse) {
+        self.callbackCreateCourse?(course)
+    }
+}
+
+extension ATYCreateCourseViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+        let vc = ATYChooseCourseCategoryViewController(categories: self.viewModel.course.courseCategory)
+        vc.callBack = { [weak self] resultCategories in
+            self?.viewModel.course.courseCategory = resultCategories
+            self?.createCourseTableView.reloadData()
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

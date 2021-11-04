@@ -77,8 +77,8 @@ class ATYCoursesViewController : UIViewController {
         }
     }
 
-    private func openCourseVc() {
-        let vc = ATYAboutCourseViewController()
+    private func openCourseVc(isMyCourse: Bool, indexPath: IndexPath) {
+        let vc = ATYAboutCourseViewController(isMyCourse: isMyCourse, course: courseArray[indexPath.row])
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
@@ -180,18 +180,18 @@ extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource 
             var child = UIViewController()
             switch cell.typeOfCourse {
             case .PUBLIC:
-                openCourseVc()
+                openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
                 return
             case .PRIVATE:
                 if courseArray[indexPath.row].isMyCourse {
-                    openCourseVc()
+                    openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
                     return
                 }
                 child = ATYJoinToCloseCourseViewController()
                 child.transitioningDelegate = self.transitionOne
             case .PAID:
                 if courseArray[indexPath.row].isMyCourse {
-                    openCourseVc()
+                    openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
                     return
                 }
                 child = ATYPaidCoursePreviewViewController()
