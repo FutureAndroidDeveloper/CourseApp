@@ -433,8 +433,8 @@
 		6DAB028C2656500100B72955 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6DAB028E2656500100B72955 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6DAB029C265666D000B72955 /* ATYDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYDatabaseService.swift; sourceTree = "<group>"; };
-		6DAB02A52656719D00B72955 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileManager.swift; path = "../../../settlements-ios/STMService/Extensions/FileManager.swift"; sourceTree = "<group>"; };
-		6DAB02A8265671A100B72955 /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URL.swift; path = "../../../settlements-ios/STMService/Extensions/URL.swift"; sourceTree = "<group>"; };
+		6DAB02A52656719D00B72955 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		6DAB02A8265671A100B72955 /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		6DC42F512670B9E7006CB865 /* ATYEnumsCreateCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYEnumsCreateCourseCell.swift; sourceTree = "<group>"; };
 		6DC42F552670C472006CB865 /* ATYDetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYDetailImageViewController.swift; sourceTree = "<group>"; };
 		6DC42F5D2670E361006CB865 /* ATYAboutCourseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYAboutCourseViewController.swift; sourceTree = "<group>"; };
