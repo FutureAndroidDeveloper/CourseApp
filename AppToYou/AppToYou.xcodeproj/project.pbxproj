@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0413EE33274A70410005948C /* ParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413EE32274A70410005948C /* ParameterEncoder.swift */; };
+		0413EE39274A95F10005948C /* UserUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413EE38274A95F10005948C /* UserUpdateRequest.swift */; };
+		0413EE3B274A96180005948C /* UserCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413EE3A274A96180005948C /* UserCreateRequest.swift */; };
+		0413EE3D274A96380005948C /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413EE3C274A96380005948C /* UserResponse.swift */; };
+		04731A34274929F4001DD136 /* HTTPTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A29274929F4001DD136 /* HTTPTask.swift */; };
+		04731A35274929F4001DD136 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A2A274929F4001DD136 /* NetworkManager.swift */; };
+		04731A36274929F4001DD136 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A2C274929F4001DD136 /* ParameterEncoding.swift */; };
+		04731A37274929F4001DD136 /* JsonBodyEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A2D274929F4001DD136 /* JsonBodyEncoder.swift */; };
+		04731A38274929F4001DD136 /* URLParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A2E274929F4001DD136 /* URLParameterEncoder.swift */; };
+		04731A39274929F4001DD136 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A2F274929F4001DD136 /* HTTPMethod.swift */; };
+		04731A3A274929F4001DD136 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A30274929F4001DD136 /* Router.swift */; };
+		04731A3B274929F4001DD136 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A31274929F4001DD136 /* Endpoint.swift */; };
+		04731A3F27492A29001DD136 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A3E27492A29001DD136 /* NetworkRouter.swift */; };
+		04731A4227492CBA001DD136 /* UserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A4127492CBA001DD136 /* UserEndpoint.swift */; };
 		61504E968323318951FD0D81 /* Pods_AppToYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */; };
 		6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0B8D6826C675A600F7582C /* ATYCourse.swift */; };
 		6D118EB826A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */; };
@@ -247,6 +261,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0413EE32274A70410005948C /* ParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoder.swift; sourceTree = "<group>"; };
+		0413EE38274A95F10005948C /* UserUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUpdateRequest.swift; sourceTree = "<group>"; };
+		0413EE3A274A96180005948C /* UserCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreateRequest.swift; sourceTree = "<group>"; };
+		0413EE3C274A96380005948C /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
+		04731A29274929F4001DD136 /* HTTPTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPTask.swift; sourceTree = "<group>"; };
+		04731A2A274929F4001DD136 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		04731A2C274929F4001DD136 /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
+		04731A2D274929F4001DD136 /* JsonBodyEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonBodyEncoder.swift; sourceTree = "<group>"; };
+		04731A2E274929F4001DD136 /* URLParameterEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLParameterEncoder.swift; sourceTree = "<group>"; };
+		04731A2F274929F4001DD136 /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		04731A30274929F4001DD136 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		04731A31274929F4001DD136 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		04731A3E27492A29001DD136 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
+		04731A4127492CBA001DD136 /* UserEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndpoint.swift; sourceTree = "<group>"; };
 		05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppToYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D0B8D6826C675A600F7582C /* ATYCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourse.swift; sourceTree = "<group>"; };
 		6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourseParticipantsViewController.swift; sourceTree = "<group>"; };
@@ -512,6 +540,91 @@
 				D30F1AD3E74BBD142EBFE3D0 /* Pods-AppToYou.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		0413EE34274A95B00005948C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0413EE37274A95E40005948C /* User */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0413EE35274A95B80005948C /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				0413EE3C274A96380005948C /* UserResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		0413EE36274A95C20005948C /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				0413EE38274A95F10005948C /* UserUpdateRequest.swift */,
+				0413EE3A274A96180005948C /* UserCreateRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		0413EE37274A95E40005948C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				0413EE36274A95C20005948C /* Request */,
+				0413EE35274A95B80005948C /* Response */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		04731A232749296D001DD136 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				04731A27274929F4001DD136 /* Networking */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		04731A27274929F4001DD136 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				04731A2A274929F4001DD136 /* NetworkManager.swift */,
+				04731A4127492CBA001DD136 /* UserEndpoint.swift */,
+				0413EE34274A95B00005948C /* Model */,
+				04731A4027492ABB001DD136 /* Endpoint */,
+				04731A3D27492A0C001DD136 /* Router */,
+				04731A2B274929F4001DD136 /* Encoding */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		04731A2B274929F4001DD136 /* Encoding */ = {
+			isa = PBXGroup;
+			children = (
+				04731A2C274929F4001DD136 /* ParameterEncoding.swift */,
+				04731A2D274929F4001DD136 /* JsonBodyEncoder.swift */,
+				04731A2E274929F4001DD136 /* URLParameterEncoder.swift */,
+				0413EE32274A70410005948C /* ParameterEncoder.swift */,
+			);
+			path = Encoding;
+			sourceTree = "<group>";
+		};
+		04731A3D27492A0C001DD136 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				04731A3E27492A29001DD136 /* NetworkRouter.swift */,
+				04731A30274929F4001DD136 /* Router.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		04731A4027492ABB001DD136 /* Endpoint */ = {
+			isa = PBXGroup;
+			children = (
+				04731A31274929F4001DD136 /* Endpoint.swift */,
+				04731A29274929F4001DD136 /* HTTPTask.swift */,
+				04731A2F274929F4001DD136 /* HTTPMethod.swift */,
+			);
+			path = Endpoint;
 			sourceTree = "<group>";
 		};
 		53ADC5C8439D08763C3283E5 /* Frameworks */ = {
@@ -1545,6 +1658,7 @@
 		6DAB027C2656500100B72955 /* AppToYou */ = {
 			isa = PBXGroup;
 			children = (
+				04731A232749296D001DD136 /* Service */,
 				6D8A2818265E6D2B00BAAEF5 /* Transition */,
 				6D40348B265D119A00248E9E /* Navigation */,
 				6DDA127F265B9133004124E7 /* Scenes */,
@@ -2024,6 +2138,7 @@
 				6D8A281B265E6D6C00BAAEF5 /* PanelTransition.swift in Sources */,
 				6D3AC1E026846BE0007AC57D /* CDUserTask+CoreDataClass.swift in Sources */,
 				6DAB029D265666D000B72955 /* ATYDatabaseService.swift in Sources */,
+				0413EE39274A95F10005948C /* UserUpdateRequest.swift in Sources */,
 				6D79938026BA79220071EF4E /* ATYNavigationBarWalletViewController.swift in Sources */,
 				6DA8E20B26A6AACB005014DA /* ATYEditTextCourseTaskCell.swift in Sources */,
 				6D6E7EC726B13CBD005C8C62 /* ATYPenaltyForFailureViewController.swift in Sources */,
@@ -2038,6 +2153,7 @@
 				6D55ADE026A1C8A900F7DD4A /* ATYEditCourseCountRepeatTaskViewController.swift in Sources */,
 				6DDD2AB1268C61AB00DD9A87 /* ATYDatabaseService+CDVacation.swift in Sources */,
 				6D40CA602667CFA200A78CEC /* UIViewController.swift in Sources */,
+				0413EE3D274A96380005948C /* UserResponse.swift in Sources */,
 				6D8A282A265E6DAE00BAAEF5 /* DimmPresentationController.swift in Sources */,
 				6D91B864265BE20700EB2589 /* ATYShowHideTextField.swift in Sources */,
 				6D4BAFEC26C2BF1100090789 /* SearchBar+SHSearchBar.swift in Sources */,
@@ -2049,6 +2165,7 @@
 				6D568ECF26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift in Sources */,
 				6D6E7ECC26B13CFD005C8C62 /* ATYPenaltyForFailureCell.swift in Sources */,
 				6D8A281F265E6D7C00BAAEF5 /* TransitionDriver.swift in Sources */,
+				0413EE3B274A96180005948C /* UserCreateRequest.swift in Sources */,
 				6DA8E21326A6C03D005014DA /* ATYTaskAddedViewController.swift in Sources */,
 				6D568EB426B2A8A8000619B2 /* ATYReceivingAnAwardViewController.swift in Sources */,
 				6DC4AE27268DD7FB0028CDDE /* String+ToDateTime.swift in Sources */,
@@ -2060,6 +2177,7 @@
 				6D40347C265CF5B900248E9E /* ATYCoursesViewController.swift in Sources */,
 				6D4928C826A952DE000E5346 /* ATYTheCostCourseCell.swift in Sources */,
 				6DF82863266FA2A3006487B0 /* ATYDurationCreateCourseCell.swift in Sources */,
+				04731A35274929F4001DD136 /* NetworkManager.swift in Sources */,
 				6D7993CC26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.swift in Sources */,
 				6DF5394926837A5D0086A64E /* CDCourse+CoreDataProperties.swift in Sources */,
 				6D1F25FC265F991F008489C9 /* ATYTaskTableViewCell.swift in Sources */,
@@ -2070,6 +2188,7 @@
 				6DA60DE02680916D00885650 /* ATYCreateCourseTaskViewController.swift in Sources */,
 				6DAB027E2656500100B72955 /* AppDelegate.swift in Sources */,
 				6D7399B9268B60D70026D81D /* ATYDatabaseService+CDUserAchievement.swift in Sources */,
+				04731A4227492CBA001DD136 /* UserEndpoint.swift in Sources */,
 				6D55ADE426A1C8F500F7DD4A /* ATYEditCourseCountRepeatTaskCell.swift in Sources */,
 				6D7399B6268B5CB80026D81D /* ATYDatabaseService+CDCourseUser.swift in Sources */,
 				6D79939726BAB4250071EF4E /* ATYShopCollectionViewCell.swift in Sources */,
@@ -2079,6 +2198,7 @@
 				6D7993C726BACE540071EF4E /* ATYPayWalletTableViewCell.swift in Sources */,
 				6D40CA5C2667C18400A78CEC /* ATYEditTaskViewController.swift in Sources */,
 				6D32D85F26651AD5009D62C9 /* ATYCreateSanctionTaskCell.swift in Sources */,
+				04731A3F27492A29001DD136 /* NetworkRouter.swift in Sources */,
 				6D403477265CF02D00248E9E /* ATYTasksViewController.swift in Sources */,
 				6DF8286D266FC4F3006487B0 /* ATYPayForCourseView.swift in Sources */,
 				6DA8E20E26A6AB9B005014DA /* ATYEditTextSymbolsCountTaskCell.swift in Sources */,
@@ -2094,8 +2214,10 @@
 				6DA60DEF2680A5DE00885650 /* ATYCreateCourseTaskMinSanctionCell.swift in Sources */,
 				6DA10EE326AAA4A200A05770 /* ATYProgressInfoTableViewCell.swift in Sources */,
 				6DAB02A9265671A100B72955 /* URL.swift in Sources */,
+				04731A34274929F4001DD136 /* HTTPTask.swift in Sources */,
 				6D4E12E52657ACC600732465 /* ATYDatabaseService+CDUser.swift in Sources */,
 				6D4928C426A95176000E5346 /* ATYHeaderBuyingACourseCell.swift in Sources */,
+				04731A38274929F4001DD136 /* URLParameterEncoder.swift in Sources */,
 				6DA60DE826809DEE00885650 /* ATYCreateCourseTasksEnums.swift in Sources */,
 				6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */,
 				6DDD2ABD268CA3DD00DD9A87 /* ATYDatabaseService+CDSanction.swift in Sources */,
@@ -2105,6 +2227,7 @@
 				6DA10EEB26AAB4D700A05770 /* ATYProgressParticipantViewController.swift in Sources */,
 				6D568EC426B2E0D1000619B2 /* ATYProfileSignInViewController.swift in Sources */,
 				6D8A2822265E6D8700BAAEF5 /* TransitionDirection.swift in Sources */,
+				04731A37274929F4001DD136 /* JsonBodyEncoder.swift in Sources */,
 				6DF53962268381450086A64E /* CDStatistics+CoreDataClass.swift in Sources */,
 				6D8A2838265E6DF900BAAEF5 /* InstantPanGestureRecognizer.swift in Sources */,
 				6DC56C7926A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift in Sources */,
@@ -2123,6 +2246,7 @@
 				6DC42F642670E433006CB865 /* ATYHeaderAboutCourseCell.swift in Sources */,
 				6DF5395426837F6F0086A64E /* CDCourseUser+CoreDataProperties.swift in Sources */,
 				6D6E7EF326B19416005C8C62 /* ATYStatisticProfileView.swift in Sources */,
+				04731A36274929F4001DD136 /* ParameterEncoding.swift in Sources */,
 				6D21D77F26B3F88800F27CC4 /* ATYAchievementType.swift in Sources */,
 				6DF8285F266F7D24006487B0 /* ATYRadioButtonCreateCourseCell.swift in Sources */,
 				6DF5394826837A5D0086A64E /* CDCourse+CoreDataClass.swift in Sources */,
@@ -2141,11 +2265,13 @@
 				6DC42F522670B9E7006CB865 /* ATYEnumsCreateCourseCell.swift in Sources */,
 				6D40348D265D11AF00248E9E /* ATYNavigationViewController+PageView.swift in Sources */,
 				6DDD2AB7268C9CF000DD9A87 /* ATYDatabaseService+CDTransaction.swift in Sources */,
+				0413EE33274A70410005948C /* ParameterEncoder.swift in Sources */,
 				6D6F6AF6269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift in Sources */,
 				6DA8E22226A6E7FC005014DA /* ATYGradientImageView.swift in Sources */,
 				6DF5394F26837C220086A64E /* CDCourseTask+CoreDataProperties.swift in Sources */,
 				6DF53963268381450086A64E /* CDStatistics+CoreDataProperties.swift in Sources */,
 				6DDD2AC0268CA55E00DD9A87 /* ATYDatabaseService+CDStore.swift in Sources */,
+				04731A3B274929F4001DD136 /* Endpoint.swift in Sources */,
 				6DF82869266FB054006487B0 /* ATYCreateCourseChatCell.swift in Sources */,
 				6DA60DD62680748900885650 /* ATYMembersAboutCourseCell.swift in Sources */,
 				6D32D84D2664EB3D009D62C9 /* ATYEnumWithReuseIdentifierCell.swift in Sources */,
@@ -2176,6 +2302,7 @@
 				6D91B84D265BBC2F00EB2589 /* UITextField+RightView.swift in Sources */,
 				6D8A2826265E6DA300BAAEF5 /* PresentationController.swift in Sources */,
 				6DF5395326837F6F0086A64E /* CDCourseUser+CoreDataClass.swift in Sources */,
+				04731A39274929F4001DD136 /* HTTPMethod.swift in Sources */,
 				6D3AC1EB26846DDC007AC57D /* CDStore+CoreDataProperties.swift in Sources */,
 				6D28977A26B9707D0001995C /* ATYVacationViewController.swift in Sources */,
 				6DC4AE24268DC5AE0028CDDE /* ATYUserTask.swift in Sources */,
@@ -2211,6 +2338,7 @@
 				6D6E7EE726B18489005C8C62 /* ATYProfileWithoutSignInViewController.swift in Sources */,
 				6D8A282E265E6DC900BAAEF5 /* PresentAnimation.swift in Sources */,
 				6D3AC1DC26846AD7007AC57D /* CDTransaction+CoreDataProperties.swift in Sources */,
+				04731A3A274929F4001DD136 /* Router.swift in Sources */,
 				6D6E7ED826B1442B005C8C62 /* ATYPenaltyWarningCell.swift in Sources */,
 				6D455C1D26C57AE90014BDF2 /* UITableView+Placeholder.swift in Sources */,
 				6DA15F94266A27EE00201DD3 /* ATYCollectionViewTypeCourseTableCell.swift in Sources */,
