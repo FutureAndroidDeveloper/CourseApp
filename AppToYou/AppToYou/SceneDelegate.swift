@@ -12,6 +12,8 @@ import IQKeyboardManagerSwift
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    private let router = AppCoordinator().strongRouter
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
@@ -23,12 +25,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
-        let viewController = ATYAuthorizationViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
-
+        
+    
         self.window = UIWindow(windowScene: windowScene)
-        self.window?.rootViewController = navigationController
-        self.window?.makeKeyAndVisible()
+        if let window = window {
+            router.setRoot(for: window)
+        }
+        
+//        let viewController = ATYAuthorizationViewController()
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//
+//        self.window = UIWindow(windowScene: windowScene)
+//        self.window?.rootViewController = navigationController
+//        self.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

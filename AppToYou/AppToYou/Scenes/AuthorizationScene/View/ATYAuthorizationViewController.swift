@@ -9,7 +9,14 @@
 import Foundation
 import SnapKit
 
-class ATYAuthorizationViewController: UIViewController {
+class ATYAuthorizationViewController: UIViewController, BindableType {
+    
+    var viewModel: AuthorizationViewModel!
+    
+    
+    func bindViewModel() {
+        //
+    }
 
     private let inAccountLabel : UILabel = {
         let label = UILabel()
@@ -255,6 +262,7 @@ class ATYAuthorizationViewController: UIViewController {
 
     @objc func signInButtonAction() {
         print("signInButtonAction")
+        viewModel.input.didLogin()
     }
 
     @objc func registrationButtonAction() {

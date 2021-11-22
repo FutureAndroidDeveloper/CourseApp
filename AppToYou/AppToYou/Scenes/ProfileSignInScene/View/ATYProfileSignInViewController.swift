@@ -10,7 +10,7 @@ import UIKit
 import Toast_Swift
 import PopupDialog
 
-class ATYProfileSignInViewController: UIViewController {
+class ATYProfileSignInViewController: UIViewController, BindableType {
 
     private var transitionThird: PanelTransition!
     private var imagePicker: ATYImagePicker?
@@ -26,6 +26,13 @@ class ATYProfileSignInViewController: UIViewController {
     }
 
     let tableView = UITableView()
+    
+    var viewModel: ProfileViewModel!
+    
+    
+    func bindViewModel() {
+        //
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,7 +153,8 @@ extension ATYProfileSignInViewController: UITableViewDelegate, UITableViewDataSo
             }
 
             cell.logOutCallback = { [weak self] in
-
+                guard let self = self else { return }
+                self.viewModel.input.logout()
             }
             return cell
         default : return UITableViewCell()
