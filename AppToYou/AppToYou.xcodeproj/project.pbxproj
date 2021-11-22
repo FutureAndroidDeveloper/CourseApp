@@ -13,6 +13,11 @@
 		0413EE39274A95F10005948C /* UserUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413EE38274A95F10005948C /* UserUpdateRequest.swift */; };
 		0413EE3B274A96180005948C /* UserCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413EE3A274A96180005948C /* UserCreateRequest.swift */; };
 		0413EE3D274A96380005948C /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0413EE3C274A96380005948C /* UserResponse.swift */; };
+		041A730B274C38820021B6FC /* EnterNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A730A274C38820021B6FC /* EnterNameViewModel.swift */; };
+		041A730D274C3B4C0021B6FC /* AddPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A730C274C3B4C0021B6FC /* AddPhotoViewModel.swift */; };
+		041A7310274C3F770021B6FC /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A730F274C3F770021B6FC /* MainCoordinator.swift */; };
+		041A7312274C3FEE0021B6FC /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A7311274C3FEE0021B6FC /* ProfileCoordinator.swift */; };
+		041A7314274C401E0021B6FC /* TasksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A7313274C401E0021B6FC /* TasksCoordinator.swift */; };
 		0432BAAC274AD920000DD016 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0432BAAB274AD920000DD016 /* ProfileViewModel.swift */; };
 		04731A34274929F4001DD136 /* HTTPTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A29274929F4001DD136 /* HTTPTask.swift */; };
 		04731A35274929F4001DD136 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A2A274929F4001DD136 /* NetworkManager.swift */; };
@@ -24,6 +29,10 @@
 		04731A3B274929F4001DD136 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A31274929F4001DD136 /* Endpoint.swift */; };
 		04731A3F27492A29001DD136 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A3E27492A29001DD136 /* NetworkRouter.swift */; };
 		04731A4227492CBA001DD136 /* UserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A4127492CBA001DD136 /* UserEndpoint.swift */; };
+		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
+		04BB1804274BD80A00C584F8 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */; };
+		04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */; };
+		04F02943274BFC3A0054A455 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */; };
 		61504E968323318951FD0D81 /* Pods_AppToYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */; };
 		6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0B8D6826C675A600F7582C /* ATYCourse.swift */; };
 		6D118EB826A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */; };
@@ -270,6 +279,11 @@
 		0413EE38274A95F10005948C /* UserUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUpdateRequest.swift; sourceTree = "<group>"; };
 		0413EE3A274A96180005948C /* UserCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreateRequest.swift; sourceTree = "<group>"; };
 		0413EE3C274A96380005948C /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
+		041A730A274C38820021B6FC /* EnterNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnterNameViewModel.swift; path = AppToYou/Service/Coordinator/Login/EnterNameViewModel.swift; sourceTree = SOURCE_ROOT; };
+		041A730C274C3B4C0021B6FC /* AddPhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddPhotoViewModel.swift; path = AppToYou/Service/Coordinator/Login/AddPhotoViewModel.swift; sourceTree = SOURCE_ROOT; };
+		041A730F274C3F770021B6FC /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		041A7311274C3FEE0021B6FC /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		041A7313274C401E0021B6FC /* TasksCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksCoordinator.swift; sourceTree = "<group>"; };
 		0432BAAB274AD920000DD016 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = AppToYou/Service/Coordinator/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
 		04731A29274929F4001DD136 /* HTTPTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPTask.swift; sourceTree = "<group>"; };
 		04731A2A274929F4001DD136 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -281,6 +295,10 @@
 		04731A31274929F4001DD136 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		04731A3E27492A29001DD136 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		04731A4127492CBA001DD136 /* UserEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndpoint.swift; sourceTree = "<group>"; };
+		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
+		04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
+		04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationViewModel.swift; path = AppToYou/Service/Coordinator/Login/RegistrationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppToYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D0B8D6826C675A600F7582C /* ATYCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourse.swift; sourceTree = "<group>"; };
 		6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourseParticipantsViewController.swift; sourceTree = "<group>"; };
@@ -552,6 +570,8 @@
 			isa = PBXGroup;
 			children = (
 				0408DF74274AA03E000C422B /* AppCoordinator.swift */,
+				041A730E274C3F680021B6FC /* Main */,
+				04BB1800274BD7E400C584F8 /* Login */,
 				0408DF76274AA27E000C422B /* Bindable.swift */,
 			);
 			path = Coordinator;
@@ -589,6 +609,16 @@
 				0413EE35274A95B80005948C /* Response */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		041A730E274C3F680021B6FC /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				041A730F274C3F770021B6FC /* MainCoordinator.swift */,
+				041A7311274C3FEE0021B6FC /* ProfileCoordinator.swift */,
+				041A7313274C401E0021B6FC /* TasksCoordinator.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		04731A232749296D001DD136 /* Service */ = {
@@ -641,6 +671,16 @@
 				04731A2F274929F4001DD136 /* HTTPMethod.swift */,
 			);
 			path = Endpoint;
+			sourceTree = "<group>";
+		};
+		04BB1800274BD7E400C584F8 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */,
+				04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */,
+				04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		53ADC5C8439D08763C3283E5 /* Frameworks */ = {
@@ -1423,6 +1463,7 @@
 		6D91B858265BDBE900EB2589 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1466,6 +1507,7 @@
 		6D91B868265BE95F00EB2589 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				041A730A274C38820021B6FC /* EnterNameViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1490,6 +1532,7 @@
 		6D91B86F265BEB8300EB2589 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				041A730C274C3B4C0021B6FC /* AddPhotoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2136,6 +2179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D32D862266527B5009D62C9 /* ATYSaveTaskCell.swift in Sources */,
+				041A730D274C3B4C0021B6FC /* AddPhotoViewModel.swift in Sources */,
 				6D2ADD3726B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.swift in Sources */,
 				6D403494265D151A00248E9E /* ATYAllTasksViewController.swift in Sources */,
 				6DA8E20726A6AA11005014DA /* ATYEditCourseTextTaskViewController.swift in Sources */,
@@ -2180,6 +2224,7 @@
 				6D40CA4D2667740600A78CEC /* ATYSelectWeekDaysCell.swift in Sources */,
 				6D3AC1EA26846DDC007AC57D /* CDStore+CoreDataClass.swift in Sources */,
 				6DDBE4892666742800F797FD /* ATYSelectTimeViewController.swift in Sources */,
+				041A7314274C401E0021B6FC /* TasksCoordinator.swift in Sources */,
 				6D568ECF26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift in Sources */,
 				6D6E7ECC26B13CFD005C8C62 /* ATYPenaltyForFailureCell.swift in Sources */,
 				6D8A281F265E6D7C00BAAEF5 /* TransitionDriver.swift in Sources */,
@@ -2192,10 +2237,12 @@
 				6D8A280E265E465200BAAEF5 /* ATYStackProgressView.swift in Sources */,
 				6DA07DC926BD2CE900DDC6D4 /* ATYCustomCourseNavigationBar.swift in Sources */,
 				6D21D77B26B3E4F600F27CC4 /* ATYAchievementListCell.swift in Sources */,
+				041A7310274C3F770021B6FC /* MainCoordinator.swift in Sources */,
 				6D40347C265CF5B900248E9E /* ATYCoursesViewController.swift in Sources */,
 				6D4928C826A952DE000E5346 /* ATYTheCostCourseCell.swift in Sources */,
 				6DF82863266FA2A3006487B0 /* ATYDurationCreateCourseCell.swift in Sources */,
 				04731A35274929F4001DD136 /* NetworkManager.swift in Sources */,
+				04F02943274BFC3A0054A455 /* RegistrationViewModel.swift in Sources */,
 				6D7993CC26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.swift in Sources */,
 				6DF5394926837A5D0086A64E /* CDCourse+CoreDataProperties.swift in Sources */,
 				6D1F25FC265F991F008489C9 /* ATYTaskTableViewCell.swift in Sources */,
@@ -2204,6 +2251,7 @@
 				6D32D8502664FE6D009D62C9 /* UIButton.swift in Sources */,
 				6D6E7EF626B1A00B005C8C62 /* ATYProfileWithoutSignInStatisticCell.swift in Sources */,
 				6D264EFE267C949600FEAAB8 /* ATYTasksForAboutCourseCell.swift in Sources */,
+				041A7312274C3FEE0021B6FC /* ProfileCoordinator.swift in Sources */,
 				6DA60DE02680916D00885650 /* ATYCreateCourseTaskViewController.swift in Sources */,
 				6DAB027E2656500100B72955 /* AppDelegate.swift in Sources */,
 				6D7399B9268B60D70026D81D /* ATYDatabaseService+CDUserAchievement.swift in Sources */,
@@ -2252,12 +2300,14 @@
 				6DC56C7926A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift in Sources */,
 				6D6E425B26A0515400F27E6F /* ATYCreateCourseTaskViewModel.swift in Sources */,
 				6D91B82D265BAF8800EB2589 /* R.generated.swift in Sources */,
+				04BB1804274BD80A00C584F8 /* RegistrationCoordinator.swift in Sources */,
 				6DA15F98266A286F00201DD3 /* ATYCollectionViewCourseCell.swift in Sources */,
 				6DC56C7C26A837D200863F1C /* ATYPaidCoursePreviewDescriptionCell.swift in Sources */,
 				6DF5394E26837C220086A64E /* CDCourseTask+CoreDataClass.swift in Sources */,
 				6D3AC1E626846C77007AC57D /* CDSanction+CoreDataProperties.swift in Sources */,
 				6D79938F26BAAE5C0071EF4E /* ATYYourBalanceView.swift in Sources */,
 				6D7399B0268B4DC60026D81D /* ATYDatabaseService+CDCourse.swift in Sources */,
+				041A730B274C38820021B6FC /* EnterNameViewModel.swift in Sources */,
 				6D91B877265BF4C400EB2589 /* ATYImagePicker.swift in Sources */,
 				6D6E7EFC26B1AC31005C8C62 /* ATYAboutAppCell.swift in Sources */,
 				6DF8285B266F65CE006487B0 /* ATYSearchBarCollectionView.swift in Sources */,
@@ -2288,6 +2338,7 @@
 				6D6F6AF6269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift in Sources */,
 				6DA8E22226A6E7FC005014DA /* ATYGradientImageView.swift in Sources */,
 				6DF5394F26837C220086A64E /* CDCourseTask+CoreDataProperties.swift in Sources */,
+				04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */,
 				6DF53963268381450086A64E /* CDStatistics+CoreDataProperties.swift in Sources */,
 				6DDD2AC0268CA55E00DD9A87 /* ATYDatabaseService+CDStore.swift in Sources */,
 				04731A3B274929F4001DD136 /* Endpoint.swift in Sources */,
@@ -2300,6 +2351,7 @@
 				6DA60DE5268097D100885650 /* ATYCreateCourseTaskLockCell.swift in Sources */,
 				6DF82866266FA669006487B0 /* ATYCheckBox.swift in Sources */,
 				6D6F6AF1269F0E45009AD9E1 /* ATYChooseCourseCategoryViewController.swift in Sources */,
+				04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */,
 				6D55AAA326821718004EBECB /* ATYDeleteCourseCell.swift in Sources */,
 				6DAB02882656500100B72955 /* AppToYou.xcdatamodeld in Sources */,
 				6D568EBA26B2CA63000619B2 /* ATYTakeGiftViewController.swift in Sources */,

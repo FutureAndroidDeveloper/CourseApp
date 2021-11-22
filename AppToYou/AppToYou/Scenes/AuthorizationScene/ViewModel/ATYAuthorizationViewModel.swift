@@ -1,15 +1,9 @@
-//
-//  AuthorizationViewModel.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 24.05.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
 import Foundation
 import XCoordinator
 
 protocol AuthorizationViewModelInput {
+    func resetTapped()
+    func registrationTapped()
     func didLogin()
 }
 
@@ -32,13 +26,24 @@ extension AuthorizationViewModel where Self: AuthorizationViewModelInput & Autho
 
 class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, AuthorizationViewModelOutput {
 
-    private let router: UnownedRouter<AppRoute>
+    private let appRouter: UnownedRouter<AppRoute>
+    private let router: UnownedRouter<LoginRoute>
 
-    init(router: UnownedRouter<AppRoute>) {
+    init(router: UnownedRouter<LoginRoute>, appRouter: UnownedRouter<AppRoute>) {
         self.router = router
+        self.appRouter = appRouter
     }
     
     func didLogin() {
-        router.trigger(.main, with: .init(animated: true))
+        appRouter.trigger(.main)
     }
+    
+    func resetTapped() {
+        router.trigger(.reset)
+    }
+    
+    func registrationTapped() {
+        router.trigger(.registration)
+    }
+    
 }

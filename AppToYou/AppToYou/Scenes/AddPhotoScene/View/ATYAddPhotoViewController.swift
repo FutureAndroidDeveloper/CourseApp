@@ -8,7 +8,13 @@
 
 import UIKit
 
-class ATYAddPhotoViewController: UIViewController {
+class ATYAddPhotoViewController: UIViewController, BindableType {
+    
+    var viewModel: AddPhotoViewModel!
+    
+    func bindViewModel() {
+        //
+    }
 
     private var imagePicker: ATYImagePicker?
 
@@ -130,11 +136,13 @@ class ATYAddPhotoViewController: UIViewController {
     }
 
     @objc func saveButtonAction() {
-        tabBarConfigure()
+        // upload photo
+//        tabBarConfigure()
+        
     }
 
     @objc func downloadAfterButtonAction() {
-        tabBarConfigure()
+//        tabBarConfigure()
     }
 
     private func tabBarConfigure() {
@@ -193,6 +201,10 @@ extension ATYAddPhotoViewController: ATYImagePickerDelegate {
     }
 
     func didSelect(image: UIImage?, withPath path: String?) {
+        
+        print("Selected path = \(path)")
+        viewModel.input.avatarPath(path)
+        
         if let newImage = image {
             self.image = newImage
             self.photoImageView.image = newImage

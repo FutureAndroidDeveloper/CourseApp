@@ -8,7 +8,14 @@
 
 import UIKit
 
-class ATYEnterNameViewController: UIViewController {
+class ATYEnterNameViewController: UIViewController, BindableType {
+    
+    var viewModel: EnterNameViewModel!
+    
+    func bindViewModel() {
+        //
+    }
+    
     let nameLabel : UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -87,7 +94,8 @@ class ATYEnterNameViewController: UIViewController {
     //MARK:- Handlers
 
     @objc func doneButtonAction() {
-        let photoVc = ATYAddPhotoViewController()
-        navigationController?.pushViewController(photoVc, animated: true)
+        let name = nameLabel.text ?? String()
+        viewModel.input.nameEntered(name: name)
     }
+    
 }

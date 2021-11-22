@@ -256,8 +256,7 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
     //MARK:- Handlers
 
     @objc func forgotButtonAction() {
-        let forgotVc = ATYForgotPasswordViewController()
-        navigationController?.pushViewController(forgotVc, animated: true)
+        viewModel.input.resetTapped()
     }
 
     @objc func signInButtonAction() {
@@ -266,8 +265,7 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
     }
 
     @objc func registrationButtonAction() {
-        let registrationVc = ATYRegistrationViewController()
-        navigationController?.pushViewController(registrationVc, animated: true)
+        viewModel.input.registrationTapped()
     }
 
     @objc func googleButtonAction() {

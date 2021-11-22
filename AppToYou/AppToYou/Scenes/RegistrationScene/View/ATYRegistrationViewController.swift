@@ -8,7 +8,14 @@
 
 import UIKit
 
-class ATYRegistrationViewController: UIViewController {
+class ATYRegistrationViewController: UIViewController, BindableType {
+    
+    var viewModel: RegistrationViewModel!
+    
+    
+    func bindViewModel() {
+        //
+    }
 
     let registrationLabel : UILabel = {
         let label = UILabel()
@@ -160,14 +167,18 @@ class ATYRegistrationViewController: UIViewController {
     //MARK:- Handlers
     
     @objc func doneButtonAction() {
-        let nameVc = ATYEnterNameViewController()
-        navigationController?.pushViewController(nameVc, animated: true)
+        let mail = emailTextField.text ?? String()
+        let pass = passwordTextField.text ?? String()
+        
+        viewModel.input.credentialsEntered(mail: mail, password: pass)
+//        let nameVc = ATYEnterNameViewController()
+//        navigationController?.pushViewController(nameVc, animated: true)
     }
 }
 
 extension ATYRegistrationViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        UIApplication.shared.open(URL)
+        viewModel.input.open(url: URL)
         return false
     }
 }
