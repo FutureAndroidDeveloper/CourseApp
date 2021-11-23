@@ -14,6 +14,7 @@ class ProfileCoordinator: NavigationCoordinator<ProfileRoute> {
     init(appRouter: UnownedRouter<AppRoute>) {
         self.appRouter = appRouter
         super.init(initialRoute: .profile)
+        configureContainer()
     }
     
     override func prepareTransition(for route: ProfileRoute) -> NavigationTransition {
@@ -29,6 +30,12 @@ class ProfileCoordinator: NavigationCoordinator<ProfileRoute> {
             // TODO: проверить что будет, если есть PopUp (возможно сразу нужно сделать дисмисс)
             return .trigger(.authorization, on: appRouter)
         }
+    }
+    
+    private func configureContainer() {
+        rootViewController.tabBarItem = UITabBarItem(title: R.string.localizable.profile(),
+                                                     image: R.image.targetNotActive(),
+                                                     selectedImage: R.image.targetActive())
     }
     
 }

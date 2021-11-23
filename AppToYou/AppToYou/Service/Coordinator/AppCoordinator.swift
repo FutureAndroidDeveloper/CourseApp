@@ -7,7 +7,9 @@ enum AppRoute: Route {
     case main
 }
 
-
+/**
+ Класс, отвечающий за переход между авторизованной и неавторизованной частью приложения.
+ */
 class AppCoordinator: NavigationCoordinator<AppRoute> {
     
     private let window: UIWindow

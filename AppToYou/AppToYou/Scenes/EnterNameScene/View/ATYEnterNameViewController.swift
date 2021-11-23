@@ -46,7 +46,6 @@ class ATYEnterNameViewController: UIViewController, BindableType {
         super.viewDidLoad()
         view.backgroundColor = R.color.backgroundAppColor()
         configureViews()
-        configureNavBar()
     }
 
     override func viewWillLayoutSubviews() {
@@ -56,13 +55,6 @@ class ATYEnterNameViewController: UIViewController, BindableType {
     }
 
     //MARK:- Configure views
-
-    private func configureNavBar() {
-        let backButton = UIBarButtonItem()
-        backButton.title = ""
-        backButton.tintColor = R.color.lineViewBackgroundColor()
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-    }
 
     private func configureViews() {
         view.addSubview(nameLabel)
@@ -94,7 +86,7 @@ class ATYEnterNameViewController: UIViewController, BindableType {
     //MARK:- Handlers
 
     @objc func doneButtonAction() {
-        let name = nameLabel.text ?? String()
+        let name = nameTextField.text ?? String()
         viewModel.input.nameEntered(name: name)
     }
     

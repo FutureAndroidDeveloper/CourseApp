@@ -12,7 +12,6 @@ enum LoginRoute: Route {
 class LoginCoordinator: NavigationCoordinator<LoginRoute> {
     
     private let appRouter: UnownedRouter<AppRoute>
-    private var registrationRouter: StrongRouter<RegistrationRoute>?
 
     init(appRouter: UnownedRouter<AppRoute>) {
         self.appRouter = appRouter
@@ -38,7 +37,8 @@ class LoginCoordinator: NavigationCoordinator<LoginRoute> {
             return .push(forgotVc)
             
         case .registration:
-            registrationRouter = RegistrationCoordinator(loginRouter: unownedRouter, rootViewController: rootViewController).strongRouter
+            let second = RegistrationCoordinator(loginRouter: unownedRouter, rootViewController: self.rootViewController)
+            addChild(second)
             return .none()
             
         case .didLogin:

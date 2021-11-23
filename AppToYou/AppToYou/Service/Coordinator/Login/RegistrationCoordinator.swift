@@ -9,6 +9,7 @@ enum RegistrationRoute: Route {
     case url(_ url: URL)
 }
 
+
 class RegistrationCoordinator: NavigationCoordinator<RegistrationRoute> {
     
     private let loginRouter: UnownedRouter<LoginRoute>
@@ -20,6 +21,7 @@ class RegistrationCoordinator: NavigationCoordinator<RegistrationRoute> {
     }
     
     override func prepareTransition(for route: RegistrationRoute) -> NavigationTransition {
+        configureContainer()
         
         switch route {
         case .initial:
@@ -54,6 +56,13 @@ class RegistrationCoordinator: NavigationCoordinator<RegistrationRoute> {
         }
         
         return .none()
+    }
+    
+    private func configureContainer() {
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        backButton.tintColor = R.color.lineViewBackgroundColor()
+        rootViewController.navigationBar.topItem?.backBarButtonItem = backButton
     }
     
 }

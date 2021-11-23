@@ -66,7 +66,6 @@ class ATYAddPhotoViewController: UIViewController, BindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavBar()
         configureViews()
         self.imagePicker = ATYImagePicker(presentationController: self, delegate: self)
         view.backgroundColor = R.color.backgroundAppColor()
@@ -80,13 +79,6 @@ class ATYAddPhotoViewController: UIViewController, BindableType {
     }
 
     //MARK:- Configure UI
-
-    private func configureNavBar() {
-        let backButton = UIBarButtonItem()
-        backButton.title = ""
-        backButton.tintColor = R.color.lineViewBackgroundColor()
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-    }
 
     private func configureViews() {
         view.addSubview(downloadPhotoLabel)
@@ -144,47 +136,7 @@ class ATYAddPhotoViewController: UIViewController, BindableType {
     @objc func downloadAfterButtonAction() {
 //        tabBarConfigure()
     }
-
-    private func tabBarConfigure() {
-        let nav1 = UINavigationController(rootViewController: NavigationBarViewController())
-        let nav2 = UINavigationController(rootViewController: ATYCoursesViewController())
-        let nav3 = UINavigationController(rootViewController: ATYProfileSignInViewController())
-
-        nav1.title = R.string.localizable.tasks()
-        nav2.title = R.string.localizable.courses()
-        nav3.title = R.string.localizable.profile()
-
-        let tabBar = UITabBarController()
-        tabBar.view.backgroundColor = R.color.backgroundAppColor()
-        tabBar.setViewControllers([nav1, nav2, nav3], animated: true)
-        tabBar.tabBar.barTintColor = R.color.backgroundTextFieldsColor()
-        tabBar.tabBar.isTranslucent = false
-        tabBar.tabBar.tintColor = R.color.textColorSecondary()
-
-        guard let items = tabBar.tabBar.items else {
-            return
-        }
-
-        let images = [R.image.targetActive(), R.image.rocketNotActive(), R.image.profileNotActive()]
-
-        for x in 0..<items.count {
-            items[x].image = images[x]
-        }
-
-        let transition = CATransition()
-        transition.duration = 0.4
-        transition.type = CATransitionType.moveIn
-        transition.subtype = CATransitionSubtype.fromTop
-        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.default)
-
-
-        UIApplication.shared.windows.first?.rootViewController?.view.removeFromSuperview()
-        UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: false, completion: nil)
-        UIApplication.shared.windows.first?.layer.add(transition, forKey: kCATransition)
-        UIApplication.shared.windows.first?.rootViewController = tabBar
-        UIApplication.shared.windows.first?.isHidden = false
-
-    }
+    
 }
 
 extension ATYAddPhotoViewController: ATYImagePickerDelegate {

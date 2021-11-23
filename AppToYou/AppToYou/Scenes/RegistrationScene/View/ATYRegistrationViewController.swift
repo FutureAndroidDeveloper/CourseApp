@@ -63,7 +63,6 @@ class ATYRegistrationViewController: UIViewController, BindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavBar()
         configureViews()
         setupUserAgreementInfoLabel()
         view.backgroundColor = R.color.backgroundAppColor()
@@ -78,13 +77,6 @@ class ATYRegistrationViewController: UIViewController, BindableType {
 
 
     //MARK:- Configure views
-
-    private func configureNavBar() {
-        let backButton = UIBarButtonItem()
-        backButton.title = ""
-        backButton.tintColor = R.color.lineViewBackgroundColor()
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-    }
 
     private func configureViews() {
         view.addSubview(registrationLabel)

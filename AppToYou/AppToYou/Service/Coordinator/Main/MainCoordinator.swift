@@ -17,13 +17,8 @@ class MainCoordinator: TabBarCoordinator<MainRoute> {
     
     convenience init(appRouter: UnownedRouter<AppRoute>) {
         let taskCoordinator = TasksCoordinator()
-        taskCoordinator.rootViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .recents, tag: 0)
-
         let coursesCoordinator = CoursesCoordinator()
-        coursesCoordinator.rootViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 1)
-        
         let profileCoordinator = ProfileCoordinator(appRouter: appRouter)
-        profileCoordinator.rootViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 2)
 
         self.init(tasksRouter: taskCoordinator.strongRouter,
                   coursesRouter: coursesCoordinator.strongRouter,
@@ -37,7 +32,8 @@ class MainCoordinator: TabBarCoordinator<MainRoute> {
         self.tasksRouter = tasksRouter
         self.coursesRouter = coursesRouter
         self.profileRouter = profileRouter
-        super.init(tabs: [tasksRouter, coursesRouter, profileRouter], select: profileRouter)
+        super.init(tabs: [tasksRouter, coursesRouter, profileRouter], select: tasksRouter)
+        configureContainer()
     }
     
     override func prepareTransition(for route: MainRoute) -> TabBarTransition {
@@ -51,6 +47,13 @@ class MainCoordinator: TabBarCoordinator<MainRoute> {
         case .profile:
             return .select(profileRouter)
         }
+    }
+    
+    private func configureContainer() {
+        rootViewController.view.backgroundColor = R.color.backgroundAppColor()
+        rootViewController.tabBar.barTintColor = R.color.backgroundTextFieldsColor()
+        rootViewController.tabBar.isTranslucent = false
+        rootViewController.tabBar.tintColor = R.color.textColorSecondary()
     }
     
 }
