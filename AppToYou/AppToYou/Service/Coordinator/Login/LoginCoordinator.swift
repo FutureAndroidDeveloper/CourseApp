@@ -25,7 +25,6 @@ class LoginCoordinator: NavigationCoordinator<LoginRoute> {
             let viewModel = LoginViewModelImpl(router: unownedRouter, appRouter: appRouter)
             viewController.bind(to: viewModel)
             
-//            return .set([viewController])
             return .multiple([
                 .dismissToRoot(),
                 .popToRoot(),
@@ -33,12 +32,14 @@ class LoginCoordinator: NavigationCoordinator<LoginRoute> {
             ])
             
         case .reset:
-            let forgotVc = ATYForgotPasswordViewController()
-            return .push(forgotVc)
+            let resetPasswordCoordinator = ResetPasswordCoordinator(rootViewController: self.rootViewController)
+            addChild(resetPasswordCoordinator)
+            return .none()
             
         case .registration:
-            let second = RegistrationCoordinator(loginRouter: unownedRouter, rootViewController: self.rootViewController)
-            addChild(second)
+            let registrationCoordinator = RegistrationCoordinator(loginRouter: unownedRouter,
+                                                                  rootViewController: self.rootViewController)
+            addChild(registrationCoordinator)
             return .none()
             
         case .didLogin:

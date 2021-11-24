@@ -15,8 +15,6 @@
 "!@#$MyNameIs" = "My name is...";
 "!@#$CompleteRegistration" = "Complete registration";
 "!@#$RegisterNow" = "Register now";
-"!@#$EnterYourEmail" = "Enter your email";
-"!@#$EnterEmail" = "Enter email";
 "!@#$PickAPassword" = "Pick a password";
 "!@#$MinimumSix" = "⃰Minimum 6 characters, 1 number and an uppercase letter";
 "!@#$Register" = "Register";
@@ -24,7 +22,6 @@
 "!@#$AppWith" = "applications and with";
 "!@#$TermsOfUse" = "terms of use";
 "!@#$PrivacyPolicy" = "privacy policy";
-"!@#$WeWiilSendYourInstructions" = "We will send instructions with further actions to the specified email";
 "!@#$RestorePassword" = "Restore password";
 "!@#$SignIn" = "Sign in to your account";
 "!@#$EnterPassword" = "Enter password";
@@ -62,3 +59,21 @@
 "!@#$Once" = "Once  ";
 "!@#$SelectDaysWeek" = "Select days of the week  ";
 "!@#$PenaltyForNonCompliance" = "Penalty for non-compliance";
+
+// MARK: - Forgot Password
+
+// Enter Mail
+"!@#$EnterYourEmail" = "Enter your email";
+"!@#$EnterEmail" = "Enter email";
+"!@#$WeWiilSendYourInstructions" = "Translation";
+
+// Check Mail
+"!@#$CheckYourEmail" = "Translation";
+"!@#$EmailInstructions" = "Translation";
+"!@#$CheckEmail" = "Translation";
+
+// New Password
+"!@#$NewPassword" = "Translation";
+"!@#$NewPasswordInstructions" = "Translation";
+"!@#$RepeatPassword" = "Translation";
+"!@#$SavePassword" = "Translation";

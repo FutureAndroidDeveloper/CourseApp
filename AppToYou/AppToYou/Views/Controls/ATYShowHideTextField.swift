@@ -13,6 +13,11 @@ import UIKit
 class ATYShowHideTextField: UITextField {
 
     private let rightButton = UIButton(type: .custom)
+    
+    private var leftViewPadding: UIEdgeInsets {
+        let rightInset = self.rightButton.frame.width
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: rightInset)
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -22,6 +27,18 @@ class ATYShowHideTextField: UITextField {
     required override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
+    }
+
+    override open func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: leftViewPadding)
+    }
+
+    override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: leftViewPadding)
+    }
+
+    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: leftViewPadding)
     }
 
     private func commonInit() {

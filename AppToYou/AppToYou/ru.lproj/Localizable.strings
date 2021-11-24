@@ -15,8 +15,6 @@
 "!@#$MyNameIs" = "Меня зовут...";
 "!@#$CompleteRegistration" = "Завершить регистрацию";
 "!@#$RegisterNow" = "Зарегистрироваться";
-"!@#$EnterYourEmail" = "Введите свой email";
-"!@#$EnterEmail" = "Введите email";
 "!@#$PickAPassword" = "Придумайте пароль";
 "!@#$MinimumSix" = "⃰Минимум 6 символов, 1 цифра и прописная буква";
 "!@#$Register" = "Зарегистрироваться";
@@ -24,7 +22,6 @@
 "!@#$AppWith" = "приложения и с";
 "!@#$TermsOfUse" = "условиями использования";
 "!@#$PrivacyPolicy" = "политикой конфиденциальности";
-"!@#$WeWiilSendYourInstructions" = "Мы пришлем инструкции с дальнейшими действиями на указанный email";
 "!@#$RestorePassword" = "Восстановить пароль";
 "!@#$SignIn" = "Войти в аккаунт";
 "!@#$EnterPassword" = "Введите пароль";
@@ -62,3 +59,21 @@
 "!@#$Once" = "Один раз  ";
 "!@#$SelectDaysWeek" = "Выбрать дни недели  ";
 "!@#$PenaltyForNonCompliance" = "Штраф за невыполнение";
+
+// MARK: - Forgot Password
+
+// Enter Mail
+"!@#$EnterYourEmail" = "Введите свой email";
+"!@#$EnterEmail" = "Введите email";
+"!@#$WeWiilSendYourInstructions" = "Введите свой email и следуйте дальнейшим инструкциям";
+
+// Check Mail
+"!@#$CheckYourEmail" = "Проверьте почту";
+"!@#$EmailInstructions" = "Мы выслали инструкции с дальнейшими действиями на указанный email";
+"!@#$CheckEmail" = "Проверить почту";
+
+// New Password
+"!@#$NewPassword" = "Новый пароль";
+"!@#$NewPasswordInstructions" = "Придумайте новый пароль и введите его ниже два раза";
+"!@#$RepeatPassword" = "Повторите пароль";
+"!@#$SavePassword" = "Сохранить пароль";

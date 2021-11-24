@@ -30,6 +30,12 @@
 		04731A3B274929F4001DD136 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A31274929F4001DD136 /* Endpoint.swift */; };
 		04731A3F27492A29001DD136 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A3E27492A29001DD136 /* NetworkRouter.swift */; };
 		04731A4227492CBA001DD136 /* UserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A4127492CBA001DD136 /* UserEndpoint.swift */; };
+		0482E116274EA3D400B0F3AF /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E115274EA3D400B0F3AF /* PaddingTextField.swift */; };
+		0482E118274EA72900B0F3AF /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */; };
+		0482E11C274EAAC800B0F3AF /* CheckEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */; };
+		0482E120274EAD5400B0F3AF /* NewPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */; };
+		048EF3D2274D8C0900E688DB /* CheckEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */; };
+		048EF3D5274D911000E688DB /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EF3D4274D911000E688DB /* NewPasswordViewController.swift */; };
 		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
 		04BB1804274BD80A00C584F8 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */; };
 		04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */; };
@@ -297,6 +303,12 @@
 		04731A31274929F4001DD136 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		04731A3E27492A29001DD136 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		04731A4127492CBA001DD136 /* UserEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndpoint.swift; sourceTree = "<group>"; };
+		0482E115274EA3D400B0F3AF /* PaddingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingTextField.swift; sourceTree = "<group>"; };
+		0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ForgotPasswordViewModel.swift; path = AppToYou/Views/Controls/ForgotPasswordViewModel.swift; sourceTree = SOURCE_ROOT; };
+		0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailViewModel.swift; sourceTree = "<group>"; };
+		0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewModel.swift; sourceTree = "<group>"; };
+		048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckEmailViewController.swift; sourceTree = "<group>"; };
+		048EF3D4274D911000E688DB /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
 		04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
@@ -674,6 +686,66 @@
 				04731A2F274929F4001DD136 /* HTTPMethod.swift */,
 			);
 			path = Endpoint;
+			sourceTree = "<group>";
+		};
+		0482E119274EAA1C00B0F3AF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0482E11A274EAA2300B0F3AF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0482E11D274EAD3400B0F3AF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				048EF3D4274D911000E688DB /* NewPasswordViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0482E11E274EAD3F00B0F3AF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		048EF3CA274D8C0900E688DB /* PasswordRecoveryScene */ = {
+			isa = PBXGroup;
+			children = (
+				6D91B850265BD59B00EB2589 /* ForgotPasswordScene */,
+				048EF3CB274D8C0900E688DB /* NewPasswordScene */,
+				048EF3CC274D8C0900E688DB /* CheckEmailScene */,
+			);
+			path = PasswordRecoveryScene;
+			sourceTree = "<group>";
+		};
+		048EF3CB274D8C0900E688DB /* NewPasswordScene */ = {
+			isa = PBXGroup;
+			children = (
+				0482E11E274EAD3F00B0F3AF /* ViewModel */,
+				0482E11D274EAD3400B0F3AF /* View */,
+			);
+			path = NewPasswordScene;
+			sourceTree = "<group>";
+		};
+		048EF3CC274D8C0900E688DB /* CheckEmailScene */ = {
+			isa = PBXGroup;
+			children = (
+				0482E11A274EAA2300B0F3AF /* ViewModel */,
+				0482E119274EAA1C00B0F3AF /* View */,
+			);
+			path = CheckEmailScene;
 			sourceTree = "<group>";
 		};
 		04BB1800274BD7E400C584F8 /* Login */ = {
@@ -1442,6 +1514,7 @@
 		6D91B852265BD5B400EB2589 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1486,6 +1559,7 @@
 			children = (
 				6D91B863265BE20700EB2589 /* ATYShowHideTextField.swift */,
 				6DF82865266FA669006487B0 /* ATYCheckBox.swift */,
+				0482E115274EA3D400B0F3AF /* PaddingTextField.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -1929,6 +2003,7 @@
 		6DDA127F265B9133004124E7 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				048EF3CA274D8C0900E688DB /* PasswordRecoveryScene */,
 				6DC7680926BC0F2500B8811C /* NeedAuthorizationForTaskSanctionScene */,
 				6DC767EB26BBE4A400B8811C /* CourseRatingScene */,
 				6DC767DA26BBCD5300B8811C /* SettingsScene */,
@@ -1953,7 +2028,6 @@
 				6D40CA582667C10900A78CEC /* EditTaskScene */,
 				6DDA1280265B9145004124E7 /* AuthorizationScene */,
 				6D91B856265BDBCF00EB2589 /* RegistrationScene */,
-				6D91B850265BD59B00EB2589 /* ForgotPasswordScene */,
 				6D91B866265BE94900EB2589 /* EnterNameScene */,
 				6D91B86D265BEB6D00EB2589 /* AddPhotoScene */,
 				6D403471265CE57600248E9E /* TabBarScene */,
@@ -2219,6 +2293,7 @@
 				6DDD2AB1268C61AB00DD9A87 /* ATYDatabaseService+CDVacation.swift in Sources */,
 				6D40CA602667CFA200A78CEC /* UIViewController.swift in Sources */,
 				0413EE3D274A96380005948C /* UserResponse.swift in Sources */,
+				048EF3D5274D911000E688DB /* NewPasswordViewController.swift in Sources */,
 				6D8A282A265E6DAE00BAAEF5 /* DimmPresentationController.swift in Sources */,
 				6D91B864265BE20700EB2589 /* ATYShowHideTextField.swift in Sources */,
 				6D4BAFEC26C2BF1100090789 /* SearchBar+SHSearchBar.swift in Sources */,
@@ -2245,6 +2320,7 @@
 				6D4928C826A952DE000E5346 /* ATYTheCostCourseCell.swift in Sources */,
 				6DF82863266FA2A3006487B0 /* ATYDurationCreateCourseCell.swift in Sources */,
 				04731A35274929F4001DD136 /* NetworkManager.swift in Sources */,
+				048EF3D2274D8C0900E688DB /* CheckEmailViewController.swift in Sources */,
 				04F02943274BFC3A0054A455 /* RegistrationViewModel.swift in Sources */,
 				6D7993CC26BAD04C0071EF4E /* ATYStatisticPayOnCourseCell.swift in Sources */,
 				6DF5394926837A5D0086A64E /* CDCourse+CoreDataProperties.swift in Sources */,
@@ -2273,6 +2349,7 @@
 				6DF8286D266FC4F3006487B0 /* ATYPayForCourseView.swift in Sources */,
 				6DA8E20E26A6AB9B005014DA /* ATYEditTextSymbolsCountTaskCell.swift in Sources */,
 				6D21D77026B3E45800F27CC4 /* ATYAchievementListViewController.swift in Sources */,
+				0482E118274EA72900B0F3AF /* ForgotPasswordViewModel.swift in Sources */,
 				6DF53968268381990086A64E /* CDVacation+CoreDataProperties.swift in Sources */,
 				6D3AC1E526846C77007AC57D /* CDSanction+CoreDataClass.swift in Sources */,
 				6DF53959268380100086A64E /* CDUserAchievement+CoreDataProperties.swift in Sources */,
@@ -2366,11 +2443,13 @@
 				6D118ECA26A9B04800601F34 /* ATYCourseParticipantCell.swift in Sources */,
 				6D651CEF26611F4B003ACF95 /* ATYCreateTaskNameCell.swift in Sources */,
 				6DDD2AAB268C5A0800DD9A87 /* ATYDatabaseService+Achievement.swift in Sources */,
+				0482E11C274EAAC800B0F3AF /* CheckEmailViewModel.swift in Sources */,
 				6D91B809265B9EBD00EB2589 /* UIFont+Montserrat.swift in Sources */,
 				6D54A0AE266E2921006FF63C /* ATYCreateCourseViewController.swift in Sources */,
 				6D91B871265BEBA500EB2589 /* ATYAddPhotoViewController.swift in Sources */,
 				6DF5395D268380A40086A64E /* CDAchievement+CoreDataClass.swift in Sources */,
 				6DA10EFF26AAD89800A05770 /* ATYAnotherCourseUserCell.swift in Sources */,
+				0482E120274EAD5400B0F3AF /* NewPasswordViewModel.swift in Sources */,
 				6D3AC1E126846BE0007AC57D /* CDUserTask+CoreDataProperties.swift in Sources */,
 				6DC7680C26BC0F5200B8811C /* ATYNeedAuthorizationForTaskSanctionViewController.swift in Sources */,
 				6D54A0B2266E685F006FF63C /* ATYSelectPhotoCourseCell.swift in Sources */,
@@ -2399,6 +2478,7 @@
 				6DF5396C268381F50086A64E /* CDWallet+CoreDataClass.swift in Sources */,
 				6DC767F926BBE51200B8811C /* ATYRatingCourseParticipantCell.swift in Sources */,
 				6D8A2844265E805500BAAEF5 /* ATYAddTaskTableViewCell.swift in Sources */,
+				0482E116274EA3D400B0F3AF /* PaddingTextField.swift in Sources */,
 				6D91B854265BD5CB00EB2589 /* ATYForgotPasswordViewController.swift in Sources */,
 				6D3AC1DB26846AD7007AC57D /* CDTransaction+CoreDataClass.swift in Sources */,
 				0432BAAC274AD920000DD016 /* ProfileViewModel.swift in Sources */,
