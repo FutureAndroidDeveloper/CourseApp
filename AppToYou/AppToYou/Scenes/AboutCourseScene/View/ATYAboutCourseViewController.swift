@@ -145,10 +145,10 @@ extension ATYAboutCourseViewController: UITableViewDelegate, UITableViewDataSour
                 let vc = ATYCreateCourseTaskViewController()
                 vc.hidesBottomBarWhenPushed = true
 
-                child.pushVcCallback = { [weak self] type in
-                    vc.types = type
-                    self?.navigationController?.pushViewController(vc, animated: true)
-                }
+//                child.pushVcCallback = { [weak self] type in
+//                    vc.types = type
+//                    self?.navigationController?.pushViewController(vc, animated: true)
+//                }
                 child.transitioningDelegate = self?.transition
                 child.modalPresentationStyle = .custom
 

@@ -8,7 +8,20 @@
 
 import UIKit
 
-class ATYCreateDescriptionTaskCell: UITableViewCell {
+
+class CreateDescriptionTaskCellModel {
+    let descriptionEntered: ((String) -> Void)
+    
+    init(descriptionEntered: @escaping (String) -> Void) {
+        self.descriptionEntered = descriptionEntered
+    }
+    
+}
+
+
+class ATYCreateDescriptionTaskCell: UITableViewCell, InflatableView {
+    
+    private var callbackText: ((String) -> Void)?
 
     var nameLabel : UILabel = {
         let label = UILabel()
@@ -25,8 +38,6 @@ class ATYCreateDescriptionTaskCell: UITableViewCell {
         return textView
     }()
 
-    var callbackText: ((String) -> Void)?
-
     let placeholderLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,6 +49,13 @@ class ATYCreateDescriptionTaskCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? CreateDescriptionTaskCellModel else {
+            return
+        }
+        callbackText = model.descriptionEntered
     }
 
     private func configure() {

@@ -14,15 +14,18 @@ struct ATYUserTask {
     var courseTaskId: Int? = 0
     var daysCode: String?
     var editableCourseTask: Bool = false
-    var frequencyType: ATYFrequencyTypeEnum = .ONCE
+    var frequencyType: ATYFrequencyTypeEnum = .EVERYDAY
     var minimumCourseTaskSanction: Int = 0
     var startDate: String = Date().toString(dateFormat: .simpleDateFormat)
+    
+    var endDate: String = Date().toString(dateFormat: .simpleDateFormat)
+    
     var taskAttribute: String? = "attribute"
     var taskCompleteTime: String? = nil
     var taskDescription: String? = "description"
     var taskName: String = "Name task"
     var taskSanction: Int = 0
-    var taskType: ATYTaskTypeEnum = .CHECKBOX
+    var taskType: ATYTaskType = .CHECKBOX
     var userFk: Int? = 0
     var id: Int = 0
     var courseFk: Int? = 0
@@ -42,14 +45,16 @@ enum ATYFrequencyTypeEnum : String, CaseIterable {
     }
 }
 
-enum ATYTaskTypeEnum : String, CaseIterable {
+enum ATYTaskType : String, CaseIterable {
     case CHECKBOX
     case TEXT
     case TIMER
     case RITUAL
 
     var title: String {
-        get { return String(describing: self) }
+        get {
+            return String(describing: self)
+        }
     }
 
     var massive : [UITableViewCell] {

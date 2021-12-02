@@ -28,7 +28,7 @@ extension ATYParser {
         var startDate = ""
         var taskCompletedTask: String? = nil
         var frequencyType : ATYFrequencyTypeEnum?
-        var taskType : ATYTaskTypeEnum?
+        var taskType : ATYTaskType?
 
         if let tsCreated = userTask.tsCreated {
             creationDate = tsCreated.toString(dateFormat: .simpleDateTimeFormat)
@@ -48,7 +48,7 @@ extension ATYParser {
 
         frequencyType = ATYFrequencyTypeEnum.allCases.first(where: { $0.title == userTask.frequencyType })
 
-        taskType = ATYTaskTypeEnum.allCases.first(where: { $0.title == userTask.taskType })
+        taskType = ATYTaskType.allCases.first(where: { $0.title == userTask.taskType })
 
         return ATYUserTask(tsCreated: creationDate,
                            tsUpdated: updateDate,

@@ -8,7 +8,11 @@
 
 import UIKit
 
-class ATYCreateCountRepeatTaskCell: UITableViewCell {
+class CreateCountRepeatTaskCellModel {
+    
+}
+
+class ATYCreateCountRepeatTaskCell: UITableViewCell, InflatableView {
 
     var nameLabel : UILabel = {
         let label = UILabel()
@@ -59,6 +63,12 @@ class ATYCreateCountRepeatTaskCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func inflate(model: AnyObject) {
+        guard let model = model as? ATYCreateCountRepeatTaskCell else {
+            return
+        }
+    }
+    
     @objc func chainButtonAction(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         sender.imageView?.tintColor = sender.isSelected ?  R.color.textColorSecondary() : R.color.lineViewBackgroundColor()

@@ -21,7 +21,7 @@ class ATYEditTaskViewController: UIViewController {
     private var transitionForQuestionButton: PanelTransition!
     private var datePicker = UIDatePicker()
 
-    var types : ATYTaskTypeEnum!
+    var types : ATYTaskType!
 
     var hour : String?
     var minute : String?
@@ -140,10 +140,10 @@ extension ATYEditTaskViewController: UITableViewDelegate, UITableViewDataSource 
             case .createTaskPeriodCaledarCell:
                 if  self.viewModel.frequencyType == .CERTAIN_DAYS {
                     let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
-                    cell.callbackResult = { [weak self] resultString in
-                        print(resultString)
-                        self?.viewModel.daysCode = resultString
-                    }
+//                    cell.callbackResult = { [weak self] resultString in
+//                        print(resultString)
+//                        self?.viewModel.daysCode = resultString
+//                    }
                     return cell
                 } else if  self.viewModel.frequencyType == .ONCE {
                     let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
@@ -176,21 +176,21 @@ extension ATYEditTaskViewController: UITableViewDelegate, UITableViewDataSource 
                     return cell
             case .createSanctionTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
-                cell.questionCallback = { [weak self] in
-                    self?.openPenaltyForFailureController()
-                }
+//                cell.questionCallback = { [weak self] in
+//                    self?.openPenaltyForFailureController()
+//                }
 
-                cell.callbackText = { [weak self] text in
-                    self?.viewModel.userTask.taskSanction = Int(text) ?? 0
-                }
+//                cell.callbackText = { [weak self] text in
+//                    self?.viewModel.userTask.taskSanction = Int(text) ?? 0
+//                }
                     return cell
             case .saveTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
                 cell.setUp(titleForButton: "Сохранить")
-                cell.callback = { [weak self] in
-//                    self?.viewModel.createUserTask()
-                    self?.navigationController?.popViewController(animated: true)
-                }
+//                cell.callback = { [weak self] in
+////                    self?.viewModel.createUserTask()
+//                    self?.navigationController?.popViewController(animated: true)
+//                }
                     return cell
             default: break
             }
@@ -213,9 +213,9 @@ extension ATYEditTaskViewController: UITableViewDelegate, UITableViewDataSource 
             case .createTaskPeriodCaledarCell:
                 if self.viewModel.frequencyType == .CERTAIN_DAYS {
                     let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectWeekDaysCell.reuseIdentifier, for: indexPath) as! ATYSelectWeekDaysCell
-                    cell.callbackResult = { [weak self] resultString in
-                        self?.viewModel.userTask.daysCode = resultString
-                    }
+//                    cell.callbackResult = { [weak self] resultString in
+//                        self?.viewModel.userTask.daysCode = resultString
+//                    }
                         return cell
                 } else if  self.viewModel.frequencyType == .ONCE {
                     let cell = tableView.dequeueReusableCell(withIdentifier: ATYOnceSelectDayCell.reuseIdentifier, for: indexPath) as! ATYOnceSelectDayCell
@@ -241,17 +241,17 @@ extension ATYEditTaskViewController: UITableViewDelegate, UITableViewDataSource 
                     return cell
             case .createSanctionTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
-                cell.questionCallback = { [weak self] in
-                    self?.openPenaltyForFailureController()
-                }
+//                cell.questionCallback = { [weak self] in
+//                    self?.openPenaltyForFailureController()
+//                }
                     return cell
             case .saveTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
                 cell.setUp(titleForButton: "Сохранить")
-                cell.callback = { [weak self] in
-//                    self?.viewModel.createUserTask()
-                    self?.navigationController?.popViewController(animated: true)
-                }
+//                cell.callback = { [weak self] in
+////                    self?.viewModel.createUserTask()
+//                    self?.navigationController?.popViewController(animated: true)
+//                }
                     return cell
             case .createCountRepeatTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateCountRepeatTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateCountRepeatTaskCell
@@ -302,17 +302,17 @@ extension ATYEditTaskViewController: UITableViewDelegate, UITableViewDataSource 
                     return cell
             case .createSanctionTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
-                cell.questionCallback = { [weak self] in
-                    self?.openPenaltyForFailureController()
-                }
+//                cell.questionCallback = { [weak self] in
+//                    self?.openPenaltyForFailureController()
+//                }
                     return cell
             case .saveTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
                 cell.setUp(titleForButton: "Сохранить")
-                cell.callback = { [weak self] in
-//                    self?.viewModel.createUserTask()
-                    self?.navigationController?.popViewController(animated: true)
-                }
+//                cell.callback = { [weak self] in
+////                    self?.viewModel.createUserTask()
+//                    self?.navigationController?.popViewController(animated: true)
+//                }
                     return cell
             case .createDurationTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateDurationTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateDurationTaskCell
@@ -351,17 +351,17 @@ extension ATYEditTaskViewController: UITableViewDelegate, UITableViewDataSource 
                     return cell
             case .createSanctionTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateSanctionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateSanctionTaskCell
-                cell.questionCallback = { [weak self] in
-                    self?.openPenaltyForFailureController()
-                }
+//                cell.questionCallback = { [weak self] in
+//                    self?.openPenaltyForFailureController()
+//                }
                     return cell
             case .saveTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
                 cell.setUp(titleForButton: "Сохранить")
-                cell.callback = { [weak self] in
-//                    self?.viewModel.createUserTask()
-                    self?.navigationController?.popViewController(animated: true)
-                }
+//                cell.callback = { [weak self] in
+////                    self?.viewModel.createUserTask()
+//                    self?.navigationController?.popViewController(animated: true)
+//                }
                     return cell
             case .createTaskPeriodCaledarCell:
                 if  self.viewModel.frequencyType == .CERTAIN_DAYS {

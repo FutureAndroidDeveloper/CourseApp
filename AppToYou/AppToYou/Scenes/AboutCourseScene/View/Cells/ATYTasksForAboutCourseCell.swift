@@ -57,7 +57,7 @@ class ATYTasksForAboutCourseCell : UITableViewCell {
     var applianceTableViewHeightConstraint: NSLayoutConstraint!
 
     var createTaskCallback : (() -> (Void))?
-    var selectSwitchButtonCallback : ((ATYTaskTypeEnum?) -> ())?
+    var selectSwitchButtonCallback : ((ATYTaskType?) -> ())?
     var addAllTasksCallback: (() -> ())?
 
     var completedTask = [TemporaryData(typeTask: .CHECKBOX,

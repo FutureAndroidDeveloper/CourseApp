@@ -8,13 +8,34 @@
 
 import Parchment
 import UIKit
+import XCoordinator
 
 class NavigationBarViewController: UIViewController {
-    let pagingViewController = NavigationBarPagingViewController(viewControllers: [
-        ATYTodayTasksViewController(name: R.string.localizable.today()),
-        ATYAllTasksViewController(name: R.string.localizable.allTasks())
-    ])
-
+    
+    private let taskRouter: UnownedRouter<TasksRoute>
+    
+    private lazy var pagingViewController: NavigationBarPagingViewController = {
+        let viewController = NavigationBarPagingViewController(viewControllers: [
+            ATYTodayTasksViewController(title: R.string.localizable.today(), taskRouter: self.taskRouter),
+            ATYAllTasksViewController(name: R.string.localizable.allTasks())
+        ])
+        return viewController
+    }()
+    
+//    let pagingViewController = NavigationBarPagingViewController(viewControllers: [
+//        ATYTodayTasksViewController(title: R.string.localizable.today(), taskRouter: self.taskRouter),
+//        ATYAllTasksViewController(name: R.string.localizable.allTasks())
+//    ])
+//
+    init(taskRouter: UnownedRouter<TasksRoute>) {
+        self.taskRouter = taskRouter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK:- Lifecycle methods
 
     override func viewDidLoad() {

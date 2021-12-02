@@ -8,7 +8,50 @@
 
 import UIKit
 
-enum ATYEnumWithReuseIdentifierCellCheckBox : Int, CaseIterable {
+
+protocol IdentifiableCell {
+    var identifier: String { get }
+}
+
+struct MyTest {
+    
+}
+
+//struct CreateTaskModel {
+//    let type: ATYTaskType
+//    let cellIdentifier: IdentifiableCell
+//
+//}
+
+enum CheckBoxTaskCell: Int, CaseIterable, IdentifiableCell {
+    case createTaskNameCell
+    case createTaskCountingCell
+    case createTaskPeriodCaledarCell
+    case createNotificationAboutTaskCell
+    case createSanctionTaskCell
+    case saveTaskCell
+
+    var identifier: String {
+        switch self {
+        case .createTaskNameCell:
+            return ATYCreateTaskNameCell.reuseIdentifier
+        case .createTaskCountingCell:
+            return ATYCreateTaskCountingCell.reuseIdentifier
+        case .createTaskPeriodCaledarCell:
+            return ATYCreateTaskPeriodCalendarCell.reuseIdentifier
+        case .createNotificationAboutTaskCell:
+            return ATYCreateNotificationAboutTaskCell.reuseIdentifier
+        case .createSanctionTaskCell:
+            return ATYCreateSanctionTaskCell.reuseIdentifier
+        case .saveTaskCell:
+            return ATYSaveTaskCell.reuseIdentifier
+        }
+    }
+    
+}
+
+
+enum ATYEnumWithReuseIdentifierCellCheckBox : Int, CaseIterable, IdentifiableCell {
     case createTaskNameCell
     case createTaskCountingCell
     case createTaskPeriodCaledarCell

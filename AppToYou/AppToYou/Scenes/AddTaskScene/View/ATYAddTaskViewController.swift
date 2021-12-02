@@ -8,14 +8,20 @@
 
 import UIKit
 
-class ATYAddTaskViewController: UIViewController {
+class ATYAddTaskViewController: UIViewController, BindableType {
+    
+    var viewModel: AddTaskViewModel!
+    
+    func bindViewModel() {
+        //
+    }
 
     let tableView = UITableView()
     let lineView = UIView()
     let chooseTypeTaskLabel = UILabel()
     let selectedView = UIView()
     
-    var pushVcCallback : ((ATYTaskTypeEnum) -> Void)?
+//    var pushVcCallback : ((ATYTaskType) -> Void)?
 
     let titleStrings = [R.string.localizable.oneTimeTaskExecution(),
                         R.string.localizable.countingReps(),
@@ -28,7 +34,7 @@ class ATYAddTaskViewController: UIViewController {
                            R.string.localizable.toCompleteTask()]
 
     let imageArray = [R.image.checkBox(), R.image.countTask(), R.image.timerTask(), R.image.textTask()]
-    let typeTask = [ATYTaskTypeEnum.CHECKBOX, ATYTaskTypeEnum.RITUAL, ATYTaskTypeEnum.TIMER, ATYTaskTypeEnum.TEXT]
+    let typeTask = [ATYTaskType.CHECKBOX, ATYTaskType.RITUAL, ATYTaskType.TIMER, ATYTaskType.TEXT]
 
 
     override func viewDidLoad() {
@@ -99,10 +105,12 @@ extension ATYAddTaskViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let type = self.typeTask[indexPath.row]
+        viewModel.input.typePicked(type)
 
-        self.dismiss(animated: true) { [weak self] in
-            self?.pushVcCallback?((self?.typeTask[indexPath.row])!)
-        }
+//        self.dismiss(animated: true) { [weak self] in
+//            self?.pushVcCallback?((self?.typeTask[indexPath.row])!)
+//        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

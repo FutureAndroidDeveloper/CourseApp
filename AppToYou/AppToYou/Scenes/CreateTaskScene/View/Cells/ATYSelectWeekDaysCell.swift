@@ -8,12 +8,25 @@
 
 import UIKit
 
-class ATYSelectWeekDaysCell: UITableViewCell, UITextFieldDelegate {
+
+class SelectWeekDaysCellModel {
+    let callbackResult: ((String) -> Void)
+    
+    init(callbackResult: @escaping (String) -> Void) {
+        self.callbackResult = callbackResult
+    }
+    
+}
+
+
+class ATYSelectWeekDaysCell: UITableViewCell, UITextFieldDelegate, InflatableView {
 
     private var weekDaysButton = [ATYWeekDaysButton]()
     private let stackViewButtons = UIStackView()
     private let titlesForButton = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"]
     private var resultString = ""
+    
+    private var callbackResult: ((String) -> Void)?
 
     var datePicker = UIDatePicker()
 
@@ -60,8 +73,6 @@ class ATYSelectWeekDaysCell: UITableViewCell, UITextFieldDelegate {
     private let labelStackView = UIStackView()
     private let buttonStackView = UIStackView()
 
-    var callbackResult: ((String) -> Void)?
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = R.color.backgroundAppColor()
@@ -73,6 +84,14 @@ class ATYSelectWeekDaysCell: UITableViewCell, UITextFieldDelegate {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? SelectWeekDaysCellModel else {
+            return
+        }
+        
+        callbackResult = model.callbackResult
     }
 
     private func configure() {

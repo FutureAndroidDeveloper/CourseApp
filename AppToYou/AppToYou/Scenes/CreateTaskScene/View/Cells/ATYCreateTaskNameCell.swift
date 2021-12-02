@@ -8,8 +8,26 @@
 
 import UIKit
 
-class ATYCreateTaskNameCell: UITableViewCell {
+class CreateTaskNameCellModel {
+    let nameCallback: ((String) -> Void)
+    
+    init(nameCallback: @escaping (String) -> Void) {
+        self.nameCallback = nameCallback
+    }
+    
+}
 
+class ATYCreateTaskNameCell: UITableViewCell, InflatableView {
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? CreateTaskNameCellModel else {
+            return
+        }
+        
+        callbackText = model.nameCallback
+    }
+    
+    
     var nameLabel : UILabel = {
         let label = UILabel()
         label.text = R.string.localizable.taskName()

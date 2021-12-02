@@ -8,7 +8,22 @@
 
 import UIKit
 
-class ATYCreateSanctionTaskCell: UITableViewCell {
+
+class CreateSanctionTaskCellModel {
+    let callbackText: ((String) -> Void)
+    let questionCallback: (() -> Void)
+    
+    init(callbackText: @escaping (String) -> Void, questionCallback: @escaping () -> Void) {
+        self.callbackText = callbackText
+        self.questionCallback = questionCallback
+    }
+    
+}
+
+class ATYCreateSanctionTaskCell: UITableViewCell, InflatableView {
+    
+    private var callbackText: ((String) -> Void)?
+    private var questionCallback: (() -> Void)?
 
     var nameLabel : UILabel = {
         let label = UILabel()
@@ -40,8 +55,7 @@ class ATYCreateSanctionTaskCell: UITableViewCell {
         return switchButton
     }()
 
-    var callbackText: ((String) -> Void)?
-    var questionCallback: (() -> Void)?
+    // MARK: - Initialization
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,6 +66,14 @@ class ATYCreateSanctionTaskCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? CreateSanctionTaskCellModel else {
+            return
+        }
+        callbackText = model.callbackText
+        questionCallback = model.questionCallback
     }
 
     @objc func questionButtonAction() {

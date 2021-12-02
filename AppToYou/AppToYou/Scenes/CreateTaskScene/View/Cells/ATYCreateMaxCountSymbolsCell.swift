@@ -8,7 +8,13 @@
 
 import UIKit
 
-class ATYCreateMaxCountSymbolsCell: UITableViewCell {
+
+class CreateMaxCountSymbolsCellModel {
+    
+}
+
+
+class ATYCreateMaxCountSymbolsCell: UITableViewCell, InflatableView {
 
     var nameLabel : UILabel = {
         let label = UILabel()
@@ -47,6 +53,12 @@ class ATYCreateMaxCountSymbolsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func inflate(model: AnyObject) {
+        guard let model = model as? CreateMaxCountSymbolsCellModel else {
+            return
+        }
+    }
+    
     @objc func chainButtonAction(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         sender.imageView?.tintColor = sender.isSelected ?  R.color.textColorSecondary() : R.color.lineViewBackgroundColor()

@@ -6,12 +6,13 @@
 //  Copyright © 2021 QITTIQ. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import XCoordinator
 
 final class ATYTodayTasksViewController: UIViewController {
 
     private var transition: PanelTransition!
+//    private let taskRouter: UnownedRouter<TasksRoute>
 
     var viewModel : ATYTodayTasksViewModel!
 
@@ -168,19 +169,19 @@ final class ATYTodayTasksViewController: UIViewController {
     var filteredArrayCurrent = [TemporaryData]()
     var filteredArrayDoneTasks = [TemporaryData]()
 
-    convenience init(name: String) {
-        self.init(title: name)
-    }
+//    convenience init(taskRouter: UnownedRouter<TasksRoute>, name: String) {
+//        self.init(title: name)
+//    }
+//
+//    convenience init(title: String) {
+//        self.init(titles: title)
+//    }
 
-    convenience init(title: String) {
-        self.init(titles: title)
-    }
-
-    init(titles: String) {
+    init(title: String, taskRouter: UnownedRouter<TasksRoute>) {
         super.init(nibName: nil, bundle: nil)
-        self.title = titles
+        self.title = title
         view.backgroundColor = R.color.backgroundAppColor()
-        self.viewModel = ATYTodayTasksViewModel()
+        self.viewModel = ATYTodayTasksViewModel(router: taskRouter)
         self.viewModel.delegate = self
     }
 
@@ -321,18 +322,20 @@ final class ATYTodayTasksViewController: UIViewController {
     //MARK:- Handlers
 
     @objc func addButtonAction() {
-        let child = ATYAddTaskViewController()
-        let vc = ATYCreateTaskViewController()
-        vc.hidesBottomBarWhenPushed = true
-
-        child.pushVcCallback = { [weak self] type in
-            vc.types = type
-            self?.navigationController?.pushViewController(vc, animated: true)
-        }
-        child.transitioningDelegate = transition   // 2
-        child.modalPresentationStyle = .custom  // 3
-
-        present(child, animated: true)
+        viewModel.addTask()
+        
+//        let child = ATYAddTaskViewController()
+//        let vc = ATYCreateTaskViewController()
+//        vc.hidesBottomBarWhenPushed = true
+//
+//        child.pushVcCallback = { [weak self] type in
+//            vc.types = type
+//            self?.navigationController?.pushViewController(vc, animated: true)
+//        }
+//        child.transitioningDelegate = transition   // 2
+//        child.modalPresentationStyle = .custom  // 3
+//
+//        present(child, animated: true)
     }
 }
 
@@ -413,7 +416,7 @@ extension ATYTodayTasksViewController: UITableViewDelegate, UITableViewDataSourc
 
         let edit = UIContextualAction(style: .destructive, title: "") { [weak self] (action, view, boolValue) in
             boolValue(true)
-            var typeOfTask : ATYTaskTypeEnum
+            var typeOfTask : ATYTaskType
 
             if indexPath.section == 0 {
                 typeOfTask = self?.temporaryArray[indexPath.row].typeTask ?? .CHECKBOX
@@ -441,7 +444,7 @@ extension ATYTodayTasksViewController : ATYTodayTasksViewModelDelegate {
 }
 
 struct TemporaryData {
-    let typeTask : ATYTaskTypeEnum
+    let typeTask : ATYTaskType
     let courseName : String?
     let hasSanction : Bool
     let titleLabel : String

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import XCoordinator
 
 protocol ATYTodayTasksViewModelDelegate : class {
     func updateData()
@@ -19,6 +20,12 @@ class ATYTodayTasksViewModel {
     var completedTasksArray = [ATYUserTask]()
 
     weak var delegate : ATYTodayTasksViewModelDelegate?
+    
+    private let router: UnownedRouter<TasksRoute>
+    
+    init(router: UnownedRouter<TasksRoute>) {
+        self.router = router
+    }
 
 //    func getData() {
 //        guard let dbService = try? ATYDatabaseService() else {
@@ -38,6 +45,10 @@ class ATYTodayTasksViewModel {
 //
 //        self.delegate?.updateData()
 //    }
+    
+    func addTask() {
+        router.trigger(.add)
+    }
 
     func getData() {
 

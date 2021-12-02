@@ -108,9 +108,9 @@ class ATYTaskTableViewCell: UITableViewCell {
 
     var callback: (() -> Void)?
 
-    var callBackSwitch: ((ATYTaskTypeEnum?) -> ())?
+    var callBackSwitch: ((ATYTaskType?) -> ())?
 
-    var typeTask : ATYTaskTypeEnum?
+    var typeTask : ATYTaskType?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -135,7 +135,7 @@ class ATYTaskTableViewCell: UITableViewCell {
         }
     }
 
-    func setUp(typeTask: ATYTaskTypeEnum,
+    func setUp(typeTask: ATYTaskType,
                courseName: String?,
                hasSanction: Bool,
                titleLabel: String,

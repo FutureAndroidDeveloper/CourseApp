@@ -8,7 +8,13 @@
 
 import UIKit
 
-class ATYOnceSelectDayCell: UITableViewCell, UITextFieldDelegate {
+
+class OnceSelectDayCellModel {
+    
+}
+
+
+class ATYOnceSelectDayCell: UITableViewCell, UITextFieldDelegate, InflatableView {
 
     var datePicker = UIDatePicker()
     
@@ -32,6 +38,12 @@ class ATYOnceSelectDayCell: UITableViewCell, UITextFieldDelegate {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? OnceSelectDayCellModel else {
+            return
+        }
     }
 
     private func configure() {

@@ -8,8 +8,19 @@
 
 import UIKit
 
-class ATYSaveTaskCell: UITableViewCell {
+class SaveTaskCellModel {
+    let callback: (() -> Void)
+    
+    init(callback: @escaping () -> Void) {
+        self.callback = callback
+    }
+    
+}
 
+class ATYSaveTaskCell: UITableViewCell, InflatableView {
+
+    private var callback: (() -> Void)?
+    
     var saveButton : UIButton = {
         let button = UIButton()
         button.backgroundColor = R.color.buttonColor()
@@ -18,13 +29,18 @@ class ATYSaveTaskCell: UITableViewCell {
         return button
     }()
 
-    var callback: (() -> Void)?
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = R.color.backgroundAppColor()
         selectionStyle = .none
         configure()
+    }
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? SaveTaskCellModel else {
+            return
+        }
+        callback = model.callback
     }
 
     func setUp(titleForButton: String) {

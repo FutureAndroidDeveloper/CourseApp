@@ -8,7 +8,24 @@
 
 import UIKit
 
-class ATYCreateTaskCountingCell: UITableViewCell {
+class CreateTaskCountingCellModel {
+    let frequencyPicked : ((ATYFrequencyTypeEnum) -> Void)
+    
+    init(frequencyPicked: @escaping (ATYFrequencyTypeEnum) -> Void) {
+        self.frequencyPicked = frequencyPicked
+    }
+    
+}
+
+class ATYCreateTaskCountingCell: UITableViewCell, InflatableView {
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? CreateTaskCountingCellModel else {
+            return
+        }
+        
+        oneRepeatCallback = model.frequencyPicked
+    }
 
     var countingLabel : UILabel = {
         let label = UILabel()

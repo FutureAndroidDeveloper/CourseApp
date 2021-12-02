@@ -8,7 +8,30 @@
 
 import UIKit
 
-class ATYCreateNotificationAboutTaskCell: UITableViewCell {
+class CreateNotificationAboutTaskCellModel {
+    typealias Callback = () -> Void
+    
+    let callback: Callback
+    let plusCallback: Callback
+    
+    init(callback: @escaping Callback, plusCallback: @escaping Callback) {
+        self.callback = callback
+        self.plusCallback = plusCallback
+    }
+    
+}
+
+
+class ATYCreateNotificationAboutTaskCell: UITableViewCell, InflatableView {
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? CreateNotificationAboutTaskCellModel else {
+            return
+        }
+        
+        callBack = model.callback
+        plusCallBack = model.plusCallback
+    }
 
     var nameLabel : UILabel = {
         let label = UILabel()
@@ -36,6 +59,8 @@ class ATYCreateNotificationAboutTaskCell: UITableViewCell {
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
         }
+        
+        setUp(notificationCount: 1)
     }
 
     required init?(coder: NSCoder) {

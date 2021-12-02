@@ -20,6 +20,7 @@
 		041A7312274C3FEE0021B6FC /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A7311274C3FEE0021B6FC /* ProfileCoordinator.swift */; };
 		041A7314274C401E0021B6FC /* TasksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A7313274C401E0021B6FC /* TasksCoordinator.swift */; };
 		0432BAAC274AD920000DD016 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0432BAAB274AD920000DD016 /* ProfileViewModel.swift */; };
+		0445BFBE274FA6A800F8D9BC /* UITableViewIflater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445BFBD274FA6A800F8D9BC /* UITableViewIflater.swift */; };
 		04731A34274929F4001DD136 /* HTTPTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A29274929F4001DD136 /* HTTPTask.swift */; };
 		04731A35274929F4001DD136 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A2A274929F4001DD136 /* NetworkManager.swift */; };
 		04731A36274929F4001DD136 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A2C274929F4001DD136 /* ParameterEncoding.swift */; };
@@ -34,11 +35,15 @@
 		0482E118274EA72900B0F3AF /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */; };
 		0482E11C274EAAC800B0F3AF /* CheckEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */; };
 		0482E120274EAD5400B0F3AF /* NewPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */; };
+		048B927D274FF1D4007FABC2 /* CreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B927C274FF1D4007FABC2 /* CreateTaskViewModel.swift */; };
+		048B9281274FF81F007FABC2 /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B9280274FF81F007FABC2 /* AddTaskViewModel.swift */; };
 		048EF3D2274D8C0900E688DB /* CheckEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */; };
 		048EF3D5274D911000E688DB /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EF3D4274D911000E688DB /* NewPasswordViewController.swift */; };
 		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
 		04BB1804274BD80A00C584F8 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */; };
 		04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */; };
+		04CECEA92758023600ECCB2D /* CteateTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEA82758023600ECCB2D /* CteateTaskModel.swift */; };
+		04CECEAB27581CD100ECCB2D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEAA27581CD100ECCB2D /* Observable.swift */; };
 		04F02943274BFC3A0054A455 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */; };
 		61504E968323318951FD0D81 /* Pods_AppToYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */; };
 		6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0B8D6826C675A600F7582C /* ATYCourse.swift */; };
@@ -293,6 +298,7 @@
 		041A7311274C3FEE0021B6FC /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		041A7313274C401E0021B6FC /* TasksCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksCoordinator.swift; sourceTree = "<group>"; };
 		0432BAAB274AD920000DD016 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = AppToYou/Service/Coordinator/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
+		0445BFBD274FA6A800F8D9BC /* UITableViewIflater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewIflater.swift; sourceTree = "<group>"; };
 		04731A29274929F4001DD136 /* HTTPTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPTask.swift; sourceTree = "<group>"; };
 		04731A2A274929F4001DD136 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		04731A2C274929F4001DD136 /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
@@ -307,11 +313,15 @@
 		0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ForgotPasswordViewModel.swift; path = AppToYou/Views/Controls/ForgotPasswordViewModel.swift; sourceTree = SOURCE_ROOT; };
 		0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailViewModel.swift; sourceTree = "<group>"; };
 		0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewModel.swift; sourceTree = "<group>"; };
+		048B927C274FF1D4007FABC2 /* CreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewModel.swift; sourceTree = "<group>"; };
+		048B9280274FF81F007FABC2 /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckEmailViewController.swift; sourceTree = "<group>"; };
 		048EF3D4274D911000E688DB /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
 		04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
+		04CECEA82758023600ECCB2D /* CteateTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CteateTaskModel.swift; sourceTree = "<group>"; };
+		04CECEAA27581CD100ECCB2D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationViewModel.swift; path = AppToYou/Service/Coordinator/Login/RegistrationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppToYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D0B8D6826C675A600F7582C /* ATYCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourse.swift; sourceTree = "<group>"; };
@@ -630,15 +640,24 @@
 			children = (
 				041A730F274C3F770021B6FC /* MainCoordinator.swift */,
 				041A7311274C3FEE0021B6FC /* ProfileCoordinator.swift */,
-				041A7313274C401E0021B6FC /* TasksCoordinator.swift */,
 				0406E02E274D13E000DDFD4C /* CoursesCoordinator.swift */,
+				048B927E274FF367007FABC2 /* Task */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		0445BFBC274FA68500F8D9BC /* Inflater */ = {
+			isa = PBXGroup;
+			children = (
+				0445BFBD274FA6A800F8D9BC /* UITableViewIflater.swift */,
+			);
+			path = Inflater;
 			sourceTree = "<group>";
 		};
 		04731A232749296D001DD136 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				0445BFBC274FA68500F8D9BC /* Inflater */,
 				0408DF73274AA00A000C422B /* Coordinator */,
 				04731A27274929F4001DD136 /* Networking */,
 			);
@@ -716,6 +735,22 @@
 			isa = PBXGroup;
 			children = (
 				0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		048B927E274FF367007FABC2 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				041A7313274C401E0021B6FC /* TasksCoordinator.swift */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		048B927F274FF80F007FABC2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				048B9280274FF81F007FABC2 /* AddTaskViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1237,6 +1272,8 @@
 			children = (
 				6D651CE72661147B003ACF95 /* ViewModel */,
 				6D651CE826611480003ACF95 /* View */,
+				04CECEA82758023600ECCB2D /* CteateTaskModel.swift */,
+				04CECEAA27581CD100ECCB2D /* Observable.swift */,
 			);
 			path = CreateTaskScene;
 			sourceTree = "<group>";
@@ -1245,6 +1282,7 @@
 			isa = PBXGroup;
 			children = (
 				6DC4AE17268DA6A60028CDDE /* ATYCreateTaskViewModel.swift */,
+				048B927C274FF1D4007FABC2 /* CreateTaskViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1252,8 +1290,8 @@
 		6D651CE826611480003ACF95 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6D651CEC266114F4003ACF95 /* Cells */,
 				6D651CE92661148E003ACF95 /* ATYCreateTaskViewController.swift */,
+				6D651CEC266114F4003ACF95 /* Cells */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1443,6 +1481,7 @@
 		6D8A283B265E7AA500BAAEF5 /* AddTaskScene */ = {
 			isa = PBXGroup;
 			children = (
+				048B927F274FF80F007FABC2 /* ViewModel */,
 				6D8A283F265E7AC300BAAEF5 /* View */,
 			);
 			path = AddTaskScene;
@@ -1451,8 +1490,8 @@
 		6D8A283F265E7AC300BAAEF5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6D8A2842265E803D00BAAEF5 /* Cell */,
 				6D8A283C265E7ABF00BAAEF5 /* ATYAddTaskViewController.swift */,
+				6D8A2842265E803D00BAAEF5 /* Cell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2265,6 +2304,7 @@
 				6DC4AE1C268DC41D0028CDDE /* ATYParser.swift in Sources */,
 				6D403497265D152E00248E9E /* ATYTodayTasksViewController.swift in Sources */,
 				6DA8E21C26A6CBDD005014DA /* ATYTaskAddedDescriptionsCell.swift in Sources */,
+				04CECEA92758023600ECCB2D /* CteateTaskModel.swift in Sources */,
 				6D4034A0265D3CF300248E9E /* ATYCalendarCollectionViewCell.swift in Sources */,
 				6D55ADD626A18FAD00F7DD4A /* ATYEditTimerCourseTaskTimeCell.swift in Sources */,
 				6D55ADE826A1CAC400F7DD4A /* ATYEditCourseCountTaskCell.swift in Sources */,
@@ -2294,7 +2334,9 @@
 				6D40CA602667CFA200A78CEC /* UIViewController.swift in Sources */,
 				0413EE3D274A96380005948C /* UserResponse.swift in Sources */,
 				048EF3D5274D911000E688DB /* NewPasswordViewController.swift in Sources */,
+				048B927D274FF1D4007FABC2 /* CreateTaskViewModel.swift in Sources */,
 				6D8A282A265E6DAE00BAAEF5 /* DimmPresentationController.swift in Sources */,
+				048B9281274FF81F007FABC2 /* AddTaskViewModel.swift in Sources */,
 				6D91B864265BE20700EB2589 /* ATYShowHideTextField.swift in Sources */,
 				6D4BAFEC26C2BF1100090789 /* SearchBar+SHSearchBar.swift in Sources */,
 				6D4928BA26A950EA000E5346 /* ATYBuyingACourseViewController.swift in Sources */,
@@ -2364,6 +2406,7 @@
 				04731A34274929F4001DD136 /* HTTPTask.swift in Sources */,
 				6D4E12E52657ACC600732465 /* ATYDatabaseService+CDUser.swift in Sources */,
 				6D4928C426A95176000E5346 /* ATYHeaderBuyingACourseCell.swift in Sources */,
+				04CECEAB27581CD100ECCB2D /* Observable.swift in Sources */,
 				04731A38274929F4001DD136 /* URLParameterEncoder.swift in Sources */,
 				6DA60DE826809DEE00885650 /* ATYCreateCourseTasksEnums.swift in Sources */,
 				6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */,
@@ -2497,6 +2540,7 @@
 				04731A3A274929F4001DD136 /* Router.swift in Sources */,
 				6D6E7ED826B1442B005C8C62 /* ATYPenaltyWarningCell.swift in Sources */,
 				6D455C1D26C57AE90014BDF2 /* UITableView+Placeholder.swift in Sources */,
+				0445BFBE274FA6A800F8D9BC /* UITableViewIflater.swift in Sources */,
 				6DA15F94266A27EE00201DD3 /* ATYCollectionViewTypeCourseTableCell.swift in Sources */,
 				6D6E7EE026B157BA005C8C62 /* ATYCardView.swift in Sources */,
 			);

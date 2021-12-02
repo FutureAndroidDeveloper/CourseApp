@@ -8,7 +8,30 @@
 
 import UIKit
 
-class ATYCreateTaskPeriodCalendarCell: UITableViewCell, UITextFieldDelegate {
+typealias DateCompletion = (String?) -> Void
+
+class CreateTaskPeriodCalendarCellModel {
+    
+    let startPicked: DateCompletion
+    let endPicked: DateCompletion
+    
+    init(startPicked: @escaping DateCompletion, endPicked: @escaping DateCompletion) {
+        self.startPicked = startPicked
+        self.endPicked = endPicked
+    }
+    
+}
+
+class ATYCreateTaskPeriodCalendarCell: UITableViewCell, UITextFieldDelegate, InflatableView {
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? CreateTaskPeriodCalendarCellModel else {
+            return
+        }
+        
+        startCallback = model.startPicked
+        endCallback = model.endPicked
+    }
 
     var datePicker = UIDatePicker()
 

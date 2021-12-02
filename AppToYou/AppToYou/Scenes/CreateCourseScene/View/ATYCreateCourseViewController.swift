@@ -104,9 +104,9 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateDescriptionTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateDescriptionTaskCell
             cell.nameLabel.text = "Описание курса"
             cell.placeholderLabel.text = "Опишите цели или преимущества вашего курса"
-            cell.callbackText = { [weak self] text in
-                self?.viewModel.course.courseDescription = text.replacingOccurrences(of: " ", with: "")
-            }
+//            cell.callbackText = { [weak self] text in
+//                self?.viewModel.course.courseDescription = text.replacingOccurrences(of: " ", with: "")
+//            }
             return cell
         case .photoCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYSelectPhotoCourse.reuseIdentifier, for: indexPath) as! ATYSelectPhotoCourse
@@ -175,10 +175,10 @@ extension ATYCreateCourseViewController: UITableViewDelegate, UITableViewDataSou
         case .saveCourse:
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYSaveTaskCell.reuseIdentifier, for: indexPath) as! ATYSaveTaskCell
             cell.saveButton.setTitle(titleForDoneButton, for: .normal)
-            cell.callback = { [weak self] in
-                self?.viewModel.createCourse()
-                self?.navigationController?.popViewController(animated: true)
-            }
+//            cell.callback = { [weak self] in
+//                self?.viewModel.createCourse()
+//                self?.navigationController?.popViewController(animated: true)
+//            }
             return cell
         default: break
         }
