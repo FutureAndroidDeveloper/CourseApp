@@ -50,7 +50,7 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
     
     private var notificationViews = [NotificationTaskTimeView]()
     private var switchCallback: ((Bool) -> Void)?
-    private var timerCallback: ((NotificationTaskTimeView) -> Void)?
+    private var timerCallback: ((NotificationTaskTimeView, TaskNoticationDelegate) -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -102,7 +102,6 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         guard let model = model as? NotificationAboutTaskModel else {
             return
         }
-        
         switchCallback = model.switchCallback
         timerCallback = model.timerCallback
         configure(model.notificationModels)
@@ -115,12 +114,8 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         notificationViews = models.map { model -> NotificationTaskTimeView in
             let notificationView = NotificationTaskTimeView()
             notificationView.configure(with: model)
+            notificationDidAdd(notificationView)
             return notificationView
-        }
-        
-        for view in notificationViews {
-            view.addGestureRecognizer(getGestureRecognizer())
-            notificationStackView.addArrangedSubview(view)
         }
     }
     
@@ -135,7 +130,7 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         guard let notificationView = sender.view as? NotificationTaskTimeView else {
             return
         }
-        timerCallback?(notificationView)
+        timerCallback?(notificationView, self)
     }
     
     @objc
@@ -149,10 +144,7 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         }
         
         let newNotification = NotificationTaskTimeView()
-        newNotification.addGestureRecognizer(getGestureRecognizer())
-        notificationStackView.addArrangedSubview(newNotification)
-        
-        timerCallback?(newNotification)
+        timerCallback?(newNotification, self)
     }
     
     @objc
@@ -163,3 +155,18 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
 }
 
 
+extension NotificationAboutTaskCell: TaskNoticationDelegate {
+    /**
+     Добавляет новое напоминание о задаче в список напоминаний.
+     */
+    func notificationDidAdd(_ notifcation: NotificationTaskTimeView) {
+        // проверка нужна для случая, если напонимание изменялось, а не добавлялось новое.
+        if notificationViews.contains(notifcation) {
+            return
+        }
+        notifcation.addGestureRecognizer(getGestureRecognizer())
+        notificationStackView.addArrangedSubview(notifcation)
+        notificationViews.append(notifcation)
+    }
+    
+}

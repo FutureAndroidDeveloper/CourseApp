@@ -1,15 +1,7 @@
 import Foundation
 import XCoordinator
 
-struct NotificationTime {
-    let hour: String
-    let min: String
-}
 
-
-protocol SimpleCreateTaskViewModelDelegate: AnyObject {
-    func updateA()
-}
 
 protocol CreateTaskViewModelInput {
     func updateTaskCreationModel()
@@ -45,7 +37,9 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
         return Tester(type: self.taskType, delegate: self)
     }()
     
+    private var notifModels: [NotificationTaskTimeModel] = []
     private var notificationView: NotificationTaskTimeView?
+    private weak var notificationDelegate: TaskNoticationDelegate?
     
     var data: Observable<[AnyObject]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
@@ -61,24 +55,33 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
     }
     
     func notificationTimePicked(_ time: NotificationTime) {
+        guard let notificationView = notificationView else {
+            return
+        }
         let model = NotificationTaskTimeModel(notificationTime: time)
-        notificationView?.configure(with: model)
+        notificationView.configure(with: model)
+        
+        notificationDelegate?.notificationDidAdd(notificationView)
+        updateState()
     }
-    
     
     
 }
 
 extension CreateTaskViewModelImpl: TesterDelegate {
-    func showTimePicker(for notification: NotificationTaskTimeView) {
-        self.notificationView = notification
+    func showTimePicker(for notification: NotificationTaskTimeView, delegate: TaskNoticationDelegate) {
+        notificationDelegate = delegate
+        notificationView = notification
         router.trigger(.timePicker)
     }
     
     func getNotificationModels() -> [NotificationTaskTimeModel] {
-        
-       let model = NotificationTaskTimeModel(hourModel: .init(unit: "час"), minModel: .init(unit: "мин"))
-        return [model]
+        if notifModels.isEmpty {
+            let model = NotificationTaskTimeModel(hourModel: NotificationTimeBlockModelFactory.getHourModel(),
+                                                  minModel: NotificationTimeBlockModelFactory.getMinModel())
+            notifModels.append(model)
+        }
+        return notifModels
     }
     
     func update() {

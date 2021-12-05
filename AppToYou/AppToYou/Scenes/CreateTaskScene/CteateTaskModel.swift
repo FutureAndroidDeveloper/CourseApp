@@ -21,7 +21,7 @@ protocol TesterDelegate: AnyObject {
     func update()
     
     func updateState()
-    func showTimePicker(for notification: NotificationTaskTimeView)
+    func showTimePicker(for notification: NotificationTaskTimeView, delegate: TaskNoticationDelegate)
     
     func getNotificationModels() -> [NotificationTaskTimeModel]
 }
@@ -51,7 +51,7 @@ class Tester {
         case .TEXT:
             let textModel = TextCreateTaskModel()
             textModel.addDescriptionHandler { description in
-                self.task.taskDescription = description
+//                self.task.taskDescription = description
             }
             textModel.addLimitHandler()
             
@@ -70,27 +70,28 @@ class Tester {
         
         model?.addNameHandler { name in
             print(name)
-            self.task.taskName = name
+//            self.task.taskName = name
         }
         
-        model?.addFrequencyHandler { frequency in
+        model?.addFrequencyHandler { [weak self] frequency in
             print(frequency)
             if frequency == .ONCE {
-                self.model?.removePeriodHandler()
-                self.delegate?.update()
+                self?.model?.removePeriodHandler()
+                self?.delegate?.update()
             } else {
-                self.addPeriod()
-                self.delegate?.update()
+                self?.addPeriod()
+                self?.delegate?.update()
             }
-            self.task.frequencyType = frequency
+            
+//            self.task.frequencyType = frequency
         }
         
         model?.addPeriodHandler(startPicked: { start in
             print(start)
-            self.task.startDate = start ?? "N/A"
+//            self.task.startDate = start ?? "N/A"
         }, endPicked: { end in
             print(end)
-            self.task.endDate = end ?? "N/A"
+//            self.task.endDate = end ?? "N/A"
         })
         
         
@@ -98,22 +99,21 @@ class Tester {
         
         model?.addNotificationHandler(notificationModels: models, switchCallback: { isOn in
             print("Is active = \(isOn)")
-        }, timerCallback: { notificationView in
+        }, timerCallback: { [weak self] notificationView, notifDelegate in
             print("Timer callback")
-            self.delegate?.showTimePicker(for: notificationView)
-            self.delegate?.updateState()
+            self?.delegate?.showTimePicker(for: notificationView, delegate: notifDelegate)
         })
         
         model?.addSanctionHandler(callbackText: { sanction in
             print(sanction)
-            self.task.taskSanction = Int(sanction) ?? -1
+//            self.task.taskSanction = Int(sanction) ?? -1
         }, questionCallback: {
             print("Question Handler")
         })
         
-        model?.addSaveHandler {
+        model?.addSaveHandler { [weak self] in
             print("Save")
-            self.delegate?.update()
+            self?.delegate?.update()
             // validate + после валидации при необходимости обновить модель ячеек с указанием ошибок
             // при успешной валидации отправить запрос на сервер
             // при успешном выполнении запроса, сохранить в бд
@@ -123,10 +123,10 @@ class Tester {
     private func addPeriod() {
         model?.addPeriodHandler(startPicked: { start in
             print(start)
-            self.task.startDate = start ?? "N/A"
+//            self.task.startDate = start ?? "N/A"
         }, endPicked: { end in
             print(end)
-            self.task.endDate = end ?? "N/A"
+//            self.task.endDate = end ?? "N/A"
         })
     }
     
@@ -162,7 +162,7 @@ class CreateTaskModel {
     
     func addNotificationHandler(notificationModels: [NotificationTaskTimeModel],
                                 switchCallback: @escaping (Bool) -> Void,
-                                timerCallback: @escaping (NotificationTaskTimeView) -> Void) {
+                                timerCallback: @escaping (NotificationTaskTimeView, TaskNoticationDelegate) -> Void) {
         
         notificationModel = NotificationAboutTaskModel(notificationModels: notificationModels,
                                                        switchCallback: switchCallback,

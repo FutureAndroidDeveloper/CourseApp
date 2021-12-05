@@ -38,6 +38,9 @@
 		0482E118274EA72900B0F3AF /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */; };
 		0482E11C274EAAC800B0F3AF /* CheckEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */; };
 		0482E120274EAD5400B0F3AF /* NewPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */; };
+		048A5789275D215D00C7893B /* TaskNoticationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A5788275D215D00C7893B /* TaskNoticationDelegate.swift */; };
+		048A578C275D286200C7893B /* SelectTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A578B275D286200C7893B /* SelectTimeViewModel.swift */; };
+		048A578E275D298C00C7893B /* NotificationTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048A578D275D298C00C7893B /* NotificationTime.swift */; };
 		048B927D274FF1D4007FABC2 /* CreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B927C274FF1D4007FABC2 /* CreateTaskViewModel.swift */; };
 		048B9281274FF81F007FABC2 /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B9280274FF81F007FABC2 /* AddTaskViewModel.swift */; };
 		048EF3D2274D8C0900E688DB /* CheckEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */; };
@@ -323,6 +326,9 @@
 		0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ForgotPasswordViewModel.swift; path = AppToYou/Views/Controls/ForgotPasswordViewModel.swift; sourceTree = SOURCE_ROOT; };
 		0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailViewModel.swift; sourceTree = "<group>"; };
 		0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewModel.swift; sourceTree = "<group>"; };
+		048A5788275D215D00C7893B /* TaskNoticationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNoticationDelegate.swift; sourceTree = "<group>"; };
+		048A578B275D286200C7893B /* SelectTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTimeViewModel.swift; sourceTree = "<group>"; };
+		048A578D275D298C00C7893B /* NotificationTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTime.swift; sourceTree = "<group>"; };
 		048B927C274FF1D4007FABC2 /* CreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewModel.swift; sourceTree = "<group>"; };
 		048B9280274FF81F007FABC2 /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckEmailViewController.swift; sourceTree = "<group>"; };
@@ -771,6 +777,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		048A578A275D285100C7893B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				048A578B275D286200C7893B /* SelectTimeViewModel.swift */,
+				048A578D275D298C00C7893B /* NotificationTime.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		048B927E274FF367007FABC2 /* Task */ = {
 			isa = PBXGroup;
 			children = (
@@ -866,6 +881,7 @@
 			children = (
 				04E72A8A275CF177003B40EA /* NotificationAboutTaskModel.swift */,
 				0429A4B5275ABB8A00B1BFD9 /* NotificationAboutTaskCell.swift */,
+				048A5788275D215D00C7893B /* TaskNoticationDelegate.swift */,
 			);
 			path = new;
 			sourceTree = "<group>";
@@ -2180,6 +2196,7 @@
 		6DDBE485266673FF00F797FD /* SelectTimeScene */ = {
 			isa = PBXGroup;
 			children = (
+				048A578A275D285100C7893B /* Model */,
 				6DDBE4862666741700F797FD /* View */,
 			);
 			path = SelectTimeScene;
@@ -2394,8 +2411,10 @@
 				6D3AC1E026846BE0007AC57D /* CDUserTask+CoreDataClass.swift in Sources */,
 				6DAB029D265666D000B72955 /* ATYDatabaseService.swift in Sources */,
 				0413EE39274A95F10005948C /* UserUpdateRequest.swift in Sources */,
+				048A578C275D286200C7893B /* SelectTimeViewModel.swift in Sources */,
 				6D79938026BA79220071EF4E /* ATYNavigationBarWalletViewController.swift in Sources */,
 				6DA8E20B26A6AACB005014DA /* ATYEditTextCourseTaskCell.swift in Sources */,
+				048A578E275D298C00C7893B /* NotificationTime.swift in Sources */,
 				6D6E7EC726B13CBD005C8C62 /* ATYPenaltyForFailureViewController.swift in Sources */,
 				6DF53967268381990086A64E /* CDVacation+CoreDataClass.swift in Sources */,
 				6DC767DD26BBCD7200B8811C /* ATYSettingsViewController.swift in Sources */,
@@ -2566,6 +2585,7 @@
 				6DC56C7426A800A100863F1C /* ATYPaidCoursePreviewViewController.swift in Sources */,
 				6D315F522668FA4E00889FD7 /* ATYCreateCourseCell.swift in Sources */,
 				6D118ECA26A9B04800601F34 /* ATYCourseParticipantCell.swift in Sources */,
+				048A5789275D215D00C7893B /* TaskNoticationDelegate.swift in Sources */,
 				6D651CEF26611F4B003ACF95 /* ATYCreateTaskNameCell.swift in Sources */,
 				6DDD2AAB268C5A0800DD9A87 /* ATYDatabaseService+Achievement.swift in Sources */,
 				0482E11C274EAAC800B0F3AF /* CheckEmailViewModel.swift in Sources */,

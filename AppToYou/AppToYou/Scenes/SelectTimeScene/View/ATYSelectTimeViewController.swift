@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ATYSelectTimeViewController: UIViewController {
+class ATYSelectTimeViewController: UIViewController, BindableType {
+    
+    var viewModel: SelectTimeViewModel!
 
     let lineView = UIView()
 
@@ -27,6 +29,7 @@ class ATYSelectTimeViewController: UIViewController {
         return button
     }()
 
+    // TODO: - удалить это свойство, т.к. передача ввремени происходит через VM
     var callBackTime: ((String, String) -> Void)?
 
     override func viewDidLoad() {
@@ -71,14 +74,21 @@ class ATYSelectTimeViewController: UIViewController {
             make.width.equalTo(40)
         }
     }
+    
+    func bindViewModel() {
+        //
+    }
 
-    @objc func actionButtonTap() {
+    @objc
+    private func actionButtonTap() {
         let comp = timePicker.calendar.dateComponents([.hour, .minute], from: timePicker.date)
         let hour = String(comp.hour ?? 0)
         let minute = String(comp.minute ?? 0)
+        
+        viewModel.input.timePicked(hour: hour, min: minute)
 
-        self.dismiss(animated: true) {
-            self.callBackTime?(hour, minute)
-        }
+//        self.dismiss(animated: true) {
+//            self.callBackTime?(hour, minute)
+//        }
     }
 }

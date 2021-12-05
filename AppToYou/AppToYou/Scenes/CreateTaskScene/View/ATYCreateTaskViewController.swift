@@ -8,22 +8,14 @@
 
 import UIKit
 
-class ATYCreateTaskViewController: UIViewController, SimpleCreateTaskViewModelDelegate, BindableType {
-    func updateA() {
-        //
-    }
-    
-    
-
-//    var viewModel : ATYCreateTaskViewModel!
+class ATYCreateTaskViewController: UIViewController, BindableType {
     var viewModel : CreateTaskViewModel!
-//    var viewModel: SimpleCreateTaskViewModel!
     
     func bindViewModel() {
         viewModel.output.data.bind(self.update(_:))
-        viewModel.output.updatedState.bind { _ in
-            self.createTaskTableView.beginUpdates()
-            self.createTaskTableView.endUpdates()
+        viewModel.output.updatedState.bind { [weak self] _ in
+            self?.createTaskTableView.beginUpdates()
+            self?.createTaskTableView.endUpdates()
         }
     }
 

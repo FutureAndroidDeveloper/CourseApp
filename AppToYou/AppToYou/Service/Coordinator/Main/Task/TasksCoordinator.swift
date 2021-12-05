@@ -6,7 +6,9 @@ enum TasksRoute: Route {
     case add
     case create(ATYTaskType)
     case timePicker
+    case timePicked(_ time: NotificationTime)
 }
+
 
 // Разбить координатор на отдельные
 class TasksCoordinator: NavigationCoordinator<TasksRoute> {
@@ -45,13 +47,15 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
             ])
             
         case .timePicker:
-            let timePicker = ATYSelectTimeViewController()
-            timePicker.callBackTime = { [weak self] (hour, minute) in
-                let time = NotificationTime(hour: hour, min: minute)
-                self?.createTaskViewModel?.input.notificationTimePicked(time)
-            }
+            let timePickerViewController = ATYSelectTimeViewController()
+            let timePickerViewModel = SelectTimeViewModelImpl(router: unownedRouter)
+            timePickerViewController.bind(to: timePickerViewModel)
 
-            return .present(timePicker, animation: nil)
+            return .present(timePickerViewController, animation: nil)
+            
+        case .timePicked(let time):
+            createTaskViewModel?.input.notificationTimePicked(time)
+            return .dismiss(animation: nil)
         }
     }
     
