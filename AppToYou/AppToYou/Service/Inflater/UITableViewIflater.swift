@@ -1,11 +1,3 @@
-//
-//  UITableViewIflater.swift
-//  AppToYou
-//
-//  Created by mac on 25.11.21.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
 import UIKit
 
 
@@ -14,40 +6,11 @@ protocol InflatableView {
     func inflate(model: AnyObject)
 }
 
-public protocol ReusableView: AnyObject {
-    static var defaultReuseIdentifier: String { get }
-}
-
-public extension ReusableView where Self: UIView {
-    static var defaultReuseIdentifier: String {
-        return NSStringFromClass(self)
-    }
-}
-
-extension UITableViewCell: ReusableView {
-
-}
-
-public extension UITableView {
-
-    func register<T: UITableViewCell>(_: T.Type) {
-        register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
-    }
-
-    /// Get cell with the default reuse cell identifier
-    func dequeueReusableCell<T: UITableViewCell>(forIndexPath indexPath: IndexPath) -> T {
-        guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
-            fatalError("Could not dequeue cell: \(T.self) with identifier: \(T.defaultReuseIdentifier)")
-        }
-
-        return cell
-    }
-}
-
 
 class TableHeader {
     
 }
+
 
 class TableViewSection {
     
@@ -108,6 +71,14 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         cell.inflate(model: model)
         return cell as! UITableViewCell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     private func getModel(for indexPath: IndexPath) -> AnyObject {

@@ -19,6 +19,11 @@ import Foundation
 
 protocol TesterDelegate: AnyObject {
     func update()
+    
+    func updateState()
+    func showTimePicker(for notification: NotificationTaskTimeView)
+    
+    func getNotificationModels() -> [NotificationTaskTimeModel]
 }
 
 class Tester {
@@ -26,13 +31,14 @@ class Tester {
     private var task: ATYUserTask
     private var type: ATYTaskType
     
-    weak var delegate: TesterDelegate?
+    private weak var delegate: TesterDelegate?
     
     private var model: CreateTaskModel?
     
-    init(type: ATYTaskType) {
+    init(type: ATYTaskType, delegate: TesterDelegate? = nil) {
         self.type = type
         self.task = ATYUserTask()
+        self.delegate = delegate
         task.taskType = type
         construct()
     }
@@ -87,10 +93,15 @@ class Tester {
             self.task.endDate = end ?? "N/A"
         })
         
-        model?.addNotificationHandler(callback: {
-            print("Add Notification handler")
-        }, plusCallback: {
-            print("Add plus notification handler")
+        
+        let models = delegate?.getNotificationModels() ?? []
+        
+        model?.addNotificationHandler(notificationModels: models, switchCallback: { isOn in
+            print("Is active = \(isOn)")
+        }, timerCallback: { notificationView in
+            print("Timer callback")
+            self.delegate?.showTimePicker(for: notificationView)
+            self.delegate?.updateState()
         })
         
         model?.addSanctionHandler(callbackText: { sanction in
@@ -129,7 +140,7 @@ class CreateTaskModel {
     var nameModel: CreateTaskNameCellModel!
     var frequencyModel: CreateTaskCountingCellModel!
     var periodModel: CreateTaskPeriodCalendarCellModel?
-    var notificationModel: CreateNotificationAboutTaskCellModel!
+    var notificationModel: NotificationAboutTaskModel!
     var sanctionModel: CreateSanctionTaskCellModel!
     var saveModel: SaveTaskCellModel!
     
@@ -149,8 +160,13 @@ class CreateTaskModel {
         periodModel = nil
     }
     
-    func addNotificationHandler(callback: @escaping () -> Void, plusCallback: @escaping () -> Void) {
-        notificationModel = CreateNotificationAboutTaskCellModel(callback: callback, plusCallback: plusCallback)
+    func addNotificationHandler(notificationModels: [NotificationTaskTimeModel],
+                                switchCallback: @escaping (Bool) -> Void,
+                                timerCallback: @escaping (NotificationTaskTimeView) -> Void) {
+        
+        notificationModel = NotificationAboutTaskModel(notificationModels: notificationModels,
+                                                       switchCallback: switchCallback,
+                                                       timerCallback: timerCallback)
     }
     
     func addSanctionHandler(callbackText: @escaping (String) -> Void, questionCallback: @escaping () -> Void) {

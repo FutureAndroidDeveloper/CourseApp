@@ -19,6 +19,9 @@
 		041A7310274C3F770021B6FC /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A730F274C3F770021B6FC /* MainCoordinator.swift */; };
 		041A7312274C3FEE0021B6FC /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A7311274C3FEE0021B6FC /* ProfileCoordinator.swift */; };
 		041A7314274C401E0021B6FC /* TasksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041A7313274C401E0021B6FC /* TasksCoordinator.swift */; };
+		0429A4B2275AB37D00B1BFD9 /* NotificationTimeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0429A4B1275AB37D00B1BFD9 /* NotificationTimeBlockView.swift */; };
+		0429A4B4275AB76500B1BFD9 /* NotificationTaskTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0429A4B3275AB76500B1BFD9 /* NotificationTaskTimeView.swift */; };
+		0429A4B6275ABB8A00B1BFD9 /* NotificationAboutTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0429A4B5275ABB8A00B1BFD9 /* NotificationAboutTaskCell.swift */; };
 		0432BAAC274AD920000DD016 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0432BAAB274AD920000DD016 /* ProfileViewModel.swift */; };
 		0445BFBE274FA6A800F8D9BC /* UITableViewIflater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0445BFBD274FA6A800F8D9BC /* UITableViewIflater.swift */; };
 		04731A34274929F4001DD136 /* HTTPTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A29274929F4001DD136 /* HTTPTask.swift */; };
@@ -39,11 +42,15 @@
 		048B9281274FF81F007FABC2 /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048B9280274FF81F007FABC2 /* AddTaskViewModel.swift */; };
 		048EF3D2274D8C0900E688DB /* CheckEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */; };
 		048EF3D5274D911000E688DB /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EF3D4274D911000E688DB /* NewPasswordViewController.swift */; };
+		0491EE11275BE08600B4691B /* NotificationTimeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491EE10275BE08600B4691B /* NotificationTimeBlockModel.swift */; };
+		0491EE13275BE48000B4691B /* NotificationTaskTimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491EE12275BE48000B4691B /* NotificationTaskTimeModel.swift */; };
 		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
 		04BB1804274BD80A00C584F8 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */; };
 		04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */; };
 		04CECEA92758023600ECCB2D /* CteateTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEA82758023600ECCB2D /* CteateTaskModel.swift */; };
 		04CECEAB27581CD100ECCB2D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEAA27581CD100ECCB2D /* Observable.swift */; };
+		04E72A88275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E72A87275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift */; };
+		04E72A8B275CF177003B40EA /* NotificationAboutTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E72A8A275CF177003B40EA /* NotificationAboutTaskModel.swift */; };
 		04F02943274BFC3A0054A455 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */; };
 		61504E968323318951FD0D81 /* Pods_AppToYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */; };
 		6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0B8D6826C675A600F7582C /* ATYCourse.swift */; };
@@ -297,6 +304,9 @@
 		041A730F274C3F770021B6FC /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		041A7311274C3FEE0021B6FC /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		041A7313274C401E0021B6FC /* TasksCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksCoordinator.swift; sourceTree = "<group>"; };
+		0429A4B1275AB37D00B1BFD9 /* NotificationTimeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTimeBlockView.swift; sourceTree = "<group>"; };
+		0429A4B3275AB76500B1BFD9 /* NotificationTaskTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTaskTimeView.swift; sourceTree = "<group>"; };
+		0429A4B5275ABB8A00B1BFD9 /* NotificationAboutTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAboutTaskCell.swift; sourceTree = "<group>"; };
 		0432BAAB274AD920000DD016 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = AppToYou/Service/Coordinator/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
 		0445BFBD274FA6A800F8D9BC /* UITableViewIflater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewIflater.swift; sourceTree = "<group>"; };
 		04731A29274929F4001DD136 /* HTTPTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPTask.swift; sourceTree = "<group>"; };
@@ -317,11 +327,15 @@
 		048B9280274FF81F007FABC2 /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		048EF3CD274D8C0900E688DB /* CheckEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckEmailViewController.swift; sourceTree = "<group>"; };
 		048EF3D4274D911000E688DB /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
+		0491EE10275BE08600B4691B /* NotificationTimeBlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTimeBlockModel.swift; sourceTree = "<group>"; };
+		0491EE12275BE48000B4691B /* NotificationTaskTimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTaskTimeModel.swift; sourceTree = "<group>"; };
 		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
 		04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
 		04CECEA82758023600ECCB2D /* CteateTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CteateTaskModel.swift; sourceTree = "<group>"; };
 		04CECEAA27581CD100ECCB2D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		04E72A87275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTimeBlockModelFactory.swift; sourceTree = "<group>"; };
+		04E72A8A275CF177003B40EA /* NotificationAboutTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAboutTaskModel.swift; sourceTree = "<group>"; };
 		04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationViewModel.swift; path = AppToYou/Service/Coordinator/Login/RegistrationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppToYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D0B8D6826C675A600F7582C /* ATYCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourse.swift; sourceTree = "<group>"; };
@@ -646,6 +660,24 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		0429A4AD275AAD1900B1BFD9 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				04E72A89275CF139003B40EA /* new */,
+				6D32D85626650B2F009D62C9 /* ATYCreateNotificationAboutTaskCell.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		0429A4B0275AB34E00B1BFD9 /* NotificationAboutTaskView */ = {
+			isa = PBXGroup;
+			children = (
+				0491EE0D275BDE5C00B4691B /* new */,
+				0491EE0C275BDE5600B4691B /* old */,
+			);
+			path = NotificationAboutTaskView;
+			sourceTree = "<group>";
+		};
 		0445BFBC274FA68500F8D9BC /* Inflater */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,6 +815,42 @@
 			path = CheckEmailScene;
 			sourceTree = "<group>";
 		};
+		0491EE0C275BDE5600B4691B /* old */ = {
+			isa = PBXGroup;
+			children = (
+				6D32D85A26651227009D62C9 /* ATYNotificationAboutTaskView.swift */,
+			);
+			path = old;
+			sourceTree = "<group>";
+		};
+		0491EE0D275BDE5C00B4691B /* new */ = {
+			isa = PBXGroup;
+			children = (
+				0491EE0F275BDE7F00B4691B /* View */,
+				0491EE0E275BDE7200B4691B /* Model */,
+			);
+			path = new;
+			sourceTree = "<group>";
+		};
+		0491EE0E275BDE7200B4691B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0491EE12275BE48000B4691B /* NotificationTaskTimeModel.swift */,
+				0491EE10275BE08600B4691B /* NotificationTimeBlockModel.swift */,
+				04E72A87275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0491EE0F275BDE7F00B4691B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0429A4B3275AB76500B1BFD9 /* NotificationTaskTimeView.swift */,
+				0429A4B1275AB37D00B1BFD9 /* NotificationTimeBlockView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		04BB1800274BD7E400C584F8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -791,6 +859,15 @@
 				04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		04E72A89275CF139003B40EA /* new */ = {
+			isa = PBXGroup;
+			children = (
+				04E72A8A275CF177003B40EA /* NotificationAboutTaskModel.swift */,
+				0429A4B5275ABB8A00B1BFD9 /* NotificationAboutTaskCell.swift */,
+			);
+			path = new;
 			sourceTree = "<group>";
 		};
 		53ADC5C8439D08763C3283E5 /* Frameworks */ = {
@@ -1299,10 +1376,10 @@
 		6D651CEC266114F4003ACF95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				0429A4AD275AAD1900B1BFD9 /* Notification */,
 				6D651CEE26611F4B003ACF95 /* ATYCreateTaskNameCell.swift */,
 				6D651CF1266122C0003ACF95 /* ATYCreateTaskCountingCell.swift */,
 				6D32D852266501E8009D62C9 /* ATYCreateTaskPeriodCalendarCell.swift */,
-				6D32D85626650B2F009D62C9 /* ATYCreateNotificationAboutTaskCell.swift */,
 				6D32D85E26651AD5009D62C9 /* ATYCreateSanctionTaskCell.swift */,
 				6D32D861266527B5009D62C9 /* ATYSaveTaskCell.swift */,
 				6D32D86426652905009D62C9 /* ATYCreateCountRepeatTaskCell.swift */,
@@ -1656,9 +1733,9 @@
 		6D91B875265BF4AD00EB2589 /* ReusableViews */ = {
 			isa = PBXGroup;
 			children = (
+				0429A4B0275AB34E00B1BFD9 /* NotificationAboutTaskView */,
 				6D91B876265BF4C400EB2589 /* ATYImagePicker.swift */,
 				6D32D8492664CCED009D62C9 /* ATYRadioButton.swift */,
-				6D32D85A26651227009D62C9 /* ATYNotificationAboutTaskView.swift */,
 				6DF8285A266F65CE006487B0 /* ATYSearchBarCollectionView.swift */,
 				6DF8286C266FC4F3006487B0 /* ATYPayForCourseView.swift */,
 				6DA8E22126A6E7FC005014DA /* ATYGradientImageView.swift */,
@@ -2347,6 +2424,7 @@
 				041A7314274C401E0021B6FC /* TasksCoordinator.swift in Sources */,
 				6D568ECF26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift in Sources */,
 				6D6E7ECC26B13CFD005C8C62 /* ATYPenaltyForFailureCell.swift in Sources */,
+				0429A4B6275ABB8A00B1BFD9 /* NotificationAboutTaskCell.swift in Sources */,
 				6D8A281F265E6D7C00BAAEF5 /* TransitionDriver.swift in Sources */,
 				0413EE3B274A96180005948C /* UserCreateRequest.swift in Sources */,
 				6DA8E21326A6C03D005014DA /* ATYTaskAddedViewController.swift in Sources */,
@@ -2419,6 +2497,8 @@
 				6D8A2822265E6D8700BAAEF5 /* TransitionDirection.swift in Sources */,
 				04731A37274929F4001DD136 /* JsonBodyEncoder.swift in Sources */,
 				6DF53962268381450086A64E /* CDStatistics+CoreDataClass.swift in Sources */,
+				0429A4B4275AB76500B1BFD9 /* NotificationTaskTimeView.swift in Sources */,
+				0491EE13275BE48000B4691B /* NotificationTaskTimeModel.swift in Sources */,
 				6D8A2838265E6DF900BAAEF5 /* InstantPanGestureRecognizer.swift in Sources */,
 				6DC56C7926A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift in Sources */,
 				6D6E425B26A0515400F27E6F /* ATYCreateCourseTaskViewModel.swift in Sources */,
@@ -2454,6 +2534,7 @@
 				6DAB02A62656719D00B72955 /* FileManager.swift in Sources */,
 				6DF53958268380100086A64E /* CDUserAchievement+CoreDataClass.swift in Sources */,
 				6DC42F5E2670E361006CB865 /* ATYAboutCourseViewController.swift in Sources */,
+				0429A4B2275AB37D00B1BFD9 /* NotificationTimeBlockView.swift in Sources */,
 				6DA10EFA26AAC73E00A05770 /* ATYProgressTaskCourseUserCell.swift in Sources */,
 				6DC42F522670B9E7006CB865 /* ATYEnumsCreateCourseCell.swift in Sources */,
 				6D40348D265D11AF00248E9E /* ATYNavigationViewController+PageView.swift in Sources */,
@@ -2461,6 +2542,7 @@
 				0413EE33274A70410005948C /* ParameterEncoder.swift in Sources */,
 				6D6F6AF6269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift in Sources */,
 				6DA8E22226A6E7FC005014DA /* ATYGradientImageView.swift in Sources */,
+				04E72A88275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift in Sources */,
 				6DF5394F26837C220086A64E /* CDCourseTask+CoreDataProperties.swift in Sources */,
 				04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */,
 				6DF53963268381450086A64E /* CDStatistics+CoreDataProperties.swift in Sources */,
@@ -2500,6 +2582,8 @@
 				6D8A2826265E6DA300BAAEF5 /* PresentationController.swift in Sources */,
 				6DF5395326837F6F0086A64E /* CDCourseUser+CoreDataClass.swift in Sources */,
 				04731A39274929F4001DD136 /* HTTPMethod.swift in Sources */,
+				04E72A8B275CF177003B40EA /* NotificationAboutTaskModel.swift in Sources */,
+				0491EE11275BE08600B4691B /* NotificationTimeBlockModel.swift in Sources */,
 				6D3AC1EB26846DDC007AC57D /* CDStore+CoreDataProperties.swift in Sources */,
 				6D28977A26B9707D0001995C /* ATYVacationViewController.swift in Sources */,
 				6DC4AE24268DC5AE0028CDDE /* ATYUserTask.swift in Sources */,

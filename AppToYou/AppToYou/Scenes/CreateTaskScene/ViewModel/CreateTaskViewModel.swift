@@ -1,90 +1,24 @@
 import Foundation
 import XCoordinator
 
+struct NotificationTime {
+    let hour: String
+    let min: String
+}
 
 
 protocol SimpleCreateTaskViewModelDelegate: AnyObject {
     func updateA()
 }
 
-class SimpleCreateTaskViewModel {
-    
-//    private let router: UnownedRouter<TasksRoute>
-    private let taskType: ATYTaskType
-    private var taskModel: ATYUserTask!
-    
-    private weak var delegate: SimpleCreateTaskViewModelDelegate?
-    
-    private var flag = false
-    
-    init(delegate: SimpleCreateTaskViewModelDelegate, taskType: ATYTaskType) {
-        self.taskType = taskType
-        self.delegate = delegate
-//        self.router = router
-    }
-    
-    func getModel() -> [AnyObject] {
-        let name = CreateTaskNameCellModel { name in
-            print(name)
-        }
-        
-        let counting = CreateTaskCountingCellModel { freq in
-            switch freq {
-            case .ONCE:
-                self.flag.toggle()
-                break
-            case .EVERYDAY:
-                break
-            case .WEEKDAYS:
-                break
-            case .MONTHLY:
-                break
-            case .YEARLY:
-                break
-            case .CERTAIN_DAYS:
-                break
-            }
-            //
-        }
-        
-        let period = CreateTaskPeriodCalendarCellModel(startPicked: { start in
-            //
-        }, endPicked: { end in
-            //
-        })
-        
-        let notification = CreateNotificationAboutTaskCellModel(callback: {
-            //
-        }, plusCallback: {
-            //
-        })
-
-        let sanction = CreateSanctionTaskCellModel(callbackText: { text in
-            //
-        }, questionCallback: {
-            //
-        })
-        
-        let save = SaveTaskCellModel {
-            self.delegate?.updateA()
-        }
-        
-        if flag {
-            return [name, counting, period, sanction, save]
-        } else {
-            return [name, counting, period, notification, sanction, save]
-        }
-        
-    }
-}
-
 protocol CreateTaskViewModelInput {
     func updateTaskCreationModel()
+    func notificationTimePicked(_ time: NotificationTime)
 }
 
 protocol CreateTaskViewModelOutput {
-//    func getModel() -> [AnyObject]
     var data: Observable<[AnyObject]> { get }
+    var updatedState: Observable<Void> { get }
 }
 
 
@@ -107,15 +41,18 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
     
     private var taskModel: ATYUserTask!
     
-    private let constructor: Tester
+    private lazy var constructor: Tester = {
+        return Tester(type: self.taskType, delegate: self)
+    }()
+    
+    private var notificationView: NotificationTaskTimeView?
     
     var data: Observable<[AnyObject]> = Observable([])
+    var updatedState: Observable<Void> = Observable(())
 
     init(taskType: ATYTaskType, router: UnownedRouter<TasksRoute>) {
         self.taskType = taskType
         self.router = router
-        self.constructor = Tester(type: self.taskType)
-        self.constructor.delegate = self
         update()
     }
     
@@ -123,16 +60,33 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
         
     }
     
-//    func getModel() -> [AnyObject] {
-//        let model = constructor.construct()
-//        return model.prepare()
-//    }
+    func notificationTimePicked(_ time: NotificationTime) {
+        let model = NotificationTaskTimeModel(notificationTime: time)
+        notificationView?.configure(with: model)
+    }
+    
+    
     
 }
 
 extension CreateTaskViewModelImpl: TesterDelegate {
+    func showTimePicker(for notification: NotificationTaskTimeView) {
+        self.notificationView = notification
+        router.trigger(.timePicker)
+    }
+    
+    func getNotificationModels() -> [NotificationTaskTimeModel] {
+        
+       let model = NotificationTaskTimeModel(hourModel: .init(unit: "час"), minModel: .init(unit: "мин"))
+        return [model]
+    }
+    
     func update() {
         data.value = constructor.getModel()
+    }
+    
+    func updateState() {
+        updatedState.value = ()
     }
     
 }
@@ -169,67 +123,3 @@ class TaskCreationBuilder {
     }
 }
 
-class TaskCretionFactory {
-    
-    private let builder: TaskCreationBuilder
-    
-    private var taskModel: ATYTaskType!
-    
-    init() {
-        builder = TaskCreationBuilder()
-    }
-    
-    func createTaskCreationModel(with type: ATYTaskType) {
-        switch type {
-        case .CHECKBOX:
-            builder
-                .createTaskNameCellModel { name in
-                    //
-                }
-        case .TEXT:
-            break
-        case .TIMER:
-            break
-        case .RITUAL:
-            break
-        }
-    }
-}
-
-
-enum TaskCreationCell {
-    case createTaskNameCell
-    case createTaskCountingCell
-    case createTaskPeriodCaledarCell
-    case createNotificationAboutTaskCell
-    case createSanctionTaskCell
-    case saveTaskCell
-    
-    case createCountRepeatTaskCell
-    
-    case createDurationTaskCell
-
-    case createDescriptionTaskCell
-    case createMaxSymbolsCountCell
-
-}
-
-class CreateTaskCellFactory {
-    func cell(_ cell: TaskCreationCell) -> UITableViewCell {
-        return .init()
-    }
-    
-    func model(for cell: TaskCreationCell) -> AnyObject {
-        return UITableViewCell()
-    }
-    
-}
-
-struct CheckBoxTaskModel {
-    
-    
-    init() {
-        
-    }
-    
-}

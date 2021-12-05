@@ -1,39 +1,21 @@
-//
-//  ATYNotificationAboutTaskCell.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 31.05.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
 import UIKit
-
-class CreateNotificationAboutTaskCellModel {
-    typealias Callback = () -> Void
-    
-    let callback: Callback
-    let plusCallback: Callback
-    
-    init(callback: @escaping Callback, plusCallback: @escaping Callback) {
-        self.callback = callback
-        self.plusCallback = plusCallback
-    }
-    
-}
-
 
 class ATYCreateNotificationAboutTaskCell: UITableViewCell, InflatableView {
     
-    func inflate(model: AnyObject) {
-        guard let model = model as? CreateNotificationAboutTaskCellModel else {
-            return
-        }
-        
-        callBack = model.callback
-        plusCallBack = model.plusCallback
-    }
+    // MARK: - UI
+    private var plusButton: UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.plusImage(), for: .normal)
+        return button
+    }()
 
-    var nameLabel : UILabel = {
+    private var switchButton: UISwitch = {
+        let switchButton = UISwitch()
+        switchButton.onTintColor = R.color.textColorSecondary()
+        return switchButton
+    }()
+
+    private var nameLabel : UILabel = {
         let label = UILabel()
         label.text = "Напоминание о задаче"
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
@@ -42,6 +24,7 @@ class ATYCreateNotificationAboutTaskCell: UITableViewCell, InflatableView {
         return label
     }()
 
+    // MARK: - Properties
     var notificationsViews = [ATYNotificationAboutTaskView]()
 
     var stackView = UIStackView()
@@ -51,9 +34,14 @@ class ATYCreateNotificationAboutTaskCell: UITableViewCell, InflatableView {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         contentView.addSubview(nameLabel)
+        contentView.addSubview(plusButton)
+        contentView.addSubview(switchButton)
+        
         selectionStyle = .none
         backgroundColor = R.color.backgroundAppColor()
+        
         nameLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(20)
@@ -65,6 +53,14 @@ class ATYCreateNotificationAboutTaskCell: UITableViewCell, InflatableView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func inflate(model: AnyObject) {
+//        guard let model = model as? CreateNotificationAboutTaskCellModel else {
+//            return
+//        }
+//        
+//        callBack = model.callback
     }
 
     func setUp(notificationCount: Int) {

@@ -21,6 +21,10 @@ class ATYCreateTaskViewController: UIViewController, SimpleCreateTaskViewModelDe
     
     func bindViewModel() {
         viewModel.output.data.bind(self.update(_:))
+        viewModel.output.updatedState.bind { _ in
+            self.createTaskTableView.beginUpdates()
+            self.createTaskTableView.endUpdates()
+        }
     }
 
     var createTaskTableView = UITableView()
@@ -58,7 +62,9 @@ class ATYCreateTaskViewController: UIViewController, SimpleCreateTaskViewModelDe
         inflater.registerRow(model: CreateTaskNameCellModel.self, cell: ATYCreateTaskNameCell.self)
         inflater.registerRow(model: CreateTaskCountingCellModel.self, cell: ATYCreateTaskCountingCell.self)
         inflater.registerRow(model: CreateTaskPeriodCalendarCellModel.self, cell: ATYCreateTaskPeriodCalendarCell.self)
-        inflater.registerRow(model: CreateNotificationAboutTaskCellModel.self, cell: ATYCreateNotificationAboutTaskCell.self)
+        
+        inflater.registerRow(model: NotificationAboutTaskModel.self, cell: NotificationAboutTaskCell.self)
+        
         inflater.registerRow(model: CreateSanctionTaskCellModel.self, cell: ATYCreateSanctionTaskCell.self)
         inflater.registerRow(model: SaveTaskCellModel.self, cell: ATYSaveTaskCell.self)
         inflater.registerRow(model: CreateCountRepeatTaskCellModel.self, cell: ATYCreateCountRepeatTaskCell.self)
