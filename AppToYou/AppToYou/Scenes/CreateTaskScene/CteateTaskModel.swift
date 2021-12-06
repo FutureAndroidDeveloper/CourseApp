@@ -24,6 +24,7 @@ protocol TesterDelegate: AnyObject {
     func showTimePicker(for notification: NotificationTaskTimeView, delegate: TaskNoticationDelegate)
     
     func getNotificationModels() -> [NotificationTaskTimeModel]
+    func getWeekdayModels() -> [WeekdayModel]
 }
 
 class Tester {
@@ -75,34 +76,25 @@ class Tester {
         
         model?.addFrequencyHandler { [weak self] frequency in
             print(frequency)
+            
             if frequency == .ONCE {
+                self?.model?.removeWeekdayHandler()
                 self?.model?.removePeriodHandler()
-                self?.delegate?.update()
-            } else {
+            } else if frequency == .CERTAIN_DAYS {
+                self?.addWeekdayHandler()
                 self?.addPeriod()
-                self?.delegate?.update()
+            }
+            else {
+                self?.model?.removeWeekdayHandler()
+                self?.addPeriod()
             }
             
+            self?.updateAndSync()
 //            self.task.frequencyType = frequency
         }
         
-        model?.addPeriodHandler(startPicked: { start in
-            print(start)
-//            self.task.startDate = start ?? "N/A"
-        }, endPicked: { end in
-            print(end)
-//            self.task.endDate = end ?? "N/A"
-        })
-        
-        
-        let models = delegate?.getNotificationModels() ?? []
-        
-        model?.addNotificationHandler(notificationModels: models, switchCallback: { isOn in
-            print("Is active = \(isOn)")
-        }, timerCallback: { [weak self] notificationView, notifDelegate in
-            print("Timer callback")
-            self?.delegate?.showTimePicker(for: notificationView, delegate: notifDelegate)
-        })
+        addPeriod()
+        addNotificationHandler()
         
         model?.addSanctionHandler(callbackText: { sanction in
             print(sanction)
@@ -130,6 +122,32 @@ class Tester {
         })
     }
     
+    private func addWeekdayHandler() {
+        let weekdayModels = delegate?.getWeekdayModels() ?? []
+        model?.addWeekdayHandler(models: weekdayModels)
+    }
+    
+    private func addNotificationHandler() {
+        let models = delegate?.getNotificationModels() ?? []
+        
+        model?.addNotificationHandler(notificationModels: models, switchCallback: { isOn in
+            print("Is active = \(isOn)")
+        }, timerCallback: { [weak self] notificationView, notifDelegate in
+            print("Timer callback")
+            self?.delegate?.showTimePicker(for: notificationView, delegate: notifDelegate)
+        })
+    }
+    
+    /**
+     Обновление модели таблицы.
+     
+     Также получает обновленную модель напоминаний о задаче.
+     */
+    private func updateAndSync() {
+        addNotificationHandler()
+        delegate?.update()
+    }
+    
     func getModel() -> [AnyObject] {        
         return model?.prepare() ?? []
     }
@@ -139,6 +157,9 @@ class Tester {
 class CreateTaskModel {
     var nameModel: CreateTaskNameCellModel!
     var frequencyModel: CreateTaskCountingCellModel!
+    
+    var weekdayModel: SelectWeekdayModel?
+    
     var periodModel: CreateTaskPeriodCalendarCellModel?
     var notificationModel: NotificationAboutTaskModel!
     var sanctionModel: CreateSanctionTaskCellModel!
@@ -150,6 +171,14 @@ class CreateTaskModel {
     
     func addFrequencyHandler(_ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {
         frequencyModel = CreateTaskCountingCellModel(frequencyPicked: handler)
+    }
+    
+    func addWeekdayHandler(models: [WeekdayModel]) {
+        weekdayModel = SelectWeekdayModel(weekdayModels: models)
+    }
+    
+    func removeWeekdayHandler() {
+        weekdayModel = nil
     }
     
     func addPeriodHandler(startPicked: @escaping DateCompletion, endPicked: @escaping DateCompletion) {
@@ -179,7 +208,7 @@ class CreateTaskModel {
     
     func prepare() -> [AnyObject] {
         var result: [AnyObject] = [nameModel]
-        let tail: [AnyObject?] = [frequencyModel, periodModel, notificationModel, sanctionModel, saveModel]
+        let tail: [AnyObject?] = [frequencyModel, weekdayModel, periodModel, notificationModel, sanctionModel, saveModel]
         
         result.append(contentsOf: getAdditionalModels())
         result.append(contentsOf: tail.compactMap({ $0 }))

@@ -56,6 +56,7 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         inflater.registerRow(model: CreateTaskPeriodCalendarCellModel.self, cell: ATYCreateTaskPeriodCalendarCell.self)
         
         inflater.registerRow(model: NotificationAboutTaskModel.self, cell: NotificationAboutTaskCell.self)
+        inflater.registerRow(model: SelectWeekdayModel.self, cell: SelectWeekdayCell.self)
         
         inflater.registerRow(model: CreateSanctionTaskCellModel.self, cell: ATYCreateSanctionTaskCell.self)
         inflater.registerRow(model: SaveTaskCellModel.self, cell: ATYSaveTaskCell.self)

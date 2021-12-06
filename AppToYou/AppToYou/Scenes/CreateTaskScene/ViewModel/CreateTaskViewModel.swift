@@ -2,7 +2,6 @@ import Foundation
 import XCoordinator
 
 
-
 protocol CreateTaskViewModelInput {
     func updateTaskCreationModel()
     func notificationTimePicked(_ time: NotificationTime)
@@ -38,6 +37,8 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
     }()
     
     private var notifModels: [NotificationTaskTimeModel] = []
+    
+    // TODO: - VM не должна содержать View слой
     private var notificationView: NotificationTaskTimeView?
     private weak var notificationDelegate: TaskNoticationDelegate?
     
@@ -59,6 +60,13 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
             return
         }
         let model = NotificationTaskTimeModel(notificationTime: time)
+        
+        // TODO: изменение модели или добавление
+        if let firstModel = notifModels.first, firstModel.isDefault, notifModels.count == 1 {
+            notifModels[0] = model
+        } else {
+            notifModels.append(model)
+        }
         notificationView.configure(with: model)
         
         notificationDelegate?.notificationDidAdd(notificationView)
@@ -69,6 +77,7 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
 }
 
 extension CreateTaskViewModelImpl: TesterDelegate {
+    
     func showTimePicker(for notification: NotificationTaskTimeView, delegate: TaskNoticationDelegate) {
         notificationDelegate = delegate
         notificationView = notification
@@ -82,6 +91,16 @@ extension CreateTaskViewModelImpl: TesterDelegate {
             notifModels.append(model)
         }
         return notifModels
+    }
+    
+    func getWeekdayModels() -> [WeekdayModel] {
+        // TODO: - получать модели из модели задачи или создавать новые из календаря
+        let calendar = Calendar.autoupdatingCurrent
+        let weekdaySymbols = calendar.shortWeekdaySymbols
+        let bound = calendar.firstWeekday - 1
+        let orderedSymbols = weekdaySymbols[bound...] + weekdaySymbols[..<bound]
+        
+        return orderedSymbols.map { WeekdayModel(title: $0) }
     }
     
     func update() {
