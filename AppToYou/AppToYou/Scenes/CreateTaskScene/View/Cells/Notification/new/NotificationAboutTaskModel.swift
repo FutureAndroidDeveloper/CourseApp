@@ -14,10 +14,9 @@ class NotificationAboutTaskModel {
      Обработчик выбора времени для представления получения уведомления о задаче.
      
      - parameters:
-        - notification: напоминание о задаче, для которого выбирается время.
-        - delegate: получатель уведомления о добавлении нового напоминания.
+        - delegate: объект, который обновляет модель напоминаний о задаче.
      */
-    let timerCallback: (_ notification: NotificationTaskTimeView, _ delegate: TaskNoticationDelegate) -> Void
+    let timerCallback: (_ delegate: TaskNoticationDelegate) -> Void
     
     /**
      Модели представления напоминания о задаче.
@@ -29,7 +28,7 @@ class NotificationAboutTaskModel {
      */
     init(notificationModels: [NotificationTaskTimeModel],
          switchCallback: @escaping (Bool) -> Void,
-         timerCallback: @escaping (NotificationTaskTimeView, TaskNoticationDelegate) -> Void) {
+         timerCallback: @escaping (TaskNoticationDelegate) -> Void) {
         
         self.notificationModels = notificationModels
         self.switchCallback = switchCallback

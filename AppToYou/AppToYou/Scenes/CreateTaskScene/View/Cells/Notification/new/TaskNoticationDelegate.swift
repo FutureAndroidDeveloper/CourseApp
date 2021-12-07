@@ -2,7 +2,7 @@ import Foundation
 
 
 /**
- Протокол, который сообщает о получении нового напоминания о задаче.
+ Протокол взаимодействия c напоминаниями о задаче.
  */
 protocol TaskNoticationDelegate: AnyObject {
     
@@ -12,5 +12,10 @@ protocol TaskNoticationDelegate: AnyObject {
      - parameters:
         - notification: напоминание о задаче.
      */
-    func notificationDidAdd(_ notifcation: NotificationTaskTimeView)
+    func notificationDidAdd(_ notifcation: NotificationTaskTimeModel)
+    
+    /**
+     Получить текущее состояние моделей напоминаний о задаче.
+     */
+    func getNotificationModels() -> [NotificationTaskTimeModel]
 }

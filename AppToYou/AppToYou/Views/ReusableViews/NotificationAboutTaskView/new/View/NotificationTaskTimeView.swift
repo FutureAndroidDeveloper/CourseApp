@@ -5,31 +5,23 @@ import UIKit
  Представление времени получения уведомления о задаче.
  */
 class NotificationTaskTimeView: UIView {
-    
-    typealias Handler = (NotificationTaskTimeView) -> Void
-    
+        
     private struct Constants {
         static let blockSize = CGSize(width: 85, height: 44)
         static let spacing: CGFloat = 12
     }
         
-    private let hourTimeView: NotificationTimeBlockView = {
-        let blockView = NotificationTimeBlockView()
-        blockView.configure(with: NotificationTimeBlockModelFactory.getHourModel())
-        return blockView
-    }()
+    private let hourTimeView = NotificationTimeBlockView()
+    private let minTimeView = NotificationTimeBlockView()
     
-    private let minTimeView: NotificationTimeBlockView = {
-        let blockView = NotificationTimeBlockView()
-        blockView.configure(with: NotificationTimeBlockModelFactory.getMinModel())
-        return blockView
-    }()
+    private(set) var model: NotificationTaskTimeModel
     
-    private(set) var model: NotificationTaskTimeModel?
     
-    init() {
+    init(model: NotificationTaskTimeModel) {
+        self.model = model
         super.init(frame: .zero)
         setup()
+        configure(with: model)
     }
 
     required init?(coder: NSCoder) {
