@@ -6,6 +6,7 @@ class DefaultCreateTaskModel {
     var frequencyModel: CreateTaskCountingCellModel!
     
     var weekdayModel: SelectWeekdayModel?
+    var selectDateModel: SelectDateModel?
     
     var periodModel: CreateTaskPeriodCalendarCellModel?
     var notificationModel: NotificationAboutTaskModel!
@@ -26,6 +27,14 @@ class DefaultCreateTaskModel {
     
     func removeWeekdayHandler() {
         weekdayModel = nil
+    }
+    
+    func addSelectDateHandler() {
+        selectDateModel = SelectDateModel()
+    }
+    
+    func removeSelectDateHandler() {
+        selectDateModel = nil
     }
     
     func addPeriodHandler(startPicked: @escaping DateCompletion, endPicked: @escaping DateCompletion) {
@@ -55,7 +64,8 @@ class DefaultCreateTaskModel {
     
     func prepare() -> [AnyObject] {
         var result: [AnyObject] = [nameModel]
-        let tail: [AnyObject?] = [frequencyModel, weekdayModel, periodModel, notificationModel, sanctionModel, saveModel]
+        // TODO: - сделать функцию, которая решает между `selectDateModel, weekdayModel, periodModel`
+        let tail: [AnyObject?] = [frequencyModel, selectDateModel, weekdayModel, periodModel, notificationModel, sanctionModel, saveModel]
         
         result.append(contentsOf: getAdditionalModels())
         result.append(contentsOf: tail.compactMap({ $0 }))

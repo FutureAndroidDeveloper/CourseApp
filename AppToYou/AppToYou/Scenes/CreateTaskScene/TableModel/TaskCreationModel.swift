@@ -62,14 +62,17 @@ class TaskCreationModel {
             print(frequency)
             
             if frequency == .ONCE {
+                self?.model?.addSelectDateHandler()
                 self?.model?.removeWeekdayHandler()
                 self?.model?.removePeriodHandler()
             } else if frequency == .CERTAIN_DAYS {
                 self?.addWeekdayHandler()
                 self?.addPeriod()
+                self?.model?.removeSelectDateHandler()
             }
             else {
                 self?.model?.removeWeekdayHandler()
+                self?.model?.removeSelectDateHandler()
                 self?.addPeriod()
             }
             
@@ -79,7 +82,7 @@ class TaskCreationModel {
         
         addPeriod()
         addNotificationHandler()
-        
+                
         model?.addSanctionHandler(callbackText: { sanction in
             print(sanction)
 //            self.task.taskSanction = Int(sanction) ?? -1

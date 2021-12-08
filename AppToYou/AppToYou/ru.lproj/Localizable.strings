@@ -60,6 +60,8 @@
 "!@#$SelectDaysWeek" = "Выбрать дни недели  ";
 "!@#$PenaltyForNonCompliance" = "Штраф за невыполнение";
 
+"!@#$Done" = "Готово";
+
 // MARK: - Forgot Password
 
 // Enter Mail

@@ -60,6 +60,8 @@
 "!@#$SelectDaysWeek" = "Select days of the week  ";
 "!@#$PenaltyForNonCompliance" = "Penalty for non-compliance";
 
+"!@#$Done" = "Done";
+
 // MARK: - Forgot Password
 
 // Enter Mail

@@ -15,7 +15,7 @@ public extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .current
         dateFormatter.dateFormat = "yyyy/MM/dd"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.timeZone = .autoupdatingCurrent
         return dateFormatter
     }()
 
