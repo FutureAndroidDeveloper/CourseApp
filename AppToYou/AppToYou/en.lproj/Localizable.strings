@@ -62,6 +62,9 @@
 
 "!@#$Done" = "Done";
 
+"!@#$TaskStartTitle" = "Start of execution";
+"!@#$TaskEndTitle" = "End of execution";
+
 // MARK: - Forgot Password
 
 // Enter Mail

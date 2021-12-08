@@ -53,11 +53,11 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         
         inflater.registerRow(model: CreateTaskNameCellModel.self, cell: ATYCreateTaskNameCell.self)
         inflater.registerRow(model: CreateTaskCountingCellModel.self, cell: ATYCreateTaskCountingCell.self)
-        inflater.registerRow(model: CreateTaskPeriodCalendarCellModel.self, cell: ATYCreateTaskPeriodCalendarCell.self)
         
         inflater.registerRow(model: NotificationAboutTaskModel.self, cell: NotificationAboutTaskCell.self)
         inflater.registerRow(model: SelectWeekdayModel.self, cell: SelectWeekdayCell.self)
         inflater.registerRow(model: SelectDateModel.self, cell: SelectDateCell.self)
+        inflater.registerRow(model: TaskPeriodModel.self, cell: TaskPeriodCell.self)
         
         inflater.registerRow(model: CreateSanctionTaskCellModel.self, cell: ATYCreateSanctionTaskCell.self)
         inflater.registerRow(model: SaveTaskCellModel.self, cell: ATYSaveTaskCell.self)
@@ -65,8 +65,6 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         inflater.registerRow(model: CreateMaxCountSymbolsCellModel.self, cell: ATYCreateMaxCountSymbolsCell.self)
         inflater.registerRow(model: CreateDurationTaskCellModel.self, cell: ATYCreateDurationTaskCell.self)
         inflater.registerRow(model: CreateDescriptionTaskCellModel.self, cell: ATYCreateDescriptionTaskCell.self)
-        inflater.registerRow(model: OnceSelectDayCellModel.self, cell: ATYOnceSelectDayCell.self)
-        inflater.registerRow(model: SelectWeekDaysCellModel.self, cell: ATYSelectWeekDaysCell.self)
         
         createTaskTableView.snp.makeConstraints { (make) in
             make.leading.trailing.top.equalToSuperview()

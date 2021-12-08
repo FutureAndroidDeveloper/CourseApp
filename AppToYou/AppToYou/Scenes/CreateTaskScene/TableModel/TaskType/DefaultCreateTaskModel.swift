@@ -8,7 +8,7 @@ class DefaultCreateTaskModel {
     var weekdayModel: SelectWeekdayModel?
     var selectDateModel: SelectDateModel?
     
-    var periodModel: CreateTaskPeriodCalendarCellModel?
+    var periodModel: TaskPeriodModel?
     var notificationModel: NotificationAboutTaskModel!
     var sanctionModel: CreateSanctionTaskCellModel!
     var saveModel: SaveTaskCellModel!
@@ -38,7 +38,7 @@ class DefaultCreateTaskModel {
     }
     
     func addPeriodHandler(startPicked: @escaping DateCompletion, endPicked: @escaping DateCompletion) {
-        periodModel = CreateTaskPeriodCalendarCellModel(startPicked: startPicked, endPicked: endPicked)
+        periodModel = TaskPeriodModel(startPicked: startPicked, endPicked: endPicked)
     }
     
     func removePeriodHandler() {

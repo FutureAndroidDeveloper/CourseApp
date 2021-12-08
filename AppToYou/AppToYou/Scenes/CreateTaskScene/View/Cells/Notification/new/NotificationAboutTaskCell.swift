@@ -8,7 +8,7 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
     
     private struct Constants {
         static let nameInsets = UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 20)
-        static let containerInsets = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 32)
+        static let containerInsets = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 23)
         static let switchOffset: CGFloat = 8
         static let plusOffset: CGFloat = 15
     }
