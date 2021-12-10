@@ -5,7 +5,8 @@ class RepeatCreateTaskModel: DefaultCreateTaskModel {
     var countModel: CreateCountRepeatTaskCellModel!
     
     func addCountHandler() {
-        countModel = CreateCountRepeatTaskCellModel()
+        let model = NaturalNumberFieldModel()
+        countModel = CreateCountRepeatTaskCellModel(valueModel: model)
     }
     
     override func getAdditionalModels() -> [AnyObject] {

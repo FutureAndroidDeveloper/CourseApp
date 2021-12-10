@@ -194,7 +194,7 @@ extension ATYCreateCourseTaskViewController: UITableViewDelegate, UITableViewDat
                 return cell
             case .createCountRepeatTaskCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateCountRepeatTaskCell.reuseIdentifier, for: indexPath) as! ATYCreateCountRepeatTaskCell
-                cell.lockButton.isHidden = false
+//                cell.lockButton.isHidden = false
                 return cell
             case .createTaskCountingCell:
                 let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateTaskCountingCell.reuseIdentifier, for: indexPath) as! ATYCreateTaskCountingCell

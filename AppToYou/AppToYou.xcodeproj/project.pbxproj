@@ -42,6 +42,7 @@
 		04731A3B274929F4001DD136 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A31274929F4001DD136 /* Endpoint.swift */; };
 		04731A3F27492A29001DD136 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A3E27492A29001DD136 /* NetworkRouter.swift */; };
 		04731A4227492CBA001DD136 /* UserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04731A4127492CBA001DD136 /* UserEndpoint.swift */; };
+		0482762A2763667800B501C5 /* NaturalNumberFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048276292763667800B501C5 /* NaturalNumberFieldModel.swift */; };
 		0482E116274EA3D400B0F3AF /* PaddingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E115274EA3D400B0F3AF /* PaddingTextField.swift */; };
 		0482E118274EA72900B0F3AF /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */; };
 		0482E11C274EAAC800B0F3AF /* CheckEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */; };
@@ -69,6 +70,8 @@
 		04E72A88275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E72A87275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift */; };
 		04E72A8B275CF177003B40EA /* NotificationAboutTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E72A8A275CF177003B40EA /* NotificationAboutTaskModel.swift */; };
 		04F02943274BFC3A0054A455 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */; };
+		04FD2697276235190062EEF7 /* RepeatCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD2696276235190062EEF7 /* RepeatCounterView.swift */; };
+		04FD269A27623C900062EEF7 /* NaturalNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD269927623C900062EEF7 /* NaturalNumberTextField.swift */; };
 		61504E968323318951FD0D81 /* Pods_AppToYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */; };
 		6D0B8D6926C675A600F7582C /* ATYCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0B8D6826C675A600F7582C /* ATYCourse.swift */; };
 		6D118EB826A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */; };
@@ -344,6 +347,7 @@
 		04731A31274929F4001DD136 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		04731A3E27492A29001DD136 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		04731A4127492CBA001DD136 /* UserEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndpoint.swift; sourceTree = "<group>"; };
+		048276292763667800B501C5 /* NaturalNumberFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalNumberFieldModel.swift; sourceTree = "<group>"; };
 		0482E115274EA3D400B0F3AF /* PaddingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingTextField.swift; sourceTree = "<group>"; };
 		0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ForgotPasswordViewModel.swift; path = AppToYou/Views/Controls/ForgotPasswordViewModel.swift; sourceTree = SOURCE_ROOT; };
 		0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailViewModel.swift; sourceTree = "<group>"; };
@@ -371,6 +375,8 @@
 		04E72A87275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTimeBlockModelFactory.swift; sourceTree = "<group>"; };
 		04E72A8A275CF177003B40EA /* NotificationAboutTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAboutTaskModel.swift; sourceTree = "<group>"; };
 		04F02942274BFC3A0054A455 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistrationViewModel.swift; path = AppToYou/Service/Coordinator/Login/RegistrationViewModel.swift; sourceTree = SOURCE_ROOT; };
+		04FD2696276235190062EEF7 /* RepeatCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatCounterView.swift; sourceTree = "<group>"; };
+		04FD269927623C900062EEF7 /* NaturalNumberTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalNumberTextField.swift; sourceTree = "<group>"; };
 		05825BC2F114BC315BF0A49F /* Pods_AppToYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppToYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D0B8D6826C675A600F7582C /* ATYCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourse.swift; sourceTree = "<group>"; };
 		6D118EB726A9A4FA00601F34 /* ATYCourseParticipantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATYCourseParticipantsViewController.swift; sourceTree = "<group>"; };
@@ -1006,6 +1012,32 @@
 			path = new;
 			sourceTree = "<group>";
 		};
+		04FD2694276234E50062EEF7 /* RepeatCounterCell */ = {
+			isa = PBXGroup;
+			children = (
+				6D32D86426652905009D62C9 /* ATYCreateCountRepeatTaskCell.swift */,
+				04FD2695276234FA0062EEF7 /* new */,
+			);
+			path = RepeatCounterCell;
+			sourceTree = "<group>";
+		};
+		04FD2695276234FA0062EEF7 /* new */ = {
+			isa = PBXGroup;
+			children = (
+				04FD2696276235190062EEF7 /* RepeatCounterView.swift */,
+			);
+			path = new;
+			sourceTree = "<group>";
+		};
+		04FD269827623C580062EEF7 /* NaturalNumberTextField */ = {
+			isa = PBXGroup;
+			children = (
+				04FD269927623C900062EEF7 /* NaturalNumberTextField.swift */,
+				048276292763667800B501C5 /* NaturalNumberFieldModel.swift */,
+			);
+			path = NaturalNumberTextField;
+			sourceTree = "<group>";
+		};
 		53ADC5C8439D08763C3283E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1512,6 +1544,7 @@
 		6D651CEC266114F4003ACF95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				04FD2694276234E50062EEF7 /* RepeatCounterCell */,
 				04875F5C2760DC9D00C4BB51 /* TaskPeriodCell */,
 				0440344A275FE9290095EB8A /* SelectDateCell */,
 				04E14270275E77700076D8FC /* SelectWeekdayCell */,
@@ -1520,7 +1553,6 @@
 				6D651CF1266122C0003ACF95 /* ATYCreateTaskCountingCell.swift */,
 				6D32D85E26651AD5009D62C9 /* ATYCreateSanctionTaskCell.swift */,
 				6D32D861266527B5009D62C9 /* ATYSaveTaskCell.swift */,
-				6D32D86426652905009D62C9 /* ATYCreateCountRepeatTaskCell.swift */,
 				6D32D86826652B56009D62C9 /* ATYCreateMaxCountSymbolsCell.swift */,
 				6D32D86E26652EF1009D62C9 /* ATYCreateDurationTaskCell.swift */,
 				6D32D87226653022009D62C9 /* ATYCreateDescriptionTaskCell.swift */,
@@ -1809,6 +1841,7 @@
 		6D91B861265BE1F200EB2589 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				04FD269827623C580062EEF7 /* NaturalNumberTextField */,
 				04403447275FE4A60095EB8A /* SelectDateTextField */,
 				04E1426B275E53A10076D8FC /* WeekdayButton */,
 				6D91B863265BE20700EB2589 /* ATYShowHideTextField.swift */,
@@ -2526,6 +2559,7 @@
 				6D55ADE826A1CAC400F7DD4A /* ATYEditCourseCountTaskCell.swift in Sources */,
 				6D118EBB26A9A51100601F34 /* ATYShareCourseLinkCell.swift in Sources */,
 				6D6F6AEB269EFDDE009AD9E1 /* ATYCategoryCourseCell.swift in Sources */,
+				04FD269A27623C900062EEF7 /* NaturalNumberTextField.swift in Sources */,
 				6DDD2AB4268C661B00DD9A87 /* ATYDatabaseService+CDWallet.swift in Sources */,
 				6D4E12EC2657ADA100732465 /* CDUser+CoreDataProperties.swift in Sources */,
 				6D32D87326653022009D62C9 /* ATYCreateDescriptionTaskCell.swift in Sources */,
@@ -2652,6 +2686,7 @@
 				0440344C275FE94E0095EB8A /* SelectDateCell.swift in Sources */,
 				6D6E425B26A0515400F27E6F /* ATYCreateCourseTaskViewModel.swift in Sources */,
 				0440343B275F943F0095EB8A /* CreateTaskViewModel.swift in Sources */,
+				04FD2697276235190062EEF7 /* RepeatCounterView.swift in Sources */,
 				6D91B82D265BAF8800EB2589 /* R.generated.swift in Sources */,
 				04BB1804274BD80A00C584F8 /* RegistrationCoordinator.swift in Sources */,
 				6DA15F98266A286F00201DD3 /* ATYCollectionViewCourseCell.swift in Sources */,
@@ -2693,6 +2728,7 @@
 				0413EE33274A70410005948C /* ParameterEncoder.swift in Sources */,
 				6D6F6AF6269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift in Sources */,
 				6DA8E22226A6E7FC005014DA /* ATYGradientImageView.swift in Sources */,
+				0482762A2763667800B501C5 /* NaturalNumberFieldModel.swift in Sources */,
 				04E72A88275CEFC9003B40EA /* NotificationTimeBlockModelFactory.swift in Sources */,
 				6DF5394F26837C220086A64E /* CDCourseTask+CoreDataProperties.swift in Sources */,
 				04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */,
