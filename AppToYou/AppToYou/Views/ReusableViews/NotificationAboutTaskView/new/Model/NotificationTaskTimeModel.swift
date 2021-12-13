@@ -8,12 +8,12 @@ class NotificationTaskTimeModel {
     /**
      Модель - часы получения уведомления.
      */
-    let hourModel: NotificationTimeBlockModel
+    let hourModel: TimeBlockModel
     
     /**
      Модель - минуты получения уведомления.
      */
-    let minModel: NotificationTimeBlockModel
+    let minModel: TimeBlockModel
     
     /**
      Является ли модель со значениями по умолчанию.
@@ -31,8 +31,8 @@ class NotificationTaskTimeModel {
         - notificationTime: модель времени.
      */
     convenience init(notificationTime: NotificationTime) {
-        let hour = NotificationTimeBlockModelFactory.getHourModel()
-        let min = NotificationTimeBlockModelFactory.getMinModel()
+        let hour = TimeBlockModelFactory.getHourModel()
+        let min = TimeBlockModelFactory.getMinModel()
         
         hour.update(value: notificationTime.hour)
         min.update(value: notificationTime.min)
@@ -46,7 +46,7 @@ class NotificationTaskTimeModel {
         - hourModel: модель блока часов.
         - minModel: модель юлока минут.
      */
-    init(hourModel: NotificationTimeBlockModel, minModel: NotificationTimeBlockModel) {
+    init(hourModel: TimeBlockModel, minModel: TimeBlockModel) {
         self.hourModel = hourModel
         self.minModel = minModel
     }

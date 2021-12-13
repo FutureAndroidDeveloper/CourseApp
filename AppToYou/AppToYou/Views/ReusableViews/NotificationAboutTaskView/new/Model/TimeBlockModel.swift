@@ -4,7 +4,7 @@ import Foundation
 /**
  Базовая модель блока времени уведомления.
  */
-class NotificationTimeBlockModel {
+class TimeBlockModel {
     
     private struct Constants {
         static let defaultValue = "0"

@@ -11,8 +11,8 @@ class NotificationTaskTimeView: UIView {
         static let spacing: CGFloat = 12
     }
         
-    private let hourTimeView = NotificationTimeBlockView()
-    private let minTimeView = NotificationTimeBlockView()
+    private let hourTimeView = TimeBlockView()
+    private let minTimeView = TimeBlockView()
     
     private(set) var model: NotificationTaskTimeModel
     

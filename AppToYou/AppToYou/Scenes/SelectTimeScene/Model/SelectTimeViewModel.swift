@@ -2,11 +2,11 @@ import Foundation
 import XCoordinator
 
 protocol SelectTimeViewModelInput {
-    func timePicked(hour: String, min: String)
+    func timePicked(hour: String, min: String, sec: String?)
 }
 
 protocol SelectTimeViewModelOutput {
-    
+    func getPickerType() -> TimePickerType
 }
 
 
@@ -25,14 +25,25 @@ extension SelectTimeViewModel where Self: SelectTimeViewModelInput & SelectTimeV
 class SelectTimeViewModelImpl: SelectTimeViewModel, SelectTimeViewModelInput, SelectTimeViewModelOutput {
 
     private let router: UnownedRouter<TasksRoute>
+    private let pickerType: TimePickerType
 
-    init(router: UnownedRouter<TasksRoute>) {
+    init(pickerType: TimePickerType, router: UnownedRouter<TasksRoute>) {
+        self.pickerType = pickerType
         self.router = router
     }
     
-    func timePicked(hour: String, min: String) {
-        let notificationTime = NotificationTime(hour: hour, min: min)
-        router.trigger(.timePicked(notificationTime))
+    func timePicked(hour: String, min: String, sec: String?) {
+        if let second = sec {
+            let time = DurationTime(hour: hour, min: min, sec: second)
+            router.trigger(.durationTimePicked(time))
+        } else {
+            let time = NotificationTime(hour: hour, min: min)
+            router.trigger(.notificationTimePicked(time))
+        }
+    }
+    
+    func getPickerType() -> TimePickerType {
+        return pickerType
     }
     
 }

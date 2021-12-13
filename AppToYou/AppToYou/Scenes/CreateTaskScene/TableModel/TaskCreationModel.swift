@@ -5,10 +5,11 @@ protocol TaskCreationDelegate: AnyObject {
     func update()
     
     func updateState()
-    func showTimePicker(delegate: TaskNoticationDelegate)
+    func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?)
     
     func getNameModel() -> TextFieldModel
     
+    func getDurationModel() -> TaskDurationModel
     func getNotificationModels() -> [NotificationTaskTimeModel]
     func getWeekdayModels() -> [WeekdayModel]
 }
@@ -31,6 +32,9 @@ class TaskCreationModel {
     }
     
     private func construct() {
+        guard let dataProvider = delegate else {
+            return
+        }
         
         switch type {
         case .CHECKBOX:
@@ -45,9 +49,9 @@ class TaskCreationModel {
             model = textModel
         case .TIMER:
             let timerModel = TimerCreateTaskModel()
-            timerModel.addDurationHandler()
-            
             model = timerModel
+            
+            addDuration()
         case .RITUAL:
             let repeatModel = RepeatCreateTaskModel()
             repeatModel.addCountHandler()
@@ -55,7 +59,7 @@ class TaskCreationModel {
             model = repeatModel
         }
         
-        let nameModel = delegate?.getNameModel() ?? .init()
+        let nameModel = dataProvider.getNameModel()
         model?.addNameHandler(nameModel)
         
         model?.addFrequencyHandler { [weak self] frequency in
@@ -109,6 +113,20 @@ class TaskCreationModel {
         })
     }
     
+    private func addDuration() {
+        guard
+            let timerModel = model as? TimerCreateTaskModel,
+            let dataProvider = delegate
+        else {
+            return
+        }
+        
+        let durationModel = dataProvider.getDurationModel()
+        timerModel.addDurationHandler(duration: durationModel) { [weak self] in
+            self?.delegate?.showTimePicker(pickerType: .duration, delegate: nil)
+        }
+    }
+    
     private func addWeekdayHandler() {
         let weekdayModels = delegate?.getWeekdayModels() ?? []
         model?.addWeekdayHandler(models: weekdayModels)
@@ -121,7 +139,7 @@ class TaskCreationModel {
             print("Is active = \(isOn)")
         }, timerCallback: { [weak self] notifDelegate in
             print("Timer callback")
-            self?.delegate?.showTimePicker(delegate: notifDelegate)
+            self?.delegate?.showTimePicker(pickerType: .notification, delegate: notifDelegate)
         })
     }
     
@@ -135,7 +153,14 @@ class TaskCreationModel {
         delegate?.update()
     }
     
-    func getModel() -> [AnyObject] {        
+    // тут нужно обновить все хендлеры перед перезагрузкой таблицы с обновленными данными в моделях
+    private func fullUpdate() {
+        
+        addDuration()
+    }
+    
+    func getModel() -> [AnyObject] {
+        fullUpdate()
         return model?.prepare() ?? []
     }
     

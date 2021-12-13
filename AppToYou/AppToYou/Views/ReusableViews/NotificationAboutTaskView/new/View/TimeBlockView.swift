@@ -2,9 +2,9 @@ import UIKit
 
 
 /**
- Представление блока уведомления, который содержит значение и единицу измерения.
+ Представление блока времени, которое содержит значение и единицу измерения.
  */
-class NotificationTimeBlockView: UIView {
+class TimeBlockView: UIView {
     
     private struct Constants {
         static let padding = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 10)
@@ -63,7 +63,7 @@ class NotificationTimeBlockView: UIView {
      - parameters:
         - model: модель блока времени.
      */
-    func configure(with model: NotificationTimeBlockModel) {
+    func configure(with model: TimeBlockModel) {
         valueLabel.text = model.value
         unitLabel.text = model.unit
     }

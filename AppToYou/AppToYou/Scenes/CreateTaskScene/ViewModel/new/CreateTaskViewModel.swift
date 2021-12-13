@@ -3,6 +3,7 @@ import Foundation
 
 protocol CreateTaskViewModelInput {
     func notificationTimePicked(_ time: NotificationTime)
+    func durationTimePicked(_ time: DurationTime)
 }
 
 protocol CreateTaskViewModelOutput {

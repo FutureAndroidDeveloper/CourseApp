@@ -15,6 +15,8 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
     private var notificationModels: [NotificationTaskTimeModel] = []
     private weak var notificationDelegate: TaskNoticationDelegate?
     
+    private var duration: TaskDurationModel?
+    
     var data: Observable<[AnyObject]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
     
@@ -35,25 +37,44 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
         updateState()
     }
     
+    func durationTimePicked(_ time: DurationTime) {
+        duration = TaskDurationModel(durationTime: time)
+        update()
+    }
+    
 }
 
 
 extension CreateTaskViewModelImpl: TaskCreationDelegate {
     
-    func showTimePicker(delegate: TaskNoticationDelegate) {
+    func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?) {
         notificationDelegate = delegate
-        router.trigger(.timePicker)
+        router.trigger(.timePicker(type: pickerType))
     }
     
     func getNameModel() -> TextFieldModel {
         // TODO: - получать имя из модели задачи
+        
         return .init(value: String(), placeholder: R.string.localizable.forExampleDoExercises())
+    }
+    
+    func getDurationModel() -> TaskDurationModel {
+        // TODO: - получать длительность из модели задачи
+        if let durationModel = self.duration {
+            return durationModel
+        } else {
+            let model = TaskDurationModel(hourModel: TimeBlockModelFactory.getHourModel(),
+                                          minModel: TimeBlockModelFactory.getMinModel(),
+                                          secModel: TimeBlockModelFactory.getSecModel())
+            duration = model
+            return model
+        }
     }
     
     func getNotificationModels() -> [NotificationTaskTimeModel] {
         if notificationModels.isEmpty {
-            let model = NotificationTaskTimeModel(hourModel: NotificationTimeBlockModelFactory.getHourModel(),
-                                                  minModel: NotificationTimeBlockModelFactory.getMinModel())
+            let model = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
+                                                  minModel: TimeBlockModelFactory.getMinModel())
             notificationModels.append(model)
         }
         return notificationModels

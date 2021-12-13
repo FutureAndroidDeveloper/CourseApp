@@ -141,8 +141,8 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
             return
         }
 
-        let defaultModel = NotificationTaskTimeModel(hourModel: NotificationTimeBlockModelFactory.getHourModel(),
-                                                     minModel: NotificationTimeBlockModelFactory.getMinModel())
+        let defaultModel = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
+                                                     minModel: TimeBlockModelFactory.getMinModel())
         
         let newNotification = NotificationTaskTimeView(model: defaultModel)
         editingNotificationView = newNotification

@@ -5,8 +5,9 @@ enum TasksRoute: Route {
     case tasks
     case add
     case create(ATYTaskType)
-    case timePicker
-    case timePicked(_ time: NotificationTime)
+    case timePicker(type: TimePickerType)
+    case notificationTimePicked(_ time: NotificationTime)
+    case durationTimePicked(_ time: DurationTime)
 }
 
 
@@ -46,16 +47,20 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
                 .push(vc)
             ])
             
-        case .timePicker:
+        case .timePicker(let type):
             let timePickerViewController = ATYSelectTimeViewController()
-            let timePickerViewModel = SelectTimeViewModelImpl(router: unownedRouter)
+            let timePickerViewModel = SelectTimeViewModelImpl(pickerType: type, router: unownedRouter)
             timePickerViewController.bind(to: timePickerViewModel)
 
             return .present(timePickerViewController, animation: nil)
             
-        case .timePicked(let time):
+        case .notificationTimePicked(let time):
             createTaskViewModel?.input.notificationTimePicked(time)
             return .dismiss(animation: nil)
+            
+        case .durationTimePicked(let time):
+            createTaskViewModel?.input.durationTimePicked(time)
+            return .dismiss()
         }
     }
     
