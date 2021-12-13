@@ -54,6 +54,9 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         inflater.registerRow(model: CreateTaskNameCellModel.self, cell: ATYCreateTaskNameCell.self)
         inflater.registerRow(model: CreateTaskCountingCellModel.self, cell: ATYCreateTaskCountingCell.self)
         
+        
+        
+        inflater.registerRow(model: TaskNameModel.self, cell: TaskNameCell.self)
         inflater.registerRow(model: NotificationAboutTaskModel.self, cell: NotificationAboutTaskCell.self)
         inflater.registerRow(model: SelectWeekdayModel.self, cell: SelectWeekdayCell.self)
         inflater.registerRow(model: SelectDateModel.self, cell: SelectDateCell.self)

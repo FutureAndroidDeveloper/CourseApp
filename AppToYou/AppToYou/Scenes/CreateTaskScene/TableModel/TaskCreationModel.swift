@@ -7,6 +7,8 @@ protocol TaskCreationDelegate: AnyObject {
     func updateState()
     func showTimePicker(delegate: TaskNoticationDelegate)
     
+    func getNameModel() -> TextFieldModel
+    
     func getNotificationModels() -> [NotificationTaskTimeModel]
     func getWeekdayModels() -> [WeekdayModel]
 }
@@ -53,10 +55,8 @@ class TaskCreationModel {
             model = repeatModel
         }
         
-        model?.addNameHandler { name in
-            print(name)
-//            self.task.taskName = name
-        }
+        let nameModel = delegate?.getNameModel() ?? .init()
+        model?.addNameHandler(nameModel)
         
         model?.addFrequencyHandler { [weak self] frequency in
             print(frequency)

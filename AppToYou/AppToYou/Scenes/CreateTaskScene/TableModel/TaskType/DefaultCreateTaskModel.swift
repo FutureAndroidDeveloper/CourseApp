@@ -2,7 +2,7 @@ import Foundation
 
 
 class DefaultCreateTaskModel {
-    var nameModel: CreateTaskNameCellModel!
+    var nameModel: TaskNameModel!
     var frequencyModel: CreateTaskCountingCellModel!
     
     var weekdayModel: SelectWeekdayModel?
@@ -13,8 +13,8 @@ class DefaultCreateTaskModel {
     var sanctionModel: CreateSanctionTaskCellModel!
     var saveModel: SaveTaskCellModel!
     
-    func addNameHandler(_ handler: @escaping (String) -> Void) {
-        nameModel = CreateTaskNameCellModel(nameCallback: handler)
+    func addNameHandler(_ handler: TextFieldModel) {
+        nameModel = TaskNameModel(fieldModel: handler)
     }
     
     func addFrequencyHandler(_ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {

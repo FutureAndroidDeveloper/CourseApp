@@ -27,7 +27,6 @@ class ATYCreateTaskNameCell: UITableViewCell, InflatableView {
         callbackText = model.nameCallback
     }
     
-    
     var nameLabel : UILabel = {
         let label = UILabel()
         label.text = R.string.localizable.taskName()

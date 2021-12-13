@@ -45,6 +45,11 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         router.trigger(.timePicker)
     }
     
+    func getNameModel() -> TextFieldModel {
+        // TODO: - получать имя из модели задачи
+        return .init(value: String(), placeholder: R.string.localizable.forExampleDoExercises())
+    }
+    
     func getNotificationModels() -> [NotificationTaskTimeModel] {
         if notificationModels.isEmpty {
             let model = NotificationTaskTimeModel(hourModel: NotificationTimeBlockModelFactory.getHourModel(),
