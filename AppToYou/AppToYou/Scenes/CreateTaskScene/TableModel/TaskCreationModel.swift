@@ -93,14 +93,6 @@ class TaskCreationModel {
         }, questionCallback: {
             print("Question Handler")
         })
-        
-        model?.addSaveHandler { [weak self] in
-            print("Save")
-            self?.delegate?.update()
-            // validate + после валидации при необходимости обновить модель ячеек с указанием ошибок
-            // при успешной валидации отправить запрос на сервер
-            // при успешном выполнении запроса, сохранить в бд
-        }
     }
     
     private func addPeriod() {

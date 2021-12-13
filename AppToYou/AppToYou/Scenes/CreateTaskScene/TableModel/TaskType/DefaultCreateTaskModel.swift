@@ -11,7 +11,6 @@ class DefaultCreateTaskModel {
     var periodModel: TaskPeriodModel?
     var notificationModel: NotificationAboutTaskModel!
     var sanctionModel: CreateSanctionTaskCellModel!
-    var saveModel: SaveTaskCellModel!
     
     func addNameHandler(_ handler: TextFieldModel) {
         nameModel = TaskNameModel(fieldModel: handler)
@@ -58,14 +57,13 @@ class DefaultCreateTaskModel {
         sanctionModel = CreateSanctionTaskCellModel(callbackText: callbackText, questionCallback: questionCallback)
     }
     
-    func addSaveHandler(_ handler: @escaping () -> Void) {
-        saveModel = SaveTaskCellModel(callback: handler)
-    }
-    
     func prepare() -> [AnyObject] {
         var result: [AnyObject] = [nameModel]
         // TODO: - сделать функцию, которая решает между `selectDateModel, weekdayModel, periodModel`
-        let tail: [AnyObject?] = [frequencyModel, selectDateModel, weekdayModel, periodModel, notificationModel, sanctionModel, saveModel]
+        let tail: [AnyObject?] = [
+            frequencyModel, selectDateModel, weekdayModel,
+            periodModel, notificationModel, sanctionModel
+        ]
         
         result.append(contentsOf: getAdditionalModels())
         result.append(contentsOf: tail.compactMap({ $0 }))

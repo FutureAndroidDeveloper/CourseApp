@@ -9,6 +9,11 @@
 import UIKit
 
 class ATYCreateTaskViewController: UIViewController, BindableType {
+    
+    private struct Constants {
+        static let saveInsets = UIEdgeInsets(top: 0, left: 20, bottom: 13, right: 20)
+    }
+    
     var viewModel : CreateTaskViewModel!
     
     func bindViewModel() {
@@ -19,7 +24,20 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         }
     }
 
-    var createTaskTableView = UITableView()
+    var createTaskTableView = ContentSizedTableView()
+    private let contentContainer = TopBottomBlocksContainerView()
+    
+    private lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = R.color.buttonColor()
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.setTitleColor(R.color.backgroundTextFieldsColor(), for: .normal)
+        button.setTitle(R.string.localizable.save(), for: .normal)
+        button.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
+        button.layer.cornerRadius = 22.5
+        return button
+    }()
+    
     var countOfNotification = 1
     
     private var inflater: UITableViewIflater!
@@ -32,20 +50,29 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = R.string.localizable.creatingNewTask()
-        view.addSubview(createTaskTableView)
         view.backgroundColor = R.color.backgroundAppColor()
-        configureNavBar()
-//        configureCreateTaskTableView()
-        configureInflater()
-//        viewModel = ATYCreateTaskViewModel()
         
-//        viewModel = SimpleCreateTaskViewModel(delegate: self, taskType: .CHECKBOX)
-//        update()
+        configure()
+        configureInflater()
+    }
+    
+    private func configure() {
+        view.addSubview(contentContainer)
+        contentContainer.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        contentContainer.addTop(content: createTaskTableView)
+        contentContainer.addBottom(content: saveButton, insets: Constants.saveInsets)
+        
+        saveButton.snp.makeConstraints {
+            $0.height.equalTo(45)
+        }
     }
     
     private func configureInflater() {
         createTaskTableView.separatorStyle = .none
+        createTaskTableView.isScrollEnabled = false
         createTaskTableView.backgroundColor = R.color.backgroundAppColor()
         createTaskTableView.allowsSelection = false
         
@@ -65,16 +92,10 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         inflater.registerRow(model: TaskPeriodModel.self, cell: TaskPeriodCell.self)
         
         inflater.registerRow(model: CreateSanctionTaskCellModel.self, cell: ATYCreateSanctionTaskCell.self)
-        inflater.registerRow(model: SaveTaskCellModel.self, cell: ATYSaveTaskCell.self)
         inflater.registerRow(model: CreateCountRepeatTaskCellModel.self, cell: ATYCreateCountRepeatTaskCell.self)
         inflater.registerRow(model: CreateMaxCountSymbolsCellModel.self, cell: ATYCreateMaxCountSymbolsCell.self)
         inflater.registerRow(model: CreateDurationTaskCellModel.self, cell: ATYCreateDurationTaskCell.self)
         inflater.registerRow(model: CreateDescriptionTaskCellModel.self, cell: ATYCreateDescriptionTaskCell.self)
-        
-        createTaskTableView.snp.makeConstraints { (make) in
-            make.leading.trailing.top.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin)
-        }
 
         self.transition = PanelTransition(y: view.bounds.height * 0.5 , height: view.bounds.height * 0.5)
         self.transitionForQuestionButton = PanelTransition(y: view.bounds.height * 0.4 , height: view.bounds.height * 0.6)
@@ -83,16 +104,13 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
     //MARK:- Configure UI
 
     private func configureNavBar() {
+        self.navigationItem.title = R.string.localizable.creatingNewTask()
+        
         let backButton = UIBarButtonItem()
         backButton.title = ""
         backButton.tintColor = R.color.lineViewBackgroundColor()
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
-    
-//    func update() {
-////        let section = TableViewSection(models: viewModel.getModel())
-////        inflater.inflate(sections: [section])
-//    }
     
     func update(_ data: [AnyObject]) {
         let section = TableViewSection(models: data)
@@ -123,6 +141,13 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         child.modalPresentationStyle = .custom
 
         present(child, animated: true)
+    }
+    
+    @objc func saveTapped() {
+        print("Save tapped")
+        // validate + после валидации при необходимости обновить модель ячеек с указанием ошибок
+        // при успешной валидации отправить запрос на сервер
+        // при успешном выполнении запроса, сохранить в бд
     }
 }
 
