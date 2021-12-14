@@ -2,11 +2,11 @@ import Foundation
 
 
 class TextCreateTaskModel: DefaultCreateTaskModel {
-    var descriptionModel: CreateDescriptionTaskCellModel!
+    var descriptionModel: PlaceholderTextViewModel!
     var lengthLimitModel: CreateMaxCountSymbolsCellModel!
     
-    func addDescriptionHandler(_ handler: @escaping (String) -> Void) {
-        descriptionModel = CreateDescriptionTaskCellModel(descriptionEntered: handler)
+    func addDescriptionHandler(model: PlaceholderTextViewModel) {
+        descriptionModel = model
     }
     
     func addLimitHandler() {

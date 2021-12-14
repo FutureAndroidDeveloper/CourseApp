@@ -85,6 +85,8 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         
         inflater.registerRow(model: TaskNameModel.self, cell: TaskNameCell.self)
         inflater.registerRow(model: TaskDurationCellModel.self, cell: TaskDurationCell.self)
+        
+        inflater.registerRow(model: PlaceholderTextViewModel.self, cell: DescriptionTaskCell.self)
 
         inflater.registerRow(model: NotificationAboutTaskModel.self, cell: NotificationAboutTaskCell.self)
         inflater.registerRow(model: SelectWeekdayModel.self, cell: SelectWeekdayCell.self)
@@ -95,7 +97,6 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         inflater.registerRow(model: CreateCountRepeatTaskCellModel.self, cell: ATYCreateCountRepeatTaskCell.self)
         inflater.registerRow(model: CreateMaxCountSymbolsCellModel.self, cell: ATYCreateMaxCountSymbolsCell.self)
         inflater.registerRow(model: CreateDurationTaskCellModel.self, cell: ATYCreateDurationTaskCell.self)
-        inflater.registerRow(model: CreateDescriptionTaskCellModel.self, cell: ATYCreateDescriptionTaskCell.self)
 
         self.transition = PanelTransition(y: view.bounds.height * 0.5 , height: view.bounds.height * 0.5)
         self.transitionForQuestionButton = PanelTransition(y: view.bounds.height * 0.4 , height: view.bounds.height * 0.6)

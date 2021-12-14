@@ -9,6 +9,7 @@ protocol TaskCreationDelegate: AnyObject {
     
     func getNameModel() -> TextFieldModel
     
+    func getDescriptionModel() -> PlaceholderTextViewModel
     func getDurationModel() -> TaskDurationModel
     func getNotificationModels() -> [NotificationTaskTimeModel]
     func getWeekdayModels() -> [WeekdayModel]
@@ -39,23 +40,21 @@ class TaskCreationModel {
         switch type {
         case .CHECKBOX:
             model = DefaultCreateTaskModel()
+            
         case .TEXT:
             let textModel = TextCreateTaskModel()
-            textModel.addDescriptionHandler { description in
-//                self.task.taskDescription = description
-            }
             textModel.addLimitHandler()
-            
             model = textModel
+            addDescription()
+            
         case .TIMER:
             let timerModel = TimerCreateTaskModel()
             model = timerModel
-            
             addDuration()
+            
         case .RITUAL:
             let repeatModel = RepeatCreateTaskModel()
             repeatModel.addCountHandler()
-            
             model = repeatModel
         }
         
@@ -103,6 +102,18 @@ class TaskCreationModel {
             print(end)
 //            self.task.endDate = end ?? "N/A"
         })
+    }
+    
+    private func addDescription() {
+        guard
+            let textModel = model as? TextCreateTaskModel,
+            let dataProvider = delegate
+        else {
+            return
+        }
+        
+        let descriptionModel = dataProvider.getDescriptionModel()
+        textModel.addDescriptionHandler(model: descriptionModel)
     }
     
     private func addDuration() {

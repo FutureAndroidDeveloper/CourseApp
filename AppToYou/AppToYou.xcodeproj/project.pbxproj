@@ -47,6 +47,8 @@
 		0482E118274EA72900B0F3AF /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */; };
 		0482E11C274EAAC800B0F3AF /* CheckEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */; };
 		0482E120274EAD5400B0F3AF /* NewPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */; };
+		048742092768E96A00C0D94B /* PlaceholderTexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048742082768E96A00C0D94B /* PlaceholderTexView.swift */; };
+		0487420C2768FBF400C0D94B /* DescriptionTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0487420B2768FBF400C0D94B /* DescriptionTaskCell.swift */; };
 		04875F5B2760D8D600C4BB51 /* SelectDateFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04875F5A2760D8D600C4BB51 /* SelectDateFieldStyle.swift */; };
 		04875F5E2760DD2400C4BB51 /* TaskPeriodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04875F5D2760DD2400C4BB51 /* TaskPeriodCell.swift */; };
 		04875F602760EB7600C4BB51 /* TaskPeriodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04875F5F2760EB7600C4BB51 /* TaskPeriodModel.swift */; };
@@ -68,6 +70,7 @@
 		048EF3D5274D911000E688DB /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048EF3D4274D911000E688DB /* NewPasswordViewController.swift */; };
 		0491EE11275BE08600B4691B /* TimeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491EE10275BE08600B4691B /* TimeBlockModel.swift */; };
 		0491EE13275BE48000B4691B /* NotificationTaskTimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491EE12275BE48000B4691B /* NotificationTaskTimeModel.swift */; };
+		049334E6276920BF00AEF40E /* PlaceholderTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049334E5276920BF00AEF40E /* PlaceholderTextViewModel.swift */; };
 		04B76C752767C32500726600 /* TopBottomBlocksContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B76C742767C32500726600 /* TopBottomBlocksContainerView.swift */; };
 		04B76C802767E41400726600 /* ContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B76C7F2767E41400726600 /* ContentSizedTableView.swift */; };
 		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
@@ -363,6 +366,8 @@
 		0482E117274EA72900B0F3AF /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ForgotPasswordViewModel.swift; path = AppToYou/Views/Controls/ForgotPasswordViewModel.swift; sourceTree = SOURCE_ROOT; };
 		0482E11B274EAAC800B0F3AF /* CheckEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEmailViewModel.swift; sourceTree = "<group>"; };
 		0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewModel.swift; sourceTree = "<group>"; };
+		048742082768E96A00C0D94B /* PlaceholderTexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTexView.swift; sourceTree = "<group>"; };
+		0487420B2768FBF400C0D94B /* DescriptionTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionTaskCell.swift; sourceTree = "<group>"; };
 		04875F5A2760D8D600C4BB51 /* SelectDateFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDateFieldStyle.swift; sourceTree = "<group>"; };
 		04875F5D2760DD2400C4BB51 /* TaskPeriodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPeriodCell.swift; sourceTree = "<group>"; };
 		04875F5F2760EB7600C4BB51 /* TaskPeriodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPeriodModel.swift; sourceTree = "<group>"; };
@@ -384,6 +389,7 @@
 		048EF3D4274D911000E688DB /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		0491EE10275BE08600B4691B /* TimeBlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBlockModel.swift; sourceTree = "<group>"; };
 		0491EE12275BE48000B4691B /* NotificationTaskTimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTaskTimeModel.swift; sourceTree = "<group>"; };
+		049334E5276920BF00AEF40E /* PlaceholderTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextViewModel.swift; sourceTree = "<group>"; };
 		04B76C742767C32500726600 /* TopBottomBlocksContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBottomBlocksContainerView.swift; sourceTree = "<group>"; };
 		04B76C7F2767E41400726600 /* ContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedTableView.swift; sourceTree = "<group>"; };
 		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
@@ -887,6 +893,25 @@
 				0482E11F274EAD5400B0F3AF /* NewPasswordViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		048742072768E7AF00C0D94B /* DescriptionCell */ = {
+			isa = PBXGroup;
+			children = (
+				6D32D87226653022009D62C9 /* ATYCreateDescriptionTaskCell.swift */,
+				0487420A2768FBD500C0D94B /* new */,
+			);
+			path = DescriptionCell;
+			sourceTree = "<group>";
+		};
+		0487420A2768FBD500C0D94B /* new */ = {
+			isa = PBXGroup;
+			children = (
+				048742082768E96A00C0D94B /* PlaceholderTexView.swift */,
+				0487420B2768FBF400C0D94B /* DescriptionTaskCell.swift */,
+				049334E5276920BF00AEF40E /* PlaceholderTextViewModel.swift */,
+			);
+			path = new;
 			sourceTree = "<group>";
 		};
 		04875F5C2760DC9D00C4BB51 /* TaskPeriodCell */ = {
@@ -1634,6 +1659,7 @@
 		6D651CEC266114F4003ACF95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				048742072768E7AF00C0D94B /* DescriptionCell */,
 				048C22C427677E7000F3FF4D /* TaskDurationCell */,
 				048C22B627676CE500F3FF4D /* TaskNameCell */,
 				04FD2694276234E50062EEF7 /* RepeatCounterCell */,
@@ -1645,7 +1671,6 @@
 				6D32D85E26651AD5009D62C9 /* ATYCreateSanctionTaskCell.swift */,
 				6D32D861266527B5009D62C9 /* ATYSaveTaskCell.swift */,
 				6D32D86826652B56009D62C9 /* ATYCreateMaxCountSymbolsCell.swift */,
-				6D32D87226653022009D62C9 /* ATYCreateDescriptionTaskCell.swift */,
 				6D32D84C2664EB3D009D62C9 /* ATYEnumWithReuseIdentifierCell.swift */,
 			);
 			path = Cells;
@@ -2644,6 +2669,7 @@
 				6DA8E21C26A6CBDD005014DA /* ATYTaskAddedDescriptionsCell.swift in Sources */,
 				04CECEA92758023600ECCB2D /* TaskCreationModel.swift in Sources */,
 				6D4034A0265D3CF300248E9E /* ATYCalendarCollectionViewCell.swift in Sources */,
+				0487420C2768FBF400C0D94B /* DescriptionTaskCell.swift in Sources */,
 				6D55ADD626A18FAD00F7DD4A /* ATYEditTimerCourseTaskTimeCell.swift in Sources */,
 				6D55ADE826A1CAC400F7DD4A /* ATYEditCourseCountTaskCell.swift in Sources */,
 				6D118EBB26A9A51100601F34 /* ATYShareCourseLinkCell.swift in Sources */,
@@ -2734,6 +2760,7 @@
 				6DDD2AAE268C5BE500DD9A87 /* ATYDatabaseService+CDStatistics.swift in Sources */,
 				6D32D86526652905009D62C9 /* ATYCreateCountRepeatTaskCell.swift in Sources */,
 				6DA60DD92680899700885650 /* ATYShareCourseCell.swift in Sources */,
+				049334E6276920BF00AEF40E /* PlaceholderTextViewModel.swift in Sources */,
 				6D7993C726BACE540071EF4E /* ATYPayWalletTableViewCell.swift in Sources */,
 				6D40CA5C2667C18400A78CEC /* ATYEditTaskViewController.swift in Sources */,
 				6D32D85F26651AD5009D62C9 /* ATYCreateSanctionTaskCell.swift in Sources */,
@@ -2826,6 +2853,7 @@
 				6D6F6AF6269F12EB009AD9E1 /* ATYChooseCourseCategoryCell.swift in Sources */,
 				6DA8E22226A6E7FC005014DA /* ATYGradientImageView.swift in Sources */,
 				0482762A2763667800B501C5 /* NaturalNumberFieldModel.swift in Sources */,
+				048742092768E96A00C0D94B /* PlaceholderTexView.swift in Sources */,
 				04E72A88275CEFC9003B40EA /* TimeBlockModelFactory.swift in Sources */,
 				6DF5394F26837C220086A64E /* CDCourseTask+CoreDataProperties.swift in Sources */,
 				04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */,

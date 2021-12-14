@@ -58,6 +58,12 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         return .init(value: String(), placeholder: R.string.localizable.forExampleDoExercises())
     }
     
+    func getDescriptionModel() -> PlaceholderTextViewModel {
+        // TODO: - получать описание из модели задачи
+        
+        return PlaceholderTextViewModel(text: nil, placeholder: "Например, положительные моменты")
+    }
+    
     func getDurationModel() -> TaskDurationModel {
         // TODO: - получать длительность из модели задачи
         if let durationModel = self.duration {
