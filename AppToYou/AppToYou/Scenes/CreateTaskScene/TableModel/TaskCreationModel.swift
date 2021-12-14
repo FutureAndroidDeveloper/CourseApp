@@ -10,6 +10,7 @@ protocol TaskCreationDelegate: AnyObject {
     func getNameModel() -> TextFieldModel
     
     func getDescriptionModel() -> PlaceholderTextViewModel
+    func getMinSymbolsModel() -> NaturalNumberFieldModel
     func getDurationModel() -> TaskDurationModel
     func getNotificationModels() -> [NotificationTaskTimeModel]
     func getWeekdayModels() -> [WeekdayModel]
@@ -43,9 +44,9 @@ class TaskCreationModel {
             
         case .TEXT:
             let textModel = TextCreateTaskModel()
-            textModel.addLimitHandler()
             model = textModel
             addDescription()
+            addLimit()
             
         case .TIMER:
             let timerModel = TimerCreateTaskModel()
@@ -114,6 +115,18 @@ class TaskCreationModel {
         
         let descriptionModel = dataProvider.getDescriptionModel()
         textModel.addDescriptionHandler(model: descriptionModel)
+    }
+    
+    private func addLimit() {
+        guard
+            let textModel = model as? TextCreateTaskModel,
+            let dataProvider = delegate
+        else {
+            return
+        }
+        
+        let limitModel = dataProvider.getMinSymbolsModel()
+        textModel.addLimitHandler(model: limitModel)
     }
     
     private func addDuration() {

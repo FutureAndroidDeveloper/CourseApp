@@ -64,6 +64,12 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         return PlaceholderTextViewModel(text: nil, placeholder: "Например, положительные моменты")
     }
     
+    func getMinSymbolsModel() -> NaturalNumberFieldModel {
+        // TODO: - получать кол-во из модели задачи
+        
+        return NaturalNumberFieldModel()
+    }
+    
     func getDurationModel() -> TaskDurationModel {
         // TODO: - получать длительность из модели задачи
         if let durationModel = self.duration {

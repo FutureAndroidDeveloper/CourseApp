@@ -71,6 +71,7 @@
 		0491EE11275BE08600B4691B /* TimeBlockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491EE10275BE08600B4691B /* TimeBlockModel.swift */; };
 		0491EE13275BE48000B4691B /* NotificationTaskTimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0491EE12275BE48000B4691B /* NotificationTaskTimeModel.swift */; };
 		049334E6276920BF00AEF40E /* PlaceholderTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049334E5276920BF00AEF40E /* PlaceholderTextViewModel.swift */; };
+		049334EB276922CC00AEF40E /* MinimumSymbolsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049334EA276922CC00AEF40E /* MinimumSymbolsCell.swift */; };
 		04B76C752767C32500726600 /* TopBottomBlocksContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B76C742767C32500726600 /* TopBottomBlocksContainerView.swift */; };
 		04B76C802767E41400726600 /* ContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B76C7F2767E41400726600 /* ContentSizedTableView.swift */; };
 		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
@@ -390,6 +391,7 @@
 		0491EE10275BE08600B4691B /* TimeBlockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBlockModel.swift; sourceTree = "<group>"; };
 		0491EE12275BE48000B4691B /* NotificationTaskTimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTaskTimeModel.swift; sourceTree = "<group>"; };
 		049334E5276920BF00AEF40E /* PlaceholderTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextViewModel.swift; sourceTree = "<group>"; };
+		049334EA276922CC00AEF40E /* MinimumSymbolsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumSymbolsCell.swift; sourceTree = "<group>"; };
 		04B76C742767C32500726600 /* TopBottomBlocksContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBottomBlocksContainerView.swift; sourceTree = "<group>"; };
 		04B76C7F2767E41400726600 /* ContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedTableView.swift; sourceTree = "<group>"; };
 		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
@@ -1080,6 +1082,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		049334E82769229700AEF40E /* MinimumSymbolsCell */ = {
+			isa = PBXGroup;
+			children = (
+				6D32D86826652B56009D62C9 /* ATYCreateMaxCountSymbolsCell.swift */,
+				049334E9276922A900AEF40E /* new */,
+			);
+			path = MinimumSymbolsCell;
+			sourceTree = "<group>";
+		};
+		049334E9276922A900AEF40E /* new */ = {
+			isa = PBXGroup;
+			children = (
+				049334EA276922CC00AEF40E /* MinimumSymbolsCell.swift */,
+			);
+			path = new;
+			sourceTree = "<group>";
+		};
 		04B76C7E2767E3FD00726600 /* TopBottomContent */ = {
 			isa = PBXGroup;
 			children = (
@@ -1659,6 +1678,7 @@
 		6D651CEC266114F4003ACF95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				049334E82769229700AEF40E /* MinimumSymbolsCell */,
 				048742072768E7AF00C0D94B /* DescriptionCell */,
 				048C22C427677E7000F3FF4D /* TaskDurationCell */,
 				048C22B627676CE500F3FF4D /* TaskNameCell */,
@@ -1670,7 +1690,6 @@
 				6D651CF1266122C0003ACF95 /* ATYCreateTaskCountingCell.swift */,
 				6D32D85E26651AD5009D62C9 /* ATYCreateSanctionTaskCell.swift */,
 				6D32D861266527B5009D62C9 /* ATYSaveTaskCell.swift */,
-				6D32D86826652B56009D62C9 /* ATYCreateMaxCountSymbolsCell.swift */,
 				6D32D84C2664EB3D009D62C9 /* ATYEnumWithReuseIdentifierCell.swift */,
 			);
 			path = Cells;
@@ -2799,6 +2818,7 @@
 				6D8A2822265E6D8700BAAEF5 /* TransitionDirection.swift in Sources */,
 				04731A37274929F4001DD136 /* JsonBodyEncoder.swift in Sources */,
 				6DF53962268381450086A64E /* CDStatistics+CoreDataClass.swift in Sources */,
+				049334EB276922CC00AEF40E /* MinimumSymbolsCell.swift in Sources */,
 				0429A4B4275AB76500B1BFD9 /* NotificationTaskTimeView.swift in Sources */,
 				0491EE13275BE48000B4691B /* NotificationTaskTimeModel.swift in Sources */,
 				6D8A2838265E6DF900BAAEF5 /* InstantPanGestureRecognizer.swift in Sources */,
