@@ -7,7 +7,7 @@ import UIKit
 class TaskDurationView: UIView {
         
     private struct Constants {
-        static let blockSize = CGSize(width: 85, height: 44)
+        static let blockSize = CGSize(width: 85, height: 45)
         static let spacing: CGFloat = 12
     }
     

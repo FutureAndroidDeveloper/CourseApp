@@ -3,12 +3,12 @@ import Foundation
 
 class TaskPeriodModel {
     
-    let startPicked: DateCompletion
-    let endPicked: DateCompletion
+    let start: DateFieldModel
+    let end: DateFieldModel
     
-    init(startPicked: @escaping DateCompletion, endPicked: @escaping DateCompletion) {
-        self.startPicked = startPicked
-        self.endPicked = endPicked
+    init(start: DateFieldModel, end: DateFieldModel) {
+        self.start = start
+        self.end = end
     }
     
 }

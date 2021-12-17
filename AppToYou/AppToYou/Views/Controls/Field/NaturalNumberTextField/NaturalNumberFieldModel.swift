@@ -1,7 +1,7 @@
 import Foundation
 
 
-class NaturalNumberFieldModel: FieldModel<Int> {
+class NaturalNumberFieldModel: BaseFieldModel<Int> {
     
     private struct Constants {
         static let defaultValue = 0
@@ -27,4 +27,5 @@ class NaturalNumberFieldModel: FieldModel<Int> {
         let placeholder = placeholder == nil ? String(Constants.defaultValue) : placeholder
         super.init(value: value, placeholder: placeholder)
     }
+    
 }

@@ -4,14 +4,15 @@ import UIKit
 class SelectWeekdayCell: UITableViewCell, InflatableView {
     
     private struct Constants {
+        static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 23)
         static let buttonHeight: CGFloat = 38
-        static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 20)
+        static let buttonSpacing: CGFloat = 5
     }
 
     private let buttonStack: UIStackView = {
         let stack = UIStackView()
         stack.distribution = .fillEqually
-        stack.spacing = 5
+        stack.spacing = Constants.buttonSpacing
         return stack
     }()
     

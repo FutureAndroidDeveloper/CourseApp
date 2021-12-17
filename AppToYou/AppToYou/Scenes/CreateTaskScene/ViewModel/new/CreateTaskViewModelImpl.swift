@@ -58,6 +58,18 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         return .init(value: String(), placeholder: R.string.localizable.forExampleDoExercises())
     }
     
+    func getFrequncy() -> ATYFrequencyTypeEnum {
+        // TODO: - получать частоту из модели задачи
+        
+        return .EVERYDAY
+    }
+    
+    func getOnceDateModel() -> DateFieldModel {
+        // TODO: - получать дату из модели задачи
+        
+        return DateFieldModel()
+    }
+    
     func getDescriptionModel() -> PlaceholderTextViewModel {
         // TODO: - получать описание из модели задачи
         
@@ -68,6 +80,12 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         // TODO: - получать кол-во из модели задачи
         
         return NaturalNumberFieldModel()
+    }
+    
+    func getPeriodModel() -> (start: DateFieldModel, end: DateFieldModel) {
+        // TODO: - получать даты из модели задачи
+        
+        return (DateFieldModel(), DateFieldModel())
     }
     
     func getDurationModel() -> TaskDurationModel {

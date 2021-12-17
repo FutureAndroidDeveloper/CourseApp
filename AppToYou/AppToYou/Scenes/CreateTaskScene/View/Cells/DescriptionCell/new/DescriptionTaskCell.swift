@@ -3,6 +3,16 @@ import UIKit
 
 class DescriptionTaskCell: UITableViewCell, InflatableView {
     
+    private struct Constants {
+        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
+        
+        struct Field {
+            static let hight: CGFloat = 125
+        }
+    }
+    
+    private let descriptionTextView = PlaceholderTextView()
+    
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Описание задачи"
@@ -10,8 +20,6 @@ class DescriptionTaskCell: UITableViewCell, InflatableView {
         label.textColor = R.color.titleTextColor()
         return label
     }()
-
-    private let descriptionTextView = PlaceholderTextView()
 
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -25,6 +33,20 @@ class DescriptionTaskCell: UITableViewCell, InflatableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    private func configure() {
+        contentView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        }
+
+        contentView.addSubview(descriptionTextView)
+        descriptionTextView.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.edgeInsets.bottom)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.height.equalTo(Constants.Field.hight)
+        }
+    }
     
     func inflate(model: AnyObject) {
         guard let model = model as? PlaceholderTextViewModel else {
@@ -32,24 +54,6 @@ class DescriptionTaskCell: UITableViewCell, InflatableView {
         }
         
         descriptionTextView.configure(with: model)
-    }
-
-    private func configure() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-        }
-
-        contentView.addSubview(descriptionTextView)
-        descriptionTextView.snp.makeConstraints { (make) in
-            make.top.equalTo(nameLabel.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(125)
-            make.bottom.equalToSuperview().offset(-15)
-        }
     }
     
 }

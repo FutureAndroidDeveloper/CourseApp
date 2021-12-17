@@ -23,6 +23,16 @@ extension UIButton {
         titleEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
         contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
     }
+    
+    func setInsets(contentPadding: UIEdgeInsets, imageTitlePadding: CGFloat) {
+        contentEdgeInsets = UIEdgeInsets(top: contentPadding.top,
+                                         left: contentPadding.left,
+                                         bottom: contentPadding.bottom,
+                                         right: contentPadding.right + imageTitlePadding)
+        
+        titleEdgeInsets = UIEdgeInsets(top: 0, left: imageTitlePadding, bottom: 0, right: -imageTitlePadding)
+    }
+    
 }
 
 class ATYChainButton : UIButton {

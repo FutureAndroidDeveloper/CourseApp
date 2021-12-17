@@ -1,18 +1,24 @@
 import UIKit
 
 
-class SelectDateModel {
-    
-}
-
-
 class SelectDateCell: UITableViewCell, InflatableView {
     
     private struct Constants {
         static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 0)
+                
+        struct Field {
+            static let size = CGSize(width: 145, height: 38)
+            static let textInsets = UIEdgeInsets(top: 8, left: 7, bottom: 10, right: 16)
+            static let iconInsets = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 0)
+                        
+            struct Title {
+                static let start = R.string.localizable.taskStartTitle()
+                static let end = R.string.localizable.taskEndTitle()
+            }
+        }
     }
 
-    private let startTextField = SelectDateTextField(style: .highlighted)
+    private let startTextField = DateTextField(style: StyleManager.highlightedTextField)
     
     private let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -33,12 +39,6 @@ class SelectDateCell: UITableViewCell, InflatableView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func inflate(model: AnyObject) {
-        guard let model = model as? SelectDateModel else {
-            return
-        }
-    }
-
     private func configure() {
         let toolBar = UIToolbar()
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -52,15 +52,32 @@ class SelectDateCell: UITableViewCell, InflatableView {
         contentView.addSubview(startTextField)
         startTextField.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.size.equalTo(Constants.Field.size)
         }
         
         datePicker.addTarget(self, action: #selector(self.dateChanged), for: .valueChanged)
-        dateChanged()
+    }
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? SelectDateModel else {
+            return
+        }
+        
+        let calendarIconView = UIImageView()
+        calendarIconView.image = R.image.calendarImage()?.withRenderingMode(.alwaysTemplate)
+        calendarIconView.tintColor = R.color.backgroundTextFieldsColor()
+        
+        let calendarModel = FieldAdditionalContentModel(contentView: calendarIconView, insets: Constants.Field.iconInsets)
+        let contentModel = FieldContentModel(fieldModel: model.date, insets: Constants.Field.textInsets)
+        let fieldModel = FieldModel(content: contentModel, leftContent: calendarModel)
+        startTextField.configure(with: fieldModel)
     }
 
     @objc
     private func dateChanged() {
-        startTextField.text = datePicker.date.toString(dateFormat: .simpleDateFormatFullYear)
+        let dateModel = DateFieldModel(value: datePicker.date)
+        let cellModel = SelectDateModel(date: dateModel)
+        inflate(model: cellModel)
     }
 
     @objc

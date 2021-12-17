@@ -1,23 +1,24 @@
 import Foundation
+import UIKit
 
 
 class DefaultCreateTaskModel {
-    var nameModel: TaskNameModel!
-    var frequencyModel: CreateTaskCountingCellModel!
+    var nameModel: TextFieldModel!
+    var frequencyModel: FrequencyModel!
     
     var weekdayModel: SelectWeekdayModel?
     var selectDateModel: SelectDateModel?
     
     var periodModel: TaskPeriodModel?
     var notificationModel: NotificationAboutTaskModel!
-    var sanctionModel: CreateSanctionTaskCellModel!
+    var sanctionModel: TaskSanctionModel!
     
     func addNameHandler(_ handler: TextFieldModel) {
-        nameModel = TaskNameModel(fieldModel: handler)
+        nameModel = handler
     }
     
-    func addFrequencyHandler(_ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {
-        frequencyModel = CreateTaskCountingCellModel(frequencyPicked: handler)
+    func addFrequency(_ frequency: ATYFrequencyTypeEnum, _ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {
+        frequencyModel = FrequencyModel(frequency: frequency, frequencyPicked: handler)
     }
     
     func addWeekdayHandler(models: [WeekdayModel]) {
@@ -28,16 +29,16 @@ class DefaultCreateTaskModel {
         weekdayModel = nil
     }
     
-    func addSelectDateHandler() {
-        selectDateModel = SelectDateModel()
+    func addSelectDateHandler(date: DateFieldModel) {
+        selectDateModel = SelectDateModel(date: date)
     }
     
     func removeSelectDateHandler() {
         selectDateModel = nil
     }
     
-    func addPeriodHandler(startPicked: @escaping DateCompletion, endPicked: @escaping DateCompletion) {
-        periodModel = TaskPeriodModel(startPicked: startPicked, endPicked: endPicked)
+    func addPeriodHandler(start: DateFieldModel, end: DateFieldModel) {
+        periodModel = TaskPeriodModel(start: start, end: end)
     }
     
     func removePeriodHandler() {
@@ -54,7 +55,7 @@ class DefaultCreateTaskModel {
     }
     
     func addSanctionHandler(callbackText: @escaping (String) -> Void, questionCallback: @escaping () -> Void) {
-        sanctionModel = CreateSanctionTaskCellModel(callbackText: callbackText, questionCallback: questionCallback)
+        sanctionModel = TaskSanctionModel(model: NaturalNumberFieldModel())
     }
     
     func prepare() -> [AnyObject] {

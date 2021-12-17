@@ -1,24 +1,13 @@
 import UIKit
 
-class TaskDurationCellModel {
-    let durationModel: TaskDurationModel
-    
-    /**
-     Обработчик выбора времени для представления длительности выполнения задачи.
-     */
-    let timerCallback: () -> Void
-    
-    init(durationModel: TaskDurationModel, timerCallback: @escaping () -> Void) {
-        self.durationModel = durationModel
-        self.timerCallback = timerCallback
-    }
-}
 
 class TaskDurationCell: UITableViewCell, InflatableView {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
     }
+    
+    private let durationView = TaskDurationView()
 
     private let nameLabel : UILabel = {
         let label = UILabel()
@@ -27,8 +16,6 @@ class TaskDurationCell: UITableViewCell, InflatableView {
         label.textColor = R.color.titleTextColor()
         return label
     }()
-
-    private let durationView = TaskDurationView()
     
     private var timerCallback: (() -> Void)?
 
@@ -40,6 +27,7 @@ class TaskDurationCell: UITableViewCell, InflatableView {
 //        return button
 //    }()
 
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = R.color.backgroundAppColor()
@@ -95,4 +83,5 @@ class TaskDurationCell: UITableViewCell, InflatableView {
     private func openTimePicker() {
         timerCallback?()
     }
+    
 }

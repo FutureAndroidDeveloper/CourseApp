@@ -1,16 +1,53 @@
-import Foundation
+import UIKit
 
 
+/**
+ Полная модель поля с дополнительным контентом.
+ */
 class FieldModel<Value> {
-    private(set) var value: Value
-    let placeholder: String?
+    let content: FieldContentModel<Value>
+    var leftContent: FieldAdditionalContentModel?
+    var rightContent: FieldAdditionalContentModel?
     
-    init(value: Value, placeholder: String? = nil) {
-        self.value = value
-        self.placeholder = placeholder
+    init(content: FieldContentModel<Value>,
+         leftContent: FieldAdditionalContentModel? = nil,
+         rightContent: FieldAdditionalContentModel? = nil) {
+        
+        self.content = content
+        self.leftContent = leftContent
+        self.rightContent = rightContent
     }
     
-    func update(value: Value) {
-        self.value = value
-    }
+}
+
+
+/**
+ Модель представления поля.
+ */
+struct FieldContentModel<Value> {
+    /**
+     Модель поля.
+     */
+    let fieldModel: BaseFieldModel<Value>
+    
+    /**
+     Отступы поля.
+     */
+    let insets: UIEdgeInsets
+}
+
+
+/**
+ Модель представления дополнительного контента поля.
+ */
+struct FieldAdditionalContentModel {
+    /**
+     Представление контента.
+     */
+    let contentView: UIView
+    
+    /**
+     Отступы контента.
+     */
+    let insets: UIEdgeInsets
 }

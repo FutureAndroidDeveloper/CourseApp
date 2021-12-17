@@ -9,6 +9,9 @@ protocol TaskCreationDelegate: AnyObject {
     
     func getNameModel() -> TextFieldModel
     
+    func getFrequncy() -> ATYFrequencyTypeEnum
+    func getOnceDateModel() -> DateFieldModel
+    func getPeriodModel() -> (start: DateFieldModel, end: DateFieldModel)
     func getDescriptionModel() -> PlaceholderTextViewModel
     func getMinSymbolsModel() -> NaturalNumberFieldModel
     func getDurationModel() -> TaskDurationModel
@@ -62,27 +65,8 @@ class TaskCreationModel {
         let nameModel = dataProvider.getNameModel()
         model?.addNameHandler(nameModel)
         
-        model?.addFrequencyHandler { [weak self] frequency in
-            print(frequency)
-            
-            if frequency == .ONCE {
-                self?.model?.addSelectDateHandler()
-                self?.model?.removeWeekdayHandler()
-                self?.model?.removePeriodHandler()
-            } else if frequency == .CERTAIN_DAYS {
-                self?.addWeekdayHandler()
-                self?.addPeriod()
-                self?.model?.removeSelectDateHandler()
-            }
-            else {
-                self?.model?.removeWeekdayHandler()
-                self?.model?.removeSelectDateHandler()
-                self?.addPeriod()
-            }
-            
-            self?.updateAndSync()
-//            self.task.frequencyType = frequency
-        }
+        let frequency = dataProvider.getFrequncy()
+        addFrequency(initial: frequency)
         
         addPeriod()
         addNotificationHandler()
@@ -95,14 +79,49 @@ class TaskCreationModel {
         })
     }
     
+    private func addselectDate() {
+        guard let dataProvider = delegate else {
+            return
+        }
+        
+        let onceDate = dataProvider.getOnceDateModel()
+        model?.addSelectDateHandler(date: onceDate)
+    }
+    
+    private func addFrequency(initial frequency: ATYFrequencyTypeEnum) {
+        model?.addFrequency(frequency) { [weak self] newFrequency in
+            if frequency == newFrequency {
+                return
+            }
+            print(newFrequency)
+            
+            if newFrequency == .ONCE {
+                self?.addselectDate()
+                self?.model?.removeWeekdayHandler()
+                self?.model?.removePeriodHandler()
+            } else if newFrequency == .CERTAIN_DAYS {
+                self?.addWeekdayHandler()
+                self?.addPeriod()
+                self?.model?.removeSelectDateHandler()
+            }
+            else {
+                self?.model?.removeWeekdayHandler()
+                self?.model?.removeSelectDateHandler()
+                self?.addPeriod()
+            }
+            
+            self?.addFrequency(initial: newFrequency)
+            self?.updateAndSync()
+        }
+    }
+    
     private func addPeriod() {
-        model?.addPeriodHandler(startPicked: { start in
-            print(start)
-//            self.task.startDate = start ?? "N/A"
-        }, endPicked: { end in
-            print(end)
-//            self.task.endDate = end ?? "N/A"
-        })
+        guard let dataProvider = delegate else {
+            return
+        }
+        
+        let periodModel = dataProvider.getPeriodModel()
+        model?.addPeriodHandler(start: periodModel.start, end: periodModel.end)
     }
     
     private func addDescription() {

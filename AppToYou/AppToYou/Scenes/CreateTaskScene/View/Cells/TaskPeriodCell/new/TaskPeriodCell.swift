@@ -4,12 +4,23 @@ import UIKit
 class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 15, right: 23)
+        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
         static let space: CGFloat = 16
         
-        static let startTitle = R.string.localizable.taskStartTitle()
-        static let endTitle = R.string.localizable.taskEndTitle()
+        struct Field {
+            static let size = CGSize(width: 158, height: 45)
+            static let textInsets = UIEdgeInsets(top: 11, left: 8, bottom: 13, right: 20)
+            static let iconInsets = UIEdgeInsets(top: 10, left: 14, bottom: 10, right: 0)
+                        
+            struct Title {
+                static let start = R.string.localizable.taskStartTitle()
+                static let end = R.string.localizable.taskEndTitle()
+            }
+        }
     }
+    
+    private let startTextField = DateTextField(style: StyleManager.standartTextField)
+    private let endTextField = DateTextField(style: StyleManager.standartTextField)
     
     private let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -27,13 +38,7 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
         
         return toolBar
     }()
-
-    private let startTextField = SelectDateTextField(style: .standart)
-    private let endTextField = SelectDateTextField(style: .standart)
-
-    private var startCallback: ((String?) -> Void)?
-    private var endCallback: ((String?) -> Void)?
-
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -48,30 +53,20 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
     }
 
     private func setup() {
-        let startBlock = buildDateBlock(title: Constants.startTitle, pickerView: startTextField)
-        let endBlock = buildDateBlock(title: Constants.endTitle, pickerView: endTextField)
-        
+        let startBlock = buildDateBlock(title: Constants.Field.Title.start, pickerView: startTextField)
         contentView.addSubview(startBlock)
         startBlock.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview().inset(Constants.edgeInsets)
         }
         
+        let endBlock = buildDateBlock(title: Constants.Field.Title.end, pickerView: endTextField)
         contentView.addSubview(endBlock)
         endBlock.snp.makeConstraints {
-            $0.trailing.top.bottom.equalToSuperview().inset(Constants.edgeInsets)
-            $0.leading.greaterThanOrEqualTo(startBlock.snp.trailing).offset(Constants.space)
+            $0.leading.equalTo(startBlock.snp.trailing).offset(Constants.space)
+            $0.top.bottom.equalToSuperview().inset(Constants.edgeInsets)
         }
         
         datePicker.addTarget(self, action: #selector(self.dateChanged), for: .valueChanged)
-    }
-    
-    func inflate(model: AnyObject) {
-        guard let model = model as? TaskPeriodModel else {
-            return
-        }
-        
-        startCallback = model.startPicked
-        endCallback = model.endPicked
     }
     
     private func buildDateBlock(title: String?, pickerView: UITextField) -> UIView {
@@ -83,23 +78,43 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
         pickerView.inputAccessoryView = toolBar
         pickerView.inputView = datePicker
         pickerView.delegate = self
+        pickerView.snp.makeConstraints {
+            $0.size.equalTo(Constants.Field.size)
+        }
         
         let block = UIStackView(arrangedSubviews: [label, pickerView])
         block.axis = .vertical
-        block.spacing = 10
+        block.spacing = Constants.edgeInsets.bottom
         return block
+    }
+    
+    private func configureField(_ field: DateTextField, dateModel: DateFieldModel) {
+        let calendarIcon = UIImageView()
+        calendarIcon.image = R.image.calendarImage()?.withRenderingMode(.alwaysTemplate)
+        calendarIcon.tintColor = R.color.textSecondaryColor()
+        
+        let calendarModel = FieldAdditionalContentModel(contentView: calendarIcon, insets: Constants.Field.iconInsets)
+        let contentModel = FieldContentModel(fieldModel: dateModel, insets: Constants.Field.textInsets)
+        let fieldModel = FieldModel(content: contentModel, leftContent: calendarModel)
+        
+        field.configure(with: fieldModel)
+    }
+    
+    func inflate(model: AnyObject) {
+        guard let model = model as? TaskPeriodModel else {
+            return
+        }
+        
+        configureField(startTextField, dateModel: model.start)
+        configureField(endTextField, dateModel: model.end)
     }
 
     @objc
     private func dateChanged() {
-        let text = datePicker.date.toString(dateFormat: .simpleDateFormatFullYear)
-        if startTextField.isFirstResponder {
-            startTextField.text = text
-            startCallback?(text)
-        } else {
-            endTextField.text = text
-            endCallback?(text)
-        }
+        let dateModel = DateFieldModel(value: datePicker.date)
+        let field = startTextField.isFirstResponder ? startTextField : endTextField
+        
+        configureField(field, dateModel: dateModel)
     }
 
     @objc
@@ -107,4 +122,5 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
         startTextField.resignFirstResponder()
         endTextField.resignFirstResponder()
     }
+    
 }

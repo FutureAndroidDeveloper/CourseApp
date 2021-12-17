@@ -1,12 +1,5 @@
 import UIKit
 
-class CreateCountRepeatTaskCellModel {
-    let valueModel: NaturalNumberFieldModel
-    
-    init(valueModel: NaturalNumberFieldModel) {
-        self.valueModel = valueModel
-    }
-}
 
 class ATYCreateCountRepeatTaskCell: UITableViewCell, InflatableView {
     
@@ -48,10 +41,7 @@ class ATYCreateCountRepeatTaskCell: UITableViewCell, InflatableView {
     }
     
     func inflate(model: AnyObject) {
-        guard let model = model as? NaturalNumberFieldModel else {
-            return
-        }
-        repeatView.configure(model: model)
+        
     }
     
     @objc func chainButtonAction(_ sender: UIButton) {

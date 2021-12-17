@@ -4,8 +4,11 @@ import UIKit
 class TaskNameCell: UITableViewCell, InflatableView {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
+        static let fieldInsets = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 16)
     }
+    
+    private let nameTextField = TextField(style: StyleManager.standartTextField)
     
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -15,8 +18,6 @@ class TaskNameCell: UITableViewCell, InflatableView {
         return label
     }()
     
-    private let nameTextField = TextField()
-
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,9 +45,13 @@ class TaskNameCell: UITableViewCell, InflatableView {
     }
     
     func inflate(model: AnyObject) {
-        guard let model = model as? TaskNameModel else {
+        guard let model = model as? TextFieldModel else {
             return
         }
-        nameTextField.configure(with: model.fieldModel)
+        
+        let contentModel = FieldContentModel(fieldModel: model, insets: Constants.fieldInsets)
+        let fieldModel = FieldModel(content: contentModel)
+        nameTextField.configure(with: fieldModel)
     }
+    
 }

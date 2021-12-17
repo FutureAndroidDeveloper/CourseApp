@@ -43,7 +43,7 @@ class ATYForgotPasswordViewController: UIViewController, BindableType {
     }()
 
     let emailTextField : UITextField = {
-        let textField = PaddingTextField()
+        let textField = UITextField()
         textField.placeholder = R.string.localizable.enterEmail()
         textField.backgroundColor = R.color.backgroundTextFieldsColor()
         textField.textColor = R.color.titleTextColor()

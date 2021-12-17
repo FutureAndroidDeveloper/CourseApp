@@ -1,6 +1,26 @@
 import UIKit
 
 
+struct FieldStyle {
+    let backgroundColor: UIColor?
+    let textColor: UIColor?
+}
+
+class StyleManager {
+    
+    static let shared = StyleManager()
+    
+    private init() {
+        
+    }
+    
+    static let standartTextField = FieldStyle(backgroundColor: R.color.backgroundTextFieldsColor(),
+                                              textColor: R.color.titleTextColor())
+    
+    static let highlightedTextField = FieldStyle(backgroundColor: R.color.textColorSecondary(),
+                                                 textColor: R.color.backgroundTextFieldsColor())
+}
+
 enum SelectDateFieldStyle {
     case standart
     case highlighted
