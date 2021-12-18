@@ -1,7 +1,7 @@
 import Foundation
 
 
-class DateFieldModel: BaseFieldModel<Date> {
+class DateFieldModel: BaseFieldModel<Date?> {
     
     private struct Constants {
         static let defaultValue = Date()
@@ -23,7 +23,7 @@ class DateFieldModel: BaseFieldModel<Date> {
         - value: начальная дата.
         - placeholder: плейсхолдер поля. Значение по умолчанию - пустое.
      */
-    override init(value: Date, placeholder: String? = nil) {
+    override init(value: Date?, placeholder: String? = nil) {
         super.init(value: value, placeholder: placeholder)
     }
 }

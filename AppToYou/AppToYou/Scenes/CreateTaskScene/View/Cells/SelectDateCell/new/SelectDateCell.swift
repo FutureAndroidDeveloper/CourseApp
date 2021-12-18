@@ -7,8 +7,8 @@ class SelectDateCell: UITableViewCell, InflatableView {
         static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 0)
                 
         struct Field {
-            static let size = CGSize(width: 145, height: 38)
-            static let textInsets = UIEdgeInsets(top: 8, left: 7, bottom: 10, right: 16)
+            static let size = CGSize(width: 150, height: 38)
+            static let textInsets = UIEdgeInsets(top: 8, left: 7, bottom: 10, right: 10)
             static let iconInsets = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 0)
                         
             struct Title {
@@ -75,9 +75,11 @@ class SelectDateCell: UITableViewCell, InflatableView {
 
     @objc
     private func dateChanged() {
-        let dateModel = DateFieldModel(value: datePicker.date)
-        let cellModel = SelectDateModel(date: dateModel)
-        inflate(model: cellModel)
+        guard let dateModel = startTextField.model?.content.fieldModel else {
+            return
+        }
+        dateModel.update(value: datePicker.date)
+        startTextField.setContentModel(dateModel)
     }
 
     @objc

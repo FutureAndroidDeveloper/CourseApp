@@ -75,6 +75,8 @@
 		049334EB276922CC00AEF40E /* MinimumSymbolsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049334EA276922CC00AEF40E /* MinimumSymbolsCell.swift */; };
 		049334EF276929CA00AEF40E /* TaskSanctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049334EE276929CA00AEF40E /* TaskSanctionCell.swift */; };
 		049334F427692D7100AEF40E /* BaseField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049334F327692D7100AEF40E /* BaseField.swift */; };
+		04B3D605276E384A006BF9FC /* TitledCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3D604276E384A006BF9FC /* TitledCheckBox.swift */; };
+		04B3D609276E417A006BF9FC /* TitledCheckBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3D608276E417A006BF9FC /* TitledCheckBoxModel.swift */; };
 		04B76C752767C32500726600 /* TopBottomBlocksContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B76C742767C32500726600 /* TopBottomBlocksContainerView.swift */; };
 		04B76C802767E41400726600 /* ContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B76C7F2767E41400726600 /* ContentSizedTableView.swift */; };
 		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
@@ -410,6 +412,8 @@
 		049334EA276922CC00AEF40E /* MinimumSymbolsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumSymbolsCell.swift; sourceTree = "<group>"; };
 		049334EE276929CA00AEF40E /* TaskSanctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSanctionCell.swift; sourceTree = "<group>"; };
 		049334F327692D7100AEF40E /* BaseField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseField.swift; sourceTree = "<group>"; };
+		04B3D604276E384A006BF9FC /* TitledCheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledCheckBox.swift; sourceTree = "<group>"; };
+		04B3D608276E417A006BF9FC /* TitledCheckBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledCheckBoxModel.swift; sourceTree = "<group>"; };
 		04B76C742767C32500726600 /* TopBottomBlocksContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBottomBlocksContainerView.swift; sourceTree = "<group>"; };
 		04B76C7F2767E41400726600 /* ContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedTableView.swift; sourceTree = "<group>"; };
 		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
@@ -1156,6 +1160,15 @@
 			children = (
 			);
 			path = SanctionTextField;
+			sourceTree = "<group>";
+		};
+		04B3D606276E4133006BF9FC /* TitledCheckBox */ = {
+			isa = PBXGroup;
+			children = (
+				04B3D604276E384A006BF9FC /* TitledCheckBox.swift */,
+				04B3D608276E417A006BF9FC /* TitledCheckBoxModel.swift */,
+			);
+			path = TitledCheckBox;
 			sourceTree = "<group>";
 		};
 		04B76C7E2767E3FD00726600 /* TopBottomContent */ = {
@@ -2084,6 +2097,7 @@
 			isa = PBXGroup;
 			children = (
 				048742082768E96A00C0D94B /* PlaceholderTexView.swift */,
+				04B3D606276E4133006BF9FC /* TitledCheckBox */,
 				04F71BB0276CFDF000A0B181 /* Button */,
 				048C22C327677CB400F3FF4D /* Field */,
 				6D91B863265BE20700EB2589 /* ATYShowHideTextField.swift */,
@@ -2835,6 +2849,7 @@
 				048EF3D5274D911000E688DB /* NewPasswordViewController.swift in Sources */,
 				048B927D274FF1D4007FABC2 /* CreateTaskViewModelImpl.swift in Sources */,
 				04F71BB8276D193E00A0B181 /* TaskSanctionModel.swift in Sources */,
+				04B3D609276E417A006BF9FC /* TitledCheckBoxModel.swift in Sources */,
 				6D8A282A265E6DAE00BAAEF5 /* DimmPresentationController.swift in Sources */,
 				04F71BA2276CA18C00A0B181 /* FieldModel.swift in Sources */,
 				048B9281274FF81F007FABC2 /* AddTaskViewModel.swift in Sources */,
@@ -3006,6 +3021,7 @@
 				04731A3B274929F4001DD136 /* Endpoint.swift in Sources */,
 				6DF82869266FB054006487B0 /* ATYCreateCourseChatCell.swift in Sources */,
 				6DA60DD62680748900885650 /* ATYMembersAboutCourseCell.swift in Sources */,
+				04B3D605276E384A006BF9FC /* TitledCheckBox.swift in Sources */,
 				048C22C9276780F900F3FF4D /* TaskDurationView.swift in Sources */,
 				6D32D84D2664EB3D009D62C9 /* ATYEnumWithReuseIdentifierCell.swift in Sources */,
 				6DF5396D268381F50086A64E /* CDWallet+CoreDataProperties.swift in Sources */,

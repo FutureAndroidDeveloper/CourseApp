@@ -13,22 +13,29 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         static let plusOffset: CGFloat = 15
     }
     
-    // MARK: - UI
+    // MARK: - Properties
+    private var model: NotificationAboutTaskModel?
+    private var editingNotificationView: NotificationTaskTimeView?
+    private var switchCallback: ((Bool) -> Void)?
+    private var timerCallback: ((TaskNoticationDelegate) -> Void)?
     
-    private var plusButton: UIButton = {
+    // MARK: - UI
+    private let container = UIView()
+    
+    private let plusButton: UIButton = {
         let button = UIButton()
         button.setImage(R.image.plusImage(), for: .normal)
         return button
     }()
 
-    private var switchButton: UISwitch = {
+    private let switchButton: UISwitch = {
         let switchButton = UISwitch()
         switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         switchButton.onTintColor = R.color.textColorSecondary()
         return switchButton
     }()
 
-    private var nameLabel : UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Напоминание о задаче"
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
@@ -37,20 +44,13 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         return label
     }()
     
-    private var notificationStackView: UIStackView = {
+    private let notificationStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 8
         return stack
     }()
 
-    private let container = UIView()
-    
-    // MARK: - Properties
-    
-    private var editingNotificationView: NotificationTaskTimeView?
-    private var switchCallback: ((Bool) -> Void)?
-    private var timerCallback: ((TaskNoticationDelegate) -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -102,6 +102,7 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         guard let model = model as? NotificationAboutTaskModel else {
             return
         }
+        self.model = model
         switchCallback = model.switchCallback
         timerCallback = model.timerCallback
         configure(model.notificationModels)
@@ -110,9 +111,11 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
     private func configure(_ models: [NotificationTaskTimeModel]) {
         notificationStackView.removeFullyAllArrangedSubviews()
         
-        models.forEach {
-            editingNotificationView = NotificationTaskTimeView(model: $0)
-            notificationDidAdd($0)
+        models.forEach { [weak self] model in
+            let notificationView = NotificationTaskTimeView()
+            notificationView.configure(with: model)
+            notificationView.addGestureRecognizer(getGestureRecognizer())
+            self?.notificationStackView.addArrangedSubview(notificationView)
         }
     }
     
@@ -136,16 +139,13 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         // для добавления нового уведомления, не должно быть пустого времени (0; 0)
         guard
             let lastNotificationView = notificationStackView.arrangedSubviews.last as? NotificationTaskTimeView,
-            !lastNotificationView.model.isDefault
+            let model = lastNotificationView.model,
+            !model.isDefault
         else {
             return
         }
 
-        let defaultModel = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
-                                                     minModel: TimeBlockModelFactory.getMinModel())
-        
-        let newNotification = NotificationTaskTimeView(model: defaultModel)
-        editingNotificationView = newNotification
+        editingNotificationView = NotificationTaskTimeView()
         timerCallback?(self)
     }
     
@@ -158,34 +158,32 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
 
 
 extension NotificationAboutTaskCell: TaskNoticationDelegate {
-    /**
-     Добавляет новое напоминание о задаче в список напоминаний или изменяет время для выбранного напоминания.
-     */
     func notificationDidAdd(_ notifcation: NotificationTaskTimeModel) {
-        guard
-            let newNotificationView = editingNotificationView,
-            !notificationStackView.contains(newNotificationView)
-        else {
-            // изменение времени ранее выбранного напоминания.
-            self.editingNotificationView?.configure(with: notifcation)
+        guard let editingNotificationView = editingNotificationView else {
             return
         }
         
-        // добавление нового напоминания.
-        newNotificationView.configure(with: notifcation)
-        newNotificationView.addGestureRecognizer(getGestureRecognizer())
-        notificationStackView.addArrangedSubview(newNotificationView)
+        // обновление модели
+        if let editingModel = editingNotificationView.model {
+            editingModel.hourModel.update(value: notifcation.hourModel.value)
+            editingModel.minModel.update(value: notifcation.minModel.value)
+            editingNotificationView.configure(with: editingModel)
+        }
+        
+        let existingModel = notificationStackView.arrangedSubviews
+            .compactMap { $0 as? NotificationTaskTimeView }
+            .compactMap { $0.model }
+            .first { $0 == notifcation }
+        
+        // добавление новой модели, если такого времени напоминания еще нет в списке моделей
+        if existingModel == nil {
+            model?.notificationModels.append(notifcation)
+            editingNotificationView.configure(with: notifcation)
+            editingNotificationView.addGestureRecognizer(getGestureRecognizer())
+            notificationStackView.addArrangedSubview(editingNotificationView)
+        }
+        
     }
     
-    /**
-     Получить текущее состояние моделей напоминаний о задаче.
-     
-     Необходимо для получений обновленных моделей.
-     */
-    func getNotificationModels() -> [NotificationTaskTimeModel] {
-        return notificationStackView.arrangedSubviews
-            .compactMap { $0 as? NotificationTaskTimeView }
-            .map { $0.model }
-    }
     
 }

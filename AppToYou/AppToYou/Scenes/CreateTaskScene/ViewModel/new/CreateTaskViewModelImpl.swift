@@ -33,13 +33,60 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
         }
         let model = NotificationTaskTimeModel(notificationTime: time)
         notificationDelegate.notificationDidAdd(model)
-        notificationModels = notificationDelegate.getNotificationModels()
         updateState()
     }
     
     func durationTimePicked(_ time: DurationTime) {
         duration = TaskDurationModel(durationTime: time)
         update()
+    }
+    
+    func saveDidTapped() {
+        runtimeModel()
+    }
+    
+    
+    private func runtimeModel() {
+        print(#function)
+        print()
+        
+        guard let model = constructor.model else {
+            return
+        }
+        
+        let name = model.nameModel.fieldModel.value
+        print("name = \(name)")
+        
+        let freq = model.frequencyModel.initialFrequency
+        print("freq = \(freq)")
+        
+        let days = model.weekdayModel?.weekdayModels.compactMap { $0 }
+        let daysResult = days?.map { $0.isSelected }
+            .map { $0 ? "1" : "0" }
+            .joined()
+        print("daysResult = \(daysResult)")
+        
+        let onceDate = model.selectDateModel?.date.value
+        print("Once date = \(onceDate)")
+        
+        let period = model.periodModel
+        let start = period?.start.value
+        let end = period?.end.value
+        let isInfinite = period?.isInfiniteModel.isSelected
+        print("start = \(start)")
+        print("end = \(end)")
+        print("isInfinite = \(isInfinite)")
+        
+        let notifcations = model.notificationModel.notificationModels
+        notifcations.forEach { print("\($0.hourModel.value) : \($0.minModel.value)") }
+        
+        let sanction = model.sanctionModel.model.value
+        print("sanction = \(sanction)")
+//
+//        if let repeatModel = model as? RepeatCreateTaskModel {
+//            let name = repeatModel.nameModel.fieldModel.value
+//        }
+        
     }
     
 }
@@ -82,10 +129,11 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         return NaturalNumberFieldModel()
     }
     
-    func getPeriodModel() -> (start: DateFieldModel, end: DateFieldModel) {
-        // TODO: - получать даты из модели задачи
+    func getPeriodModel() -> TaskPeriodModel {
+        // TODO: - получать isSelected, даты из модели задачи
         
-        return (DateFieldModel(), DateFieldModel())
+        let isInfiniteModel = TitledCheckBoxModel(title: "Бесконечная длительность курса", isSelected: false)
+        return TaskPeriodModel(isInfiniteModel: isInfiniteModel, start: DateFieldModel(), end: DateFieldModel(value: nil))
     }
     
     func getDurationModel() -> TaskDurationModel {
@@ -102,12 +150,11 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
     }
     
     func getNotificationModels() -> [NotificationTaskTimeModel] {
-        if notificationModels.isEmpty {
-            let model = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
-                                                  minModel: TimeBlockModelFactory.getMinModel())
-            notificationModels.append(model)
-        }
-        return notificationModels
+        // TODO: - получать нотификации из модели задачи
+        
+        let model = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
+                                              minModel: TimeBlockModelFactory.getMinModel())
+        return [model]
     }
     
     func getWeekdayModels() -> [WeekdayModel] {

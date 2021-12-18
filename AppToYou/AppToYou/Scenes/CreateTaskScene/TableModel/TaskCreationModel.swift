@@ -11,7 +11,7 @@ protocol TaskCreationDelegate: AnyObject {
     
     func getFrequncy() -> ATYFrequencyTypeEnum
     func getOnceDateModel() -> DateFieldModel
-    func getPeriodModel() -> (start: DateFieldModel, end: DateFieldModel)
+    func getPeriodModel() -> TaskPeriodModel
     func getDescriptionModel() -> PlaceholderTextViewModel
     func getMinSymbolsModel() -> NaturalNumberFieldModel
     func getDurationModel() -> TaskDurationModel
@@ -26,7 +26,7 @@ class TaskCreationModel {
     
     private weak var delegate: TaskCreationDelegate?
     
-    private var model: DefaultCreateTaskModel?
+    private(set) var model: DefaultCreateTaskModel?
     
     init(type: ATYTaskType, delegate: TaskCreationDelegate? = nil) {
         self.type = type
@@ -68,7 +68,7 @@ class TaskCreationModel {
         let frequency = dataProvider.getFrequncy()
         addFrequency(initial: frequency)
         
-        addPeriod()
+        updatePeriod()
         addNotificationHandler()
                 
         model?.addSanctionHandler(callbackText: { sanction in
@@ -89,39 +89,42 @@ class TaskCreationModel {
     }
     
     private func addFrequency(initial frequency: ATYFrequencyTypeEnum) {
+        
         model?.addFrequency(frequency) { [weak self] newFrequency in
             if frequency == newFrequency {
                 return
             }
             print(newFrequency)
             
+            if newFrequency != .ONCE || newFrequency != .CERTAIN_DAYS {
+                print("1")
+                self?.model?.removeWeekdayHandler()
+                self?.model?.removeSelectDateHandler()
+                self?.updatePeriod()
+            }
+            
             if newFrequency == .ONCE {
                 self?.addselectDate()
-                self?.model?.removeWeekdayHandler()
                 self?.model?.removePeriodHandler()
-            } else if newFrequency == .CERTAIN_DAYS {
-                self?.addWeekdayHandler()
-                self?.addPeriod()
-                self?.model?.removeSelectDateHandler()
             }
-            else {
-                self?.model?.removeWeekdayHandler()
-                self?.model?.removeSelectDateHandler()
-                self?.addPeriod()
+            
+            if newFrequency == .CERTAIN_DAYS {
+                self?.addWeekdayHandler()
             }
             
             self?.addFrequency(initial: newFrequency)
-            self?.updateAndSync()
+            self?.delegate?.update()
         }
     }
     
-    private func addPeriod() {
+    private func updatePeriod() {
         guard let dataProvider = delegate else {
             return
         }
         
         let periodModel = dataProvider.getPeriodModel()
-        model?.addPeriodHandler(start: periodModel.start, end: periodModel.end)
+        model?.removePeriodHandler()
+        model?.addPeriodHandler(isInfiniteModel: periodModel.isInfiniteModel, start: periodModel.start, end: periodModel.end)
     }
     
     private func addDescription() {
@@ -176,16 +179,6 @@ class TaskCreationModel {
             print("Timer callback")
             self?.delegate?.showTimePicker(pickerType: .notification, delegate: notifDelegate)
         })
-    }
-    
-    /**
-     Обновление модели таблицы.
-     
-     Также получает обновленную модель напоминаний о задаче.
-     */
-    private func updateAndSync() {
-        addNotificationHandler()
-        delegate?.update()
     }
     
     // тут нужно обновить все хендлеры перед перезагрузкой таблицы с обновленными данными в моделях

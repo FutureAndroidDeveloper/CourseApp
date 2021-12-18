@@ -1,6 +1,5 @@
 import UIKit
 
-
 /**
  Представление времени получения уведомления о задаче.
  */
@@ -10,18 +9,17 @@ class NotificationTaskTimeView: UIView {
         static let blockSize = CGSize(width: 85, height: 44)
         static let spacing: CGFloat = 12
     }
-        
+    
+    
+    private(set) var model: NotificationTaskTimeModel?
     private let hourTimeView = TimeBlockView()
     private let minTimeView = TimeBlockView()
     
-    private(set) var model: NotificationTaskTimeModel
     
-    
-    init(model: NotificationTaskTimeModel) {
-        self.model = model
+    init() {
         super.init(frame: .zero)
+        
         setup()
-        configure(with: model)
     }
 
     required init?(coder: NSCoder) {
@@ -52,10 +50,9 @@ class NotificationTaskTimeView: UIView {
         - model: модель представления времени напоминания о задаче.
      */
     func configure(with model: NotificationTaskTimeModel) {
+        self.model = model
         hourTimeView.configure(with: model.hourModel)
         minTimeView.configure(with: model.minModel)
-        self.model = model
     }
     
 }
-

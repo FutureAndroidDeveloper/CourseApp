@@ -61,7 +61,7 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         inflater = UITableViewIflater(createTaskTableView)
         
         // common
-        inflater.registerRow(model: TextFieldModel.self, cell: TaskNameCell.self)
+        inflater.registerRow(model: TaskNameModel.self, cell: TaskNameCell.self)
         inflater.registerRow(model: FrequencyModel.self, cell: FrequencyCell.self)
         inflater.registerRow(model: NotificationAboutTaskModel.self, cell: NotificationAboutTaskCell.self)
         inflater.registerRow(model: TaskSanctionModel.self, cell: TaskSanctionCell.self)
@@ -138,6 +138,7 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
     
     @objc func saveTapped() {
         print("Save tapped")
+        viewModel.input.saveDidTapped()
         // validate + после валидации при необходимости обновить модель ячеек с указанием ошибок
         // при успешной валидации отправить запрос на сервер
         // при успешном выполнении запроса, сохранить в бд

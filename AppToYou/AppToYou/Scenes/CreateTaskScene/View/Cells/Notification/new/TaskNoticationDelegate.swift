@@ -13,9 +13,4 @@ protocol TaskNoticationDelegate: AnyObject {
         - notification: напоминание о задаче.
      */
     func notificationDidAdd(_ notifcation: NotificationTaskTimeModel)
-    
-    /**
-     Получить текущее состояние моделей напоминаний о задаче.
-     */
-    func getNotificationModels() -> [NotificationTaskTimeModel]
 }

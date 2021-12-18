@@ -6,6 +6,7 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
     private struct Constants {
         static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
         static let space: CGFloat = 16
+        static let verticalPadding: CGFloat = 12
         
         struct Field {
             static let size = CGSize(width: 158, height: 45)
@@ -21,6 +22,8 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
     
     private let startTextField = DateTextField(style: StyleManager.standartTextField)
     private let endTextField = DateTextField(style: StyleManager.standartTextField)
+    private let infiniteView = TitledCheckBox()
+    private var endBlock: UIView?
     
     private let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
@@ -56,14 +59,22 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
         let startBlock = buildDateBlock(title: Constants.Field.Title.start, pickerView: startTextField)
         contentView.addSubview(startBlock)
         startBlock.snp.makeConstraints {
-            $0.leading.top.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.leading.top.equalToSuperview().inset(Constants.edgeInsets)
         }
         
         let endBlock = buildDateBlock(title: Constants.Field.Title.end, pickerView: endTextField)
         contentView.addSubview(endBlock)
         endBlock.snp.makeConstraints {
             $0.leading.equalTo(startBlock.snp.trailing).offset(Constants.space)
-            $0.top.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.bottom.equalTo(startBlock.snp.bottom)
+            $0.top.equalToSuperview().inset(Constants.edgeInsets)
+        }
+        self.endBlock = endBlock
+        
+        contentView.addSubview(infiniteView)
+        infiniteView.snp.makeConstraints {
+            $0.top.equalTo(startBlock.snp.bottom).offset(Constants.verticalPadding)
+            $0.leading.bottom.trailing.equalToSuperview().inset(Constants.edgeInsets)
         }
         
         datePicker.addTarget(self, action: #selector(self.dateChanged), for: .valueChanged)
@@ -107,14 +118,30 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
         
         configureField(startTextField, dateModel: model.start)
         configureField(endTextField, dateModel: model.end)
+        infiniteView.configure(with: model.isInfiniteModel) { [weak self] isInfinite in
+            self?.infiniteStateChanged(isInfinite)
+        }
+        
+    }
+    
+    private func infiniteStateChanged(_ isInfinite: Bool) {
+        guard let dateModel = endTextField.model?.content.fieldModel else {
+            return
+        }
+        dateModel.update(value: nil)
+        endTextField.setContentModel(dateModel)
+        endBlock?.isHidden = isInfinite
     }
 
     @objc
     private func dateChanged() {
-        let dateModel = DateFieldModel(value: datePicker.date)
         let field = startTextField.isFirstResponder ? startTextField : endTextField
         
-        configureField(field, dateModel: dateModel)
+        guard let dateModel = field.model?.content.fieldModel else {
+            return
+        }
+        dateModel.update(value: datePicker.date)
+        field.setContentModel(dateModel)
     }
 
     @objc

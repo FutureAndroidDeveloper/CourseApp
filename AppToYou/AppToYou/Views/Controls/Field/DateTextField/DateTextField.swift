@@ -9,11 +9,11 @@
 import Foundation
 
 
-class DateTextField: BaseField<Date> {
+class DateTextField: BaseField<Date?> {
     
-    override func setContentModel(_ model: BaseFieldModel<Date>) {
+    override func setContentModel(_ model: BaseFieldModel<Date?>) {
         super.setContentModel(model)
-        text = model.value.toString(dateFormat: .simpleDateFormatFullYear)
+        text = model.value?.toString(dateFormat: .simpleDateFormatFullYear)
     }
     
 }

@@ -38,7 +38,7 @@ class FrequencyView: UIView {
     
     func configure(model: FrequencyModel) {
         self.model = model
-        select(model.initialFrequency)
+        self.select(model.initialFrequency)
     }
     
     private func setup() {

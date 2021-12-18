@@ -3,48 +3,77 @@ import UIKit
 
 
 class DefaultCreateTaskModel {
-    var nameModel: TextFieldModel!
+    var nameModel: TaskNameModel!
     var frequencyModel: FrequencyModel!
     
+    private var prevWeekdaysModel: SelectWeekdayModel?
     var weekdayModel: SelectWeekdayModel?
+    
+    private var prevDateModel: SelectDateModel?
     var selectDateModel: SelectDateModel?
     
+    private var prevPeriodModel: TaskPeriodModel?
     var periodModel: TaskPeriodModel?
+    
+    
     var notificationModel: NotificationAboutTaskModel!
     var sanctionModel: TaskSanctionModel!
     
+    // Name
     func addNameHandler(_ handler: TextFieldModel) {
-        nameModel = handler
+        nameModel = TaskNameModel(fieldModel: handler)
     }
     
+    // Freq
     func addFrequency(_ frequency: ATYFrequencyTypeEnum, _ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {
         frequencyModel = FrequencyModel(frequency: frequency, frequencyPicked: handler)
     }
     
+    // Days
     func addWeekdayHandler(models: [WeekdayModel]) {
-        weekdayModel = SelectWeekdayModel(weekdayModels: models)
+        weekdayModel = prevWeekdaysModel ?? SelectWeekdayModel(weekdayModels: models)
     }
     
     func removeWeekdayHandler() {
+        guard let model = weekdayModel else {
+            return
+        }
+        
+        prevWeekdaysModel = model.copy() as? SelectWeekdayModel
         weekdayModel = nil
+        
     }
     
+    // Once day
     func addSelectDateHandler(date: DateFieldModel) {
-        selectDateModel = SelectDateModel(date: date)
+        selectDateModel = prevDateModel ?? SelectDateModel(date: date)
     }
+    
     
     func removeSelectDateHandler() {
+        guard let model = selectDateModel else {
+            return
+        }
+        
+        prevDateModel = model.copy() as? SelectDateModel
         selectDateModel = nil
     }
     
-    func addPeriodHandler(start: DateFieldModel, end: DateFieldModel) {
-        periodModel = TaskPeriodModel(start: start, end: end)
+    // Period
+    func addPeriodHandler(isInfiniteModel: TitledCheckBoxModel, start: DateFieldModel, end: DateFieldModel) {
+        periodModel = prevPeriodModel ?? TaskPeriodModel(isInfiniteModel: isInfiniteModel, start: start, end: end)
     }
     
     func removePeriodHandler() {
+        guard let model = periodModel else {
+            return
+        }
+        
+        prevPeriodModel = model.copy() as? TaskPeriodModel
         periodModel = nil
     }
     
+    // Notification
     func addNotificationHandler(notificationModels: [NotificationTaskTimeModel],
                                 switchCallback: @escaping (Bool) -> Void,
                                 timerCallback: @escaping (TaskNoticationDelegate) -> Void) {
@@ -54,6 +83,7 @@ class DefaultCreateTaskModel {
                                                        timerCallback: timerCallback)
     }
     
+    // Sanction
     func addSanctionHandler(callbackText: @escaping (String) -> Void, questionCallback: @escaping () -> Void) {
         sanctionModel = TaskSanctionModel(model: NaturalNumberFieldModel())
     }

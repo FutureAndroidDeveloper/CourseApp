@@ -4,7 +4,7 @@ import Foundation
 /**
  Модель представления времени напоминания о задаче.
  */
-class NotificationTaskTimeModel {
+class NotificationTaskTimeModel: Equatable {
     /**
      Модель - часы получения уведомления.
      */
@@ -49,6 +49,10 @@ class NotificationTaskTimeModel {
     init(hourModel: TimeBlockModel, minModel: TimeBlockModel) {
         self.hourModel = hourModel
         self.minModel = minModel
+    }
+    
+    static func == (lhs: NotificationTaskTimeModel, rhs: NotificationTaskTimeModel) -> Bool {
+        lhs.hourModel.value == rhs.hourModel.value && lhs.minModel.value == rhs.minModel.value
     }
     
 }

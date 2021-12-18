@@ -21,7 +21,7 @@ class NotificationAboutTaskModel {
     /**
      Модели представления напоминания о задаче.
      */
-    let notificationModels: [NotificationTaskTimeModel]
+    var notificationModels: [NotificationTaskTimeModel]
     
     /**
      Создание модели.

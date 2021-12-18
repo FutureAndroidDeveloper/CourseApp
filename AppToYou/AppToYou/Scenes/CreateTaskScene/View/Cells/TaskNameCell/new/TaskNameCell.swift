@@ -45,11 +45,11 @@ class TaskNameCell: UITableViewCell, InflatableView {
     }
     
     func inflate(model: AnyObject) {
-        guard let model = model as? TextFieldModel else {
+        guard let model = model as? TaskNameModel else {
             return
         }
         
-        let contentModel = FieldContentModel(fieldModel: model, insets: Constants.fieldInsets)
+        let contentModel = FieldContentModel(fieldModel: model.fieldModel, insets: Constants.fieldInsets)
         let fieldModel = FieldModel(content: contentModel)
         nameTextField.configure(with: fieldModel)
     }
