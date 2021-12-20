@@ -8,15 +8,19 @@ protocol TaskCreationDelegate: AnyObject {
     func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?)
     
     func getNameModel() -> TextFieldModel
-    
     func getFrequncy() -> ATYFrequencyTypeEnum
     func getOnceDateModel() -> DateFieldModel
+    func getWeekdayModels() -> [WeekdayModel]
     func getPeriodModel() -> TaskPeriodModel
+    func getNotificationModels() -> [NotificationTaskTimeModel]
+    func getSanctionModel() -> NaturalNumberFieldModel
+    
     func getDescriptionModel() -> PlaceholderTextViewModel
     func getMinSymbolsModel() -> NaturalNumberFieldModel
+    
     func getDurationModel() -> TaskDurationModel
-    func getNotificationModels() -> [NotificationTaskTimeModel]
-    func getWeekdayModels() -> [WeekdayModel]
+    
+    func getCounterModel() -> NaturalNumberFieldModel
 }
 
 class TaskCreationModel {
@@ -58,12 +62,12 @@ class TaskCreationModel {
             
         case .RITUAL:
             let repeatModel = RepeatCreateTaskModel()
-            repeatModel.addCountHandler()
             model = repeatModel
+            addCounter()
         }
         
         let nameModel = dataProvider.getNameModel()
-        model?.addNameHandler(nameModel)
+//        model?.addNameHandler(nameModel)
         
         let frequency = dataProvider.getFrequncy()
         addFrequency(initial: frequency)
@@ -71,12 +75,12 @@ class TaskCreationModel {
         updatePeriod()
         addNotificationHandler()
                 
-        model?.addSanctionHandler(callbackText: { sanction in
-            print(sanction)
-//            self.task.taskSanction = Int(sanction) ?? -1
-        }, questionCallback: {
-            print("Question Handler")
-        })
+//        model?.addSanctionHandler(callbackText: { sanction in
+//            print(sanction)
+////            self.task.taskSanction = Int(sanction) ?? -1
+//        }, questionCallback: {
+//            print("Question Handler")
+//        })
     }
     
     private func addselectDate() {
@@ -90,7 +94,7 @@ class TaskCreationModel {
     
     private func addFrequency(initial frequency: ATYFrequencyTypeEnum) {
         
-        model?.addFrequency(frequency) { [weak self] newFrequency in
+        model?.addFrequency(.init()) { [weak self] newFrequency in
             if frequency == newFrequency {
                 return
             }
@@ -163,6 +167,18 @@ class TaskCreationModel {
         timerModel.addDurationHandler(duration: durationModel) { [weak self] in
             self?.delegate?.showTimePicker(pickerType: .duration, delegate: nil)
         }
+    }
+    
+    private func addCounter() {
+        guard
+            let repeatModel = model as? RepeatCreateTaskModel,
+            let dataProvider = delegate
+        else {
+            return
+        }
+        
+        let counterModel = dataProvider.getCounterModel()
+        repeatModel.addCounter(model: counterModel)
     }
     
     private func addWeekdayHandler() {

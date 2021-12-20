@@ -5,6 +5,8 @@ import UIKit
 class DefaultCreateTaskModel {
     var nameModel: TaskNameModel!
     var frequencyModel: FrequencyModel!
+    var notificationModel: NotificationAboutTaskModel!
+    var sanctionModel: TaskSanctionModel!
     
     private var prevWeekdaysModel: SelectWeekdayModel?
     var weekdayModel: SelectWeekdayModel?
@@ -15,18 +17,18 @@ class DefaultCreateTaskModel {
     private var prevPeriodModel: TaskPeriodModel?
     var periodModel: TaskPeriodModel?
     
-    
-    var notificationModel: NotificationAboutTaskModel!
-    var sanctionModel: TaskSanctionModel!
+    required init() {
+        
+    }
     
     // Name
-    func addNameHandler(_ handler: TextFieldModel) {
-        nameModel = TaskNameModel(fieldModel: handler)
+    func addName(model: TextFieldModel) {
+        nameModel = TaskNameModel(fieldModel: model)
     }
     
     // Freq
-    func addFrequency(_ frequency: ATYFrequencyTypeEnum, _ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {
-        frequencyModel = FrequencyModel(frequency: frequency, frequencyPicked: handler)
+    func addFrequency(_ value: FrequncyValueModel, _ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {
+        frequencyModel = FrequencyModel(value: value, frequencyPicked: handler)
     }
     
     // Days
@@ -84,8 +86,8 @@ class DefaultCreateTaskModel {
     }
     
     // Sanction
-    func addSanctionHandler(callbackText: @escaping (String) -> Void, questionCallback: @escaping () -> Void) {
-        sanctionModel = TaskSanctionModel(model: NaturalNumberFieldModel())
+    func addSanction(model: NaturalNumberFieldModel, questionCallback: @escaping () -> Void, switchCallback: @escaping (Bool) -> Void) {
+        sanctionModel = TaskSanctionModel(model: model)
     }
     
     func prepare() -> [AnyObject] {

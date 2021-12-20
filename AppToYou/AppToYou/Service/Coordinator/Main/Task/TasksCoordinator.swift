@@ -35,12 +35,13 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
             return .present(vc, animation: nil)
             
         case .create(let taskType):
-            print("Type = \(taskType.title)")
+            let factory = CreateTaskFactory(type: taskType)
+            let viewModel = factory.getViewModel(unownedRouter)
+            createTaskViewModel = viewModel
+            
             let vc = ATYCreateTaskViewController()
             vc.hidesBottomBarWhenPushed = true
-            let vm = CreateTaskViewModelImpl(taskType: taskType, router: unownedRouter)
-            createTaskViewModel = vm
-            vc.bind(to: vm)
+            vc.bind(to: viewModel)
             
             return .multiple([
                 .dismiss(),

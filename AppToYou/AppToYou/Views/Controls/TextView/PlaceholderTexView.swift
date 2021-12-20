@@ -41,19 +41,9 @@ class PlaceholderTextView: UITextView, UITextViewDelegate {
     
     func configure(with model: PlaceholderTextViewModel) {
         self.model = model
-        text = model.text
+        text = model.value
         let range = NSRange(location: .zero, length: text.count)
         _ = delegate?.textView?(self, shouldChangeTextIn: range, replacementText: text)
-    }
-    
-    func getModel() -> PlaceholderTextViewModel? {
-        guard let model = model else {
-            return nil
-        }
-        if model.placeholder != text {
-            model.update(text: text)
-        }
-        return model
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -65,12 +55,15 @@ class PlaceholderTextView: UITextView, UITextViewDelegate {
             textView.text = model?.placeholder
             textView.textColor = Constants.Text.placeholderColor
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            model?.update(value: nil)
         }
         // обновление текста, если сейчас установлен placeholder
         else if textView.textColor == Constants.Text.placeholderColor && !text.isEmpty {
             textView.textColor = Constants.Text.textColor
             textView.text = text
+            model?.update(value: text)
         } else {
+            model?.update(value: updatedText)
             return true
         }
         

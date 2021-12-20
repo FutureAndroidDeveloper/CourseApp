@@ -49,11 +49,11 @@ class DescriptionTaskCell: UITableViewCell, InflatableView {
     }
     
     func inflate(model: AnyObject) {
-        guard let model = model as? PlaceholderTextViewModel else {
+        guard let model = model as? DescriptionModel else {
             return
         }
         
-        descriptionTextView.configure(with: model)
+        descriptionTextView.configure(with: model.fieldModel)
     }
     
 }

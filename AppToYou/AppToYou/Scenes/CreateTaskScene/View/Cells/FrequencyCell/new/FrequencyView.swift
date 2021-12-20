@@ -38,7 +38,7 @@ class FrequencyView: UIView {
     
     func configure(model: FrequencyModel) {
         self.model = model
-        self.select(model.initialFrequency)
+        self.select(model.value.frequency)
     }
     
     private func setup() {
@@ -115,8 +115,12 @@ class FrequencyView: UIView {
     
     @objc
     private func frequencyDidChange(_ sender: FrequencyButton) {
+        if sender.isSelected {
+            return
+        }
         deselect()
-        sender.isSelected = true
+        sender.isSelected.toggle()
+        model?.value.update(sender.type)
         model?.frequencyPicked(sender.type)
     }
     

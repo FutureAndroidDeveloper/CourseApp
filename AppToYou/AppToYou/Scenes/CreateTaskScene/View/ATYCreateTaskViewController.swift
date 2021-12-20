@@ -75,7 +75,7 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         inflater.registerRow(model: TaskDurationCellModel.self, cell: TaskDurationCell.self)
         
         // text
-        inflater.registerRow(model: PlaceholderTextViewModel.self, cell: DescriptionTaskCell.self)
+        inflater.registerRow(model: DescriptionModel.self, cell: DescriptionTaskCell.self)
         inflater.registerRow(model: NaturalNumberFieldModel.self, cell: MinimumSymbolsCell.self)
 
         // counting

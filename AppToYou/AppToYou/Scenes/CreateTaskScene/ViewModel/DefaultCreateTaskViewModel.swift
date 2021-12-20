@@ -2,31 +2,25 @@ import Foundation
 import XCoordinator
 
 
-class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, CreateTaskViewModelOutput {
+class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput, CreateTaskViewModelOutput {
+    private(set) var router: UnownedRouter<TasksRoute>
 
-    private let router: UnownedRouter<TasksRoute>
-    private let taskType: ATYTaskType
-    private var taskModel: ATYUserTask!
     
-    private lazy var constructor: TaskCreationModel = {
-        return TaskCreationModel(type: self.taskType, delegate: self)
+    private lazy var constructor: DefaultTaskModel = {
+        return DefaultTaskModel(delegate: self)
     }()
-    
-    private var notificationModels: [NotificationTaskTimeModel] = []
-    private weak var notificationDelegate: TaskNoticationDelegate?
-    
-    private var duration: TaskDurationModel?
+
+    weak var notificationDelegate: TaskNoticationDelegate?
     
     var data: Observable<[AnyObject]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
-    
 
-    init(taskType: ATYTaskType, router: UnownedRouter<TasksRoute>) {
-        self.taskType = taskType
+
+    init(router: UnownedRouter<TasksRoute>) {
         self.router = router
         update()
     }
-    
+
     func notificationTimePicked(_ time: NotificationTime) {
         guard let notificationDelegate = notificationDelegate else {
             return
@@ -37,22 +31,18 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
     }
     
     func durationTimePicked(_ time: DurationTime) {
-//        duration = TaskDurationModel(durationTime: time)
-        update()
+        // обработка получения происходит в TimerCreateTaskViewModel
     }
-    
+
     func saveDidTapped() {
-        runtimeModel()
+        validate()
     }
     
-    
-    private func runtimeModel() {
+    func validate() {
         print(#function)
         print()
         
-        guard let model = constructor.model else {
-            return
-        }
+        let model = constructor.model
         
         let name = model.nameModel.fieldModel.value
         print("name = \(name)")
@@ -86,17 +76,29 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
 //        if let repeatModel = model as? RepeatCreateTaskModel {
 //            let name = repeatModel.nameModel.fieldModel.value
 //        }
-        
     }
     
+    /**
+     Обновление структуры таблицы.
+     
+     Приводит к вызову tableView.reload()
+     */
+    func update() {
+        data.value = constructor.getModels()
+    }
+    
+    /**
+     Обновление внутри ячеек.
+     
+     Приводит к вызову tableView.beginUpdates()
+     */
+    func updateState() {
+        updatedState.value = ()
+    }
+
 }
 
-
-extension CreateTaskViewModelImpl: TaskCreationDelegate {
-    func getSanctionModel() -> NaturalNumberFieldModel {
-        return .init()
-    }
-    
+extension DefaultCreateTaskViewModel: DefaultTaskCreationDelegate {
     
     func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?) {
         notificationDelegate = delegate
@@ -109,28 +111,10 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         return .init(value: String(), placeholder: R.string.localizable.forExampleDoExercises())
     }
     
-    func getFrequncy() -> ATYFrequencyTypeEnum {
+    func getFrequncy() -> FrequncyValueModel {
         // TODO: - получать частоту из модели задачи
         
-        return .EVERYDAY
-    }
-    
-    func getOnceDateModel() -> DateFieldModel {
-        // TODO: - получать дату из модели задачи
-        
-        return DateFieldModel()
-    }
-    
-    func getDescriptionModel() -> PlaceholderTextViewModel {
-        // TODO: - получать описание из модели задачи
-        
-        return PlaceholderTextViewModel(value: nil, placeholder: "Например, положительные моменты")
-    }
-    
-    func getMinSymbolsModel() -> NaturalNumberFieldModel {
-        // TODO: - получать кол-во из модели задачи
-        
-        return NaturalNumberFieldModel()
+        return FrequncyValueModel()
     }
     
     func getPeriodModel() -> TaskPeriodModel {
@@ -140,22 +124,7 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         return TaskPeriodModel(isInfiniteModel: isInfiniteModel, start: DateFieldModel(), end: DateFieldModel(value: nil))
     }
     
-    func getDurationModel() -> TaskDurationModel {
-        // TODO: - получать длительность из модели задачи
-        if let durationModel = self.duration {
-            return durationModel
-        } else {
-            let model = TaskDurationModel(hourModel: TimeBlockModelFactory.getHourModel(),
-                                          minModel: TimeBlockModelFactory.getMinModel(),
-                                          secModel: TimeBlockModelFactory.getSecModel())
-            duration = model
-            return model
-        }
-    }
-    
-    func getCounterModel() -> NaturalNumberFieldModel {
-        // TODO: - получать повторения из модели задачи
-        
+    func getSanctionModel() -> NaturalNumberFieldModel {
         return NaturalNumberFieldModel()
     }
     
@@ -177,22 +146,10 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
         return orderedSymbols.map { WeekdayModel(title: $0) }
     }
     
-    /**
-     Обновление структуры таблицы.
-     
-     Приводит к вызову tableView.reload()
-     */
-    func update() {
-        data.value = constructor.getModel()
-    }
-    
-    /**
-     Обновление внутри ячеек.
-     
-     Приводит к вызову tableView.beginUpdates()
-     */
-    func updateState() {
-        updatedState.value = ()
+    func getOnceDateModel() -> DateFieldModel {
+        // TODO: - получать дату из модели задачи
+        
+        return DateFieldModel()
     }
     
 }

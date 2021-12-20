@@ -4,8 +4,7 @@ import Foundation
 class RepeatCreateTaskModel: DefaultCreateTaskModel {
     var countModel: RepeatCounterModel!
     
-    func addCountHandler() {
-        let model = NaturalNumberFieldModel()
+    func addCounter(model: NaturalNumberFieldModel) {
         countModel = RepeatCounterModel(valueModel: model)
     }
     

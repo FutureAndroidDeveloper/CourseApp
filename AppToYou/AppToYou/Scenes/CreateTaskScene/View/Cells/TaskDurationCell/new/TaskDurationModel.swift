@@ -24,23 +24,6 @@ class TaskDurationModel {
      Создание модели.
      
      - parameters:
-        - durationTime: модель времени выполнения задачи.
-     */
-    convenience init(durationTime: DurationTime) {
-        let hour = TimeBlockModelFactory.getHourModel()
-        let min = TimeBlockModelFactory.getMinModel()
-        let sec = TimeBlockModelFactory.getSecModel()
-
-        hour.update(value: durationTime.hour)
-        min.update(value: durationTime.min)
-        sec.update(value: durationTime.sec)
-        self.init(hourModel: hour, minModel: min, secModel: sec)
-    }
-    
-    /**
-     Создание модели.
-     
-     - parameters:
         - hourModel: модель блока часов.
         - minModel: модель блока минут.
         - minModel: модель блока секунд.
@@ -49,6 +32,18 @@ class TaskDurationModel {
         self.hourModel = hourModel
         self.minModel = minModel
         self.secModel = secModel
+    }
+    
+    /**
+     Обновление модели.
+     
+     - parameters:
+        - durationTime: модель времени выполнения задачи.
+     */
+    func update(durationTime: DurationTime) {
+        hourModel.update(value: durationTime.hour)
+        minModel.update(value: durationTime.min)
+        secModel.update(value: durationTime.sec)
     }
     
 }

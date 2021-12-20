@@ -2,11 +2,11 @@ import Foundation
 
 
 class FrequencyModel {
-    let initialFrequency: ATYFrequencyTypeEnum
+    let value: FrequncyValueModel
     let frequencyPicked : ((ATYFrequencyTypeEnum) -> Void)
     
-    init(frequency: ATYFrequencyTypeEnum, frequencyPicked: @escaping (ATYFrequencyTypeEnum) -> Void) {
-        initialFrequency = frequency
+    init(value: FrequncyValueModel, frequencyPicked: @escaping (ATYFrequencyTypeEnum) -> Void) {
+        self.value = value
         self.frequencyPicked = frequencyPicked
     }
     

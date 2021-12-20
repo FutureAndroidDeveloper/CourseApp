@@ -2,11 +2,11 @@ import Foundation
 
 
 class TextCreateTaskModel: DefaultCreateTaskModel {
-    var descriptionModel: PlaceholderTextViewModel!
+    var descriptionModel: DescriptionModel!
     var lengthLimitModel: NaturalNumberFieldModel!
     
     func addDescriptionHandler(model: PlaceholderTextViewModel) {
-        descriptionModel = model
+        descriptionModel = DescriptionModel(fieldModel: model)
     }
     
     func addLimitHandler(model: NaturalNumberFieldModel) {

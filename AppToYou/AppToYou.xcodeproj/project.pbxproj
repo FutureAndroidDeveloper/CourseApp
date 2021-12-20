@@ -84,6 +84,18 @@
 		04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */; };
 		04CECEA92758023600ECCB2D /* TaskCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEA82758023600ECCB2D /* TaskCreationModel.swift */; };
 		04CECEAB27581CD100ECCB2D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEAA27581CD100ECCB2D /* Observable.swift */; };
+		04D1FA5D2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D1FA5C2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift */; };
+		04D1FA5F2770F87F0011ECC0 /* TextCreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D1FA5E2770F87F0011ECC0 /* TextCreateTaskViewModel.swift */; };
+		04D1FA612771010A0011ECC0 /* FrequncyValueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D1FA602771010A0011ECC0 /* FrequncyValueModel.swift */; };
+		04D1FA63277118840011ECC0 /* DescriptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D1FA62277118840011ECC0 /* DescriptionModel.swift */; };
+		04DED8012770A54C00DBD724 /* CreateTaskFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DED8002770A54C00DBD724 /* CreateTaskFactory.swift */; };
+		04DED8032770A82800DBD724 /* DefaultCreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DED8022770A82800DBD724 /* DefaultCreateTaskViewModel.swift */; };
+		04DED8062770A92300DBD724 /* DefaultTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DED8052770A92300DBD724 /* DefaultTaskModel.swift */; };
+		04DED8082770A99500DBD724 /* RepeatTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DED8072770A99500DBD724 /* RepeatTaskModel.swift */; };
+		04DED80A2770AA8100DBD724 /* TimerTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DED8092770AA8100DBD724 /* TimerTaskModel.swift */; };
+		04DED80C2770AAD400DBD724 /* TextTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DED80B2770AAD400DBD724 /* TextTaskModel.swift */; };
+		04DED80E2770ADEA00DBD724 /* RepeatCreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DED80D2770ADEA00DBD724 /* RepeatCreateTaskViewModel.swift */; };
+		04DED8102770CFA700DBD724 /* TaskCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DED80F2770CFA700DBD724 /* TaskCreation.swift */; };
 		04E1426D275E53DE0076D8FC /* WeekdayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E1426C275E53DE0076D8FC /* WeekdayButton.swift */; };
 		04E1426F275E53EA0076D8FC /* WeekdayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E1426E275E53EA0076D8FC /* WeekdayModel.swift */; };
 		04E14272275E779B0076D8FC /* SelectWeekdayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E14271275E779B0076D8FC /* SelectWeekdayCell.swift */; };
@@ -421,6 +433,18 @@
 		04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
 		04CECEA82758023600ECCB2D /* TaskCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreationModel.swift; sourceTree = "<group>"; };
 		04CECEAA27581CD100ECCB2D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		04D1FA5C2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCreateTaskViewModel.swift; sourceTree = "<group>"; };
+		04D1FA5E2770F87F0011ECC0 /* TextCreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCreateTaskViewModel.swift; sourceTree = "<group>"; };
+		04D1FA602771010A0011ECC0 /* FrequncyValueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequncyValueModel.swift; sourceTree = "<group>"; };
+		04D1FA62277118840011ECC0 /* DescriptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionModel.swift; sourceTree = "<group>"; };
+		04DED8002770A54C00DBD724 /* CreateTaskFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskFactory.swift; sourceTree = "<group>"; };
+		04DED8022770A82800DBD724 /* DefaultCreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCreateTaskViewModel.swift; sourceTree = "<group>"; };
+		04DED8052770A92300DBD724 /* DefaultTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTaskModel.swift; sourceTree = "<group>"; };
+		04DED8072770A99500DBD724 /* RepeatTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatTaskModel.swift; sourceTree = "<group>"; };
+		04DED8092770AA8100DBD724 /* TimerTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerTaskModel.swift; sourceTree = "<group>"; };
+		04DED80B2770AAD400DBD724 /* TextTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTaskModel.swift; sourceTree = "<group>"; };
+		04DED80D2770ADEA00DBD724 /* RepeatCreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatCreateTaskViewModel.swift; sourceTree = "<group>"; };
+		04DED80F2770CFA700DBD724 /* TaskCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreation.swift; sourceTree = "<group>"; };
 		04E1426C275E53DE0076D8FC /* WeekdayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayButton.swift; sourceTree = "<group>"; };
 		04E1426E275E53EA0076D8FC /* WeekdayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayModel.swift; sourceTree = "<group>"; };
 		04E14271275E779B0076D8FC /* SelectWeekdayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWeekdayCell.swift; sourceTree = "<group>"; };
@@ -814,7 +838,7 @@
 		04403446275F96B00095EB8A /* new */ = {
 			isa = PBXGroup;
 			children = (
-				0440343A275F943F0095EB8A /* CreateTaskViewModel.swift */,
+				6DC4AE17268DA6A60028CDDE /* ATYCreateTaskViewModel.swift */,
 				048B927C274FF1D4007FABC2 /* CreateTaskViewModelImpl.swift */,
 			);
 			path = new;
@@ -946,7 +970,7 @@
 			isa = PBXGroup;
 			children = (
 				0487420B2768FBF400C0D94B /* DescriptionTaskCell.swift */,
-				049334E5276920BF00AEF40E /* PlaceholderTextViewModel.swift */,
+				04D1FA62277118840011ECC0 /* DescriptionModel.swift */,
 			);
 			path = new;
 			sourceTree = "<group>";
@@ -1190,6 +1214,36 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		04D1FA6427711A040011ECC0 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				048742082768E96A00C0D94B /* PlaceholderTexView.swift */,
+				049334E5276920BF00AEF40E /* PlaceholderTextViewModel.swift */,
+			);
+			path = TextView;
+			sourceTree = "<group>";
+		};
+		04DED7FF2770A52B00DBD724 /* NewTest */ = {
+			isa = PBXGroup;
+			children = (
+				04DED8042770A91700DBD724 /* default */,
+				04DED8002770A54C00DBD724 /* CreateTaskFactory.swift */,
+			);
+			path = NewTest;
+			sourceTree = "<group>";
+		};
+		04DED8042770A91700DBD724 /* default */ = {
+			isa = PBXGroup;
+			children = (
+				04DED80F2770CFA700DBD724 /* TaskCreation.swift */,
+				04DED8052770A92300DBD724 /* DefaultTaskModel.swift */,
+				04DED8072770A99500DBD724 /* RepeatTaskModel.swift */,
+				04DED8092770AA8100DBD724 /* TimerTaskModel.swift */,
+				04DED80B2770AAD400DBD724 /* TextTaskModel.swift */,
+			);
+			path = default;
+			sourceTree = "<group>";
+		};
 		04E1426B275E53A10076D8FC /* WeekdayButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1242,6 +1296,7 @@
 				04F71BAC276CD7F900A0B181 /* FrequencyCell.swift */,
 				04F71BB3276CFE4F00A0B181 /* FrequencyView.swift */,
 				04F71BB5276D139300A0B181 /* FrequencyModel.swift */,
+				04D1FA602771010A0011ECC0 /* FrequncyValueModel.swift */,
 			);
 			path = new;
 			sourceTree = "<group>";
@@ -1770,6 +1825,7 @@
 		6D651CE62661146B003ACF95 /* CreateTaskScene */ = {
 			isa = PBXGroup;
 			children = (
+				04DED7FF2770A52B00DBD724 /* NewTest */,
 				0440343C275F94BB0095EB8A /* TableModel */,
 				6D651CE72661147B003ACF95 /* ViewModel */,
 				6D651CE826611480003ACF95 /* View */,
@@ -1781,7 +1837,11 @@
 		6D651CE72661147B003ACF95 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				6DC4AE17268DA6A60028CDDE /* ATYCreateTaskViewModel.swift */,
+				0440343A275F943F0095EB8A /* CreateTaskViewModel.swift */,
+				04DED8022770A82800DBD724 /* DefaultCreateTaskViewModel.swift */,
+				04DED80D2770ADEA00DBD724 /* RepeatCreateTaskViewModel.swift */,
+				04D1FA5C2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift */,
+				04D1FA5E2770F87F0011ECC0 /* TextCreateTaskViewModel.swift */,
 				04403446275F96B00095EB8A /* new */,
 			);
 			path = ViewModel;
@@ -2096,7 +2156,7 @@
 		6D91B861265BE1F200EB2589 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				048742082768E96A00C0D94B /* PlaceholderTexView.swift */,
+				04D1FA6427711A040011ECC0 /* TextView */,
 				04B3D606276E4133006BF9FC /* TitledCheckBox */,
 				04F71BB0276CFDF000A0B181 /* Button */,
 				048C22C327677CB400F3FF4D /* Field */,
@@ -2800,6 +2860,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D32D862266527B5009D62C9 /* ATYSaveTaskCell.swift in Sources */,
+				04DED8062770A92300DBD724 /* DefaultTaskModel.swift in Sources */,
 				041A730D274C3B4C0021B6FC /* AddPhotoViewModel.swift in Sources */,
 				6D2ADD3726B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.swift in Sources */,
 				6D403494265D151A00248E9E /* ATYAllTasksViewController.swift in Sources */,
@@ -2817,6 +2878,7 @@
 				6D118EBB26A9A51100601F34 /* ATYShareCourseLinkCell.swift in Sources */,
 				6D6F6AEB269EFDDE009AD9E1 /* ATYCategoryCourseCell.swift in Sources */,
 				04FD269A27623C900062EEF7 /* NaturalNumberTextField.swift in Sources */,
+				04DED80A2770AA8100DBD724 /* TimerTaskModel.swift in Sources */,
 				6DDD2AB4268C661B00DD9A87 /* ATYDatabaseService+CDWallet.swift in Sources */,
 				6D4E12EC2657ADA100732465 /* CDUser+CoreDataProperties.swift in Sources */,
 				6D32D87326653022009D62C9 /* ATYCreateDescriptionTaskCell.swift in Sources */,
@@ -2834,6 +2896,7 @@
 				049334EF276929CA00AEF40E /* TaskSanctionCell.swift in Sources */,
 				6DF53967268381990086A64E /* CDVacation+CoreDataClass.swift in Sources */,
 				6DC767DD26BBCD7200B8811C /* ATYSettingsViewController.swift in Sources */,
+				04D1FA5D2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift in Sources */,
 				6D40349C265D38CB00248E9E /* ATYCalendarCollectionViewController.swift in Sources */,
 				6DDD2ABA268CA08000DD9A87 /* ATYDatabaseService+CDUserTask.swift in Sources */,
 				0408DF75274AA03E000C422B /* AppCoordinator.swift in Sources */,
@@ -2842,6 +2905,7 @@
 				04F71BB2276CFDFE00A0B181 /* FrequencyButton.swift in Sources */,
 				6D32D853266501E8009D62C9 /* ATYCreateTaskPeriodCalendarCell.swift in Sources */,
 				6D651CEA2661148E003ACF95 /* ATYCreateTaskViewController.swift in Sources */,
+				04DED8102770CFA700DBD724 /* TaskCreation.swift in Sources */,
 				6D55ADE026A1C8A900F7DD4A /* ATYEditCourseCountRepeatTaskViewController.swift in Sources */,
 				6DDD2AB1268C61AB00DD9A87 /* ATYDatabaseService+CDVacation.swift in Sources */,
 				6D40CA602667CFA200A78CEC /* UIViewController.swift in Sources */,
@@ -2863,6 +2927,7 @@
 				6D3AC1EA26846DDC007AC57D /* CDStore+CoreDataClass.swift in Sources */,
 				6DDBE4892666742800F797FD /* ATYSelectTimeViewController.swift in Sources */,
 				041A7314274C401E0021B6FC /* TasksCoordinator.swift in Sources */,
+				04DED8012770A54C00DBD724 /* CreateTaskFactory.swift in Sources */,
 				044841EB276A149D0011A1D4 /* DateFieldModel.swift in Sources */,
 				04F71BB4276CFE4F00A0B181 /* FrequencyView.swift in Sources */,
 				6D568ECF26B2EA45000619B2 /* UINavigationBar+BlurEffect.swift in Sources */,
@@ -2909,6 +2974,7 @@
 				6D55ADE426A1C8F500F7DD4A /* ATYEditCourseCountRepeatTaskCell.swift in Sources */,
 				6D7399B6268B5CB80026D81D /* ATYDatabaseService+CDCourseUser.swift in Sources */,
 				6D79939726BAB4250071EF4E /* ATYShopCollectionViewCell.swift in Sources */,
+				04DED80C2770AAD400DBD724 /* TextTaskModel.swift in Sources */,
 				6DDD2AAE268C5BE500DD9A87 /* ATYDatabaseService+CDStatistics.swift in Sources */,
 				6D32D86526652905009D62C9 /* ATYCreateCountRepeatTaskCell.swift in Sources */,
 				6DA60DD92680899700885650 /* ATYShareCourseCell.swift in Sources */,
@@ -2935,6 +3001,7 @@
 				6D4928CE26A994D8000E5346 /* ATYJoinToCloseCourseViewController.swift in Sources */,
 				6DA60DEF2680A5DE00885650 /* ATYCreateCourseTaskMinSanctionCell.swift in Sources */,
 				6DA10EE326AAA4A200A05770 /* ATYProgressInfoTableViewCell.swift in Sources */,
+				04D1FA612771010A0011ECC0 /* FrequncyValueModel.swift in Sources */,
 				6DAB02A9265671A100B72955 /* URL.swift in Sources */,
 				04731A34274929F4001DD136 /* HTTPTask.swift in Sources */,
 				6D4E12E52657ACC600732465 /* ATYDatabaseService+CDUser.swift in Sources */,
@@ -2946,6 +3013,8 @@
 				6DDD2ABD268CA3DD00DD9A87 /* ATYDatabaseService+CDSanction.swift in Sources */,
 				6D8A2809265E3BE800BAAEF5 /* UITableViewCell+ReuseIdentifier.swift in Sources */,
 				6D55ADDA26A1B3D100F7DD4A /* ATYEditTimerCourseTaskDurationCell.swift in Sources */,
+				04DED8082770A99500DBD724 /* RepeatTaskModel.swift in Sources */,
+				04D1FA5F2770F87F0011ECC0 /* TextCreateTaskViewModel.swift in Sources */,
 				6D8A2832265E6DD200BAAEF5 /* DismissAnimation.swift in Sources */,
 				04E1426F275E53EA0076D8FC /* WeekdayModel.swift in Sources */,
 				6DA10EEB26AAB4D700A05770 /* ATYProgressParticipantViewController.swift in Sources */,
@@ -2956,6 +3025,7 @@
 				049334EB276922CC00AEF40E /* MinimumSymbolsCell.swift in Sources */,
 				0429A4B4275AB76500B1BFD9 /* NotificationTaskTimeView.swift in Sources */,
 				0491EE13275BE48000B4691B /* NotificationTaskTimeModel.swift in Sources */,
+				04D1FA63277118840011ECC0 /* DescriptionModel.swift in Sources */,
 				6D8A2838265E6DF900BAAEF5 /* InstantPanGestureRecognizer.swift in Sources */,
 				6DC56C7926A8111D00863F1C /* ATYPaidCoursePreviewHeaderCell.swift in Sources */,
 				0440344C275FE94E0095EB8A /* SelectDateCell.swift in Sources */,
@@ -3012,6 +3082,8 @@
 				6DA8E22226A6E7FC005014DA /* ATYGradientImageView.swift in Sources */,
 				04F71BBE276D228400A0B181 /* RepeatCounterCell.swift in Sources */,
 				0482762A2763667800B501C5 /* NaturalNumberFieldModel.swift in Sources */,
+				04DED80E2770ADEA00DBD724 /* RepeatCreateTaskViewModel.swift in Sources */,
+				04DED8032770A82800DBD724 /* DefaultCreateTaskViewModel.swift in Sources */,
 				048742092768E96A00C0D94B /* PlaceholderTexView.swift in Sources */,
 				04E72A88275CEFC9003B40EA /* TimeBlockModelFactory.swift in Sources */,
 				6DF5394F26837C220086A64E /* CDCourseTask+CoreDataProperties.swift in Sources */,
