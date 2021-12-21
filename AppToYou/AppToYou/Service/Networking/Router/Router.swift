@@ -1,8 +1,14 @@
 import Foundation
 
 class Router<EndPoint: Endpoint>: NetworkRouter {
+    
     private var task: URLSessionTask?
-    private var body: Encodable?
+    private let deviceIdentifierService: DeviceIdentifiable
+    
+    
+    init(deviceIdentifierService: DeviceIdentifiable) {
+        self.deviceIdentifierService = deviceIdentifierService
+    }
     
     func request(_ route: EndPoint, completion: @escaping NetworkRouterCompletion) {
         let session = URLSession.shared
@@ -29,11 +35,18 @@ class Router<EndPoint: Endpoint>: NetworkRouter {
         
         route.task.prepare(for: &request)
         request.httpMethod = route.httpMethod.rawValue
-        route.headers?
-            .compactMap { $0 }
-            .forEach { request.addValue($0.value, forHTTPHeaderField: $0.key) }
+        configureHeaders(for: route, request: &request)
         
         return request
+    }
+    
+    
+    private func configureHeaders(for route: EndPoint, request: inout URLRequest) {
+        request.addValue(deviceIdentifierService.getDeviceUUID(), forHTTPHeaderField: "uuid")
+        
+        route.headers
+            .forEach { request.addValue($0.value, forHTTPHeaderField: $0.key) }
+        
     }
     
 }

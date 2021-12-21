@@ -1,33 +1,38 @@
-//
-//  ParameterEncoding.swift
-//  Currency Converter
-//
-//  Created by Кирилл Клименков on 3/26/20.
-//  Copyright © 2020 Kiryl Klimiankou. All rights reserved.
-//
-
 import Foundation
 
-public typealias Parameters = [String: Any]
 
+/**
+ Набор кодирования данных запроса.
+ */
 public enum ParameterEncoding {
+    /**
+     Кодирование url параметров запроса.
+     */
     case urlEncoding
+
+    /**
+     Кодирование тела запроса.
+     */
     case jsonEncoding
+
+    /**
+     Кодирование тела и url параметров запроса.
+     */
     case urlAndJsonEncoding
-    
+
     public func encode<T: Encodable>(urlRequest: inout URLRequest,
                        body: T?,
-                       urlParameters: Parameters?) throws {
+                       urlParameters: [Parameter]?) throws {
         do {
             switch self {
             case .urlEncoding:
                 guard let urlParameters = urlParameters else { return }
                 try URLParameterEncoder().encode(urlRequest: &urlRequest, with: urlParameters)
-                
+
             case .jsonEncoding:
                 guard let body = body else { return }
                 try JsonBodyEncoder().encode(urlRequest: &urlRequest, with: body)
-                
+
             case .urlAndJsonEncoding:
                 guard
                     let body = body,
@@ -42,12 +47,5 @@ public enum ParameterEncoding {
             throw error
         }
     }
-    
-}
 
-
-public enum NetworkError : String, Error {
-    case parametersNil = "Parameters were nil."
-    case encodingFailed = "Parameter encoding failed."
-    case missingURL = "URL is nil."
 }

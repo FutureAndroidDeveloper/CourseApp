@@ -1,6 +1,8 @@
 import Foundation
 
+
 public typealias NetworkRouterCompletion = (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void
+
 
 /**
  Протокол роутера для взаимодействия с Api.

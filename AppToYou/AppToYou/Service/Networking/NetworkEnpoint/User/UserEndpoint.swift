@@ -30,18 +30,14 @@ enum UserEndpoint: Endpoint {
     var task: HTTPTask {
         switch self {
         case .create(let user):
-            return RequestWithParameters(body: user, encoding: .jsonEncoding, urlParameters: nil)
+            return RequestWithParameters(body: user)
             
         case .update(let user):
-            return RequestWithParameters(body: user, encoding: .jsonEncoding, urlParameters: nil)
+            return RequestWithParameters(body: user)
             
         case .delete:
             return Request()
         }
-    }
-    
-    var headers: HTTPHeaders? {
-        return ["uuid": "DE6B2DED-8275-4E80-B089-86AD0865F4C7"]
     }
     
 }

@@ -260,8 +260,12 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
     }
 
     @objc func signInButtonAction() {
-        print("signInButtonAction")
-        viewModel.input.didLogin()
+        let login = emailTextField.text ?? String()
+        let password = passwordTextField.text ?? String()
+        let credentials = Credentials(mail: login, password: password)
+        
+        viewModel.input.loginTapped(credentials)
+//        viewModel.input.didLogin()
     }
 
     @objc func registrationButtonAction() {
@@ -269,6 +273,7 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
     }
 
     @objc func googleButtonAction() {
+        print(DeviceIdentifierService().getDeviceUUID())
         print("registrationButtonAction")
     }
 

@@ -1,5 +1,6 @@
 import Foundation
 
+
 struct UserResponse: Decodable {
     let id: Int64?
     let createdTimestamp: String?

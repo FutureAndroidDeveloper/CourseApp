@@ -1,25 +1,22 @@
-//
-//  URLEncoding.swift
-//  Currency Converter
-//
-//  Created by Кирилл Клименков on 3/26/20.
-//  Copyright © 2020 Kiryl Klimiankou. All rights reserved.
-//
-
 import Foundation
 
 
+/**
+ Кодировщик url параметров запроса.
+ */
 public struct URLParameterEncoder: ParameterEncoder {
-    public func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws {
-        guard let url = urlRequest.url else { throw NetworkError.missingURL }
+    
+    public func encode(urlRequest: inout URLRequest, with parameters: [Parameter]) throws {
+        guard let url = urlRequest.url else {
+            throw RequestEncodingError.missingURL
+        }
         
         if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
-            
             urlComponents.queryItems = [URLQueryItem]()
             
-            parameters.forEach { key, value in
-                let correctValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-                let queryItem = URLQueryItem(name: key, value: correctValue)
+            parameters.forEach { parameter in
+                let correctValue = "\(parameter.value)".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+                let queryItem = URLQueryItem(name: parameter.name, value: correctValue)
                 urlComponents.queryItems?.append(queryItem)
             }
             

@@ -4,6 +4,7 @@ import XCoordinator
 protocol AuthorizationViewModelInput {
     func resetTapped()
     func registrationTapped()
+    func loginTapped(_ credentials: Credentials)
     func didLogin()
 }
 
@@ -28,10 +29,35 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
 
     private let appRouter: UnownedRouter<AppRoute>
     private let router: UnownedRouter<LoginRoute>
+    
+    private let loginManager: LoginManager
 
     init(router: UnownedRouter<LoginRoute>, appRouter: UnownedRouter<AppRoute>) {
         self.router = router
         self.appRouter = appRouter
+        loginManager = LoginManager(deviceIdentifierService: DeviceIdentifierService())
+    }
+    
+    func loginTapped(_ credentials: Credentials) {
+        // validate
+        loginManager.login(credentials: credentials) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            
+            switch result {
+            case .success(let loginResponse):
+                if loginResponse.loginStatus == .ok {
+                    self.didLogin()
+                }
+                else {
+                    self.showLogin(message: loginResponse.loginStatus.message)
+                }
+                
+            case .failure(let error):
+                print(error.description)
+            }
+        }
     }
     
     func didLogin() {
@@ -46,4 +72,11 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
         router.trigger(.registration)
     }
     
+    private func showLogin(message: String?) {
+        guard let message = message else {
+            return
+        }
+        
+        print(message)
+    }
 }

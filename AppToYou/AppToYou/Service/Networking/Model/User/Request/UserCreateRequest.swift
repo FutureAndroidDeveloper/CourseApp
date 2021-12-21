@@ -1,5 +1,6 @@
 import Foundation
 
+
 struct UserCreateRequest: Encodable {
     let avatarPath: String?
     let loginEmailAddress: String
