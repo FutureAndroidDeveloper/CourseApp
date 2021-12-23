@@ -1,5 +1,6 @@
 PODS:
   - CoreStore (8.1.0)
+  - DropDown (2.3.13)
   - DynamicBlurView (4.1.0)
   - IQKeyboardManagerSwift (6.3.0)
   - KeychainAccess (4.2.2)
@@ -17,6 +18,7 @@ PODS:
 
 DEPENDENCIES:
   - CoreStore (~> 8.0)
+  - DropDown
   - IQKeyboardManagerSwift (= 6.3.0)
   - KeychainAccess
   - Parchment (~> 3.0)
@@ -29,6 +31,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - CoreStore
+    - DropDown
     - DynamicBlurView
     - IQKeyboardManagerSwift
     - KeychainAccess
@@ -42,6 +45,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   CoreStore: 497ade3103f1ffd95d09c2658f9008d10c7d3082
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
   IQKeyboardManagerSwift: a8228c257614af98743b4cd8584637025f36358f
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
@@ -53,6 +57,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   XCoordinator: 9ee654fedef1ffede33d5c11677708a555c00542
 
-PODFILE CHECKSUM: 5ce49c0d37180f551ffbdda60c72cd2c9ee49124
+PODFILE CHECKSUM: 33cfdae8ee2b29dfbb0bfffd55c71bf22c4d22c2
 
 COCOAPODS: 1.11.2

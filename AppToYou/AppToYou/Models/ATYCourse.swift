@@ -40,7 +40,7 @@ struct ATYDurationCourse {
     var day: Int = 0
 }
 
-enum ATYCourseCategory {
+enum ATYCourseCategory: CaseIterable {
     case HEALTHY_LIFESTYLE
     case CHILDREN
     case PETS
@@ -99,4 +99,27 @@ enum ATYCourseType {
     case PUBLIC
     case PRIVATE
     case PAID
+    
+    var title: String? {
+        switch self {
+        case .PUBLIC:
+            return "Открытый"
+        case .PRIVATE:
+            return  "Закрытый"
+        case .PAID:
+            return "Платный"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .PUBLIC:
+            return "Любой пользователь приложения может стать участником курса, выполнять его задачи и писать в общем чате"
+        case .PRIVATE:
+            return "Лишь после одобрения заявки администратором курса, пользователь может стать его участником "
+        case .PAID:
+            return "Лишь после оплаты курса, пользователь может стать его участником "
+        }
+    }
+    
 }

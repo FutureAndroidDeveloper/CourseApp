@@ -16,7 +16,8 @@ class NavigationBarViewController: UIViewController {
     
     private lazy var pagingViewController: NavigationBarPagingViewController = {
         let viewController = NavigationBarPagingViewController(viewControllers: [
-            ATYTodayTasksViewController(title: R.string.localizable.today(), taskRouter: self.taskRouter),
+            ToodayTaskViewController(title: R.string.localizable.today(), taskRouter: self.taskRouter),
+//            ATYTodayTasksViewController(title: R.string.localizable.today(), taskRouter: self.taskRouter),
             ATYAllTasksViewController(name: R.string.localizable.allTasks())
         ])
         return viewController

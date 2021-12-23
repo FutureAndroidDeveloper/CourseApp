@@ -18,7 +18,13 @@ struct ATYTemporaryCourseData {
     var categories : [String]
 }
 
-class ATYCoursesViewController : UIViewController {
+class ATYCoursesViewController : UIViewController, BindableType {
+    
+    var viewModel: CoursesViewModel!
+    
+    func bindViewModel() {
+        
+    }
 
     enum CreateCellCourses: Int, CaseIterable {
         case courseBar
@@ -100,16 +106,18 @@ extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource 
         if indexPath.row == 0 && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateCourseCell.reuseIdentifier, for: indexPath) as! ATYCreateCourseCell
             cell.createCourseCallback = { [weak self] in
-                let vc = ATYCreateCourseViewController(interactionMode: .create)
-                vc.callbackCreateCourse = { [weak self] course in
-                    guard let course = course else { return }
-                    self?.courseArray.append(course)
-                    self?.filteredArray = self?.courseArray ?? []
-                    self?.tableView.reloadData()
-                }
-                self?.navigationController?.setNavigationBarHidden(false, animated: false)
-                vc.hidesBottomBarWhenPushed = true
-                self?.navigationController?.pushViewController(vc, animated: true)
+                print("Create Tapped")
+                self?.viewModel.input.createDidTapped()
+//                let vc = ATYCreateCourseViewController(interactionMode: .create)
+//                vc.callbackCreateCourse = { [weak self] course in
+//                    guard let course = course else { return }
+//                    self?.courseArray.append(course)
+//                    self?.filteredArray = self?.courseArray ?? []
+//                    self?.tableView.reloadData()
+//                }
+//                self?.navigationController?.setNavigationBarHidden(false, animated: false)
+//                vc.hidesBottomBarWhenPushed = true
+//                self?.navigationController?.pushViewController(vc, animated: true)
             }
             return cell
         }
