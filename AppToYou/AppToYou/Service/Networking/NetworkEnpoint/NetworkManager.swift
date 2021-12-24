@@ -101,8 +101,8 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
      - returns: Модель ответа сервера.
      */
     private func decode<T: Decodable >(_ type: T.Type, from data: Data) throws -> T {
-        let json = try? JSONSerialization.jsonObject(with: data, options: [])
-        print(json)
+        print("\nResponse:")
+        debugPrint(data.prettyPrintedJSONString)
         return try JSONDecoder().decode(T.self, from: data)
     }
     

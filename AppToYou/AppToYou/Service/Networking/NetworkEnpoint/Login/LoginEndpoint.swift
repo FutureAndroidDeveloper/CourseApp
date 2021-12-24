@@ -20,13 +20,12 @@ enum LoginEndpoint: Endpoint {
         var result = "user/login"
         
         switch self {
+        case .merge(let credentials, _):
+            result.append("/merge")
+            fallthrough
+            
         case .login(let credentials):
             let encodedCredentials = encode(credentials)
-            result.append("/\(encodedCredentials)")
-            
-        case .merge(let credentials, _):
-            let encodedCredentials = encode(credentials)
-            result.append("/merge")
             result.append("/\(encodedCredentials)")
             
         case .oauth:
@@ -74,6 +73,8 @@ enum LoginEndpoint: Endpoint {
             print("Cant encode creds: \(credentials.mail):\(credentials.password)")
             return String()
         }
+        
+        UserSession.shared.updateEncodedData(encodedData)
         return encodedData.base64EncodedString()
     }
     

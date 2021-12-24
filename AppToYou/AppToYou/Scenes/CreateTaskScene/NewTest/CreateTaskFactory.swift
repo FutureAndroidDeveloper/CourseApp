@@ -13,13 +13,13 @@ class CreateTaskFactory {
     func getViewModel(_ router: UnownedRouter<TasksRoute>) -> CreateTaskViewModel {
         switch type {
         case .CHECKBOX:
-            return DefaultCreateTaskViewModel(router: router)
+            return DefaultCreateTaskViewModel(type: type, router: router)
         case .TEXT:
-            return TextCreateTaskViewModel(router: router)
+            return TextCreateTaskViewModel(type: type,router: router)
         case .TIMER:
-            return TimerCreateTaskViewModel(router: router)
+            return TimerCreateTaskViewModel(type: type, router: router)
         case .RITUAL:
-            return RepeatCreateTaskViewModel(router: router)
+            return RepeatCreateTaskViewModel(type: type, router: router)
         }
     }
     

@@ -18,6 +18,7 @@ class DeviceIdentifierService: DeviceIdentifiable {
     
     func getDeviceUUID() -> String {
         if let uuid = getUUID() {
+            print("UUID = \(uuid)")
             return uuid
         } else {
             let uuid = UUID().uuidString

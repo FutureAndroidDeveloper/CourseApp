@@ -12,12 +12,18 @@ class RepeatCreateTaskViewModel: DefaultCreateTaskViewModel, CounterTaskCreation
         data.value = constructor.getModels()
     }
     
-    override func saveDidTapped() {
-        super.saveDidTapped()
+//    override func saveDidTapped() {
+//        super.saveDidTapped()
+//    }
+    
+    override func validate() {
+        super.validate()
         
         let counter = constructor.model.countModel.valueModel.value
         print()
         print("Counter = \(counter)")
+        
+        taskRequest?.taskAttribute = "\(counter)"
     }
 
     func getCounterModel() -> NaturalNumberFieldModel {

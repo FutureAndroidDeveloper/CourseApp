@@ -32,7 +32,7 @@ struct ATYUserTask {
     var reminderList : [String]?
 }
 
-enum ATYFrequencyTypeEnum : String, CaseIterable {
+enum ATYFrequencyTypeEnum: String, CaseIterable, Codable {
     case ONCE
     case EVERYDAY
     case WEEKDAYS
@@ -45,7 +45,7 @@ enum ATYFrequencyTypeEnum : String, CaseIterable {
     }
 }
 
-enum ATYTaskType : String, CaseIterable {
+enum ATYTaskType: String, CaseIterable, Codable {
     case CHECKBOX
     case TEXT
     case TIMER

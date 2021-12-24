@@ -12,14 +12,21 @@ class TextCreateTaskViewModel: DefaultCreateTaskViewModel, TextTaskCreationDeleg
         data.value = constructor.getModels()
     }
     
-    override func saveDidTapped() {
-        super.saveDidTapped()
+//    override func saveDidTapped() {
+//        super.saveDidTapped()
+//    }
+    
+    override func validate() {
+        super.validate()
         
         let description = constructor.model.descriptionModel.fieldModel.value
         let min = constructor.model.lengthLimitModel.value
         print()
         print("text = \(description)")
         print("limit = \(min)")
+        
+        taskRequest?.taskDescription = description
+        taskRequest?.taskAttribute = "\(min)"
     }
     
     func getDescriptionModel() -> PlaceholderTextViewModel {

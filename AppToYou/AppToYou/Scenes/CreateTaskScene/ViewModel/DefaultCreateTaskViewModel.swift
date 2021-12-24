@@ -14,9 +14,14 @@ class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput,
     
     var data: Observable<[AnyObject]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
+    
+    private let type: ATYTaskType
+    private let taskService = TaskManager(deviceIdentifierService: DeviceIdentifierService())
+    var taskRequest: UserTaskCreateRequest?
 
 
-    init(router: UnownedRouter<TasksRoute>) {
+    init(type: ATYTaskType, router: UnownedRouter<TasksRoute>) {
+        self.type = type
         self.router = router
         update()
     }
@@ -33,9 +38,32 @@ class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput,
     func durationPicked(_ duration: DurationTime) {
         // обработка получения происходит в TimerCreateTaskViewModel
     }
+    
+    private func saveModel() {
+        guard let task = taskRequest else {
+            print("Task Request Is NIL!")
+            return
+        }
+        print()
+        print("trying to save")
+        print(task)
+        
+        taskService.create(task: task) { result in
+            switch result {
+            case .success(let newTask):
+                print()
+                print("NEW TASK created")
+                print(newTask)
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 
     func saveDidTapped() {
         validate()
+        saveModel()
     }
     
     func validate() {
@@ -45,37 +73,33 @@ class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput,
         let model = constructor.model
         
         let name = model.nameModel.fieldModel.value
-        print("name = \(name)")
-        
         let freq = model.frequencyModel.value.frequency
-        print("freq = \(freq)")
+        let sanction = Int32(model.sanctionModel.model.value)
+
+        let startPeriod = model.periodModel?.start.value
+        let startOnce = model.selectDateModel?.date.value
         
-        let days = model.weekdayModel?.weekdayModels.compactMap { $0 }
-        let daysResult = days?.map { $0.isSelected }
-            .map { $0 ? "1" : "0" }
+        guard let startDate = startPeriod ?? startOnce else {
+            print("NEED to set start date")
+            return
+        }
+        
+        let start = startDate.toString(dateFormat: .localeYearDate)
+        let end = model.periodModel?.end.value?.toString(dateFormat: .localeYearDate)
+        let isInfinite = model.periodModel?.isInfiniteModel.isSelected ?? false
+        
+        let reminders = model.notificationModel.notificationModels
+            .map { "\($0.hourModel.value):\($0.minModel.value)" }
+        
+        let days = model.weekdayModel?.weekdayModels
+            .compactMap { $0 }
+            .map { $0.isSelected ? "1" : "0" }
             .joined()
-        print("daysResult = \(daysResult)")
-        
-        let onceDate = model.selectDateModel?.date.value
-        print("Once date = \(onceDate)")
-        
-        let period = model.periodModel
-        let start = period?.start.value
-        let end = period?.end.value
-        let isInfinite = period?.isInfiniteModel.isSelected
-        print("start = \(start)")
-        print("end = \(end)")
-        print("isInfinite = \(isInfinite)")
-        
-        let notifcations = model.notificationModel.notificationModels
-        notifcations.forEach { print("\($0.hourModel.value) : \($0.minModel.value)") }
-        
-        let sanction = model.sanctionModel.model.value
-        print("sanction = \(sanction)")
-//
-//        if let repeatModel = model as? RepeatCreateTaskModel {
-//            let name = repeatModel.nameModel.fieldModel.value
-//        }
+
+        taskRequest = UserTaskCreateRequest(
+            taskName: name, taskType: type, frequencyType: freq, taskSanction: sanction,
+            infiniteExecution: isInfinite, startDate: start, endDate: end, daysCode: days,
+            taskDescription: nil, reminderList: reminders, taskAttribute: nil)
     }
     
     /**

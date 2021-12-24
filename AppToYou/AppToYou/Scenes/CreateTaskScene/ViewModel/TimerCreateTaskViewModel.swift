@@ -17,8 +17,12 @@ class TimerCreateTaskViewModel: DefaultCreateTaskViewModel, TimerTaskCreationDel
         data.value = constructor.getModels()
     }
     
-    override func saveDidTapped() {
-        super.saveDidTapped()
+//    override func saveDidTapped() {
+//        super.saveDidTapped()
+//    }
+    
+    override func validate() {
+        super.validate()
         
         let duration = constructor.model.durationModel.durationModel
         let h = duration.hourModel.value
@@ -26,6 +30,8 @@ class TimerCreateTaskViewModel: DefaultCreateTaskViewModel, TimerTaskCreationDel
         let s = duration.secModel.value
         print()
         print("duration = \(h):\(m):\(s)")
+        
+        taskRequest?.taskAttribute = "\(h):\(m):\(s)"
     }
     
     func getDurationModel() -> TaskDurationModel {

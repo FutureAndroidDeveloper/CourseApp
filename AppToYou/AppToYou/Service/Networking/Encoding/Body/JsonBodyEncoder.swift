@@ -8,6 +8,9 @@ public struct JsonBodyEncoder: BodyEncoding {
     public func encode<T: Encodable>(urlRequest: inout URLRequest, with body: T) throws {
         do {
             let jsonData = try JSONEncoder().encode(body)
+            print("\nRequest body:")
+            debugPrint(jsonData.prettyPrintedJSONString)
+            
             urlRequest.httpBody = jsonData
         } catch {
             throw RequestEncodingError.bodyEncodingFailed
