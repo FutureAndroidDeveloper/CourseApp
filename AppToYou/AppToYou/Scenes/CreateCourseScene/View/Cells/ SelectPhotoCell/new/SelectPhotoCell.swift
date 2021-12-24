@@ -3,6 +3,8 @@ import UIKit
 
 class SelectPhotoCell: UITableViewCell, InflatableView {
     
+    private var model: SelectPhotoModel?
+    
     private let nameLabel : UILabel = {
         let label = UILabel()
         label.text = "Обложка курса"
@@ -24,6 +26,7 @@ class SelectPhotoCell: UITableViewCell, InflatableView {
         return imageView
     }()
 
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = R.color.backgroundAppColor()
@@ -47,6 +50,9 @@ class SelectPhotoCell: UITableViewCell, InflatableView {
             make.trailing.equalToSuperview().offset(-20)
         }
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
+        photoImageView.addGestureRecognizer(tapGesture)
+        photoImageView.isUserInteractionEnabled = true
         photoImageView.layer.cornerRadius = 20
         photoImageView.clipsToBounds = true
         photoImageView.snp.makeConstraints { (make) in
@@ -69,15 +75,14 @@ class SelectPhotoCell: UITableViewCell, InflatableView {
         guard let model = model as? SelectPhotoModel else {
             return
         }
-        
-        if let image = model.photoImage {
-            photoImageView.image = image
-            typeImageView.isHidden = true
-        } else {
-            photoImageView.image = R.image.coursePhotoExample()
-            typeImageView.isHidden = false
-        }
-//        photoImageView.image = model.photoImage
+        self.model = model
+        photoImageView.image = model.photoImage
+        typeImageView.isHidden = model.photoImage == model.defaultImage
+    }
+    
+    @objc
+    private func selectPhoto() {
+        model?.pickImage()
     }
     
 }

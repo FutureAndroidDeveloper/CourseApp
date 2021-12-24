@@ -8,9 +8,8 @@ class TimerCreateTaskViewModel: DefaultCreateTaskViewModel, TimerTaskCreationDel
         return TimerTaskModel(delegate: self)
     }()
     
-    override func durationTimePicked(_ time: DurationTime) {
-//        let duration =  TaskDurationModel(durationTime: time)
-        constructor.model.durationModel.durationModel.update(durationTime: time)
+    override func durationPicked(_ duration: DurationTime) {
+        constructor.model.durationModel.durationModel.update(durationTime: duration)
         update()
     }
     

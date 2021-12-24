@@ -11,6 +11,11 @@ class CourseTypeView: UIView {
     
     private(set) var model: CourseTypeModel
     
+    var isSelected: Bool {
+        get { return radioButton.isSelected }
+        set { radioButton.isSelected = newValue }
+    }
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .light)
@@ -45,10 +50,6 @@ class CourseTypeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func changeSelected(_ isSelected: Bool) {
-        radioButton.isSelected = isSelected
-    }
-    
     private func setup() {
         radioButton.addTarget(self, action: #selector(checkBoxAction), for: .touchUpInside)
         addSubview(radioButton)
@@ -70,6 +71,9 @@ class CourseTypeView: UIView {
             $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.descriptionOffset)
             $0.bottom.trailing.equalToSuperview()
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(checkBoxAction))
+        self.addGestureRecognizer(tapGesture)
     }
     
     private func configure() {

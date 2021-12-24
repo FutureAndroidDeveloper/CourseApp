@@ -43,7 +43,6 @@ class DefaultCreateTaskModel {
         
         prevWeekdaysModel = model.copy() as? SelectWeekdayModel
         weekdayModel = nil
-        
     }
     
     // Once day

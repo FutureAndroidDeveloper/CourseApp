@@ -17,9 +17,8 @@ class CreateCourseViewController: UIViewController, BindableType {
     private let createCourseTableView = ContentSizedTableView()
     private let inflater: UITableViewIflater
 
-    var titleForDoneButton = ""
     
-    private lazy var saveButton: UIButton = {
+    private lazy var doneButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = R.color.buttonColor()
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -36,34 +35,7 @@ class CreateCourseViewController: UIViewController, BindableType {
     init() {
         self.inflater = UITableViewIflater(createCourseTableView)
         super.init(nibName: nil, bundle: nil)
-        
-//        switch self.viewModel.interactionMode {
-//        case .create:
-//            self.title = "Создание нового курса"
-//            titleForDoneButton = "Создать курс"
-//        case .update:
-//            self.title = "Редактирование"
-//            titleForDoneButton = "Сохранить"
-//        }
-//        self.viewModel.delegate = self
-//        self.typeCellSelect = self.viewModel.course.courseType
     }
-    
-//    init(interactionMode : ATYUpCreateCourseViewModel.InteractionMode) {
-//        self.inflater = UITableViewIflater(createCourseTableView)
-//        super.init(nibName: nil, bundle: nil)
-//
-////        switch self.viewModel.interactionMode {
-////        case .create:
-////            self.title = "Создание нового курса"
-////            titleForDoneButton = "Создать курс"
-////        case .update:
-////            self.title = "Редактирование"
-////            titleForDoneButton = "Сохранить"
-////        }
-////        self.viewModel.delegate = self
-////        self.typeCellSelect = self.viewModel.course.courseType
-//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -84,8 +56,8 @@ class CreateCourseViewController: UIViewController, BindableType {
         }
         
         contentContainer.addTop(content: createCourseTableView)
-        contentContainer.addBottom(content: saveButton, insets: Constants.saveInsets)
-        saveButton.snp.makeConstraints {
+        contentContainer.addBottom(content: doneButton, insets: Constants.saveInsets)
+        doneButton.snp.makeConstraints {
             $0.height.equalTo(45)
         }
     }
@@ -114,6 +86,9 @@ class CreateCourseViewController: UIViewController, BindableType {
             self?.createCourseTableView.beginUpdates()
             self?.createCourseTableView.endUpdates()
         }
+        
+        doneButton.setTitle(viewModel.output.doneButtonTitle, for: .normal)
+        title = viewModel.output.title
     }
     
     func update(_ data: [AnyObject]) {
@@ -122,12 +97,9 @@ class CreateCourseViewController: UIViewController, BindableType {
     }
     
     @objc func saveTapped() {
-        print("Save tapped")
-//        viewModel.input.saveDidTapped()
-        // validate + после валидации при необходимости обновить модель ячеек с указанием ошибок
-        // при успешной валидации отправить запрос на сервер
-        // при успешном выполнении запроса, сохранить в бд
+        viewModel.input.doneDidTapped()
     }
+    
 }
 
 

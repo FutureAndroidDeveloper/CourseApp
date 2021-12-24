@@ -4,7 +4,7 @@ import UIKit
 class PayForCourseCell: UITableViewCell, InflatableView {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 49, bottom: 32, right: 20)
+        static let edgeInsets = UIEdgeInsets(top: 10, left: 49, bottom: 0, right: 20)
         
         struct Field {
             static let size = CGSize(width: 182, height: 45)

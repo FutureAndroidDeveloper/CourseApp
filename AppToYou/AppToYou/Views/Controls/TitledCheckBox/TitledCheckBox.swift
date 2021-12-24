@@ -49,9 +49,13 @@ class TitledCheckBox: UIView {
         self.model = model
         self.checkBoxChanged = checkBoxChanged
         
+        if model.isSelected, !checkBox.isSelected {
+            checkBox.isHighlighted.toggle()
+            checkBox.isSelected.toggle()
+            checkBox.isHighlighted.toggle()
+        }
         checkBoxLabel.text = model.title
-        checkBox.isSelected = model.isSelected
-        
+        checkBoxAction()
     }
     
     @objc

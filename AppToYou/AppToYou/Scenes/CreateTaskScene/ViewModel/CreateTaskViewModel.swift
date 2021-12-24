@@ -1,18 +1,16 @@
 import Foundation
 
 
-protocol CreateTaskViewModelInput {
-    func notificationTimePicked(_ time: NotificationTime)
-    func durationTimePicked(_ time: DurationTime)
+protocol CreateTaskViewModelInput: TimePickerDelegate {
     func saveDidTapped()
 }
 
-protocol CreateTaskViewModelOutput {
+protocol CreateTaskViewModelOutput: AnyObject {
     var data: Observable<[AnyObject]> { get }
     var updatedState: Observable<Void> { get }
 }
 
-protocol CreateTaskViewModel {
+protocol CreateTaskViewModel: AnyObject {
     var input: CreateTaskViewModelInput { get }
     var output: CreateTaskViewModelOutput { get }
 }

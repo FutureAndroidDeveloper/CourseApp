@@ -6,15 +6,14 @@ enum TasksRoute: Route {
     case add
     case create(ATYTaskType)
     case timePicker(type: TimePickerType)
-    case notificationTimePicked(_ time: NotificationTime)
-    case durationTimePicked(_ time: DurationTime)
 }
 
 
 // Разбить координатор на отдельные
 class TasksCoordinator: NavigationCoordinator<TasksRoute> {
     
-    private var createTaskViewModel: CreateTaskViewModel?
+    private weak var createTaskInput: CreateTaskViewModelInput?
+    
     
     init() {
         super.init(initialRoute: .tasks)
@@ -37,7 +36,7 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
         case .create(let taskType):
             let factory = CreateTaskFactory(type: taskType)
             let viewModel = factory.getViewModel(unownedRouter)
-            createTaskViewModel = viewModel
+            createTaskInput = viewModel.input
             
             let vc = ATYCreateTaskViewController()
             vc.hidesBottomBarWhenPushed = true
@@ -49,40 +48,13 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
             ])
             
         case .timePicker(let type):
-            let timePickerViewController = ATYSelectTimeViewController()
-            let timePickerViewModel = SelectTimeViewModelImpl(pickerType: type, router: unownedRouter)
-            timePickerViewController.bind(to: timePickerViewModel)
-
-            return .present(timePickerViewController, animation: nil)
-            
-        case .notificationTimePicked(let time):
-            createTaskViewModel?.input.notificationTimePicked(time)
-            return .dismiss(animation: nil)
-            
-        case .durationTimePicked(let time):
-            createTaskViewModel?.input.durationTimePicked(time)
-            return .dismiss()
+            let timePickerCoordinator = TimePickerCoordinator(type: type,
+                                                              pickerDelegate: createTaskInput,
+                                                              rootViewController: self.rootViewController)
+            addChild(timePickerCoordinator)
+            return .none()
         }
     }
-    
-//    func test() {
-//        let child = ATYAddTaskViewController()
-//        let vc = ATYCreateTaskViewController()
-//        vc.hidesBottomBarWhenPushed = true
-//
-//        child.pushVcCallback = { [weak self] type in
-//            vc.types = type
-//            self?.navigationController?.pushViewController(vc, animated: true)
-//        }
-//
-//        self.transition = PanelTransition(y: view.bounds.height * 0.4 , height: view.bounds.height * 0.6)
-//
-//        child.transitioningDelegate = transition   // 2
-//        child.modalPresentationStyle = .custom  // 3
-//
-//        present(child, animated: true)
-//    }
-    
     
     private func configureContainer() {
         rootViewController.tabBarItem = UITabBarItem(title: R.string.localizable.tasks(),

@@ -24,10 +24,10 @@ extension SelectTimeViewModel where Self: SelectTimeViewModelInput & SelectTimeV
 
 class SelectTimeViewModelImpl: SelectTimeViewModel, SelectTimeViewModelInput, SelectTimeViewModelOutput {
 
-    private let router: UnownedRouter<TasksRoute>
+    private let router: UnownedRouter<TimePickerRoute>
     private let pickerType: TimePickerType
 
-    init(pickerType: TimePickerType, router: UnownedRouter<TasksRoute>) {
+    init(pickerType: TimePickerType, router: UnownedRouter<TimePickerRoute>) {
         self.pickerType = pickerType
         self.router = router
     }

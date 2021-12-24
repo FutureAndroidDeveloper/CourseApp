@@ -3,7 +3,7 @@ import XCoordinator
 
 
 class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, CreateTaskViewModelOutput {
-
+    
     private let router: UnownedRouter<TasksRoute>
     private let taskType: ATYTaskType
     private var taskModel: ATYUserTask!
@@ -27,18 +27,17 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
         update()
     }
     
-    func notificationTimePicked(_ time: NotificationTime) {
+    func durationPicked(_ duration: DurationTime) {
+        update()
+    }
+    
+    func notificationPicked(_ notification: NotificationTime) {
         guard let notificationDelegate = notificationDelegate else {
             return
         }
-        let model = NotificationTaskTimeModel(notificationTime: time)
+        let model = NotificationTaskTimeModel(notificationTime: notification)
         notificationDelegate.notificationDidAdd(model)
         updateState()
-    }
-    
-    func durationTimePicked(_ time: DurationTime) {
-//        duration = TaskDurationModel(durationTime: time)
-        update()
     }
     
     func saveDidTapped() {

@@ -20,17 +20,17 @@ class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput,
         self.router = router
         update()
     }
-
-    func notificationTimePicked(_ time: NotificationTime) {
+    
+    func notificationPicked(_ notification: NotificationTime) {
         guard let notificationDelegate = notificationDelegate else {
             return
         }
-        let model = NotificationTaskTimeModel(notificationTime: time)
+        let model = NotificationTaskTimeModel(notificationTime: notification)
         notificationDelegate.notificationDidAdd(model)
         updateState()
     }
     
-    func durationTimePicked(_ time: DurationTime) {
+    func durationPicked(_ duration: DurationTime) {
         // обработка получения происходит в TimerCreateTaskViewModel
     }
 

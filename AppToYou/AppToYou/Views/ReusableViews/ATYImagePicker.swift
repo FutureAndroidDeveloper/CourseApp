@@ -101,7 +101,7 @@ open class ATYImagePicker: NSObject {
 }
 
 extension ATYImagePicker: UIImagePickerControllerDelegate {
-
+    
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.pickerController(picker, didSelect: nil)
     }

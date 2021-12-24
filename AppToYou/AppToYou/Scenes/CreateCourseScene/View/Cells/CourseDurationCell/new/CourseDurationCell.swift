@@ -4,12 +4,10 @@ import UIKit
 class CourseDurationCell: UITableViewCell, InflatableView {
     
     private struct Constants {
-        static let titleInsets = UIEdgeInsets(top: 0, left: 24, bottom: 6, right: 20)
+        static let titleInsets = UIEdgeInsets(top: 32, left: 24, bottom: 6, right: 20)
         static let descriptionInsets = UIEdgeInsets(top: 0, left: 24, bottom: 24, right: 16)
         static let durationInsets = UIEdgeInsets(top: 0, left: 20, bottom: 14, right: 0)
         static let infiniteInsets = UIEdgeInsets(top: 0, left: 20, bottom: 34, right: 0)
-        
-        static let defualtDuration = DurationTime(hour: "0", min: "0", sec: "0")
     }
     
     private var model: CourseDurationCellModel?
@@ -89,12 +87,7 @@ class CourseDurationCell: UITableViewCell, InflatableView {
     }
     
     private func infiniteStateChanged(_ isInfinite: Bool) {
-        guard let durationModel = model?.durationModel else {
-            return
-        }
-
-        durationModel.update(durationTime: Constants.defualtDuration)
-        durationView.configure(with: durationModel)
+        durationView.isUserInteractionEnabled = !isInfinite
     }
     
     @objc

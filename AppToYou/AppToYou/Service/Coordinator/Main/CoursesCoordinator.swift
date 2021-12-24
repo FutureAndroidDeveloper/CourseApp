@@ -1,19 +1,25 @@
-import Foundation
+import UIKit
 import XCoordinator
+
 
 enum CoursesRoute: Route {
     case courses
     case create
+    
+    case photo(image: UIImage?)
+    case durationPicker
 }
 
 
 class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
     
+    private weak var courseCreationInput: CreateCourseViewModelInput?
+    
+    
     init() {
         super.init(initialRoute: .courses)
         configureContainer()
     }
-    
     
     override func prepareTransition(for route: CoursesRoute) -> NavigationTransition {
         configureNavBar()
@@ -30,10 +36,25 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
             let createCourseViewController = CreateCourseViewController()
             createCourseViewController.hidesBottomBarWhenPushed = true
             
-            let createCourseViewModel = CreateCourseViewModelImpl(coursesRouter: unownedRouter)
+            let createCourseViewModel = CreateCourseViewModelImpl(mode: .creation, coursesRouter: unownedRouter)
             createCourseViewController.bind(to: createCourseViewModel)
+            courseCreationInput = createCourseViewModel
             
             return .push(createCourseViewController)
+            
+        case .photo(let image):
+            let photoCoordinator = PhotoCoordinator(image: image,
+                                                    photoDelegate: courseCreationInput,
+                                                    rootViewController: self.rootViewController)
+            addChild(photoCoordinator)
+            return .none()
+            
+        case .durationPicker:
+            let timePickerCoordinator = TimePickerCoordinator(type: .duration,
+                                                              pickerDelegate: courseCreationInput,
+                                                              rootViewController: self.rootViewController)
+            addChild(timePickerCoordinator)
+            return .none()
         }
     }
     

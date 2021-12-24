@@ -4,11 +4,12 @@ import UIKit
 class CourseTypeCell: UITableViewCell, InflatableView {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 20)
         static let rowSpacing: CGFloat = 16
     }
     
     private let courseTypeOrder: [ATYCourseType] = [.PUBLIC, .PRIVATE, .PAID]
+    private var model: CourseTypeModel?
     
     
     private let titleLabel: UILabel = {
@@ -79,24 +80,33 @@ class CourseTypeCell: UITableViewCell, InflatableView {
             return
         }
         
+        self.model = model
         courseTypeChanged(model.value)
     }
     
-    private func courseTypeChanged(_ courseType: ATYCourseType) {
-        print(courseType)
+    private func courseTypeChanged(_ selectedType: ATYCourseType) {
+        guard
+            // представление, которое необходимо выделить
+            let viewToSelect = contentStack.arrangedSubviews
+                .compactMap( { $0 as? CourseTypeView } )
+                .first(where: { $0.model.value == selectedType }),
+            
+            // представление еще не выделенно
+            !viewToSelect.isSelected
+        else {
+            return
+        }
+        
         deselect()
-        
-        let selectedView = contentStack.arrangedSubviews
-            .compactMap { $0 as? CourseTypeView }
-            .first { $0.model.value == courseType }
-        
-        selectedView?.changeSelected(true)
+        viewToSelect.isSelected = true
+        model?.update(value: selectedType)
+        model?.courseTypePicked(selectedType)
     }
     
     private func deselect() {
         contentStack.arrangedSubviews
             .compactMap { $0 as? CourseTypeView }
-            .forEach { $0.changeSelected(false) }
+            .forEach { $0.isSelected = false }
     }
     
 }
