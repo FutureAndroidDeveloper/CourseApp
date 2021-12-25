@@ -11,7 +11,7 @@ import SnapKit
 class TopBottomBlocksContainerView: UIView {
     
     private struct Constants {
-        static let betweenOffset: CGFloat = 32
+        static let betweenOffset: CGFloat = 0
     }
     
     private var contentHeightConstraint: Constraint?

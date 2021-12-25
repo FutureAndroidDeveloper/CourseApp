@@ -40,8 +40,8 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     
     func loginTapped(_ credentials: Credentials) {
         // validate
-//        didLogin()
-//        return
+        didLogin()
+        return
         
         loginManager.login(credentials: credentials) { [weak self] result in
             guard let self = self else {

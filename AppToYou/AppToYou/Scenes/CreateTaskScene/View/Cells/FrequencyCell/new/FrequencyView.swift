@@ -11,6 +11,8 @@ class FrequencyView: UIView {
     
     private var model: FrequencyModel?
     
+    private var frequencyChanged: ((ATYFrequencyTypeEnum) -> Void)?
+    
     private let frequencyOrder: [[ATYFrequencyTypeEnum]] = [
         [.EVERYDAY, .WEEKDAYS],
         [.MONTHLY, .YEARLY],
@@ -36,8 +38,9 @@ class FrequencyView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(model: FrequencyModel) {
+    func configure(model: FrequencyModel, frequencyChanged: @escaping (ATYFrequencyTypeEnum) -> Void) {
         self.model = model
+        self.frequencyChanged = frequencyChanged
         self.select(model.value.frequency)
     }
     
@@ -120,6 +123,7 @@ class FrequencyView: UIView {
         }
         deselect()
         sender.isSelected.toggle()
+        self.frequencyChanged?(sender.type)
         model?.value.update(sender.type)
         model?.frequencyPicked(sender.type)
     }

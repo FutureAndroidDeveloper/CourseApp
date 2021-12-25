@@ -1,13 +1,14 @@
 import UIKit
 
 
-class TaskSanctionCell: UITableViewCell, InflatableView {
+class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let edgeInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
         
         struct Field {
-            static let size = CGSize(width: 182, height: 45)
+            static let width: CGFloat = 182
             static let textInsets = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 11)
             static let iconInsets = UIEdgeInsets(top: 11, left: 0, bottom: 11, right: 11)
         }
@@ -18,18 +19,10 @@ class TaskSanctionCell: UITableViewCell, InflatableView {
         }
     }
     
-    private var callbackText: ((String) -> Void)?
-    private var questionCallback: (() -> Void)?
+    private var model: TaskSanctionModel?
 
-    private let sanctionField = NaturalNumberTextField(style: StyleManager.standartTextField)
-    
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = R.string.localizable.penaltyForNonCompliance()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
+    private let titleLabel = LabelFactory.getTitleLabel(title: R.string.localizable.penaltyForNonCompliance())
+    private let sanctionField = FieldFactory.shared.getNaturalNumberField()
 
     private let questionButton: UIButton = {
         let button = UIButton()
@@ -44,7 +37,6 @@ class TaskSanctionCell: UITableViewCell, InflatableView {
     }()
 
     
-    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -58,24 +50,23 @@ class TaskSanctionCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
 
         contentView.addSubview(sanctionField)
         sanctionField.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.edgeInsets.bottom)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.edgeInsets.top)
             $0.leading.bottom.equalToSuperview().inset(Constants.edgeInsets)
-            $0.size.equalTo(Constants.Field.size)
+            $0.width.equalTo(Constants.Field.width)
         }
 
         contentView.addSubview(questionButton)
-        questionButton.addTarget(self, action: #selector(questionButtonAction), for: .touchUpInside)
         questionButton.snp.makeConstraints {
             $0.leading.equalTo(sanctionField.snp.trailing).offset(Constants.Question.offset)
-            $0.size.equalTo(Constants.Question.size)
             $0.centerY.equalTo(sanctionField)
+            $0.size.equalTo(Constants.Question.size)
         }
 
         contentView.addSubview(switchButton)
@@ -84,25 +75,39 @@ class TaskSanctionCell: UITableViewCell, InflatableView {
             $0.trailing.equalToSuperview().inset(Constants.edgeInsets.left)
             $0.centerY.equalTo(questionButton)
         }
+        
+        questionButton.addTarget(self, action: #selector(questionButtonAction), for: .touchUpInside)
+        switchButton.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
     }
     
     func inflate(model: AnyObject) {
         guard let model = model as? TaskSanctionModel else {
             return
         }
+        self.model = model
         
         let coinImageView = UIImageView()
         coinImageView.image = R.image.coinImage()
         let rightModel = FieldAdditionalContentModel(contentView: coinImageView, insets: Constants.Field.iconInsets)
-        let contentModel = FieldContentModel(fieldModel: model.model, insets: Constants.Field.textInsets)
+        let contentModel = FieldContentModel(fieldModel: model.fieldModel, insets: Constants.Field.textInsets)
         let fieldModel = FieldModel(content: contentModel, rightContent: rightModel)
         
         sanctionField.configure(with: fieldModel)
+        switchButton.isOn = model.isEnabled
+        
+        model.errorNotification = { [weak self] error in
+            self?.sanctionField.bind(error: error)
+            self?.bind(error: error)
+        }
     }
     
     @objc
     private func questionButtonAction() {
-        questionCallback?()
+        model?.questionCallback()
     }
     
+    @objc
+    private func switchChanged(_ switch: UISwitch) {
+        model?.setIsEnabled(`switch`.isOn)
+    }
 }

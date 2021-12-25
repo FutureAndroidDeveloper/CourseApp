@@ -1,20 +1,15 @@
 import UIKit
 
 
-class SelectDateCell: UITableViewCell, InflatableView {
+class SelectDateCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 0)
+        static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 32, right: 0)
                 
         struct Field {
-            static let size = CGSize(width: 150, height: 38)
+            static let width: CGFloat = 150
             static let textInsets = UIEdgeInsets(top: 8, left: 7, bottom: 10, right: 10)
             static let iconInsets = UIEdgeInsets(top: 7, left: 10, bottom: 7, right: 0)
-                        
-            struct Title {
-                static let start = R.string.localizable.taskStartTitle()
-                static let end = R.string.localizable.taskEndTitle()
-            }
         }
     }
 
@@ -52,7 +47,7 @@ class SelectDateCell: UITableViewCell, InflatableView {
         contentView.addSubview(startTextField)
         startTextField.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview().inset(Constants.edgeInsets)
-            $0.size.equalTo(Constants.Field.size)
+            $0.width.equalTo(Constants.Field.width)
         }
         
         datePicker.addTarget(self, action: #selector(self.dateChanged), for: .valueChanged)
@@ -71,6 +66,11 @@ class SelectDateCell: UITableViewCell, InflatableView {
         let contentModel = FieldContentModel(fieldModel: model.date, insets: Constants.Field.textInsets)
         let fieldModel = FieldModel(content: contentModel, leftContent: calendarModel)
         startTextField.configure(with: fieldModel)
+        
+        model.errorNotification = { [weak self] error in
+            self?.startTextField.bind(error: error)
+            self?.bind(error: error)
+        }
     }
 
     @objc

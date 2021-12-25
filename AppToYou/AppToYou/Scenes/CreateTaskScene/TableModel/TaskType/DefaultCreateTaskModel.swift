@@ -76,17 +76,17 @@ class DefaultCreateTaskModel {
     
     // Notification
     func addNotificationHandler(notificationModels: [NotificationTaskTimeModel],
-                                switchCallback: @escaping (Bool) -> Void,
+                                isEnabled: Bool,
                                 timerCallback: @escaping (TaskNoticationDelegate) -> Void) {
         
         notificationModel = NotificationAboutTaskModel(notificationModels: notificationModels,
-                                                       switchCallback: switchCallback,
+                                                       isEnabled: isEnabled,
                                                        timerCallback: timerCallback)
     }
     
     // Sanction
-    func addSanction(model: NaturalNumberFieldModel, questionCallback: @escaping () -> Void, switchCallback: @escaping (Bool) -> Void) {
-        sanctionModel = TaskSanctionModel(model: model)
+    func addSanction(model: NaturalNumberFieldModel, isEnabled: Bool, questionCallback: @escaping () -> Void) {
+        sanctionModel = TaskSanctionModel(fieldModel: model, isEnabled: isEnabled, questionCallback: questionCallback)
     }
     
     func prepare() -> [AnyObject] {

@@ -8,10 +8,10 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
     }
     
     var viewModel : CreateTaskViewModel!
-    private var inflater: UITableViewIflater!
     
-    var createTaskTableView = ContentSizedTableView()
+    private let createTaskTableView = ContentSizedTableView()
     private let contentContainer = TopBottomBlocksContainerView()
+    private var inflater: UITableViewIflater!
     
     private lazy var saveButton: UIButton = {
         let button = UIButton()
@@ -23,12 +23,6 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         button.layer.cornerRadius = 22.5
         return button
     }()
-
-    private var transition: PanelTransition!
-    private var transitionForQuestionButton: PanelTransition!
-    private var datePicker = UIDatePicker()
-
-    var types : ATYTaskType!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,9 +74,6 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
 
         // counting
         inflater.registerRow(model: RepeatCounterModel.self, cell: RepeatCounterCell.self)
-
-        self.transition = PanelTransition(y: view.bounds.height * 0.5 , height: view.bounds.height * 0.5)
-        self.transitionForQuestionButton = PanelTransition(y: view.bounds.height * 0.4 , height: view.bounds.height * 0.6)
     }
     
     func bindViewModel() {
@@ -93,9 +84,12 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         }
     }
     
-    //MARK:- Configure UI
+    func update(_ data: [AnyObject]) {
+        let section = TableViewSection(models: data)
+        inflater.inflate(sections: [section])
+    }
     
-
+    
     private func configureNavBar() {
         self.navigationItem.title = R.string.localizable.creatingNewTask()
         
@@ -104,43 +98,13 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         backButton.tintColor = R.color.lineViewBackgroundColor()
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
-    
-    func update(_ data: [AnyObject]) {
-        let section = TableViewSection(models: data)
-        inflater.inflate(sections: [section])
-    }
-
-    private func openTimerViewController() {
-        let child = ATYSelectTimeViewController()
-        child.callBackTime = { [weak self] (hour, minute) in
-//            self?.viewModel.hour = hour
-//            self?.viewModel.minute = minute
-//            if let hour = self?.viewModel.hour, let minute = self?.viewModel.minute {
-//                self?.viewModel.userTask.reminderList?.append(hour + ":" + minute)
-//            }
-            self?.createTaskTableView.reloadData()
-        }
-
-        child.transitioningDelegate = transition   // 2
-        child.modalPresentationStyle = .custom  // 3
-
-        present(child, animated: true)
-    }
 
     private func openPenaltyForFailureController() {
         let child = ATYPenaltyForFailureViewController()
-
-        child.transitioningDelegate = transitionForQuestionButton
-        child.modalPresentationStyle = .custom
-
         present(child, animated: true)
     }
     
     @objc func saveTapped() {
-        print("Save tapped")
         viewModel.input.saveDidTapped()
-        // validate + после валидации при необходимости обновить модель ячеек с указанием ошибок
-        // при успешной валидации отправить запрос на сервер
-        // при успешном выполнении запроса, сохранить в бд
     }
 }

@@ -3,20 +3,20 @@ import XCoordinator
 
 
 class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput, CreateTaskViewModelOutput {
-    private(set) var router: UnownedRouter<TasksRoute>
 
-    
     private lazy var constructor: DefaultTaskModel = {
         return DefaultTaskModel(delegate: self)
     }()
 
-    weak var notificationDelegate: TaskNoticationDelegate?
+    private let type: ATYTaskType
+    private let router: UnownedRouter<TasksRoute>
+    private weak var notificationDelegate: TaskNoticationDelegate?
+    
+    private let taskService = TaskManager(deviceIdentifierService: DeviceIdentifierService())
+    private let validator = CheckboxTaskValidator()
     
     var data: Observable<[AnyObject]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
-    
-    private let type: ATYTaskType
-    private let taskService = TaskManager(deviceIdentifierService: DeviceIdentifierService())
     var taskRequest: UserTaskCreateRequest?
 
 
@@ -41,18 +41,12 @@ class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput,
     
     private func saveModel() {
         guard let task = taskRequest else {
-            print("Task Request Is NIL!")
             return
         }
-        print()
-        print("trying to save")
-        print(task)
         
         taskService.create(task: task) { result in
             switch result {
             case .success(let newTask):
-                print()
-                print("NEW TASK created")
                 print(newTask)
                 
             case .failure(let error):
@@ -62,44 +56,41 @@ class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput,
     }
 
     func saveDidTapped() {
-        validate()
-        saveModel()
+        validator.validate(model: constructor.model)
+        
+        if !validator.hasError {
+            makeModel()
+            saveModel()
+        }
     }
     
-    func validate() {
+    func makeModel() {
         print(#function)
-        print()
-        
         let model = constructor.model
         
         let name = model.nameModel.fieldModel.value
         let freq = model.frequencyModel.value.frequency
-        let sanction = Int32(model.sanctionModel.model.value)
+        let sanction = Int32(model.sanctionModel.fieldModel.value)
+        let isInfinite = model.periodModel?.isInfiniteModel.isSelected ?? false
 
-        let startPeriod = model.periodModel?.start.value
-        let startOnce = model.selectDateModel?.date.value
-        
-        guard let startDate = startPeriod ?? startOnce else {
-            print("NEED to set start date")
+        guard let start = model.periodModel?.start.value ?? model.selectDateModel?.date.value else {
             return
         }
+        taskRequest = UserTaskCreateRequest(
+            taskName: name, taskType: type, frequencyType: freq,
+            taskSanction: sanction, infiniteExecution: isInfinite, startDate: start.toString(dateFormat: .localeYearDate)
+        )
         
-        let start = startDate.toString(dateFormat: .localeYearDate)
-        let end = model.periodModel?.end.value?.toString(dateFormat: .localeYearDate)
-        let isInfinite = model.periodModel?.isInfiniteModel.isSelected ?? false
-        
-        let reminders = model.notificationModel.notificationModels
-            .map { "\($0.hourModel.value):\($0.minModel.value)" }
-        
-        let days = model.weekdayModel?.weekdayModels
+        taskRequest?.endDate = model.periodModel?.end.value?.toString(dateFormat: .localeYearDate)
+        taskRequest?.daysCode = model.weekdayModel?.weekdayModels
             .compactMap { $0 }
             .map { $0.isSelected ? "1" : "0" }
             .joined()
-
-        taskRequest = UserTaskCreateRequest(
-            taskName: name, taskType: type, frequencyType: freq, taskSanction: sanction,
-            infiniteExecution: isInfinite, startDate: start, endDate: end, daysCode: days,
-            taskDescription: nil, reminderList: reminders, taskAttribute: nil)
+        
+        if model.notificationModel.isEnabled {
+            taskRequest?.reminderList = model.notificationModel.notificationModels
+                .map { "\($0.hourModel.value):\($0.minModel.value)" }
+        }
     }
     
     /**
@@ -148,16 +139,17 @@ extension DefaultCreateTaskViewModel: DefaultTaskCreationDelegate {
         return TaskPeriodModel(isInfiniteModel: isInfiniteModel, start: DateFieldModel(), end: DateFieldModel(value: nil))
     }
     
-    func getSanctionModel() -> NaturalNumberFieldModel {
-        return NaturalNumberFieldModel()
-    }
-    
-    func getNotificationModels() -> [NotificationTaskTimeModel] {
+    func getNotificationModels() -> (models: [NotificationTaskTimeModel], isEnabled: Bool) {
         // TODO: - получать нотификации из модели задачи
         
         let model = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
                                               minModel: TimeBlockModelFactory.getMinModel())
-        return [model]
+        return ([model], false)
+    }
+    
+    func getSanctionModel() -> (model: NaturalNumberFieldModel, isEnabled: Bool) {
+        // TODO: - получать штраф из модели
+        return (NaturalNumberFieldModel(), false)
     }
     
     func getWeekdayModels() -> [WeekdayModel] {

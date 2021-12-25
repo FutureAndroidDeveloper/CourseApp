@@ -1,8 +1,10 @@
 import Foundation
 
 
-class SelectDateModel: NSCopying {
+class SelectDateModel: NSCopying, ValidatableModel {
+    
     let date: DateFieldModel
+    var errorNotification: ((CheckboxTaskError?) -> Void)?
     
     init(date: DateFieldModel) {
         self.date = date

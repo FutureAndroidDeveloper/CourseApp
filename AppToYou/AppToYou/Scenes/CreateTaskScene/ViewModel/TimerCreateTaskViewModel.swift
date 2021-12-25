@@ -21,8 +21,8 @@ class TimerCreateTaskViewModel: DefaultCreateTaskViewModel, TimerTaskCreationDel
 //        super.saveDidTapped()
 //    }
     
-    override func validate() {
-        super.validate()
+    override func makeModel() {
+        super.makeModel()
         
         let duration = constructor.model.durationModel.durationModel
         let h = duration.hourModel.value

@@ -79,7 +79,7 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
         let notifcations = model.notificationModel.notificationModels
         notifcations.forEach { print("\($0.hourModel.value) : \($0.minModel.value)") }
         
-        let sanction = model.sanctionModel.model.value
+        let sanction = model.sanctionModel.fieldModel.value
         print("sanction = \(sanction)")
 //
 //        if let repeatModel = model as? RepeatCreateTaskModel {

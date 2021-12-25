@@ -16,8 +16,8 @@ class TextCreateTaskViewModel: DefaultCreateTaskViewModel, TextTaskCreationDeleg
 //        super.saveDidTapped()
 //    }
     
-    override func validate() {
-        super.validate()
+    override func makeModel() {
+        super.makeModel()
         
         let description = constructor.model.descriptionModel.fieldModel.value
         let min = constructor.model.lengthLimitModel.value

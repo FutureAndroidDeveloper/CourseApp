@@ -1,12 +1,12 @@
 import Foundation
 
 
-class TaskPeriodModel: NSCopying {
+class TaskPeriodModel: NSCopying, ValidatableModel {
     
     let isInfiniteModel: TitledCheckBoxModel
     let start: DateFieldModel
     let end: DateFieldModel
-
+    var errorNotification: ((CheckboxTaskError?) -> Void)?
     
     init(isInfiniteModel: TitledCheckBoxModel, start: DateFieldModel, end: DateFieldModel) {
         self.isInfiniteModel = isInfiniteModel

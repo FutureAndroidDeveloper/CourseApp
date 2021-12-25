@@ -4,7 +4,7 @@ import UIKit
 /**
  Базовая реализация текстового поля с возможность настраивать текст, правый, левый контент и их отступы.
  */
-class BaseField<Value>: UITextField {
+class BaseField<Value>: UITextField, ValidationErrorDisplayable {
     
     private(set) var model: FieldModel<Value>?
     private let style: FieldStyle
@@ -93,6 +93,16 @@ class BaseField<Value>: UITextField {
         } else {
             rightViewMode = .never
             rightView = nil
+        }
+    }
+    
+    func bind(error: ValidationError?) {
+        if let _ = error {
+            layer.borderWidth = 1
+            layer.borderColor = R.color.failureColor()?.cgColor
+        } else {
+            layer.borderWidth = 0
+            layer.borderColor = nil
         }
     }
 

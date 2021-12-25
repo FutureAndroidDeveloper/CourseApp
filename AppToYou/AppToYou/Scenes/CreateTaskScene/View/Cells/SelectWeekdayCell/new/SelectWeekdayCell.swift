@@ -1,10 +1,10 @@
 import UIKit
 
 
-class SelectWeekdayCell: UITableViewCell, InflatableView {
+class SelectWeekdayCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 23)
+        static let edgeInsets = UIEdgeInsets(top: 00, left: 20, bottom: 32, right: 20)
         static let buttonHeight: CGFloat = 38
         static let buttonSpacing: CGFloat = 5
     }
@@ -46,15 +46,10 @@ class SelectWeekdayCell: UITableViewCell, InflatableView {
         model.weekdayModels
             .map { WeekdayButton(model: $0) }
             .forEach { self.buttonStack.addArrangedSubview($0) }
-    }
-    
-    func getResult() -> String {
-        // TODO: нужно возвращать модели кнопок и из их свойст уже получать строку
-        return buttonStack.arrangedSubviews
-            .compactMap { $0 as? WeekdayButton }
-            .map { $0.getModel() }
-            .map { $0.isSelected ? "1" : "0" }
-            .joined()
+        
+        model.errorNotification = { [weak self] error in
+            self?.bind(error: error)
+        }
     }
 
 }

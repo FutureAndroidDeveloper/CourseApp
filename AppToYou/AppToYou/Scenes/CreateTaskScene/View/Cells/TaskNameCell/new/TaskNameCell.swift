@@ -1,22 +1,16 @@
 import UIKit
 
 
-class TaskNameCell: UITableViewCell, InflatableView {
+class TaskNameCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
-        static let fieldInsets = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 16)
+        static let titleInsets = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
+        static let fieldInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
+        static let texInsets = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 16)
     }
     
-    private let nameTextField = TextField(style: StyleManager.standartTextField)
-    
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = R.string.localizable.taskName()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
+    private let titleLabel = LabelFactory.getTitleLabel(title: R.string.localizable.taskName())
+    private let nameTextField = FieldFactory.shared.getTextField()
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -32,15 +26,15 @@ class TaskNameCell: UITableViewCell, InflatableView {
     }
     
     private func setup() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.leading.top.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
         
         contentView.addSubview(nameTextField)
         nameTextField.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.edgeInsets.top)
-            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.fieldInsets.top)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.fieldInsets)
         }
     }
     
@@ -49,7 +43,12 @@ class TaskNameCell: UITableViewCell, InflatableView {
             return
         }
         
-        let contentModel = FieldContentModel(fieldModel: model.fieldModel, insets: Constants.fieldInsets)
+        model.errorNotification = { [weak self] validationError in
+            self?.nameTextField.bind(error: validationError)
+            self?.bind(error: validationError)
+        }
+        
+        let contentModel = FieldContentModel(fieldModel: model.fieldModel, insets: Constants.texInsets)
         let fieldModel = FieldModel(content: contentModel)
         nameTextField.configure(with: fieldModel)
     }

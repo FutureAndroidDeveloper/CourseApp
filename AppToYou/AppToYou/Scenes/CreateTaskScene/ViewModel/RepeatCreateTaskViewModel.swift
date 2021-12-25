@@ -16,8 +16,8 @@ class RepeatCreateTaskViewModel: DefaultCreateTaskViewModel, CounterTaskCreation
 //        super.saveDidTapped()
 //    }
     
-    override func validate() {
-        super.validate()
+    override func makeModel() {
+        super.makeModel()
         
         let counter = constructor.model.countModel.valueModel.value
         print()

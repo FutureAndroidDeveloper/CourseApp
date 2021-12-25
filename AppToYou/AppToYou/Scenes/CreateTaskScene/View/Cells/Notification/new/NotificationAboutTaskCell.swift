@@ -4,23 +4,27 @@ import UIKit
 /**
  Представление ячейки напоминания о задаче.
  */
-class NotificationAboutTaskCell: UITableViewCell, InflatableView {
+class NotificationAboutTaskCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let nameInsets = UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 23)
-        static let containerInsets = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 23)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let containerInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
         static let switchOffset: CGFloat = 8
-        static let plusOffset: CGFloat = 15
+        
+        struct Plus {
+            static let offset: CGFloat = 15
+            static let size = CGSize(width: 20, height: 20)
+        }
     }
     
     // MARK: - Properties
     private var model: NotificationAboutTaskModel?
     private var editingNotificationView: NotificationTaskTimeView?
-    private var switchCallback: ((Bool) -> Void)?
     private var timerCallback: ((TaskNoticationDelegate) -> Void)?
     
     // MARK: - UI
     private let container = UIView()
+    private let titleLabel = LabelFactory.getTitleLabel(title: "Напоминание о задаче")
     
     private let plusButton: UIButton = {
         let button = UIButton()
@@ -33,15 +37,6 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         switchButton.onTintColor = R.color.textColorSecondary()
         return switchButton
-    }()
-
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Напоминание о задаче"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        label.backgroundColor = R.color.backgroundAppColor()
-        return label
     }()
     
     private let notificationStackView: UIStackView = {
@@ -65,14 +60,14 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
     }
     
     private func setup() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(Constants.nameInsets)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
         
         contentView.addSubview(container)
         container.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.containerInsets.top)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.containerInsets.top)
             $0.leading.trailing.bottom.equalToSuperview().inset(Constants.containerInsets)
         }
         
@@ -89,8 +84,8 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
         
         container.addSubview(plusButton)
         plusButton.snp.makeConstraints {
-            $0.size.equalTo(20)
-            $0.leading.equalTo(notificationStackView.snp.trailing).offset(Constants.plusOffset)
+            $0.size.equalTo(Constants.Plus.size)
+            $0.leading.equalTo(notificationStackView.snp.trailing).offset(Constants.Plus.offset)
             $0.centerY.equalTo(switchButton.snp.centerY)
             $0.trailing.lessThanOrEqualTo(switchButton.snp.leading)
         }
@@ -103,9 +98,13 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
             return
         }
         self.model = model
-        switchCallback = model.switchCallback
         timerCallback = model.timerCallback
         configure(model.notificationModels)
+        switchButton.isOn = model.isEnabled
+        
+        model.errorNotification = { [weak self] error in
+            self?.bind(error: error)
+        }
     }
     
     private func configure(_ models: [NotificationTaskTimeModel]) {
@@ -151,7 +150,7 @@ class NotificationAboutTaskCell: UITableViewCell, InflatableView {
     
     @objc
     private func switchChanged(_ switch: UISwitch) {
-        switchCallback?(`switch`.isOn)
+        model?.setIsEnabled(`switch`.isOn)
     }
     
 }
@@ -177,13 +176,12 @@ extension NotificationAboutTaskCell: TaskNoticationDelegate {
         
         // добавление новой модели, если такого времени напоминания еще нет в списке моделей
         if existingModel == nil {
-            model?.notificationModels.append(notifcation)
+            model?.add(notification: notifcation)
             editingNotificationView.configure(with: notifcation)
             editingNotificationView.addGestureRecognizer(getGestureRecognizer())
             notificationStackView.addArrangedSubview(editingNotificationView)
         }
         
     }
-    
     
 }

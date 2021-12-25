@@ -188,13 +188,6 @@ class TaskCreationModel {
     
     private func addNotificationHandler() {
         let models = delegate?.getNotificationModels() ?? []
-        
-        model?.addNotificationHandler(notificationModels: models, switchCallback: { isOn in
-            print("Is active = \(isOn)")
-        }, timerCallback: { [weak self] notifDelegate in
-            print("Timer callback")
-            self?.delegate?.showTimePicker(pickerType: .notification, delegate: notifDelegate)
-        })
     }
     
     // тут нужно обновить все хендлеры перед перезагрузкой таблицы с обновленными данными в моделях

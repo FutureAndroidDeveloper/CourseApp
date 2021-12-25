@@ -1,15 +1,18 @@
 import UIKit
 
 
-class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
+class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
+        static let checkInsets = UIEdgeInsets(top: 16, left: 20, bottom: 32, right: 20)
+        static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 9, right: 20)
+        
+        
         static let space: CGFloat = 16
         static let verticalPadding: CGFloat = 12
         
         struct Field {
-            static let size = CGSize(width: 158, height: 45)
+            static let width: CGFloat = 158
             static let textInsets = UIEdgeInsets(top: 11, left: 8, bottom: 13, right: 20)
             static let iconInsets = UIEdgeInsets(top: 10, left: 14, bottom: 10, right: 0)
                         
@@ -20,8 +23,9 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
         }
     }
     
-    private let startTextField = DateTextField(style: StyleManager.standartTextField)
-    private let endTextField = DateTextField(style: StyleManager.standartTextField)
+    
+    private let startTextField = FieldFactory.shared.getDateField(style: .standart)
+    private let endTextField = FieldFactory.shared.getDateField(style: .standart)
     private let infiniteView = TitledCheckBox()
     private var endBlock: UIView?
     
@@ -74,23 +78,20 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
         contentView.addSubview(infiniteView)
         infiniteView.snp.makeConstraints {
             $0.top.equalTo(startBlock.snp.bottom).offset(Constants.verticalPadding)
-            $0.leading.bottom.trailing.equalToSuperview().inset(Constants.edgeInsets)
+            $0.leading.bottom.trailing.equalToSuperview().inset(Constants.checkInsets)
         }
         
         datePicker.addTarget(self, action: #selector(self.dateChanged), for: .valueChanged)
     }
     
     private func buildDateBlock(title: String?, pickerView: UITextField) -> UIView {
-        let label = UILabel()
-        label.text = title
-        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        label.textColor = R.color.titleTextColor()
+        let label = LabelFactory.getTitleLabel(title: title)
         
         pickerView.inputAccessoryView = toolBar
         pickerView.inputView = datePicker
         pickerView.delegate = self
         pickerView.snp.makeConstraints {
-            $0.size.equalTo(Constants.Field.size)
+            $0.width.equalTo(Constants.Field.width)
         }
         
         let block = UIStackView(arrangedSubviews: [label, pickerView])
@@ -122,6 +123,20 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
             self?.infiniteStateChanged(isInfinite)
         }
         
+        model.errorNotification = { [weak self] error in
+            switch error {
+            case .startDate:
+                self?.startTextField.bind(error: error)
+                self?.endTextField.bind(error: nil)
+            case .endDate, .emptyEndDate:
+                self?.endTextField.bind(error: error)
+                self?.startTextField.bind(error: nil)
+            default:
+                self?.endTextField.bind(error: error)
+                self?.startTextField.bind(error: error)
+            }
+            self?.bind(error: error)
+        }
     }
     
     private func infiniteStateChanged(_ isInfinite: Bool) {
@@ -129,6 +144,7 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView {
             return
         }
         dateModel.update(value: nil)
+        endTextField.bind(error: nil)
         endTextField.setContentModel(dateModel)
         endBlock?.isHidden = isInfinite
     }

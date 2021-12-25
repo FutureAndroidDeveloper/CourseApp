@@ -7,8 +7,8 @@ protocol DefaultTaskCreationDataSource: AnyObject {
     func getOnceDateModel() -> DateFieldModel
     func getWeekdayModels() -> [WeekdayModel]
     func getPeriodModel() -> TaskPeriodModel
-    func getNotificationModels() -> [NotificationTaskTimeModel]
-    func getSanctionModel() -> NaturalNumberFieldModel
+    func getNotificationModels() -> (models: [NotificationTaskTimeModel], isEnabled: Bool)
+    func getSanctionModel() -> (model: NaturalNumberFieldModel, isEnabled: Bool)
 }
 
 protocol DefaultTaskCreationDelegate: DefaultTaskCreationDataSource {
@@ -78,23 +78,19 @@ class DefaultTaskModel<DataModel: DefaultCreateTaskModel, DataProvider>: TaskCre
     }
     
     private func addNotificationHandler(_ dataProvider: DefaultTaskCreationDelegate) {
-        let models = dataProvider.getNotificationModels()
+        let (models, isEnabled) = dataProvider.getNotificationModels()
         
-        model.addNotificationHandler(notificationModels: models, switchCallback: { isOn in
-            print("Is active = \(isOn)")
-        }, timerCallback: { [weak self] notifDelegate in
-            print("Timer callback")
-            self?.delegate?.showTimePicker(pickerType: .notification, delegate: notifDelegate)
-        })
+        model.addNotificationHandler(notificationModels: models, isEnabled: isEnabled) { [weak self] notificationDelegate in
+            self?.delegate?.showTimePicker(pickerType: .notification, delegate: notificationDelegate)
+        }
     }
     
     private func addSanction(_ dataProvider: DefaultTaskCreationDelegate) {
-        let sanctionModel = dataProvider.getSanctionModel()
-        model.addSanction(model: sanctionModel, questionCallback: {
-            // show question
-        }, switchCallback: { isOn in
-            // isOn
-        })
+        let (sanctionModel, isEnabled) = dataProvider.getSanctionModel()
+        
+        model.addSanction(model: sanctionModel, isEnabled: isEnabled) { [weak self] in
+            print("Question")
+        }
     }
     
     private func addselectDate(_ dataProvider: DefaultTaskCreationDelegate) {

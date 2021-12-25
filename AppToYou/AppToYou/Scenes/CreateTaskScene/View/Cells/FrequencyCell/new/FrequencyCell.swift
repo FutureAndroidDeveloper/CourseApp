@@ -1,22 +1,22 @@
 import UIKit
+import SnapKit
 
 
 class FrequencyCell: UITableViewCell, InflatableView {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let edgeInsets = UIEdgeInsets(top: 13, left: 20, bottom: 0, right: 20)
+        
+        static let defaultBottomInset: CGFloat = 32
+        static let pickerBottomInset: CGFloat = 10
     }
 
+    private var bottomConstraint: Constraint?
+    
+    private let titleLabel = LabelFactory.getTitleLabel(title: R.string.localizable.frequencyOfExecution())
     private let frequencyView = FrequencyView()
     
-    private let countingLabel: UILabel = {
-        let label = UILabel()
-        label.text = R.string.localizable.frequencyOfExecution()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
-
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,15 +31,16 @@ class FrequencyCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(countingLabel)
-        countingLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
         
         contentView.addSubview(frequencyView)
-        frequencyView.snp.makeConstraints {
-            $0.top.equalTo(countingLabel.snp.bottom).offset(Constants.edgeInsets.top)
-            $0.leading.bottom.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        frequencyView.snp.makeConstraints { [weak self] in
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.edgeInsets.top)
+            $0.leading.trailing.equalToSuperview().inset(Constants.edgeInsets)
+            self?.bottomConstraint = $0.bottom.equalToSuperview().constraint
         }
         
     }
@@ -49,7 +50,14 @@ class FrequencyCell: UITableViewCell, InflatableView {
             return
         }
         
-        frequencyView.configure(model: model)
+        frequencyView.configure(model: model) { [weak self] frequency in
+            switch frequency {
+            case .ONCE, .CERTAIN_DAYS:
+                self?.bottomConstraint?.update(inset: Constants.pickerBottomInset)
+            default:
+                self?.bottomConstraint?.update(inset: Constants.defaultBottomInset)
+            }
+        }
     }
     
 }

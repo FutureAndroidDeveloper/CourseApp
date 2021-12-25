@@ -6,7 +6,7 @@ class FrequncyValueModel {
         static let defaultValue = ATYFrequencyTypeEnum.EVERYDAY
     }
     
-    var frequency: ATYFrequencyTypeEnum
+    private(set) var frequency: ATYFrequencyTypeEnum
     
     convenience init() {
         self.init(frequency: Constants.defaultValue)

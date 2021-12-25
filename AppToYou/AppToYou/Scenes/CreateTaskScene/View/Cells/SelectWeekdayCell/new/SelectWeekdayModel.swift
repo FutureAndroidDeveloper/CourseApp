@@ -1,8 +1,10 @@
 import Foundation
 
 
-class SelectWeekdayModel: NSCopying {
-    var weekdayModels: [WeekdayModel]
+class SelectWeekdayModel: NSCopying, ValidatableModel {
+    
+    private(set) var weekdayModels: [WeekdayModel]
+    var errorNotification: ((CheckboxTaskError?) -> Void)?
 
     init(weekdayModels: [WeekdayModel]) {
         self.weekdayModels = weekdayModels
