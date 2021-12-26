@@ -1,26 +1,20 @@
 import UIKit
 
 
-class DescriptionTaskCell: UITableViewCell, InflatableView {
+class DescriptionTaskCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let fieldInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
         
         struct Field {
             static let hight: CGFloat = 125
         }
     }
     
+    private let titleLabel = LabelFactory.getTitleLabel(title: "Описание задачи")
     private let descriptionTextView = PlaceholderTextView()
     
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Описание задачи"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
-
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,15 +29,15 @@ class DescriptionTaskCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
 
         contentView.addSubview(descriptionTextView)
         descriptionTextView.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.edgeInsets.bottom)
-            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.fieldInsets.top)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.fieldInsets)
             $0.height.equalTo(Constants.Field.hight)
         }
     }
@@ -54,6 +48,10 @@ class DescriptionTaskCell: UITableViewCell, InflatableView {
         }
         
         descriptionTextView.configure(with: model.fieldModel)
+        model.errorNotification = { [weak self] error in
+            self?.descriptionTextView.bind(error: error)
+            self?.bind(error: error)
+        }
     }
     
 }

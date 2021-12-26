@@ -1,23 +1,17 @@
 import UIKit
 
 
-class TaskDurationCell: UITableViewCell, InflatableView {
+class TaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let fieldInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
     }
     
-    private let durationView = TaskDurationView()
-
-    private let nameLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Длительность выполнения задачи"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
-    
     private var timerCallback: (() -> Void)?
+    
+    private let titleLabel = LabelFactory.getTitleLabel(title: "Длительность выполнения задачи")
+    private let durationView = TaskDurationView()
 
 //    let lockButton : UIButton = {
 //        let button = UIButton()
@@ -41,16 +35,16 @@ class TaskDurationCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.leading.top.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
         
         
         contentView.addSubview(durationView)
         durationView.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.edgeInsets.top)
-            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.fieldInsets.top)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.fieldInsets)
         }
         
         let tapRecognizer = UITapGestureRecognizer()
@@ -72,6 +66,11 @@ class TaskDurationCell: UITableViewCell, InflatableView {
         
         durationView.configure(with: model.durationModel)
         timerCallback = model.timerCallback
+        
+        model.errorNotification = { [weak self] error in
+            self?.durationView.bind(error: error)
+            self?.bind(error: error)
+        }
     }
     
 //    @objc func chainButtonAction(_ sender: UIButton) {

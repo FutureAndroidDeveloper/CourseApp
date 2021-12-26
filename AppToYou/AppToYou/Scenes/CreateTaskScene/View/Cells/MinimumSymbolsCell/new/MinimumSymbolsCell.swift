@@ -1,26 +1,20 @@
 import UIKit
 
 
-class MinimumSymbolsCell: UITableViewCell, InflatableView {
+class MinimumSymbolsCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 23)
+        static let titleinsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let fieldInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
         
         struct Field {
-            static let size = CGSize(width: 182, height: 45)
+            static let width: CGFloat = 182
             static let textInsets = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 16)
         }
     }
     
-    private let countOfSymbolsTextField = NaturalNumberTextField(style: StyleManager.standartTextField)
-
-    private let nameLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Минимальное количество символов"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
+    private let titleLabel = LabelFactory.getTitleLabel(title: "Минимальное количество символов")
+    private let countOfSymbolsTextField = FieldFactory.shared.getNaturalNumberField()
 
 //    let lockButton : UIButton = {
 //        let button = UIButton()
@@ -44,16 +38,16 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.leading.top.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview().inset(Constants.titleinsets)
         }
 
         contentView.addSubview(countOfSymbolsTextField)
         countOfSymbolsTextField.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.edgeInsets.bottom)
-            $0.leading.bottom.equalToSuperview().inset(Constants.edgeInsets)
-            $0.size.equalTo(Constants.Field.size)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.fieldInsets.top)
+            $0.leading.bottom.equalToSuperview().inset(Constants.fieldInsets)
+            $0.width.equalTo(Constants.Field.width)
         }
 
 //        contentView.addSubview(lockButton)
@@ -66,13 +60,18 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView {
     }
     
     func inflate(model: AnyObject) {
-        guard let model = model as? NaturalNumberFieldModel else {
+        guard let model = model as? MinimumSymbolsModel else {
             return
         }
         
-        let contentModel = FieldContentModel(fieldModel: model, insets: Constants.Field.textInsets)
+        let contentModel = FieldContentModel(fieldModel: model.fieldModel, insets: Constants.Field.textInsets)
         let fieldModel = FieldModel(content: contentModel)
         countOfSymbolsTextField.configure(with: fieldModel)
+        
+        model.errorNotification = { [weak self] error in
+            self?.countOfSymbolsTextField.bind(error: error)
+            self?.bind(error: error)
+        }
     }
     
 //    @objc

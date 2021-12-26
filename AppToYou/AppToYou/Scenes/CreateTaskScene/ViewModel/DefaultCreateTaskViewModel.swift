@@ -2,7 +2,7 @@ import Foundation
 import XCoordinator
 
 
-class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput, CreateTaskViewModelOutput {
+class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewModel, CreateTaskViewModelInput, CreateTaskViewModelOutput {
 
     private lazy var constructor: DefaultTaskModel = {
         return DefaultTaskModel(delegate: self)
@@ -38,36 +38,26 @@ class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput,
     func durationPicked(_ duration: DurationTime) {
         // обработка получения происходит в TimerCreateTaskViewModel
     }
-    
-    private func saveModel() {
-        guard let task = taskRequest else {
-            return
-        }
-        
-        taskService.create(task: task) { result in
-            switch result {
-            case .success(let newTask):
-                print(newTask)
-                
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
 
     func saveDidTapped() {
-        validator.validate(model: constructor.model)
-        
-        if !validator.hasError {
-            makeModel()
-            saveModel()
+        guard
+            let checkboxModel = constructor.model as? Model,
+            validate(model: checkboxModel)
+        else {
+            return
         }
+        save()
     }
     
-    func makeModel() {
-        print(#function)
-        let model = constructor.model
-        
+    func validate(model: Model) -> Bool {
+        validator.validate(model: model)
+        if !validator.hasError {
+            prepare(model: model)
+        }
+        return !validator.hasError
+    }
+    
+    func prepare(model: Model) {
         let name = model.nameModel.fieldModel.value
         let freq = model.frequencyModel.value.frequency
         let sanction = Int32(model.sanctionModel.fieldModel.value)
@@ -90,6 +80,22 @@ class DefaultCreateTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput,
         if model.notificationModel.isEnabled {
             taskRequest?.reminderList = model.notificationModel.notificationModels
                 .map { "\($0.hourModel.value):\($0.minModel.value)" }
+        }
+    }
+    
+    func save() {
+        guard let task = taskRequest else {
+            return
+        }
+        
+        taskService.create(task: task) { result in
+            switch result {
+            case .success(let newTask):
+                print(newTask)
+
+            case .failure(let error):
+                print(error)
+            }
         }
     }
     

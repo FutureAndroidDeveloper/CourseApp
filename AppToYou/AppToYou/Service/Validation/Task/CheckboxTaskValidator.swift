@@ -52,11 +52,14 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
     }
     
     func bind(error: CheckboxTaskError?, to receiver: ValidationErrorDisplayable) {
-        let isFiledHasError = error == nil ? false : true
-        hasError = hasError || isFiledHasError
+        updateErrorState(new: error)
         receiver.bind(error: error)
     }
     
+    func updateErrorState(new error: ValidationError?) {
+        let isFiledHasError = error == nil ? false : true
+        hasError = hasError || isFiledHasError
+    }
     
     private func validate(nameField: TaskNameModel) {
         let name = nameField.fieldModel.value

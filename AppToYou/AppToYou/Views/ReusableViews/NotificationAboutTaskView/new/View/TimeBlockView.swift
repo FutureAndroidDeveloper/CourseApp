@@ -4,7 +4,7 @@ import UIKit
 /**
  Представление блока времени, которое содержит значение и единицу измерения.
  */
-class TimeBlockView: UIView {
+class TimeBlockView: UIView, ValidationErrorDisplayable {
     
     private struct Constants {
         static let padding = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 10)
@@ -66,6 +66,16 @@ class TimeBlockView: UIView {
     func configure(with model: TimeBlockModel) {
         valueLabel.text = model.value
         unitLabel.text = model.unit
+    }
+    
+    func bind(error: ValidationError?) {
+        if let _ = error {
+            layer.borderWidth = 1
+            layer.borderColor = R.color.failureColor()?.cgColor
+        } else {
+            layer.borderWidth = 0
+            layer.borderColor = nil
+        }
     }
     
 }

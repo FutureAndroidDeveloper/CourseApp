@@ -70,7 +70,7 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         
         // text
         inflater.registerRow(model: DescriptionModel.self, cell: DescriptionTaskCell.self)
-        inflater.registerRow(model: NaturalNumberFieldModel.self, cell: MinimumSymbolsCell.self)
+        inflater.registerRow(model: MinimumSymbolsModel.self, cell: MinimumSymbolsCell.self)
 
         // counting
         inflater.registerRow(model: RepeatCounterModel.self, cell: RepeatCounterCell.self)

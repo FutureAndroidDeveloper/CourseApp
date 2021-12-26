@@ -16,7 +16,7 @@ class LabelFactory {
     
     static func getErrorLabel() -> UILabel {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = R.color.failureColor()
         label.textAlignment = .right
         label.tag = Self.errorTag

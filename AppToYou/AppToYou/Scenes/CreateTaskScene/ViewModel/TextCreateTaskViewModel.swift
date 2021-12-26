@@ -2,31 +2,43 @@ import Foundation
 import XCoordinator
 
 
-class TextCreateTaskViewModel: DefaultCreateTaskViewModel, TextTaskCreationDelegate {
+class TextCreateTaskViewModel: DefaultCreateTaskViewModel<TextCreateTaskModel>, TextTaskCreationDelegate {
 
     private lazy var constructor: TextTaskModel = {
         return TextTaskModel(delegate: self)
     }()
     
-    override func update() {
-        data.value = constructor.getModels()
+    private let validator = TextTaskValidator()
+    
+    
+    override func saveDidTapped() {
+        guard validate(model: constructor.model) else {
+            return
+        }
+        save()
     }
     
-//    override func saveDidTapped() {
-//        super.saveDidTapped()
-//    }
+    override func validate(model: TextCreateTaskModel) -> Bool {
+        let baseValidationResult = super.validate(model: model)
+        
+        validator.validate(model: model)
+        if !validator.hasError {
+            prepare(model: model)
+        }
+        return !validator.hasError && baseValidationResult
+    }
     
-    override func makeModel() {
-        super.makeModel()
+    override func prepare(model: TextCreateTaskModel) {
+        super.prepare(model: model)
         
         let description = constructor.model.descriptionModel.fieldModel.value
-        let min = constructor.model.lengthLimitModel.value
-        print()
-        print("text = \(description)")
-        print("limit = \(min)")
-        
+        let minSymbols = constructor.model.lengthLimitModel.fieldModel.value
         taskRequest?.taskDescription = description
-        taskRequest?.taskAttribute = "\(min)"
+        taskRequest?.taskAttribute = "\(minSymbols)"
+    }
+    
+    override func update() {
+        data.value = constructor.getModels()
     }
     
     func getDescriptionModel() -> PlaceholderTextViewModel {

@@ -3,7 +3,7 @@ import UIKit
 /**
  Реализация TextView с placeholder.
  */
-class PlaceholderTextView: UITextView, UITextViewDelegate {
+class PlaceholderTextView: UITextView, UITextViewDelegate, ValidationErrorDisplayable {
     
     private struct Constants {
         static let cornerRaduis: CGFloat = 20
@@ -44,6 +44,16 @@ class PlaceholderTextView: UITextView, UITextViewDelegate {
         text = model.value
         let range = NSRange(location: .zero, length: text.count)
         _ = delegate?.textView?(self, shouldChangeTextIn: range, replacementText: text)
+    }
+    
+    func bind(error: ValidationError?) {
+        if let _ = error {
+            layer.borderWidth = 1
+            layer.borderColor = R.color.failureColor()?.cgColor
+        } else {
+            layer.borderWidth = 0
+            layer.borderColor = nil
+        }
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

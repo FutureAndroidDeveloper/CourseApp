@@ -2,11 +2,41 @@ import Foundation
 import XCoordinator
 
 
-class TimerCreateTaskViewModel: DefaultCreateTaskViewModel, TimerTaskCreationDelegate {
+class TimerCreateTaskViewModel: DefaultCreateTaskViewModel<TimerCreateTaskModel>, TimerTaskCreationDelegate {
     
     private lazy var constructor: TimerTaskModel = {
         return TimerTaskModel(delegate: self)
     }()
+    
+    private let validator = TimerTaskValidator()
+    
+    
+    override func saveDidTapped() {
+        guard validate(model: constructor.model) else {
+            return
+        }
+        save()
+    }
+    
+    override func validate(model: TimerCreateTaskModel) -> Bool {
+        let baseValidationResult = super.validate(model: model)
+        
+        validator.validate(model: model)
+        if !validator.hasError {
+            prepare(model: model)
+        }
+        return !validator.hasError && baseValidationResult
+    }
+    
+    override func prepare(model: TimerCreateTaskModel) {
+        super.prepare(model: model)
+        
+        let duration = constructor.model.durationModel.durationModel
+        let h = duration.hourModel.value
+        let m = duration.minModel.value
+        let s = duration.secModel.value        
+        taskRequest?.taskAttribute = "\(h):\(m):\(s)"
+    }
     
     override func durationPicked(_ duration: DurationTime) {
         constructor.model.durationModel.durationModel.update(durationTime: duration)
@@ -15,23 +45,6 @@ class TimerCreateTaskViewModel: DefaultCreateTaskViewModel, TimerTaskCreationDel
     
     override func update() {
         data.value = constructor.getModels()
-    }
-    
-//    override func saveDidTapped() {
-//        super.saveDidTapped()
-//    }
-    
-    override func makeModel() {
-        super.makeModel()
-        
-        let duration = constructor.model.durationModel.durationModel
-        let h = duration.hourModel.value
-        let m = duration.minModel.value
-        let s = duration.secModel.value
-        print()
-        print("duration = \(h):\(m):\(s)")
-        
-        taskRequest?.taskAttribute = "\(h):\(m):\(s)"
     }
     
     func getDurationModel() -> TaskDurationModel {

@@ -3,14 +3,14 @@ import Foundation
 
 class TextCreateTaskModel: DefaultCreateTaskModel {
     var descriptionModel: DescriptionModel!
-    var lengthLimitModel: NaturalNumberFieldModel!
+    var lengthLimitModel: MinimumSymbolsModel!
     
     func addDescriptionHandler(model: PlaceholderTextViewModel) {
         descriptionModel = DescriptionModel(fieldModel: model)
     }
     
     func addLimitHandler(model: NaturalNumberFieldModel) {
-        lengthLimitModel = model
+        lengthLimitModel = MinimumSymbolsModel(fieldModel: model)
     }
     
     override func getAdditionalModels() -> [AnyObject] {

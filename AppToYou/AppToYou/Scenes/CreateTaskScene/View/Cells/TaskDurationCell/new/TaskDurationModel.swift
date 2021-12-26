@@ -21,6 +21,15 @@ class TaskDurationModel {
     let secModel: TimeBlockModel
     
     /**
+     Является ли модель со значениями по умолчанию.
+     
+     Часы, минуты и секунды в модели по умолчанию - `0`.
+     */
+    var isDefault: Bool {
+        return hourModel.isDefault && minModel.isDefault && secModel.isDefault
+    }
+    
+    /**
      Создание модели.
      
      - parameters:

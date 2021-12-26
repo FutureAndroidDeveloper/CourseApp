@@ -1,7 +1,7 @@
 import UIKit
 
 
-class RepeatCounterView: UIView {
+class RepeatCounterView: UIView, ValidationErrorDisplayable {
     
     private struct Constants {
         struct Field {
@@ -65,6 +65,10 @@ class RepeatCounterView: UIView {
         let contentModel = FieldContentModel(fieldModel: model, insets: Constants.Field.textInsets)
         let fieldModel = FieldModel(content: contentModel)
         repeatTextField.configure(with: fieldModel)
+    }
+    
+    func bind(error: ValidationError?) {
+        repeatTextField.bind(error: error)
     }
     
     @objc

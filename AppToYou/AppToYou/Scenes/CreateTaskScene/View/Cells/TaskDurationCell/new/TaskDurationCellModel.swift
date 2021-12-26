@@ -1,13 +1,15 @@
 import Foundation
 
 
-class TaskDurationCellModel {
+class TaskDurationCellModel: ValidatableModel {
     let durationModel: TaskDurationModel
     
     /**
      Обработчик выбора времени для представления длительности выполнения задачи.
      */
     let timerCallback: () -> Void
+    
+    var errorNotification: ((TimerTaskError?) -> Void)?
     
     init(durationModel: TaskDurationModel, timerCallback: @escaping () -> Void) {
         self.durationModel = durationModel

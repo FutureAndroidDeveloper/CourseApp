@@ -4,7 +4,7 @@ import UIKit
 /**
  Представление длительности выполнения задачи.
  */
-class TaskDurationView: UIView {
+class TaskDurationView: UIView, ValidationErrorDisplayable {
         
     private struct Constants {
         static let blockSize = CGSize(width: 85, height: 45)
@@ -56,6 +56,12 @@ class TaskDurationView: UIView {
         hourTimeView.configure(with: model.hourModel)
         minTimeView.configure(with: model.minModel)
         secTimeView.configure(with: model.secModel)
+    }
+    
+    func bind(error: ValidationError?) {
+        hourTimeView.bind(error: error)
+        minTimeView.bind(error: error)
+        secTimeView.bind(error: error)
     }
     
 }

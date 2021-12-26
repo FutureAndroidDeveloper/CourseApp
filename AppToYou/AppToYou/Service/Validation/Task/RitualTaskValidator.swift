@@ -23,7 +23,8 @@ class RitualTaskValidator: CheckboxTaskValidator<RepeatCreateTaskModel> {
         validate(counterField: model.countModel)
     }
     
-    func bind(error: RitualTaskError, to receiver: ValidationErrorDisplayable) {
+    func bind(error: RitualTaskError?, to receiver: ValidationErrorDisplayable) {
+        updateErrorState(new: error)
         receiver.bind(error: error)
     }
     
@@ -35,6 +36,9 @@ class RitualTaskValidator: CheckboxTaskValidator<RepeatCreateTaskModel> {
         }
         else if count > Int32.max {
             bind(error: .toMuch, to: counterField)
+        }
+        else {
+            super.bind(error: nil, to: counterField)
         }
     }
     

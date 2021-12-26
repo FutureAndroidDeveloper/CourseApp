@@ -141,6 +141,7 @@
 		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
 		04BB1804274BD80A00C584F8 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */; };
 		04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */; };
+		04C9D05B2777D0F000837A05 /* MinimumSymbolsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9D05A2777D0F000837A05 /* MinimumSymbolsModel.swift */; };
 		04CECEA92758023600ECCB2D /* TaskCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEA82758023600ECCB2D /* TaskCreationModel.swift */; };
 		04CECEAB27581CD100ECCB2D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEAA27581CD100ECCB2D /* Observable.swift */; };
 		04D1FA5D2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D1FA5C2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift */; };
@@ -564,6 +565,7 @@
 		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
 		04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
+		04C9D05A2777D0F000837A05 /* MinimumSymbolsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumSymbolsModel.swift; sourceTree = "<group>"; };
 		04CECEA82758023600ECCB2D /* TaskCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreationModel.swift; sourceTree = "<group>"; };
 		04CECEAA27581CD100ECCB2D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		04D1FA5C2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCreateTaskViewModel.swift; sourceTree = "<group>"; };
@@ -1616,6 +1618,7 @@
 			isa = PBXGroup;
 			children = (
 				049334EA276922CC00AEF40E /* MinimumSymbolsCell.swift */,
+				04C9D05A2777D0F000837A05 /* MinimumSymbolsModel.swift */,
 			);
 			path = new;
 			sourceTree = "<group>";
@@ -3578,6 +3581,7 @@
 				6D8A2809265E3BE800BAAEF5 /* UITableViewCell+ReuseIdentifier.swift in Sources */,
 				6D55ADDA26A1B3D100F7DD4A /* ATYEditTimerCourseTaskDurationCell.swift in Sources */,
 				04DED8082770A99500DBD724 /* RepeatTaskModel.swift in Sources */,
+				04C9D05B2777D0F000837A05 /* MinimumSymbolsModel.swift in Sources */,
 				04D1FA5F2770F87F0011ECC0 /* TextCreateTaskViewModel.swift in Sources */,
 				6D8A2832265E6DD200BAAEF5 /* DismissAnimation.swift in Sources */,
 				04E1426F275E53EA0076D8FC /* WeekdayModel.swift in Sources */,
