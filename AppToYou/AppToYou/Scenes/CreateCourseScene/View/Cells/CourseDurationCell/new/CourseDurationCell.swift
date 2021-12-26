@@ -1,27 +1,20 @@
 import UIKit
 
 
-class CourseDurationCell: UITableViewCell, InflatableView {
+class CourseDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let titleInsets = UIEdgeInsets(top: 32, left: 24, bottom: 6, right: 20)
-        static let descriptionInsets = UIEdgeInsets(top: 0, left: 24, bottom: 24, right: 16)
-        static let durationInsets = UIEdgeInsets(top: 0, left: 20, bottom: 14, right: 0)
-        static let infiniteInsets = UIEdgeInsets(top: 0, left: 20, bottom: 34, right: 0)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let descriptionInsets = UIEdgeInsets(top: 9, left: 20, bottom: 24, right: 20)
+        static let durationInsets = UIEdgeInsets(top: 24, left: 20, bottom: 0, right: 0)
+        static let infiniteInsets = UIEdgeInsets(top: 12, left: 25, bottom: 32, right: 20)
     }
     
     private var model: CourseDurationCellModel?
     
+    private let titleLabel = LabelFactory.getTitleLabel(title: "Длительность курса")
     private let durationView = TaskDurationView()
     private let infiniteView = TitledCheckBox()
-
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Длительность курса"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
 
     private let descriptionLabel: UILabel = {
         let label = UILabel()
@@ -46,26 +39,26 @@ class CourseDurationCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
             $0.leading.top.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
         
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.titleInsets.bottom)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.descriptionInsets.top)
             $0.leading.trailing.equalToSuperview().inset(Constants.descriptionInsets)
         }
         
         contentView.addSubview(durationView)
         durationView.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(Constants.descriptionInsets.bottom)
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(Constants.durationInsets.top)
             $0.leading.trailing.equalToSuperview().inset(Constants.durationInsets)
         }
         
         contentView.addSubview(infiniteView)
         infiniteView.snp.makeConstraints {
-            $0.top.equalTo(durationView.snp.bottom).offset(Constants.durationInsets.bottom)
+            $0.top.equalTo(durationView.snp.bottom).offset(Constants.infiniteInsets.top)
             $0.bottom.leading.trailing.equalTo(Constants.infiniteInsets)
         }
         
@@ -83,6 +76,11 @@ class CourseDurationCell: UITableViewCell, InflatableView {
         durationView.configure(with: model.durationModel)
         infiniteView.configure(with: model.isInfiniteModel) { [weak self] isInfinite in
             self?.infiniteStateChanged(isInfinite)
+        }
+        
+        model.errorNotification = { [weak self] error in
+            self?.durationView.bind(error: error)
+            self?.bind(error: error)
         }
     }
     

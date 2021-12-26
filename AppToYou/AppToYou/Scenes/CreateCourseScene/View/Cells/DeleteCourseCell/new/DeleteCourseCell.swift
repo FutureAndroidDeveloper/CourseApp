@@ -4,7 +4,7 @@ import UIKit
 class DeleteCourseCell : UITableViewCell, InflatableView {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 32, left: 20, bottom: 0, right: 0)
+        static let edgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 32, right: 20)
         static let betweenOffset: CGFloat = 9
         static let imageSize = CGSize(width: 24, height: 24)
     }

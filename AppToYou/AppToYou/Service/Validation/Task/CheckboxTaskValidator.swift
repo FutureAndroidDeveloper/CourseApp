@@ -2,7 +2,7 @@ import Foundation
 
 
 enum CheckboxTaskError: ValidationError {
-    case name
+    case name(common: CommonValidationError.Name)
     case weekdays
     case startDate
     case endDate
@@ -12,8 +12,8 @@ enum CheckboxTaskError: ValidationError {
     
     var message: String? {
         switch self {
-        case .name:
-            return "Invalid Name"
+        case .name(let common):
+            return common.message
         case .weekdays:
             return "Выберите дни недели"
         case .startDate:
@@ -53,7 +53,12 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
     
     func bind(error: CheckboxTaskError?, to receiver: ValidationErrorDisplayable) {
         updateErrorState(new: error)
-        receiver.bind(error: error)
+        
+        if case let .name(commonError) = error {
+            receiver.bind(error: commonError)
+        } else {
+            receiver.bind(error: error)
+        }
     }
     
     func updateErrorState(new error: ValidationError?) {
@@ -64,8 +69,10 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
     private func validate(nameField: TaskNameModel) {
         let name = nameField.fieldModel.value
         
-        if name.isEmpty || name.count >= 120 {
-            bind(error: .name, to: nameField)
+        if name.isEmpty {
+            bind(error: .name(common: .name), to: nameField)
+        } else if name.count > 63 {
+            bind(error: .name(common: .nameLength), to: nameField)
         } else {
             bind(error: nil, to: nameField)
         }

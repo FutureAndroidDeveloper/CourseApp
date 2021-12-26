@@ -2,12 +2,12 @@ import Foundation
 
 
 enum TimerTaskError: ValidationError {
-    case duration
+    case duration(common: CommonValidationError.Duration)
     
     var message: String? {
         switch self {
-        case .duration:
-            return "Установите значение"
+        case .duration(let common):
+            return common.message
         }
     }
 }
@@ -22,14 +22,19 @@ class TimerTaskValidator: CheckboxTaskValidator<TimerCreateTaskModel> {
     
     func bind(error: TimerTaskError?, to receiver: ValidationErrorDisplayable) {
         updateErrorState(new: error)
-        receiver.bind(error: error)
+        
+        if case let .duration(commonError) = error {
+            receiver.bind(error: commonError)
+        } else {
+            receiver.bind(error: error)
+        }
     }
     
     private func validate(durationField: TaskDurationCellModel) {
         let duration = durationField.durationModel
         
         if duration.isDefault {
-            bind(error: .duration, to: durationField)
+            bind(error: .duration(common: .duration), to: durationField)
         } else {
             super.bind(error: nil, to: durationField)
         }

@@ -1,9 +1,10 @@
 import Foundation
 
 
-class CourseChatModel {
+class CourseChatModel: ValidatableModel {
     
     let fieldModel: TextFieldModel
+    var errorNotification: ((CourseError?) -> Void)?
     
     init(fieldModel: TextFieldModel) {
         self.fieldModel = fieldModel

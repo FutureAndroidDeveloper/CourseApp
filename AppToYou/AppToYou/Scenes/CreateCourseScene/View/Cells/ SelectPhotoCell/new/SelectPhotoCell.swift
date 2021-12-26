@@ -3,15 +3,23 @@ import UIKit
 
 class SelectPhotoCell: UITableViewCell, InflatableView {
     
+    private struct Constants {
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        
+        struct Photo {
+            static let insets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
+            static let height: CGFloat = 125
+        }
+        
+        struct TypeImage {
+            static let insets = UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 12)
+            static let size = CGSize(width: 38, height: 38)
+        }
+    }
+    
     private var model: SelectPhotoModel?
     
-    private let nameLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Обложка курса"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
+    private let titleLabel = LabelFactory.getTitleLabel(title: "Обложка курса")
 
     private let photoImageView : UIImageView = {
         let imageView = UIImageView()
@@ -40,35 +48,29 @@ class SelectPhotoCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(nameLabel)
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview().inset(Constants.titleInsets)
+        }
+        
         contentView.addSubview(photoImageView)
-
-
-        nameLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
+        photoImageView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.Photo.insets.top)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.Photo.insets)
+            $0.height.equalTo(Constants.Photo.height)
         }
 
+        photoImageView.addSubview(typeImageView)
+        typeImageView.snp.makeConstraints {
+            $0.trailing.bottom.equalToSuperview().inset(Constants.TypeImage.insets)
+            $0.size.equalTo(Constants.TypeImage.size)
+        }
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectPhoto))
         photoImageView.addGestureRecognizer(tapGesture)
         photoImageView.isUserInteractionEnabled = true
         photoImageView.layer.cornerRadius = 20
         photoImageView.clipsToBounds = true
-        photoImageView.snp.makeConstraints { (make) in
-            make.top.equalTo(nameLabel.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(125)
-            make.bottom.equalToSuperview().offset(-15)
-        }
-
-        photoImageView.addSubview(typeImageView)
-        typeImageView.snp.makeConstraints { (make) in
-            make.trailing.equalToSuperview().offset(-12)
-            make.bottom.equalToSuperview().offset(-12)
-            make.width.height.equalTo(38)
-        }
     }
     
     func inflate(model: AnyObject) {

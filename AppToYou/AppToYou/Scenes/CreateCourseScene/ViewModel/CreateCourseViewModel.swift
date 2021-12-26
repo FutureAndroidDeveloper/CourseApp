@@ -37,13 +37,17 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
     
     private var courseModel: ATYCourse?
     
-    private var courseImage: UIImage?
+//    private var courseImage: UIImage?
     
     private lazy var courseConstructor: CreateCourseConstructor = {
         let constructor = CreateCourseConstructor(mode: self.mode, delegate: self)
         return constructor
     }()
 
+    private let courseService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
+    private let validator = CourseValidator()
+    
+    private var courseRequest: CourseCreateRequest?
     
     init(mode: CreateCourseMode, coursesRouter: UnownedRouter<CoursesRoute>) {
         self.mode = mode
@@ -68,10 +72,7 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
     }
     
     func photoPicked(_ image: UIImage?, with path: String?) {
-        print(image)
-        print(path)
-        courseImage = image
-        courseConstructor.createCourseModel.photoModel.update(image: image)
+        courseConstructor.createCourseModel.photoModel.update(image: image, path: path)
         updateStructure()
     }
 
@@ -81,10 +82,45 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
     }
 
     func doneDidTapped() {
-        print("Done")
-        // validate + после валидации при необходимости обновить модель ячеек с указанием ошибок
-        // при успешной валидации отправить запрос на сервер
-        // при успешном выполнении запроса, сохранить в бд
+        let model = courseConstructor.createCourseModel
+        validator.validate(model: model)
+        
+        if !validator.hasError {
+            prepare(model: model)
+            save()
+        }
+    }
+    
+    func prepare(model: CreateCourseModel) {
+        let name = model.nameModel.fieldModel.value
+        let description = model.descriptionModel.fieldModel.value ?? String()
+        let categories = model.categoryModel.selectedCategories
+        let courseType = model.typeModel.value
+        let privacy = false
+        
+        courseRequest = CourseCreateRequest(name: name, description: description, categories: categories,
+                                            courseType: courseType, duration: model.durationModel, privacyEnabled: privacy)
+        
+        let chatLink = model.chatModel.fieldModel.value
+        courseRequest?.chatPath = chatLink.isEmpty ? nil : chatLink
+        courseRequest?.picPath = model.photoModel.path
+        courseRequest?.price = model.payModel?.model.value
+    }
+    
+    func save() {
+        guard let course = courseRequest else {
+            return
+        }
+        
+        courseService.create(course: course) { result in
+            switch result {
+            case .success(let newCourse):
+                print(newCourse)
+
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
 }
@@ -111,7 +147,8 @@ extension CreateCourseViewModelImpl: CreateCourseDelegate {
     }
     
     func showPhotoPicker() {
-        coursesRouter.trigger(.photo(image: courseImage))
+        let image = courseConstructor.createCourseModel.photoModel.photoImage
+        coursesRouter.trigger(.photo(image: image))
     }
     
     func removeCourse() {
@@ -133,7 +170,12 @@ extension CreateCourseViewModelImpl: CreateCourseDelegate {
     
     func getPhoto() -> (photo: UIImage?, placeholder: UIImage?) {
         // TODO: - в модели нет свойства картинки,  но есть Path
-        return (courseImage, R.image.coursePhotoExample())
+        let defaultImage = R.image.coursePhotoExample()
+//        guard let courseImage = courseConstructor.createCourseModel.photoModel.photoImage else {
+//            return (nil, defaultImage)
+//        }
+        
+        return (nil, defaultImage)
     }
     
     func getCategoriesModel() -> CourseCategoryModel {

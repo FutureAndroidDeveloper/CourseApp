@@ -1,29 +1,22 @@
 import UIKit
 
 
-class CourseChatCell: UITableViewCell, InflatableView {
+class CourseChatCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 9, right: 20)
-        static let descriptionInsets = UIEdgeInsets(top: 0, left: 20, bottom: 16, right: 69)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let descriptionInsets = UIEdgeInsets(top: 9, left: 20, bottom: 0, right: 69)
         
         struct Link {
-            static let fieldInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 16)
+            static let fieldInsets = UIEdgeInsets(top: 16, left: 20, bottom: 32, right: 20)
             
             static let textInsets = UIEdgeInsets(top: 11, left: 5, bottom: 13, right: 5)
             static let iconInsets = UIEdgeInsets(top: 12, left: 10, bottom: 10, right: 12)
         }
     }
     
+    private let titleLabel = LabelFactory.getTitleLabel(title: "Чат курса")
     private let linkField = TextField(style: StyleManager.standartTextField)
-    
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Чат курса"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
 
     private let descriptionLabel: UILabel = {
         let label = UILabel()
@@ -47,20 +40,20 @@ class CourseChatCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
             $0.leading.top.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
 
         contentView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.titleInsets.bottom)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.descriptionInsets.top)
             $0.leading.trailing.equalToSuperview().inset(Constants.descriptionInsets)
         }
 
         contentView.addSubview(linkField)
         linkField.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(Constants.descriptionInsets.bottom)
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(Constants.Link.fieldInsets.top)
             $0.leading.trailing.bottom.equalToSuperview().inset(Constants.Link.fieldInsets)
         }
     }
@@ -71,12 +64,10 @@ class CourseChatCell: UITableViewCell, InflatableView {
         }
         
         let linkIconView = UIImageView()
-        linkIconView.image = R.image.calendarImage()?.withRenderingMode(.alwaysTemplate)
-        linkIconView.tintColor = .red
+        linkIconView.image = R.image.chatLink()
         
         let messangerIconView = UIImageView()
-        messangerIconView.image = R.image.calendarImage()?.withRenderingMode(.alwaysTemplate)
-        messangerIconView.tintColor = .blue
+        messangerIconView.image = R.image.telegram()
         
         let linkModel = FieldAdditionalContentModel(contentView: linkIconView, insets: Constants.Link.iconInsets)
         let messangerModel = FieldAdditionalContentModel(contentView: messangerIconView, insets: Constants.Link.iconInsets)
@@ -84,6 +75,11 @@ class CourseChatCell: UITableViewCell, InflatableView {
         
         let fieldModel = FieldModel(content: contentModel, leftContent: linkModel, rightContent: messangerModel)
         linkField.configure(with: fieldModel)
+        
+        model.errorNotification = { [weak self] error in
+            self?.linkField.bind(error: error)
+            self?.bind(error: error)
+        }
     }
     
 }

@@ -1,9 +1,11 @@
 import Foundation
 
 
-class CourseCategoryModel {
+class CourseCategoryModel: ValidatableModel {
+    
     let categories: [ATYCourseCategory]
     private(set) var selectedCategories: [ATYCourseCategory]
+    var errorNotification: ((CourseError?) -> Void)?
     
     convenience init(categories: [ATYCourseCategory]) {
         self.init(categories: categories, selectedCategories: [])

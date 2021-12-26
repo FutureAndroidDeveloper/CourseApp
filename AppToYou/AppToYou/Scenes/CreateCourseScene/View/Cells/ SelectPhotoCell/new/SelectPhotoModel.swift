@@ -2,7 +2,9 @@ import UIKit
 
 
 class SelectPhotoModel {
+    
     private(set) var photoImage: UIImage?
+    private(set) var path: String?
     let defaultImage: UIImage?
     let pickImage: (() -> Void)
     
@@ -13,7 +15,8 @@ class SelectPhotoModel {
         update(image: photoImage)
     }
     
-    func update(image: UIImage?) {
+    func update(image: UIImage?, path: String? = nil) {
+        self.path = path
         photoImage = image ?? defaultImage
     }
     

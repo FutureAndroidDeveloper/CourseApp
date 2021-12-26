@@ -1,8 +1,10 @@
 import Foundation
 
 
-class PayForCourseModel: NSCopying {
+class PayForCourseModel: NSCopying, ValidatableModel {
+    
     let model: NaturalNumberFieldModel
+    var errorNotification: ((CourseError?) -> Void)?
 
     init(model: NaturalNumberFieldModel) {
         self.model = model
@@ -12,4 +14,5 @@ class PayForCourseModel: NSCopying {
         let newModel = PayForCourseModel(model: model)
         return newModel
     }
+    
 }

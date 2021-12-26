@@ -40,7 +40,7 @@ struct ATYDurationCourse {
     var day: Int = 0
 }
 
-enum ATYCourseCategory: CaseIterable {
+enum ATYCourseCategory: String, CaseIterable, Codable {
     case HEALTHY_LIFESTYLE
     case CHILDREN
     case PETS
@@ -95,7 +95,7 @@ enum ATYDurationType {
     case UNLIMITED
 }
 
-enum ATYCourseType {
+enum ATYCourseType: String, Codable {
     case PUBLIC
     case PRIVATE
     case PAID

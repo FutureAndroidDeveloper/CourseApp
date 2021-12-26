@@ -1,25 +1,23 @@
 import UIKit
+import SnapKit
 
 
 class CourseTypeCell: UITableViewCell, InflatableView {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 0, right: 20)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let edgeInsets = UIEdgeInsets(top: 9, left: 20, bottom: 0, right: 20)
         static let rowSpacing: CGFloat = 16
+        
+        static let defaultBottomInset: CGFloat = 32
+        static let paymentBottomInset: CGFloat = 16
     }
     
     private let courseTypeOrder: [ATYCourseType] = [.PUBLIC, .PRIVATE, .PAID]
+    private var bottomConstraint: Constraint?
     private var model: CourseTypeModel?
     
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Тип курса"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        label.lineBreakMode = .byWordWrapping
-        return label
-    }()
+    private let titleLabel = LabelFactory.getTitleLabel(title: "Тип курса")
     
     private let contentStack: UIStackView = {
         let stack = UIStackView()
@@ -52,13 +50,14 @@ class CourseTypeCell: UITableViewCell, InflatableView {
     private func configure() {
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(Constants.edgeInsets)
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
         
         contentView.addSubview(contentStack)
-        contentStack.snp.makeConstraints {
+        contentStack.snp.makeConstraints { [weak self] in
             $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.edgeInsets.top)
-            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.leading.trailing.equalToSuperview().inset(Constants.edgeInsets)
+            self?.bottomConstraint = $0.bottom.equalToSuperview().inset(Constants.edgeInsets).constraint
         }
     }
     
@@ -99,6 +98,7 @@ class CourseTypeCell: UITableViewCell, InflatableView {
         
         deselect()
         viewToSelect.isSelected = true
+        updateConstraint(for: selectedType)
         model?.update(value: selectedType)
         model?.courseTypePicked(selectedType)
     }
@@ -107,6 +107,14 @@ class CourseTypeCell: UITableViewCell, InflatableView {
         contentStack.arrangedSubviews
             .compactMap { $0 as? CourseTypeView }
             .forEach { $0.isSelected = false }
+    }
+    
+    private func updateConstraint(for type: ATYCourseType) {
+        if type == .PAID {
+            bottomConstraint?.update(inset: Constants.paymentBottomInset)
+        } else {
+            bottomConstraint?.update(inset: Constants.defaultBottomInset)
+        }
     }
     
 }

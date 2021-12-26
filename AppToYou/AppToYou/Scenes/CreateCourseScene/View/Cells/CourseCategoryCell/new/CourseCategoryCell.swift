@@ -1,22 +1,16 @@
 import UIKit
 
 
-class CourseCategoryCell: UITableViewCell, InflatableView {
+class CourseCategoryCell: UITableViewCell, InflatableView, ValidationErrorDisplayable {
     
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let pickerInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
         static let pickerHeight: CGFloat = 50
     }
     
+    private let titleInsets = LabelFactory.getTitleLabel(title: "Категория курса")
     private let categoryPicker = CategoryPickerView()
-
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Категория курса"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
 
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -32,15 +26,15 @@ class CourseCategoryCell: UITableViewCell, InflatableView {
     }
 
     private func configure() {
-        contentView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(Constants.edgeInsets)
+        contentView.addSubview(titleInsets)
+        titleInsets.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
         
         contentView.addSubview(categoryPicker)
         categoryPicker.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(Constants.edgeInsets.top)
-            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.edgeInsets)
+            $0.top.equalTo(titleInsets.snp.bottom).offset(Constants.pickerInsets.top)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.pickerInsets)
             $0.height.equalTo(Constants.pickerHeight)
         }
     }
@@ -51,6 +45,10 @@ class CourseCategoryCell: UITableViewCell, InflatableView {
         }
         
         categoryPicker.configure(with: model)
+        model.errorNotification = { [weak self] error in
+            self?.categoryPicker.bind(error: error)
+            self?.bind(error: error)
+        }
     }
     
 }

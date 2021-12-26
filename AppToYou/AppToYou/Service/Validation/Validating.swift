@@ -5,7 +5,7 @@ import Foundation
 protocol Validating {
     associatedtype ValidatingError: ValidationError
     
-    var hasError: Bool { get }
+    var hasError: Bool { get set }
     
     func bind(error: ValidatingError?, to receiver: ValidationErrorDisplayable)
 }

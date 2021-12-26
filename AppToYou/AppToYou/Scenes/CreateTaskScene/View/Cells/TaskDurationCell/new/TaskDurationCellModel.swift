@@ -9,7 +9,7 @@ class TaskDurationCellModel: ValidatableModel {
      */
     let timerCallback: () -> Void
     
-    var errorNotification: ((TimerTaskError?) -> Void)?
+    var errorNotification: ((CommonValidationError.Duration?) -> Void)?
     
     init(durationModel: TaskDurationModel, timerCallback: @escaping () -> Void) {
         self.durationModel = durationModel

@@ -2,7 +2,7 @@ import UIKit
 import DropDown
 
 
-class CategoryPickerView: UIView {
+class CategoryPickerView: UIView, ValidationErrorDisplayable {
     
     private struct Constants {
         
@@ -87,6 +87,11 @@ class CategoryPickerView: UIView {
                 return
             }
             
+            if indexes.count > 3 {
+                self.selectRows()
+                return
+            }
+            
             let updatedSelection = indexes
                 .sorted()
                 .map { model.categories[$0] }
@@ -110,6 +115,16 @@ class CategoryPickerView: UIView {
         dropDown.dataSource = model.categories.map { $0.title }
         update()
         selectRows()
+    }
+    
+    func bind(error: ValidationError?) {
+        if let _ = error {
+            layer.borderWidth = 1
+            layer.borderColor = R.color.failureColor()?.cgColor
+        } else {
+            layer.borderWidth = 0
+            layer.borderColor = nil
+        }
     }
     
     private func update() {
@@ -142,6 +157,7 @@ class CategoryPickerView: UIView {
             resultSet.insert(index)
         }
         
+        dropDown.deselectRows(at: Set<Index>(0..<dropDown.dataSource.count))
         dropDown.selectRows(at: set)
     }
     

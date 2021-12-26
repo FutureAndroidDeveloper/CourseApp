@@ -1,14 +1,14 @@
 import Foundation
 
 enum TextTaskError: ValidationError {
-    case desription
+    case description(common: CommonValidationError.Description)
     case minSymbols
     case long
     
     var message: String? {
         switch self {
-        case .desription:
-            return "Слишком большое количество символом"
+        case .description(let common):
+            return common.message
         case .long:
             return "Слишком большое количество символом"
         case .minSymbols:
@@ -28,12 +28,17 @@ class TextTaskValidator: CheckboxTaskValidator<TextCreateTaskModel> {
     
     func bind(error: TextTaskError?, to receiver: ValidationErrorDisplayable) {
         updateErrorState(new: error)
-        receiver.bind(error: error)
+        
+        if case let .description(commonError) = error {
+            receiver.bind(error: commonError)
+        } else {
+            receiver.bind(error: error)
+        }
     }
     
     private func validate(descriptionField: DescriptionModel) {
-        if let description = descriptionField.fieldModel.value, description.count > 200 {
-            bind(error: .desription, to: descriptionField)
+        if let description = descriptionField.fieldModel.value, description.count > 255 {
+            bind(error: .description(common: .descriptionLength), to: descriptionField)
         } else {
             super.bind(error: nil, to: descriptionField)
         }
