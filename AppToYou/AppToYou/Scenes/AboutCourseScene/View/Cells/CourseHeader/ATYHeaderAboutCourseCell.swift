@@ -133,7 +133,7 @@ class ATYHeaderAboutCourseCell: UITableViewCell {
             myCourseLabel.text = "платный курс " + myCourse
         }
 
-        self.headerImageView.image = UIImage(imageName: imagePath ?? "")
+//        self.headerImageView.image = UIImage(imageName: imagePath ?? "")
     }
 
     private func configure() {

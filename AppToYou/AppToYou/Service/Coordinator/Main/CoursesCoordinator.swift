@@ -6,6 +6,8 @@ enum CoursesRoute: Route {
     case courses
     case create
     
+    case openCourse(course: CourseCreateRequest)
+    
     case photo(image: UIImage?)
     case durationPicker
 }
@@ -31,6 +33,13 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
             coursesViewController.bind(to: coursesViewModel)
             
             return .push(coursesViewController)
+            
+        case .openCourse(let course):
+            let courseViewController = CourseViewController()
+            let courseViewModel = CourseViewModelImpl(course: course, coursesRouter: unownedRouter)
+            courseViewController.bind(to: courseViewModel)
+            
+            return .push(courseViewController)
             
         case .create:
             let createCourseViewController = CreateCourseViewController()

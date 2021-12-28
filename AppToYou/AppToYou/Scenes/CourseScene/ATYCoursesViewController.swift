@@ -34,9 +34,11 @@ class ATYCoursesViewController : UIViewController, BindableType {
     private var transitionSecond: PanelTransition!
     private var transitionOne: PanelTransition!
 
-    var courseArray = [ATYCourse]()
+    private let store = FileStore()
     
-    var filteredArray = [ATYCourse]()
+    var courseArray = [CourseCreateRequest]()
+    
+    var filteredArray = [CourseCreateRequest]()
 
     var flag = true
 
@@ -59,9 +61,12 @@ class ATYCoursesViewController : UIViewController, BindableType {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        courseArray = store.getCourses()
+        filteredArray = courseArray
         super.viewWillAppear(animated)
         configureNavBar()
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        tableView.reloadData()
     }
 
     private func configureTableView() {
@@ -84,7 +89,8 @@ class ATYCoursesViewController : UIViewController, BindableType {
     }
 
     private func openCourseVc(isMyCourse: Bool, indexPath: IndexPath) {
-        let vc = ATYAboutCourseViewController(isMyCourse: isMyCourse, course: courseArray[indexPath.row])
+        let tmpCourse = ATYCourse.init()
+        let vc = ATYAboutCourseViewController(isMyCourse: isMyCourse, course: tmpCourse)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
@@ -124,15 +130,17 @@ extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource 
 
         let cell = tableView.dequeueReusableCell(withIdentifier: ATYCourseTableViewCell.reuseIdentifier, for: indexPath) as! ATYCourseTableViewCell
         let item = filteredArray[indexPath.row]
-        cell.setUp(courseName: item.courseName,
-                   categories: item.courseCategory,
-                   countOfCoin: item.coinPrice,
-                   countOfMembers: item.usersAmount ?? 0,
-                   countOfLikes: item.likes ?? 0,
+        
+        cell.setUp(courseName: item.name,
+                   categories: [item.courseCategory1, item.courseCategory2, item.courseCategory3],
+                   countOfCoin: 10,
+                   countOfMembers: 18,
+                   countOfLikes: 25,
                    typeOfCourse: item.courseType,
-                   isMyCourse: item.isMyCourse,
-                   avatarPath: item.picPath,
-                   courseDescription: item.courseDescription)
+                   isMyCourse: true,
+                   avatarPath: nil,
+                   courseDescription: item.description)
+        
         return cell
     }
 
@@ -149,25 +157,26 @@ extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource 
         }
 
         header.secondCallback = { [weak self] in
-            self?.filteredArray = self?.filteredArray.filter({ $0.isMyCourse }) ?? []
+//            self?.filteredArray = self?.filteredArray.filter({ $0.isMyCourse }) ?? []
+//            self?.filteredArray = self?.filteredArray
             self?.flag = false
             self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             self?.tableView.reloadData()
         }
 
         header.searchTextCallback = { [weak self] text in
-            self?.filteredArray = self?.courseArray.filter { $0.courseName.range(of: text ?? "", options: .caseInsensitive) != nil } ?? []
-            if text == nil || text == "" {
-                self?.filteredArray = self?.courseArray ?? []
-            }
-
-            if self?.filteredArray.isEmpty ?? true {
-                self?.tableView.setNoDataPlaceholder("Курсы не найдены")
-            }
-            else {
-                self?.tableView.removeNoDataPlaceholder()
-            }
-            self?.tableView.reloadData()
+//            self?.filteredArray = self?.courseArray.filter { $0.courseName.range(of: text ?? "", options: .caseInsensitive) != nil } ?? []
+//            if text == nil || text == "" {
+//                self?.filteredArray = self?.courseArray ?? []
+//            }
+//
+//            if self?.filteredArray.isEmpty ?? true {
+//                self?.tableView.setNoDataPlaceholder("Курсы не найдены")
+//            }
+//            else {
+//                self?.tableView.removeNoDataPlaceholder()
+//            }
+//            self?.tableView.reloadData()
         }
         return section == 1 ? header : nil
     }
@@ -188,20 +197,25 @@ extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource 
             var child = UIViewController()
             switch cell.typeOfCourse {
             case .PUBLIC:
-                openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
+//                openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
+//                openCourseVc(isMyCourse: true, indexPath: indexPath)
+                let course = courseArray[indexPath.row]
+                viewModel.input.openCourse(course)
                 return
+                
             case .PRIVATE:
-                if courseArray[indexPath.row].isMyCourse {
-                    openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
-                    return
-                }
+//                if courseArray[indexPath.row].isMyCourse {
+//                    openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
+//                    return
+//                }
                 child = ATYJoinToCloseCourseViewController()
                 child.transitioningDelegate = self.transitionOne
+                
             case .PAID:
-                if courseArray[indexPath.row].isMyCourse {
-                    openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
-                    return
-                }
+//                if courseArray[indexPath.row].isMyCourse {
+//                    openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
+//                    return
+//                }
                 child = ATYPaidCoursePreviewViewController()
                 child.transitioningDelegate = self.transitionSecond
                 (child as? ATYPaidCoursePreviewViewController)?.dismissCallback = { [weak self] in

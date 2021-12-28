@@ -1,22 +1,5 @@
 import Foundation
 
-
-//struct CourseCreateRequest: Codable {
-//    var name: String
-//    var description: String
-//    var courseCategory1: ATYCourseCategory
-//    var courseCategory2: ATYCourseCategory
-//    var courseCategory3: ATYCourseCategory
-//    var courseType: ATYCourseType
-//    var durationType: DurationType
-//    var privacyEnabled: Bool
-//
-//    var picPath: String?
-//    var price: Int?
-//    var duration: Duration?
-//    var chatPath: String?
-//}
-
 enum DurationType: String, Codable {
     case limited = "LIMITED"
     case unlimited = "UNLIMITED"
@@ -72,8 +55,12 @@ struct CourseCreateRequest: Codable {
                                         min: duration.durationModel.minModel.value,
                                         sec: duration.durationModel.secModel.value)
         
-        self.duration = .init(duration: durationTime)
-        self.durationType = duration.isInfiniteModel.isSelected ? .unlimited : .limited
+        if duration.isInfiniteModel.isSelected {
+            self.durationType = .unlimited
+        } else {
+            self.duration = .init(duration: durationTime)
+            self.durationType = .limited
+        }
         
         courseCategory1 = categories.first ?? .BEAUTY
         courseCategory2 = categories.first ?? .BEAUTY

@@ -196,7 +196,7 @@ class TaskCell: UITableViewCell, InflatableView {
         self.secondSubtitle.text = model.model.secondSubtitleLabel
 
         self.courseLabel.isHidden = model.model.courseName == nil
-        self.secondSubtitle.isHidden = model.model.secondSubtitleLabel == nil
+//        self.secondSubtitle.isHidden = model.model.secondSubtitleLabel
         self.dotView.isHidden = secondSubtitle.isHidden
         widthConstraint.constant = firstSubtitle.intrinsicContentSize.width
     }

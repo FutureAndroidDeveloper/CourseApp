@@ -37,6 +37,8 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
     
     private var courseModel: ATYCourse?
     
+    private let store = FileStore()
+    
 //    private var courseImage: UIImage?
     
     private lazy var courseConstructor: CreateCourseConstructor = {
@@ -112,15 +114,19 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
             return
         }
         
-        courseService.create(course: course) { result in
-            switch result {
-            case .success(let newCourse):
-                print(newCourse)
-
-            case .failure(let error):
-                print(error)
-            }
-        }
+        store.save(course)
+        store.printCourses()
+        
+        
+//        courseService.create(course: course) { result in
+//            switch result {
+//            case .success(let newCourse):
+//                print(newCourse)
+//
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
     
 }

@@ -86,9 +86,9 @@ final class ATYAllTasksViewController: UIViewController {
                           TemporaryData(typeTask: .RITUAL,
                                         courseName: nil,
                                         hasSanction: false,
-                                        titleLabel: "Отжимания",
-                                        firstSubtitleLabel: "пн, вт, ср",
-                                        secondSubtitleLabel: "20 раз",
+                                        titleLabel: "Отжимания и длиный текст для проверки состояния названия",
+                                        firstSubtitleLabel: "пн, вт, ср, чт, пт, cб,  вс",
+                                        secondSubtitleLabel: "2022 раз",
                                         state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31"))]
 
     var resultArray = [TemporaryData]()

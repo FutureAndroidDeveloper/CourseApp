@@ -3,14 +3,9 @@ import UIKit
 
 class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    typealias CellAssociatedType = (model: AnyObject.Type, cell: UITableViewCell.Type)
-    typealias HeaderFooterAssociatedType = (model: AnyObject.Type, headerFooter: UITableViewHeaderFooterView.Type)
-    
     private let tableView: UITableView
     private var sections: [TableViewSection] = []
-    
-    private var cellStore: [String: CellAssociatedType] = [:]
-    private var headerFooterStore: [String: HeaderFooterAssociatedType] = [:]
+    private var holders: [TableTypesHolder] = []
     
     
     init(_ tableView: UITableView) {
@@ -19,14 +14,18 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
     }
-
-    func registerRow(model: AnyObject.Type, cell: UITableViewCell.Type) {
-        cellStore[cell.reuseIdentifier] = (model: model.self, cell: cell.self)
+    
+    func registerRow<Cell: UITableViewCell>(model: AnyObject.Type, cell: Cell.Type) where Cell: InflatableView {
+        let holder = TableTypesHolder(inflatableType: cell, modelType: model)
+        holders.append(holder)
         tableView.register(cell.self, forCellReuseIdentifier: cell.reuseIdentifier)
     }
     
-    func registerHeaderFooter(model: AnyObject.Type, headerFooter: UITableViewHeaderFooterView.Type) {
-        headerFooterStore[headerFooter.reuseIdentifier] = (model: model.self, headerFooter: headerFooter.self)
+    func registerHeaderFooter<HeaderFooter: UITableViewHeaderFooterView>(model: AnyObject.Type,
+                                                                         headerFooter: HeaderFooter.Type) where HeaderFooter: InflatableView {
+        
+        let holder = TableTypesHolder(inflatableType: headerFooter, modelType: model)
+        holders.append(holder)
         tableView.register(headerFooter.self, forHeaderFooterViewReuseIdentifier: headerFooter.reuseIdentifier)
     }
     
@@ -44,36 +43,44 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = getCellModel(for: indexPath)
-
-        // поиск id и типов модели, ячейки по переданной моделе
-        guard
-            let helper = cellStore.first(where: { type(of: model) == $0.value.model } ),
-            let cell = tableView.dequeueReusableCell(withIdentifier: helper.key, for: indexPath) as? InflatableView
-        else {
-            fatalError()
-        }
+        let model = sections[indexPath.section].models[indexPath.row]
         
-        cell.inflate(model: model)
-        return cell as! UITableViewCell
+        guard
+            let holder = holders.first(where: { $0.isModelEquals(model: model) }),
+            let cellType = holder.inflatableType as? UITableViewCell.Type
+        else {
+            fatalError("Cant find cell for model: \(model)")
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellType.reuseIdentifier, for: indexPath)
+        
+        guard let inflatableCell = cell as? InflatableView else {
+            fatalError("cell in not inflatable: \(cell)")
+        }
+        inflatableCell.inflate(model: model)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // поиск id и типов модели, хедера по переданной моделе
         guard
-            let model = sections[section].header,
-            let helper = headerFooterStore.first(where: { type(of: model) == $0.value.model } ),
-            let headerFooter = tableView.dequeueReusableHeaderFooterView(withIdentifier: helper.key) as? InflatableView
+            let headerModel = sections[section].header,
+            let holder = holders.first(where: { $0.isModelEquals(model: headerModel) }),
+            let headerType = holder.inflatableType as? UITableViewHeaderFooterView.Type
         else {
             return nil
         }
+        let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: headerType.reuseIdentifier)
         
-        headerFooter.inflate(model: model)
-        return headerFooter as? UIView
+        guard let inflatableHeader = header as? InflatableView else {
+            fatalError("header in not inflatable: \(header)")
+        }
+        inflatableHeader.inflate(model: headerModel)
+        return header
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let height = getCellHeight(for: getCellModel(for: indexPath)) else {
+        let model = sections[indexPath.section].models[indexPath.row]
+        
+        guard let height = getHeight(for: model) else {
             return UITableView.automaticDimension
         }
         return height
@@ -84,7 +91,7 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let height = getHeaderFooterHeight(of: sections[section].header) else {
+        guard let height = getHeight(for: sections[section].header) else {
             return UITableView.automaticDimension
         }
         return height
@@ -97,32 +104,14 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
         return .zero
     }
     
-    private func getCellHeight(for model: AnyObject) -> CGFloat? {
-        guard
-            let helper = cellStore.first(where: { type(of: model) == $0.value.model } ),
-            let inflatable = helper.value.cell as? InflatableView.Type
-        else {
-            return nil
-        }
-        
-        return inflatable.staticHeight
-    }
-    
-    private func getHeaderFooterHeight(of model: AnyObject?) -> CGFloat? {
+    private func getHeight(for model: AnyObject?) -> CGFloat? {
         guard
             let model = model,
-            let helper = headerFooterStore.first(where: { type(of: model) == $0.value.model } ),
-            let inflatable = helper.value.headerFooter as? InflatableView.Type
+            let holder = holders.first(where: { $0.isModelEquals(model: model) })
         else {
             return nil
         }
-        
-        return inflatable.staticHeight
-    }
-    
-    private func getCellModel(for indexPath: IndexPath) -> AnyObject {
-        let model = sections[indexPath.section].models[indexPath.row]
-        return model
+        return holder.inflatableType.staticHeight
     }
     
 }

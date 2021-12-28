@@ -4,6 +4,7 @@ import XCoordinator
 
 protocol CoursesViewModelInput {
     func createDidTapped()
+    func openCourse(_ course: CourseCreateRequest)
 }
 
 protocol CoursesViewModelOutput {
@@ -31,6 +32,10 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
     
     func createDidTapped() {
         coursesRouter.trigger(.create)
+    }
+    
+    func openCourse(_ course: CourseCreateRequest) {
+        coursesRouter.trigger(.openCourse(course: course))
     }
     
 }
