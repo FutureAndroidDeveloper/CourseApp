@@ -1,39 +1,12 @@
 import Foundation
 
-enum DurationType: String, Codable {
-    case limited = "LIMITED"
-    case unlimited = "UNLIMITED"
-    
-    var isInfinite: Bool {
-        return self == .unlimited
-    }
-}
 
-struct Duration: Codable {
-    let day: Int
-    let month: Int
-    let year: Int
-    
-    init(duration: DurationTime) {
-        self.day = Int(duration.hour) ?? 0
-        self.month = Int(duration.min) ?? 0
-        self.year = Int(duration.sec) ?? 0
-    }
-    
-    init(day: Int, month: Int, year: Int) {
-        self.day = day
-        self.month = month
-        self.year = year
-    }
-}
-
-
-struct CourseCreateRequest: Codable {
+class CourseCreateRequest: Codable {
     var name: String
     var description: String
-    var courseCategory1: ATYCourseCategory
-    var courseCategory2: ATYCourseCategory
-    var courseCategory3: ATYCourseCategory
+    var courseCategory1: ATYCourseCategory = .EMPTY
+    var courseCategory2: ATYCourseCategory = .EMPTY
+    var courseCategory3: ATYCourseCategory = .EMPTY
     var courseType: ATYCourseType
     var durationType: DurationType
     var privacyEnabled: Bool
@@ -62,9 +35,18 @@ struct CourseCreateRequest: Codable {
             self.durationType = .limited
         }
         
-        courseCategory1 = categories.first ?? .BEAUTY
-        courseCategory2 = categories.first ?? .BEAUTY
-        courseCategory3 = categories.first ?? .BEAUTY
+        for index in 0..<categories.count {
+            switch index {
+            case 0:
+                courseCategory1 = categories[index]
+            case 1:
+                courseCategory2 = categories[index]
+            case 2:
+                courseCategory3 = categories[index]
+            default:
+                return
+            }
+        }
     }
     
     init(name: String, description: String, courseCategory1: ATYCourseCategory, courseCategory2: ATYCourseCategory,
@@ -86,4 +68,78 @@ struct CourseCreateRequest: Codable {
         self.chatPath = chatPath
     }
     
+    private enum CodingKeys: String, CodingKey {
+        case name, description, courseType
+        case courseCategory1, courseCategory2, courseCategory3
+        case durationType, duration
+        case privacyEnabled
+        case picPath, chatPath
+        case price
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(name, forKey: .name)
+        try container.encode(description, forKey: .description)
+        try container.encode(courseCategory1, forKey: .courseCategory1)
+        try container.encode(courseCategory2, forKey: .courseCategory2)
+        try container.encode(courseCategory3, forKey: .courseCategory3)
+        try container.encode(courseType, forKey: .courseType)
+        try container.encode(durationType, forKey: .durationType)
+        try container.encode(privacyEnabled, forKey: .privacyEnabled)
+        
+        try? container.encode(picPath, forKey: .picPath)
+        try? container.encode(price, forKey: .price)
+        try? container.encode(duration, forKey: .duration)
+        try? container.encode(chatPath, forKey: .chatPath)
+    }
+    
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        name = try container.decode(String.self, forKey: .name)
+        description = try container.decode(String.self, forKey: .description)
+        courseCategory1 = try container.decode(ATYCourseCategory.self, forKey: .courseCategory1)
+        courseCategory2 = try container.decode(ATYCourseCategory.self, forKey: .courseCategory2)
+        courseCategory3 = try container.decode(ATYCourseCategory.self, forKey: .courseCategory3)
+        courseType = try container.decode(ATYCourseType.self, forKey: .courseType)
+        durationType = try container.decode(DurationType.self, forKey: .durationType)
+        privacyEnabled = try container.decode(Bool.self, forKey: .privacyEnabled)
+        
+        
+        picPath = try? container.decode(String.self, forKey: .picPath)
+        price = try? container.decode(Int.self, forKey: .price)
+        duration = try? container.decode(Duration.self, forKey: .duration)
+        chatPath = try? container.decode(String.self, forKey: .chatPath)
+    }
+}
+
+
+enum DurationType: String, Codable {
+    case limited = "LIMITED"
+    case unlimited = "UNLIMITED"
+    
+    var isInfinite: Bool {
+        return self == .unlimited
+    }
+}
+
+struct Duration: Codable {
+    let day: Int
+    let month: Int
+    let year: Int
+    
+    init(duration: DurationTime) {
+        self.day = Int(duration.hour) ?? 0
+        self.month = Int(duration.min) ?? 0
+        self.year = Int(duration.sec) ?? 0
+    }
+    
+    init(day: Int, month: Int, year: Int) {
+        self.day = day
+        self.month = month
+        self.year = year
+    }
 }

@@ -82,6 +82,10 @@
 		0463D0F5277B1DAF0023C7E8 /* ShareCourseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463D0F4277B1DAF0023C7E8 /* ShareCourseModel.swift */; };
 		0463D0F9277B21050023C7E8 /* ReportCourseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463D0F8277B21050023C7E8 /* ReportCourseCell.swift */; };
 		0463D0FB277B230C0023C7E8 /* ReportCourseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463D0FA277B230C0023C7E8 /* ReportCourseModel.swift */; };
+		0463D0FE277B2FB30023C7E8 /* CourseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463D0FD277B2FB30023C7E8 /* CourseResponse.swift */; };
+		0463D100277B2FEB0023C7E8 /* UserPublicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463D0FF277B2FEB0023C7E8 /* UserPublicResponse.swift */; };
+		0463D103277B52D80023C7E8 /* UserTaskResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463D102277B52D80023C7E8 /* UserTaskResponse.swift */; };
+		0463D105277B5D4F0023C7E8 /* TaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463D104277B5D4F0023C7E8 /* TaskResult.swift */; };
 		046909322771F91000F3CE3C /* DeviceIdentifierService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046909312771F91000F3CE3C /* DeviceIdentifierService.swift */; };
 		046909342771FF3800F3CE3C /* LoginEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046909332771FF3800F3CE3C /* LoginEndpoint.swift */; };
 		046909372772089B00F3CE3C /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046909362772089B00F3CE3C /* Credentials.swift */; };
@@ -539,6 +543,10 @@
 		0463D0F4277B1DAF0023C7E8 /* ShareCourseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCourseModel.swift; sourceTree = "<group>"; };
 		0463D0F8277B21050023C7E8 /* ReportCourseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCourseCell.swift; sourceTree = "<group>"; };
 		0463D0FA277B230C0023C7E8 /* ReportCourseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCourseModel.swift; sourceTree = "<group>"; };
+		0463D0FD277B2FB30023C7E8 /* CourseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseResponse.swift; sourceTree = "<group>"; };
+		0463D0FF277B2FEB0023C7E8 /* UserPublicResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPublicResponse.swift; sourceTree = "<group>"; };
+		0463D102277B52D80023C7E8 /* UserTaskResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTaskResponse.swift; sourceTree = "<group>"; };
+		0463D104277B5D4F0023C7E8 /* TaskResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskResult.swift; sourceTree = "<group>"; };
 		046909312771F91000F3CE3C /* DeviceIdentifierService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdentifierService.swift; sourceTree = "<group>"; };
 		046909332771FF3800F3CE3C /* LoginEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEndpoint.swift; sourceTree = "<group>"; };
 		046909362772089B00F3CE3C /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
@@ -1011,6 +1019,7 @@
 			isa = PBXGroup;
 			children = (
 				0413EE3C274A96380005948C /* UserResponse.swift */,
+				0463D0FF277B2FEB0023C7E8 /* UserPublicResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1065,6 +1074,7 @@
 		042292C12778A5310064517A /* Course */ = {
 			isa = PBXGroup;
 			children = (
+				0463D0FC277B2F9B0023C7E8 /* Response */,
 				042292C22778A5370064517A /* Request */,
 			);
 			path = Course;
@@ -1422,6 +1432,22 @@
 			path = new;
 			sourceTree = "<group>";
 		};
+		0463D0FC277B2F9B0023C7E8 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				0463D0FD277B2FB30023C7E8 /* CourseResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		0463D101277B52C50023C7E8 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				0463D102277B52D80023C7E8 /* UserTaskResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		046909302771F8E000F3CE3C /* DeviceIdentifier */ = {
 			isa = PBXGroup;
 			children = (
@@ -1639,6 +1665,8 @@
 		048705A927762B1E006B992A /* UserTask */ = {
 			isa = PBXGroup;
 			children = (
+				0463D104277B5D4F0023C7E8 /* TaskResult.swift */,
+				0463D101277B52C50023C7E8 /* Response */,
 				048705AA27762B36006B992A /* Request */,
 			);
 			path = UserTask;
@@ -3683,6 +3711,7 @@
 				6DC4AE1C268DC41D0028CDDE /* ATYParser.swift in Sources */,
 				6D403497265D152E00248E9E /* ATYTodayTasksViewController.swift in Sources */,
 				6DA8E21C26A6CBDD005014DA /* ATYTaskAddedDescriptionsCell.swift in Sources */,
+				0463D100277B2FEB0023C7E8 /* UserPublicResponse.swift in Sources */,
 				04CECEA92758023600ECCB2D /* TaskCreationModel.swift in Sources */,
 				6D4034A0265D3CF300248E9E /* ATYCalendarCollectionViewCell.swift in Sources */,
 				0487420C2768FBF400C0D94B /* DescriptionTaskCell.swift in Sources */,
@@ -3758,6 +3787,7 @@
 				6DDBE4892666742800F797FD /* ATYSelectTimeViewController.swift in Sources */,
 				041A7314274C401E0021B6FC /* TasksCoordinator.swift in Sources */,
 				04E8B9B42772865900CF9E7D /* TitledSectionHeader.swift in Sources */,
+				0463D103277B52D80023C7E8 /* UserTaskResponse.swift in Sources */,
 				04DED8012770A54C00DBD724 /* CreateTaskFactory.swift in Sources */,
 				044841EB276A149D0011A1D4 /* DateFieldModel.swift in Sources */,
 				04F71BB4276CFE4F00A0B181 /* FrequencyView.swift in Sources */,
@@ -3769,6 +3799,7 @@
 				0413EE3B274A96180005948C /* UserCreateRequest.swift in Sources */,
 				6DA8E21326A6C03D005014DA /* ATYTaskAddedViewController.swift in Sources */,
 				048C22BB27676D3500F3FF4D /* TaskNameModel.swift in Sources */,
+				0463D0FE277B2FB30023C7E8 /* CourseResponse.swift in Sources */,
 				6D568EB426B2A8A8000619B2 /* ATYReceivingAnAwardViewController.swift in Sources */,
 				6DC4AE27268DD7FB0028CDDE /* String+ToDateTime.swift in Sources */,
 				04072C55277A611500C9B2EF /* CreateCourseTaskCell.swift in Sources */,
@@ -3921,6 +3952,7 @@
 				0495B9EB2777896700BE08E6 /* ValidationErrorDisplayable.swift in Sources */,
 				048C22C727677E9B00F3FF4D /* TaskDurationCell.swift in Sources */,
 				6D21D77F26B3F88800F27CC4 /* ATYAchievementType.swift in Sources */,
+				0463D105277B5D4F0023C7E8 /* TaskResult.swift in Sources */,
 				04587B9A2779FBD3001715BE /* CourseViewController.swift in Sources */,
 				0406E02F274D13E000DDFD4C /* CoursesCoordinator.swift in Sources */,
 				6DF8285F266F7D24006487B0 /* ATYRadioButtonCreateCourseCell.swift in Sources */,

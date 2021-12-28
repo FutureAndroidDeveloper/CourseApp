@@ -60,7 +60,7 @@ class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewM
     func prepare(model: Model) {
         let name = model.nameModel.fieldModel.value
         let freq = model.frequencyModel.value.frequency
-        let sanction = Int32(model.sanctionModel.fieldModel.value)
+        let sanction = model.sanctionModel.fieldModel.value
         let isInfinite = model.periodModel?.isInfiniteModel.isSelected ?? false
 
         guard let start = model.periodModel?.start.value ?? model.selectDateModel?.date.value else {
@@ -71,7 +71,9 @@ class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewM
             taskSanction: sanction, infiniteExecution: isInfinite, startDate: start.toString(dateFormat: .localeYearDate)
         )
         
-        taskRequest?.endDate = model.periodModel?.end.value?.toString(dateFormat: .localeYearDate)
+        let endDate = freq == .ONCE ? start : model.periodModel?.end.value
+        
+        taskRequest?.endDate = endDate?.toString(dateFormat: .localeYearDate)
         taskRequest?.daysCode = model.weekdayModel?.weekdayModels
             .compactMap { $0 }
             .map { $0.isSelected ? "1" : "0" }

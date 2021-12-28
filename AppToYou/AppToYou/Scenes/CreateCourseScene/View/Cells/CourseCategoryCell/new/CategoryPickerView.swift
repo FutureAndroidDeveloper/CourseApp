@@ -112,7 +112,7 @@ class CategoryPickerView: UIView, ValidationErrorDisplayable {
     func configure(with model: CourseCategoryModel) {
         self.model = model
         
-        dropDown.dataSource = model.categories.map { $0.title }
+        dropDown.dataSource = model.categories.compactMap { $0.title }
         update()
         selectRows()
     }

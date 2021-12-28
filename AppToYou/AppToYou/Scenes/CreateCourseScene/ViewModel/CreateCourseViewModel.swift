@@ -114,19 +114,19 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
             return
         }
         
-        store.save(course)
-        store.printCourses()
+//        store.save(course)
+//        store.printCourses()
         
         
-//        courseService.create(course: course) { result in
-//            switch result {
-//            case .success(let newCourse):
-//                print(newCourse)
-//
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
+        courseService.create(course: course) { result in
+            switch result {
+            case .success(let newCourse):
+                print(newCourse)
+
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
 }
@@ -186,7 +186,7 @@ extension CreateCourseViewModelImpl: CreateCourseDelegate {
     
     func getCategoriesModel() -> CourseCategoryModel {
         let selected = courseModel?.courseCategory ?? []
-        let categories = ATYCourseCategory.allCases
+        let categories = ATYCourseCategory.allCases.filter { $0 != .EMPTY }
         return CourseCategoryModel(categories: categories, selectedCategories: selected)
     }
     

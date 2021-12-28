@@ -10,6 +10,7 @@ class UserSession {
     static let shared = UserSession()
     
     private var encodedData: Data
+    private var user: UserResponse?
     
     var isActive: Bool {
         return !encodedData.isEmpty
@@ -26,6 +27,14 @@ class UserSession {
     
     func updateEncodedData(_ data: Data) {
         encodedData = data
+    }
+    
+    func getUser() -> UserResponse? {
+        return user
+    }
+    
+    func updateUser(_ user: UserResponse?) {
+        self.user = user
     }
     
     func getAuthorizationHeader() -> HTTPHeaders {

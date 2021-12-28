@@ -41,6 +41,7 @@ struct ATYDurationCourse {
 }
 
 enum ATYCourseCategory: String, CaseIterable, Codable {
+    case EMPTY
     case HEALTHY_LIFESTYLE
     case CHILDREN
     case PETS
@@ -55,9 +56,11 @@ enum ATYCourseCategory: String, CaseIterable, Codable {
     case IT
     case OTHER
     case RELATIONSHIPS
-
-    var title : String {
+    
+    var title : String? {
         switch self {
+        case . EMPTY:
+            return nil
         case .HEALTHY_LIFESTYLE:
             return "ЗОЖ"
         case .CHILDREN:

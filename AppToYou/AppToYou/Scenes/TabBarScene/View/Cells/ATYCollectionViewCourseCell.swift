@@ -33,7 +33,7 @@ class ATYCollectionViewCourseCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setUp(text: String) {
+    func setUp(text: String?) {
         self.labelNameTypeCourse.text = text
     }
 

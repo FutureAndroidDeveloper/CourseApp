@@ -40,8 +40,6 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     
     func loginTapped(_ credentials: Credentials) {
         // validate
-        didLogin()
-        return
         
         loginManager.login(credentials: credentials) { [weak self] result in
             guard let self = self else {
@@ -51,6 +49,7 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
             switch result {
             case .success(let loginResponse):
                 if loginResponse.loginStatus == .ok {
+                    self.updateUser(credentials: credentials, user: loginResponse.userResponse)
                     self.didLogin()
                 }
                 else {
@@ -82,4 +81,14 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
         
         print(message)
     }
+    
+    private func updateUser(credentials: Credentials, user: UserResponse?) {
+        guard let encodedData = (credentials.mail + ":" + credentials.password).data(using: .utf8) else {
+            return
+        }
+        
+        UserSession.shared.updateEncodedData(encodedData)
+        UserSession.shared.updateUser(user)
+    }
+    
 }

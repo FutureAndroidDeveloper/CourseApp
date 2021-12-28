@@ -74,7 +74,6 @@ enum LoginEndpoint: Endpoint {
             return String()
         }
         
-        UserSession.shared.updateEncodedData(encodedData)
         return encodedData.base64EncodedString()
     }
     

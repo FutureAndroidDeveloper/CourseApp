@@ -81,7 +81,8 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
             do {
                 let apiResponse = try decode(response, from: responseData)
                 return .success(apiResponse)
-            } catch {
+            } catch let decodeError {
+                print(decodeError)
                 return .failure(.unableToDecode)
             }
             

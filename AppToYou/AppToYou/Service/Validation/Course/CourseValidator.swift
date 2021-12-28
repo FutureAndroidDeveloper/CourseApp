@@ -74,7 +74,7 @@ class CourseValidator: Validating {
     private func validate(categoriesField: CourseCategoryModel) {
         let categories = categoriesField.selectedCategories
         
-        if categories.count < 3 {
+        if categories.count < 1 {
             bind(error: .categories, to: categoriesField)
         } else {
             bind(error: nil, to: categoriesField)

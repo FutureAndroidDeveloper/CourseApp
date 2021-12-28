@@ -20,7 +20,7 @@ enum CourseError: ValidationError {
             return common.message
             
         case .categories:
-            return "Укажите 3 категории курса"
+            return "Укажите до 3 категорий курса"
         case .payment:
             return "Укажите оплату за вступление"
         case .link:
