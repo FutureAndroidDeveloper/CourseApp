@@ -59,7 +59,7 @@ class CourseHeaderCell: UITableViewCell, InflatableView {
         return imageView
     }()
 
-    private let backButton: UIButton = {
+    private let backActionButton: UIButton = {
         let button = UIButton()
         button.setImage(R.image.backBlurButton(), for: .normal)
         return button
@@ -114,8 +114,8 @@ class CourseHeaderCell: UITableViewCell, InflatableView {
             $0.width.greaterThanOrEqualTo(Constants.InfoView.minWidth)
         }
         
-        headerImageView.addSubview(backButton)
-        backButton.snp.makeConstraints {
+        headerImageView.addSubview(backActionButton)
+        backActionButton.snp.makeConstraints {
             $0.leading.top.equalToSuperview().inset(Constants.BackButton.edgeInsets)
             $0.size.equalTo(Constants.BackButton.size)
         }
@@ -132,7 +132,8 @@ class CourseHeaderCell: UITableViewCell, InflatableView {
             $0.size.equalTo(Constants.EditButton.size)
         }
         
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        headerImageView.isUserInteractionEnabled = true
+        backActionButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
     }
     
@@ -142,21 +143,25 @@ class CourseHeaderCell: UITableViewCell, InflatableView {
         }
         self.model = model
         
-        let year = model.duration.year == 0 ? "" : "\(model.duration.year) год"
-        let month = model.duration.year == 0 ? "" : "\(model.duration.month) мес"
-        let day = model.duration.year == 0 ? "" : "\(model.duration.day) дн"
-        let duration = "\(year) \(month) \(day)"
+        var durationTitle = String()
         
-        if !duration.components(separatedBy: .whitespaces).joined().isEmpty {
-            let durationModel = HeaderCourseInfoViewModel(title: duration,
+        if let duration = model.duration {
+            let year = duration.year == 0 ? "" : "\(duration.year) год"
+            let month = duration.year == 0 ? "" : "\(duration.month) мес"
+            let day = duration.year == 0 ? "" : "\(duration.day) дн"
+            durationTitle = "\(year) \(month) \(day)"
+        }
+        
+        if !durationTitle.components(separatedBy: .whitespaces).joined().isEmpty {
+            let durationModel = HeaderCourseInfoViewModel(title: durationTitle,
                                                           icon: R.image.timeOclockImage()?.withRenderingMode(.alwaysTemplate))
             durationView.configure(with: durationModel)
             durationView.isHidden = false
         } else {
-            durationView.isHidden = false
+            durationView.isHidden = true
         }
         
-        if let price = model.price {
+        if let price = model.price, price.coin > 0 || price.diamond > 0 {
             let coinModel = HeaderCourseInfoViewModel(title: price.coin.formattedWithSeparator, icon: R.image.coinImage())
             coinView.configure(with: coinModel)
             coinView.isHidden = false
@@ -174,7 +179,7 @@ class CourseHeaderCell: UITableViewCell, InflatableView {
     }
 
     @objc
-    private func backButtonTapped() {
+    private func backTapped() {
         model?.backTapped()
     }
 

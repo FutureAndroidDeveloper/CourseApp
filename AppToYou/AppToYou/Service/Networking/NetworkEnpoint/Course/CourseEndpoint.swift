@@ -4,6 +4,7 @@ import Foundation
 enum CourseEndpoint: Endpoint {
     
     case create(course: CourseCreateRequest)
+    case admin(id: Int)
     
     private static let basePath = "https://apptoyou.qittiq.by:6699/"
     
@@ -20,6 +21,8 @@ enum CourseEndpoint: Endpoint {
         switch self {
         case .create:
             break
+        case .admin:
+            result.append("/list/admin")
         }
         
         return result
@@ -28,6 +31,7 @@ enum CourseEndpoint: Endpoint {
     var httpMethod: HTTPMethod {
         switch self {
         case .create: return .post
+        case .admin: return .get
         }
     }
     
@@ -35,6 +39,9 @@ enum CourseEndpoint: Endpoint {
         switch self {
         case .create(let course):
             return RequestWithParameters(body: course)
+        case .admin(let id):
+            let idParameter = Parameter(name: "id", value: id)
+            return RequestWithParameters(urlParameters: [idParameter])
         }
     }
     

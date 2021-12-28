@@ -4,9 +4,11 @@ import XCoordinator
 
 enum CoursesRoute: Route {
     case courses
-    case create
+    case createEdit(course: CourseResponse?)
     
-    case openCourse(course: CourseCreateRequest)
+    case openCourse(course: CourseResponse)
+    
+    case courseCreated(course: CourseResponse)
     
     case photo(image: UIImage?)
     case durationPicker
@@ -16,6 +18,7 @@ enum CoursesRoute: Route {
 class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
     
     private weak var courseCreationInput: CreateCourseViewModelInput?
+    private weak var coursesInput: CoursesViewModelInput?
     
     
     init() {
@@ -32,24 +35,30 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
             let coursesViewModel = CoursesViewModelImpl(coursesRouter: unownedRouter)
             coursesViewController.bind(to: coursesViewModel)
             
+            coursesInput = coursesViewModel
+            
             return .push(coursesViewController)
             
         case .openCourse(let course):
-            let courseViewController = CourseViewController()
-            let courseViewModel = CourseViewModelImpl(course: course, coursesRouter: unownedRouter)
-            courseViewController.bind(to: courseViewModel)
+            let courseCoordinator = CourseCoordinator(course: course,
+                                                      coursesRouter: unownedRouter,
+                                                      rootViewController: self.rootViewController)
+            addChild(courseCoordinator)
+            return .none()
             
-            return .push(courseViewController)
-            
-        case .create:
+        case .createEdit(let course):
             let createCourseViewController = CreateCourseViewController()
             createCourseViewController.hidesBottomBarWhenPushed = true
             
-            let createCourseViewModel = CreateCourseViewModelImpl(mode: .creation, coursesRouter: unownedRouter)
+            let createCourseViewModel = CreateCourseViewModelImpl(course: course, coursesRouter: unownedRouter)
             createCourseViewController.bind(to: createCourseViewModel)
             courseCreationInput = createCourseViewModel
             
             return .push(createCourseViewController)
+            
+        case .courseCreated(let course):
+            coursesInput?.refresh()
+            return .pop()
             
         case .photo(let image):
             let photoCoordinator = PhotoCoordinator(image: image,
@@ -86,3 +95,4 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
     }
     
 }
+

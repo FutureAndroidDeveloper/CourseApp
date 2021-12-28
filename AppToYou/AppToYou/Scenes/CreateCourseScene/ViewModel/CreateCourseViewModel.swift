@@ -32,45 +32,29 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
     var data: Observable<[AnyObject]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
     
-    private let coursesRouter: UnownedRouter<CoursesRoute>
-    private var mode: CreateCourseMode
-    
-    private var courseModel: ATYCourse?
-    
-    private let store = FileStore()
-    
-//    private var courseImage: UIImage?
-    
     private lazy var courseConstructor: CreateCourseConstructor = {
-        let constructor = CreateCourseConstructor(mode: self.mode, delegate: self)
+        let constructor = CreateCourseConstructor(mode: self.courseMode, delegate: self)
         return constructor
     }()
-
+    
+    private let coursesRouter: UnownedRouter<CoursesRoute>
     private let courseService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
     private let validator = CourseValidator()
     
+    private var courseMode: CreateCourseMode
+    private var course: CourseResponse?
     private var courseRequest: CourseCreateRequest?
     
-    init(mode: CreateCourseMode, coursesRouter: UnownedRouter<CoursesRoute>) {
-        self.mode = mode
-        self.coursesRouter = coursesRouter
-        
-        self.mode = .editing
-        
-        configure()
-        updateStructure()
-    }
     
-    private func configure() {
-        title = mode.title
-        doneButtonTitle = mode.doneTitle
+    init(course: CourseResponse?, coursesRouter: UnownedRouter<CoursesRoute>) {
+        self.coursesRouter = coursesRouter
+        self.course = course
+        self.courseMode = course == nil ? .creation: .editing
         
-        switch mode {
-        case .creation:
-            courseModel = nil
-        case .editing:
-            courseModel = ATYCourse()
-        }
+        title = courseMode.title
+        doneButtonTitle = courseMode.doneTitle
+        
+        updateStructure()
     }
     
     func photoPicked(_ image: UIImage?, with path: String?) {
@@ -114,14 +98,10 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
             return
         }
         
-//        store.save(course)
-//        store.printCourses()
-        
-        
-        courseService.create(course: course) { result in
+        courseService.create(course: course) { [weak self] result in
             switch result {
             case .success(let newCourse):
-                print(newCourse)
+                self?.coursesRouter.trigger(.courseCreated(course: newCourse))
 
             case .failure(let error):
                 print(error)
@@ -163,62 +143,63 @@ extension CreateCourseViewModelImpl: CreateCourseDelegate {
     }
     
     func getNameModel() -> TextFieldModel {
-        let name = courseModel?.courseName ?? String()
+        let name = course?.name ?? String()
         
         // TODO: - модель может принимать nil, как PlaceholderTextViewModel
         return TextFieldModel(value: name, placeholder: "Например, ментальное здоровье")
     }
     
     func getDescriptionModel() -> PlaceholderTextViewModel {
-        let desccription = courseModel?.courseDescription
-        return PlaceholderTextViewModel(value: desccription, placeholder: "Опишите цели или преимущества вашего курса")
+        return PlaceholderTextViewModel(value: course?.description, placeholder: "Опишите цели или преимущества вашего курса")
     }
     
     func getPhoto() -> (photo: UIImage?, placeholder: UIImage?) {
-        // TODO: - в модели нет свойства картинки,  но есть Path
         let defaultImage = R.image.coursePhotoExample()
-//        guard let courseImage = courseConstructor.createCourseModel.photoModel.photoImage else {
-//            return (nil, defaultImage)
-//        }
+        // TODO - загрузка картинок
+        let image = course?.picPath
         
         return (nil, defaultImage)
     }
     
     func getCategoriesModel() -> CourseCategoryModel {
-        let selected = courseModel?.courseCategory ?? []
         let categories = ATYCourseCategory.allCases.filter { $0 != .EMPTY }
+        let selected = [course?.courseCategory1, course?.courseCategory2, course?.courseCategory3]
+            .compactMap { $0 }
+            .filter { $0 != .EMPTY }
+        
         return CourseCategoryModel(categories: categories, selectedCategories: selected)
     }
     
     func getCourseType() -> ATYCourseType {
-        return courseModel?.courseType ?? .PRIVATE
+        return course?.courseType ?? .PRIVATE
     }
     
     func getPaymentModel() -> NaturalNumberFieldModel {
-        // TODO: - нет поля в модели
-        return NaturalNumberFieldModel()
+        let cost = course?.coinPrice ?? .zero
+        return NaturalNumberFieldModel(value: cost)
     }
     
     func getDurationModel() -> (TaskDurationModel, TitledCheckBoxModel) {
-        // TODO: - в моделе другой тип
+        let year = course?.duration?.year ?? 0
+        let month = course?.duration?.month ?? 0
+        let day = course?.duration?.day ?? 0
         let duration = TaskDurationModel(
-            hourModel: .init(unit: "год"),
-            minModel: .init(unit: "мес"),
-            secModel: .init(unit: "дн")
+            hourModel: .init(value: "\(year)", unit: "год"),
+            minModel: .init(value: "\(month)", unit: "мес"),
+            secModel: .init(value: "\(day)", unit: "дн")
         )
         
-        let isInfinite = courseModel?.limited == .LIMITED ? false : true
+        let durationType = course?.durationType ?? .unlimited
                 
         let infinite = TitledCheckBoxModel(
             title: "Бесконечная длительность курса",
-            isSelected: isInfinite
+            isSelected: durationType == .unlimited
         )
         return (duration, infinite)
     }
     
     func getChatModel() -> TextFieldModel {
-        let link = courseModel?.chatPath ?? String()
-        
+        let link = course?.chatPath ?? String()
         return TextFieldModel(value: link, placeholder: "Вставьте ссылку")
     }
     

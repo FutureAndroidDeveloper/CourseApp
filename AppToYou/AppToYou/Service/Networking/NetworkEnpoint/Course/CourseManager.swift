@@ -7,4 +7,7 @@ class CourseManager: NetworkManager<CourseEndpoint> {
         request(.create(course: course), responseType: CourseResponse.self, completion)
     }
     
+    func adminList(id: Int, completion: @escaping (Result<[CourseResponse], NetworkResponseError>) -> Void) {
+        request(.admin(id: id), responseType: [CourseResponse].self, completion)
+    }
 }

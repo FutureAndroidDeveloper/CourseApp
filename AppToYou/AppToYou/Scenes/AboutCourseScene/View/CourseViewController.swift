@@ -45,7 +45,7 @@ class CourseViewController: UIViewController, BindableType {
 //    }
 
     private func setup() {
-//        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         view.backgroundColor = R.color.backgroundAppColor()

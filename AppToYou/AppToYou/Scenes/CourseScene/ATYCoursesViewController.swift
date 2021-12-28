@@ -21,10 +21,6 @@ struct ATYTemporaryCourseData {
 class ATYCoursesViewController : UIViewController, BindableType {
     
     var viewModel: CoursesViewModel!
-    
-    func bindViewModel() {
-        
-    }
 
     enum CreateCellCourses: Int, CaseIterable {
         case courseBar
@@ -39,6 +35,10 @@ class ATYCoursesViewController : UIViewController, BindableType {
     var courseArray = [CourseCreateRequest]()
     
     var filteredArray = [CourseCreateRequest]()
+    
+    private let refreshControl = UIRefreshControl()
+    
+    private var courses = [CourseResponse]()
 
     var flag = true
 
@@ -86,6 +86,10 @@ class ATYCoursesViewController : UIViewController, BindableType {
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin)
         }
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
     }
 
     private func openCourseVc(isMyCourse: Bool, indexPath: IndexPath) {
@@ -95,6 +99,21 @@ class ATYCoursesViewController : UIViewController, BindableType {
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func bindViewModel() {
+        viewModel.output.courses.bind { [weak self] courses in
+            self?.courses = courses
+            self?.refreshControl.endRefreshing()
+            self?.tableView.reloadData()
+        }
+        
+    }
+    
+    @objc
+    private func refresh(_ sender: AnyObject) {
+        viewModel.input.refresh()
+    }
+    
 }
 
 extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource {
@@ -104,7 +123,8 @@ extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : filteredArray.count
+        return section == 0 ? 1 : courses.count
+//        return section == 0 ? 1 : filteredArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -129,17 +149,20 @@ extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource 
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: ATYCourseTableViewCell.reuseIdentifier, for: indexPath) as! ATYCourseTableViewCell
-        let item = filteredArray[indexPath.row]
+//        let item = filteredArray[indexPath.row]
         
-        cell.setUp(courseName: item.name,
-                   categories: [item.courseCategory1, item.courseCategory2, item.courseCategory3],
-                   countOfCoin: 10,
-                   countOfMembers: 18,
-                   countOfLikes: 25,
-                   typeOfCourse: item.courseType,
-                   isMyCourse: true,
-                   avatarPath: nil,
-                   courseDescription: item.description)
+        let course = courses[indexPath.row]
+        let isMyCourse = UserSession.shared.getUser()?.id == course.admin.id
+        
+        cell.setUp(courseName: course.name,
+                   categories: [course.courseCategory1, course.courseCategory2, course.courseCategory3],
+                   countOfCoin: course.coinPrice,
+                   countOfMembers: course.usersAmount,
+                   countOfLikes: course.likes,
+                   typeOfCourse: course.courseType,
+                   isMyCourse: isMyCourse,
+                   avatarPath: course.admin.avatarPath,
+                   courseDescription: course.description)
         
         return cell
     }
@@ -199,7 +222,7 @@ extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource 
             case .PUBLIC:
 //                openCourseVc(isMyCourse: courseArray[indexPath.row].isMyCourse, indexPath: indexPath)
 //                openCourseVc(isMyCourse: true, indexPath: indexPath)
-                let course = courseArray[indexPath.row]
+                let course = courses[indexPath.row]
                 viewModel.input.openCourse(course)
                 return
                 
