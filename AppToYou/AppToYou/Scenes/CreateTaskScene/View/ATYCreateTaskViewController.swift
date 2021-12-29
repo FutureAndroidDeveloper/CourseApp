@@ -74,19 +74,22 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
 
         // counting
         inflater.registerRow(model: RepeatCounterModel.self, cell: RepeatCounterCell.self)
+        
+        // course
+        inflater.registerRow(model: CourseTaskMinSanctionModel.self, cell: CourseTaskMinSanctionCell.self)
+        inflater.registerRow(model: CourseTaskLockModel.self, cell: CourseTaskLockHeaderCell.self)
     }
     
     func bindViewModel() {
-        viewModel.output.data.bind(self.update(_:))
+        viewModel.output.sections.bind(self.update(_:))
         viewModel.output.updatedState.bind { [weak self] _ in
             self?.createTaskTableView.beginUpdates()
             self?.createTaskTableView.endUpdates()
         }
     }
     
-    func update(_ data: [AnyObject]) {
-        let section = TableViewSection(models: data)
-        inflater.inflate(sections: [section])
+    func update(_ sections: [TableViewSection]) {
+        inflater.inflate(sections: sections)
     }
     
     

@@ -17,7 +17,7 @@ class CreateTaskViewModelImpl: CreateTaskViewModel, CreateTaskViewModelInput, Cr
     
     private var duration: TaskDurationModel?
     
-    var data: Observable<[AnyObject]> = Observable([])
+    var sections: Observable<[TableViewSection]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
     
 
@@ -182,7 +182,7 @@ extension CreateTaskViewModelImpl: TaskCreationDelegate {
      Приводит к вызову tableView.reload()
      */
     func update() {
-        data.value = constructor.getModel()
+//        data.value = constructor.getModel()
     }
     
     /**

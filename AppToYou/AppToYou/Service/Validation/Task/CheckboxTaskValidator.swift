@@ -9,6 +9,8 @@ enum CheckboxTaskError: ValidationError {
     case emptyEndDate
     case notifications
     case sanction
+    case lessThanMin(value: Int)
+    case minSanction
     
     var message: String? {
         switch self {
@@ -26,6 +28,10 @@ enum CheckboxTaskError: ValidationError {
             return "Установите напоминания или откючите поле"
         case .sanction:
             return "Введите штраф за невыполнение или откючите поле"
+        case .lessThanMin(let value):
+            return "Штраф не может быть меньше \(value)"
+        case .minSanction:
+            return "Укажите минимальный штраф за невыполнение"
         }
     }
 }
@@ -48,6 +54,7 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
         validate(weekdayField: model.weekdayModel)
         validate(periodField: model.periodModel)
         validete(notificationField: model.notificationModel)
+        validate(minSanctionField: model.minSanctionModel, sanctionField: model.sanctionModel)
         validate(sanctionField: model.sanctionModel)
     }
     
@@ -95,7 +102,9 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
     private func validate(sanctionField: TaskSanctionModel) {
         let value = sanctionField.fieldModel.value
         
-        if sanctionField.isEnabled, value == .zero {
+        if sanctionField.isEnabled, value < sanctionField.minValue {
+            bind(error: .lessThanMin(value: sanctionField.minValue), to: sanctionField)
+        } else if sanctionField.isEnabled, value == .zero {
             bind(error: .sanction, to: sanctionField)
         } else {
             bind(error: nil, to: sanctionField)
@@ -150,6 +159,20 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
         }
         
         bind(error: error, to: field)
+    }
+    
+    private func validate(minSanctionField: CourseTaskMinSanctionModel?, sanctionField: TaskSanctionModel) {
+        guard let field = minSanctionField else {
+            return
+        }
+        
+        if field.fieldModel.value == .zero, field.isActive {
+            sanctionField.updateMinValue(.zero)
+            bind(error: .minSanction, to: field)
+        } else {
+            sanctionField.updateMinValue(field.fieldModel.value)
+            bind(error: nil, to: field)
+        }
     }
     
 }

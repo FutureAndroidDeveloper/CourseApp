@@ -5,7 +5,7 @@ import XCoordinator
 class RepeatCreateTaskViewModel: DefaultCreateTaskViewModel<RepeatCreateTaskModel>, CounterTaskCreationDelegate {
     
     private lazy var constructor: RepeatTaskModel = {
-        return RepeatTaskModel(delegate: self)
+        return RepeatTaskModel(mode: mode, delegate: self)
     }()
     
     private let validator = RitualTaskValidator()
@@ -36,13 +36,30 @@ class RepeatCreateTaskViewModel: DefaultCreateTaskViewModel<RepeatCreateTaskMode
     }
 
     override func update() {
-        data.value = constructor.getModels()
+        let models = constructor.getModels()
+        let section = TableViewSection(models: models)
+        sections.value = [section]
     }
     
-    func getCounterModel() -> NaturalNumberFieldModel {
-        // TODO: - получать повторения из модели задачи
+    func getCounterModel() -> (field: NaturalNumberFieldModel, lock: LockButtonModel?) {
+        let attribute = task?.taskAttribute ?? String()
+        let value = Int(attribute) ?? 0
+        let fieldModel = NaturalNumberFieldModel(value: value)
         
-        return NaturalNumberFieldModel()
+        var lockModel: LockButtonModel?
+        
+        switch mode {
+        case .createCourseTask, .adminEditCourseTask:
+            let isLoced = task?.editableCourseTask ?? false
+            lockModel = LockButtonModel(isLocked: isLoced, stateChanged: { isLocked in
+                print("LOCK tapped = \(isLoced)")
+            })
+            
+        default:
+            break
+        }
+        
+        return (fieldModel, lockModel)
     }
     
 }

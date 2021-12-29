@@ -34,7 +34,7 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
             return .present(vc, animation: nil)
             
         case .create(let taskType):
-            let factory = CreateTaskFactory(type: taskType)
+            let factory = CreateTaskFactory(type: taskType, task: nil, mode: .createUserTask)
             let viewModel = factory.getViewModel(unownedRouter)
             createTaskInput = viewModel.input
             

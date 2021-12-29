@@ -9,8 +9,8 @@ class TextCreateTaskModel: DefaultCreateTaskModel {
         descriptionModel = DescriptionModel(fieldModel: model)
     }
     
-    func addLimitHandler(model: NaturalNumberFieldModel) {
-        lengthLimitModel = MinimumSymbolsModel(fieldModel: model)
+    func addLimitHandler(model: NaturalNumberFieldModel, lockModel: LockButtonModel?) {
+        lengthLimitModel = MinimumSymbolsModel(fieldModel: model, lockModel: lockModel)
     }
     
     override func getAdditionalModels() -> [AnyObject] {

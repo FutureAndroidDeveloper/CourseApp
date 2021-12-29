@@ -6,21 +6,14 @@ class TaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
     private struct Constants {
         static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         static let fieldInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
+        static let lockInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
     }
     
     private var timerCallback: (() -> Void)?
     
     private let titleLabel = LabelFactory.getTitleLabel(title: "Длительность выполнения задачи")
     private let durationView = TaskDurationView()
-
-//    let lockButton : UIButton = {
-//        let button = UIButton()
-//        button.setImage(R.image.chain()?.withRenderingMode(.alwaysTemplate), for: .normal)
-//        button.imageView?.tintColor = R.color.lineViewBackgroundColor()
-//        button.isHidden = true
-//        return button
-//    }()
-
+    private let lockButton = ButtonFactory.getLockButton()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,23 +33,22 @@ class TaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
             $0.leading.top.trailing.equalToSuperview().inset(Constants.titleInsets)
         }
         
-        
         contentView.addSubview(durationView)
         durationView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.fieldInsets.top)
             $0.leading.trailing.bottom.equalToSuperview().inset(Constants.fieldInsets)
         }
         
+        contentView.addSubview(lockButton)
+        lockButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(Constants.lockInsets)
+            $0.centerY.equalTo(durationView)
+        }
+        lockButton.isHidden = true
+        
         let tapRecognizer = UITapGestureRecognizer()
         tapRecognizer.addTarget(self, action: #selector(openTimePicker))
         durationView.addGestureRecognizer(tapRecognizer)
-
-//        lockButton.addTarget(self, action: #selector(chainButtonAction(_:)), for: .touchUpInside)
-//        lockButton.snp.makeConstraints { (make) in
-//            make.trailing.equalToSuperview().offset(-20)
-//            make.centerY.equalTo(secTextField)
-//            make.height.width.equalTo(24)
-//        }
     }
     
     func inflate(model: AnyObject) {
@@ -64,6 +56,10 @@ class TaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
             return
         }
         
+        if let lockModel = model.lockModel {
+            lockButton.configure(with: lockModel)
+            lockButton.isHidden = false
+        }
         durationView.configure(with: model.durationModel)
         timerCallback = model.timerCallback
         
@@ -72,11 +68,6 @@ class TaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
             self?.bind(error: error)
         }
     }
-    
-//    @objc func chainButtonAction(_ sender: UIButton) {
-//        sender.isSelected = !sender.isSelected
-//        sender.imageView?.tintColor = sender.isSelected ?  R.color.textColorSecondary() : R.color.lineViewBackgroundColor()
-//    }
     
     @objc
     private func openTimePicker() {

@@ -6,6 +6,7 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView, ValidationErrorDispla
     private struct Constants {
         static let titleinsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         static let fieldInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
+        static let lockInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         
         struct Field {
             static let width: CGFloat = 182
@@ -15,14 +16,7 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView, ValidationErrorDispla
     
     private let titleLabel = LabelFactory.getTitleLabel(title: "Минимальное количество символов")
     private let countOfSymbolsTextField = FieldFactory.shared.getNaturalNumberField()
-
-//    let lockButton : UIButton = {
-//        let button = UIButton()
-//        button.setImage(R.image.chain()?.withRenderingMode(.alwaysTemplate), for: .normal)
-//        button.imageView?.tintColor = R.color.lineViewBackgroundColor()
-//        button.isHidden = true
-//        return button
-//    }()
+    private let lockButton = ButtonFactory.getLockButton()
 
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -50,18 +44,22 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView, ValidationErrorDispla
             $0.width.equalTo(Constants.Field.width)
         }
 
-//        contentView.addSubview(lockButton)
-//        lockButton.addTarget(self, action: #selector(chainButtonAction(_:)), for: .touchUpInside)
-//        lockButton.snp.makeConstraints { (make) in
-//            make.trailing.equalToSuperview().offset(-20)
-//            make.centerY.equalTo(countOfSymbolsTextField)
-//            make.height.width.equalTo(24)
-//        }
+        contentView.addSubview(lockButton)
+        lockButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(Constants.lockInsets)
+            $0.centerY.equalTo(countOfSymbolsTextField)
+        }
+        lockButton.isHidden = true
     }
     
     func inflate(model: AnyObject) {
         guard let model = model as? MinimumSymbolsModel else {
             return
+        }
+        
+        if let lockModel = model.lockModel {
+            lockButton.configure(with: lockModel)
+            lockButton.isHidden = false
         }
         
         let contentModel = FieldContentModel(fieldModel: model.fieldModel, insets: Constants.Field.textInsets)
@@ -73,11 +71,5 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView, ValidationErrorDispla
             self?.bind(error: error)
         }
     }
-    
-//    @objc
-//    private func chainButtonAction(_ sender: UIButton) {
-//        sender.isSelected = !sender.isSelected
-//        sender.imageView?.tintColor = sender.isSelected ?  R.color.textColorSecondary() : R.color.lineViewBackgroundColor()
-//    }
     
 }

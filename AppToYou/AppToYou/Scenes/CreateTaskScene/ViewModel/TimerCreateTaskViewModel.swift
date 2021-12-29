@@ -4,8 +4,12 @@ import XCoordinator
 
 class TimerCreateTaskViewModel: DefaultCreateTaskViewModel<TimerCreateTaskModel>, TimerTaskCreationDelegate {
     
+    private struct Constants {
+        static let timeSeparator: Character = ":"
+    }
+    
     private lazy var constructor: TimerTaskModel = {
-        return TimerTaskModel(delegate: self)
+        return TimerTaskModel(mode: mode, delegate: self)
     }()
     
     private let validator = TimerTaskValidator()
@@ -34,8 +38,9 @@ class TimerCreateTaskViewModel: DefaultCreateTaskViewModel<TimerCreateTaskModel>
         let duration = constructor.model.durationModel.durationModel
         let h = duration.hourModel.value
         let m = duration.minModel.value
-        let s = duration.secModel.value        
-        taskRequest?.taskAttribute = "\(h):\(m):\(s)"
+        let s = duration.secModel.value
+        let separator = Constants.timeSeparator
+        taskRequest?.taskAttribute = "\(h)\(separator)\(m)\(separator)\(s)"
     }
     
     override func durationPicked(_ duration: DurationTime) {
@@ -44,16 +49,45 @@ class TimerCreateTaskViewModel: DefaultCreateTaskViewModel<TimerCreateTaskModel>
     }
     
     override func update() {
-        data.value = constructor.getModels()
+        let models = constructor.getModels()
+        let section = TableViewSection(models: models)
+        sections.value = [section]
     }
     
-    func getDurationModel() -> TaskDurationModel {
-        // TODO: - получать длительность из модели задачи
+    func getDurationModel() -> (field: TaskDurationModel, lock: LockButtonModel?) {
+        let attribute = task?.taskAttribute ?? String()
+        let hour = TimeBlockModelFactory.getHourModel()
+        let min = TimeBlockModelFactory.getMinModel()
+        let sec = TimeBlockModelFactory.getSecModel()
         
-        let model = TaskDurationModel(hourModel: TimeBlockModelFactory.getHourModel(),
-                                      minModel: TimeBlockModelFactory.getMinModel(),
-                                      secModel: TimeBlockModelFactory.getSecModel())
-        return model
+        attribute.split(separator: Constants.timeSeparator)
+            .enumerated()
+            .forEach { item in
+                let value = String(item.element)
+                
+                switch item.offset {
+                case 0: hour.update(value: value)
+                case 1: min.update(value: value)
+                case 2: sec.update(value: value)
+                default: break
+                }
+            }
+        
+        let duration = TaskDurationModel(hourModel: hour, minModel: min, secModel: sec)
+        var lockModel: LockButtonModel?
+        
+        switch mode {
+        case .createCourseTask, .adminEditCourseTask:
+            let isLoced = task?.editableCourseTask ?? false
+            lockModel = LockButtonModel(isLocked: isLoced, stateChanged: { isLocked in
+                print("LOCK tapped = \(isLoced)")
+            })
+            
+        default:
+            break
+        }
+        
+        return (duration, lockModel)
     }
     
 }

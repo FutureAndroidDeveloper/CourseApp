@@ -94,6 +94,7 @@ class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
         
         sanctionField.configure(with: fieldModel)
         switchButton.isOn = model.isEnabled
+        switchChanged(switchButton)
         
         model.errorNotification = { [weak self] error in
             self?.sanctionField.bind(error: error)
@@ -109,5 +110,6 @@ class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
     @objc
     private func switchChanged(_ switch: UISwitch) {
         model?.setIsEnabled(`switch`.isOn)
+        model?.switchChanged(`switch`.isOn)
     }
 }

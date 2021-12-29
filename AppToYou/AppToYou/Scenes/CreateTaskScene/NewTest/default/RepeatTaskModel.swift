@@ -2,7 +2,7 @@ import Foundation
 
 
 protocol CounterTaskCreationDelegate: DefaultTaskCreationDelegate {
-    func getCounterModel() -> NaturalNumberFieldModel
+    func getCounterModel() -> (field: NaturalNumberFieldModel, lock: LockButtonModel?)
 }
 
 
@@ -18,8 +18,8 @@ class RepeatTaskModel<DataProvider>: DefaultTaskModel<RepeatCreateTaskModel, Dat
     }
     
     private func addCounter(_ dataProvider: CounterTaskCreationDelegate) {
-        let counterModel = dataProvider.getCounterModel()
-        model.addCounter(model: counterModel)
+        let (counterModel, lockModel) = dataProvider.getCounterModel()
+        model.addCounter(model: counterModel, lockModel: lockModel)
     }
 }
 

@@ -8,7 +8,8 @@ protocol DefaultTaskCreationDataSource: AnyObject {
     func getWeekdayModels() -> [WeekdayModel]
     func getPeriodModel() -> TaskPeriodModel
     func getNotificationModels() -> (models: [NotificationTaskTimeModel], isEnabled: Bool)
-    func getSanctionModel() -> (model: NaturalNumberFieldModel, isEnabled: Bool)
+    func getSanctionModel() -> (model: NaturalNumberFieldModel, min: Int, isEnabled: Bool)
+    func getMinCourseSanctionModel() -> NaturalNumberFieldModel
 }
 
 protocol DefaultTaskCreationDelegate: DefaultTaskCreationDataSource {
@@ -17,14 +18,25 @@ protocol DefaultTaskCreationDelegate: DefaultTaskCreationDataSource {
     func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?)
 }
 
-
+enum CreateTaskMode {
+    case createUserTask
+    case createCourseTask
+    
+    case editUserTask
+    case editCourseTask
+    
+    case adminEditCourseTask
+}
 
 class DefaultTaskModel<DataModel: DefaultCreateTaskModel, DataProvider>: TaskCreation where DataProvider: DefaultTaskCreationDelegate {
     
     var model: DataModel
     weak var delegate: DataProvider?
     
-    init(delegate: DataProvider) {
+    let mode: CreateTaskMode
+    
+    init(mode: CreateTaskMode, delegate: DataProvider) {
+        self.mode = mode
         self.delegate = delegate
         model = DataModel()
         construct()
@@ -33,6 +45,20 @@ class DefaultTaskModel<DataModel: DefaultCreateTaskModel, DataProvider>: TaskCre
     func construct() {
         guard let dataProvider = delegate else {
             return
+        }
+        
+        switch mode {
+        case .createUserTask:
+            break
+        case .createCourseTask:
+            model.addLockHeaderModel()
+            addMinSanctionModel(dataProvider)
+        case .editUserTask:
+            break
+        case .editCourseTask:
+            break
+        case .adminEditCourseTask:
+            break
         }
         
         addName(dataProvider)
@@ -86,11 +112,20 @@ class DefaultTaskModel<DataModel: DefaultCreateTaskModel, DataProvider>: TaskCre
     }
     
     private func addSanction(_ dataProvider: DefaultTaskCreationDelegate) {
-        let (sanctionModel, isEnabled) = dataProvider.getSanctionModel()
+        let (sanctionModel, min, isEnabled) = dataProvider.getSanctionModel()
         
-        model.addSanction(model: sanctionModel, isEnabled: isEnabled) { [weak self] in
-            print("Question")
-        }
+        model.addSanction(
+            model: sanctionModel, isEnabled: isEnabled, minValue: min,
+            switchChanged: { [weak self] isOn in
+                self?.model.minSanctionModel?.didActivate?(isOn)
+            }, questionCallback: { [weak self] in
+                print("Question")
+            })
+    }
+    
+    private func addMinSanctionModel(_ dataProvider: DefaultTaskCreationDelegate) {
+        let minSanctionModel = dataProvider.getMinCourseSanctionModel()
+        model.addCourseMinSanction(model: minSanctionModel)
     }
     
     private func addselectDate(_ dataProvider: DefaultTaskCreationDelegate) {

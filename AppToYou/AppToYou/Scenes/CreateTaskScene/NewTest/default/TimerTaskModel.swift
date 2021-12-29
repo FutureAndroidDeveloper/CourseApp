@@ -2,7 +2,7 @@ import Foundation
 
 
 protocol TimerTaskCreationDelegate: DefaultTaskCreationDelegate {
-    func getDurationModel() -> TaskDurationModel
+    func getDurationModel() -> (field: TaskDurationModel, lock: LockButtonModel?)
 }
 
 class TimerTaskModel<DataProvider>: DefaultTaskModel<TimerCreateTaskModel, DataProvider> where DataProvider: TimerTaskCreationDelegate {
@@ -17,8 +17,8 @@ class TimerTaskModel<DataProvider>: DefaultTaskModel<TimerCreateTaskModel, DataP
     }
     
     private func addDuration(_ dataProvider: TimerTaskCreationDelegate) {
-        let durationModel = dataProvider.getDurationModel()
-        model.addDurationHandler(duration: durationModel) { [weak self] in
+        let (durationModel, lockModel) = dataProvider.getDurationModel()
+        model.addDurationHandler(duration: durationModel, lockModel: lockModel) { [weak self] in
             self?.delegate?.showTimePicker(pickerType: .duration, delegate: nil)
         }
     }

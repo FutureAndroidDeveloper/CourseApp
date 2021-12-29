@@ -144,41 +144,12 @@ class TaskCreationModel {
     }
     
     private func addLimit() {
-        guard
-            let textModel = model as? TextCreateTaskModel,
-            let dataProvider = delegate
-        else {
-            return
-        }
-        
-        let limitModel = dataProvider.getMinSymbolsModel()
-        textModel.addLimitHandler(model: limitModel)
     }
     
     private func addDuration() {
-        guard
-            let timerModel = model as? TimerCreateTaskModel,
-            let dataProvider = delegate
-        else {
-            return
-        }
-        
-        let durationModel = dataProvider.getDurationModel()
-        timerModel.addDurationHandler(duration: durationModel) { [weak self] in
-            self?.delegate?.showTimePicker(pickerType: .duration, delegate: nil)
-        }
     }
     
     private func addCounter() {
-        guard
-            let repeatModel = model as? RepeatCreateTaskModel,
-            let dataProvider = delegate
-        else {
-            return
-        }
-        
-        let counterModel = dataProvider.getCounterModel()
-        repeatModel.addCounter(model: counterModel)
     }
     
     private func addWeekdayHandler() {

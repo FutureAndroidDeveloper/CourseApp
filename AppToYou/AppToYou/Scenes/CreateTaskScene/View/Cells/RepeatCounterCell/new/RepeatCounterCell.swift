@@ -6,18 +6,12 @@ class RepeatCounterCell: UITableViewCell, InflatableView, ValidationErrorDisplay
     private struct Constants {
         static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         static let fieldInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
+        static let lockInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
     }
     
     private let titleLabel = LabelFactory.getTitleLabel(title: "Количество повторов")
     private let repeatView = RepeatCounterView()
-
-    private let lockButton : UIButton = {
-        let button = UIButton()
-        button.setImage(R.image.chain()?.withRenderingMode(.alwaysTemplate), for: .normal)
-        button.imageView?.tintColor = R.color.lineViewBackgroundColor()
-        button.isHidden = true
-        return button
-    }()
+    private let lockButton = ButtonFactory.getLockButton()
 
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -44,14 +38,12 @@ class RepeatCounterCell: UITableViewCell, InflatableView, ValidationErrorDisplay
             $0.leading.bottom.equalToSuperview().inset(Constants.fieldInsets)
         }
 
-//        contentView.addSubview(lockButton)
-//        lockButton.addTarget(self, action: #selector(chainButtonAction(_:)), for: .touchUpInside)
-//        lockButton.snp.makeConstraints { (make) in
-//            make.trailing.equalToSuperview().offset(-20)
-//            make.centerY.equalTo(plusButton)
-//            make.height.width.equalTo(24)
-//        }
-        
+        contentView.addSubview(lockButton)
+        lockButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(Constants.lockInsets)
+            $0.centerY.equalTo(repeatView)
+        }
+        lockButton.isHidden = true
     }
     
     func inflate(model: AnyObject) {
@@ -59,16 +51,16 @@ class RepeatCounterCell: UITableViewCell, InflatableView, ValidationErrorDisplay
             return
         }
         
+        if let lockModel = model.lockModel {
+            lockButton.configure(with: lockModel)
+            lockButton.isHidden = false
+        }
         repeatView.configure(model: model.valueModel)
+        
         model.errorNotification = { [weak self] error in
             self?.repeatView.bind(error: error)
             self?.bind(error: error)
         }
-    }
-    
-    @objc func chainButtonAction(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        sender.imageView?.tintColor = sender.isSelected ?  R.color.textColorSecondary() : R.color.lineViewBackgroundColor()
     }
     
 }

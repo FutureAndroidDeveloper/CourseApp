@@ -5,7 +5,7 @@ import XCoordinator
 class TextCreateTaskViewModel: DefaultCreateTaskViewModel<TextCreateTaskModel>, TextTaskCreationDelegate {
 
     private lazy var constructor: TextTaskModel = {
-        return TextTaskModel(delegate: self)
+        return TextTaskModel(mode: mode, delegate: self)
     }()
     
     private let validator = TextTaskValidator()
@@ -38,19 +38,32 @@ class TextCreateTaskViewModel: DefaultCreateTaskViewModel<TextCreateTaskModel>, 
     }
     
     override func update() {
-        data.value = constructor.getModels()
+        let models = constructor.getModels()
+        let section = TableViewSection(models: models)
+        sections.value = [section]
     }
     
     func getDescriptionModel() -> PlaceholderTextViewModel {
-        // TODO: - получать описание из модели задачи
-        
-        return PlaceholderTextViewModel(value: nil, placeholder: "Например, положительные моменты")
+        let description = task?.taskDescription
+        return PlaceholderTextViewModel(value: description, placeholder: "Например, положительные моменты")
     }
     
-    func getMinSymbolsModel() -> NaturalNumberFieldModel {
-        // TODO: - получать кол-во из модели задачи
+    func getMinSymbolsModel() -> (field: NaturalNumberFieldModel, lock: LockButtonModel?) {
+        let minSanction = task?.minimumCourseTaskSanction ?? 0
+        var lockModel: LockButtonModel?
         
-        return NaturalNumberFieldModel()
+        switch mode {
+        case .createCourseTask, .adminEditCourseTask:
+            let isLoced = task?.editableCourseTask ?? false
+            lockModel = LockButtonModel(isLocked: isLoced, stateChanged: { isLocked in
+                print("LOCK tapped = \(isLoced)")
+            })
+            
+        default:
+            break
+        }
+        
+        return (NaturalNumberFieldModel(value: minSanction), lockModel)
     }
     
 }

@@ -177,6 +177,11 @@
 		04B3D609276E417A006BF9FC /* TitledCheckBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3D608276E417A006BF9FC /* TitledCheckBoxModel.swift */; };
 		04B76C752767C32500726600 /* TopBottomBlocksContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B76C742767C32500726600 /* TopBottomBlocksContainerView.swift */; };
 		04B76C802767E41400726600 /* ContentSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B76C7F2767E41400726600 /* ContentSizedTableView.swift */; };
+		04BA81DA277BC5FE00239692 /* CreateCourseTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA81D9277BC5FE00239692 /* CreateCourseTaskViewModel.swift */; };
+		04BA81DD277BC67700239692 /* CourseTaskLockHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA81DC277BC67700239692 /* CourseTaskLockHeaderCell.swift */; };
+		04BA81DF277BCA3D00239692 /* CourseTaskLockModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA81DE277BCA3D00239692 /* CourseTaskLockModel.swift */; };
+		04BA81E2277BCA7700239692 /* CourseTaskMinSanctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA81E1277BCA7700239692 /* CourseTaskMinSanctionCell.swift */; };
+		04BA81E4277BCD7300239692 /* CourseTaskMinSanctionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA81E3277BCD7300239692 /* CourseTaskMinSanctionModel.swift */; };
 		04BB1802274BD7FC00C584F8 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */; };
 		04BB1804274BD80A00C584F8 /* RegistrationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */; };
 		04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */; };
@@ -220,6 +225,10 @@
 		04F2AEB027739104001DBAB3 /* CreateCourseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2AEAF27739104001DBAB3 /* CreateCourseViewModel.swift */; };
 		04F2AEB327739326001DBAB3 /* CoursesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2AEB227739326001DBAB3 /* CoursesViewModel.swift */; };
 		04F2AEB527739763001DBAB3 /* CreateCourseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2AEB427739763001DBAB3 /* CreateCourseModel.swift */; };
+		04F2FE2C277C775600CE7CC4 /* UIView+Opacity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2FE2B277C775600CE7CC4 /* UIView+Opacity.swift */; };
+		04F2FE2F277C80D300CE7CC4 /* LockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2FE2E277C80D300CE7CC4 /* LockButton.swift */; };
+		04F2FE31277C80EA00CE7CC4 /* LockButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2FE30277C80EA00CE7CC4 /* LockButtonModel.swift */; };
+		04F2FE33277C823200CE7CC4 /* ButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2FE32277C823200CE7CC4 /* ButtonFactory.swift */; };
 		04F71BA2276CA18C00A0B181 /* FieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F71BA1276CA18C00A0B181 /* FieldModel.swift */; };
 		04F71BA5276CA9AD00A0B181 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F71BA4276CA9AD00A0B181 /* TextField.swift */; };
 		04F71BA9276CABBA00A0B181 /* DateTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F71BA8276CABBA00A0B181 /* DateTextField.swift */; };
@@ -644,6 +653,11 @@
 		04B3D608276E417A006BF9FC /* TitledCheckBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledCheckBoxModel.swift; sourceTree = "<group>"; };
 		04B76C742767C32500726600 /* TopBottomBlocksContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBottomBlocksContainerView.swift; sourceTree = "<group>"; };
 		04B76C7F2767E41400726600 /* ContentSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedTableView.swift; sourceTree = "<group>"; };
+		04BA81D9277BC5FE00239692 /* CreateCourseTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCourseTaskViewModel.swift; sourceTree = "<group>"; };
+		04BA81DC277BC67700239692 /* CourseTaskLockHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTaskLockHeaderCell.swift; sourceTree = "<group>"; };
+		04BA81DE277BCA3D00239692 /* CourseTaskLockModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTaskLockModel.swift; sourceTree = "<group>"; };
+		04BA81E1277BCA7700239692 /* CourseTaskMinSanctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTaskMinSanctionCell.swift; sourceTree = "<group>"; };
+		04BA81E3277BCD7300239692 /* CourseTaskMinSanctionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTaskMinSanctionModel.swift; sourceTree = "<group>"; };
 		04BB1801274BD7FB00C584F8 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		04BB1803274BD80A00C584F8 /* RegistrationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCoordinator.swift; sourceTree = "<group>"; };
 		04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
@@ -687,6 +701,10 @@
 		04F2AEAF27739104001DBAB3 /* CreateCourseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCourseViewModel.swift; sourceTree = "<group>"; };
 		04F2AEB227739326001DBAB3 /* CoursesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewModel.swift; sourceTree = "<group>"; };
 		04F2AEB427739763001DBAB3 /* CreateCourseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCourseModel.swift; sourceTree = "<group>"; };
+		04F2FE2B277C775600CE7CC4 /* UIView+Opacity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Opacity.swift"; sourceTree = "<group>"; };
+		04F2FE2E277C80D300CE7CC4 /* LockButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockButton.swift; sourceTree = "<group>"; };
+		04F2FE30277C80EA00CE7CC4 /* LockButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockButtonModel.swift; sourceTree = "<group>"; };
+		04F2FE32277C823200CE7CC4 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
 		04F71BA1276CA18C00A0B181 /* FieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldModel.swift; sourceTree = "<group>"; };
 		04F71BA4276CA9AD00A0B181 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		04F71BA8276CABBA00A0B181 /* DateTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTextField.swift; sourceTree = "<group>"; };
@@ -1994,6 +2012,24 @@
 			path = TopBottomContent;
 			sourceTree = "<group>";
 		};
+		04BA81DB277BC65900239692 /* CourseTaskLockHeader */ = {
+			isa = PBXGroup;
+			children = (
+				04BA81DC277BC67700239692 /* CourseTaskLockHeaderCell.swift */,
+				04BA81DE277BCA3D00239692 /* CourseTaskLockModel.swift */,
+			);
+			path = CourseTaskLockHeader;
+			sourceTree = "<group>";
+		};
+		04BA81E0277BCA6500239692 /* CourseTaskMinSanction */ = {
+			isa = PBXGroup;
+			children = (
+				04BA81E1277BCA7700239692 /* CourseTaskMinSanctionCell.swift */,
+				04BA81E3277BCD7300239692 /* CourseTaskMinSanctionModel.swift */,
+			);
+			path = CourseTaskMinSanction;
+			sourceTree = "<group>";
+		};
 		04BB1800274BD7E400C584F8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -2128,6 +2164,15 @@
 			path = CourseScene;
 			sourceTree = "<group>";
 		};
+		04F2FE2D277C80C900CE7CC4 /* LockButton */ = {
+			isa = PBXGroup;
+			children = (
+				04F2FE2E277C80D300CE7CC4 /* LockButton.swift */,
+				04F2FE30277C80EA00CE7CC4 /* LockButtonModel.swift */,
+			);
+			path = LockButton;
+			sourceTree = "<group>";
+		};
 		04F71BA3276CA3D900A0B181 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -2160,6 +2205,7 @@
 		04F71BB0276CFDF000A0B181 /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				04F2FE2D277C80C900CE7CC4 /* LockButton */,
 				04F71BB1276CFDFE00A0B181 /* FrequencyButton.swift */,
 				04E1426B275E53A10076D8FC /* WeekdayButton */,
 			);
@@ -2944,6 +2990,7 @@
 				04E8B9B12772838300CF9E7D /* UITableViewHeaderFooterView+ReuseIdentifier.swift */,
 				048705B2277659C8006B992A /* Data+prettyJSONString.swift */,
 				0463D0EB277B1A650023C7E8 /* Formatter+withSeparator.swift */,
+				04F2FE2B277C775600CE7CC4 /* UIView+Opacity.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3009,6 +3056,7 @@
 		6D91B860265BE1E800EB2589 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04F2FE32277C823200CE7CC4 /* ButtonFactory.swift */,
 				0495B9E22777831200BE08E6 /* LabelFactory.swift */,
 				0495B9E42777835600BE08E6 /* FieldFactory.swift */,
 				6DC42F542670C457006CB865 /* ReusableControllers */,
@@ -3153,6 +3201,7 @@
 			isa = PBXGroup;
 			children = (
 				6D6E425A26A0515400F27E6F /* ATYCreateCourseTaskViewModel.swift */,
+				04BA81D9277BC5FE00239692 /* CreateCourseTaskViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -3160,8 +3209,8 @@
 		6DA60DDE2680915900885650 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6DA60DE3268097A700885650 /* Cells */,
 				6DA60DDF2680916D00885650 /* ATYCreateCourseTaskViewController.swift */,
+				6DA60DE3268097A700885650 /* Cells */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3169,6 +3218,8 @@
 		6DA60DE3268097A700885650 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				04BA81E0277BCA6500239692 /* CourseTaskMinSanction */,
+				04BA81DB277BC65900239692 /* CourseTaskLockHeader */,
 				6DA60DE4268097D100885650 /* ATYCreateCourseTaskLockCell.swift */,
 				6DA60DE726809DEE00885650 /* ATYCreateCourseTasksEnums.swift */,
 				6DA60DEB2680A23E00885650 /* ATYDurationCourseTaskCell.swift */,
@@ -3736,6 +3787,7 @@
 				6D32D862266527B5009D62C9 /* ATYSaveTaskCell.swift in Sources */,
 				04DED8062770A92300DBD724 /* DefaultTaskModel.swift in Sources */,
 				041A730D274C3B4C0021B6FC /* AddPhotoViewModel.swift in Sources */,
+				04F2FE2F277C80D300CE7CC4 /* LockButton.swift in Sources */,
 				6D2ADD3726B920EA009A1DE6 /* ATYTakeGiftProfileSignInCell.swift in Sources */,
 				6D403494265D151A00248E9E /* ATYAllTasksViewController.swift in Sources */,
 				6DA8E20726A6AA11005014DA /* ATYEditCourseTextTaskViewController.swift in Sources */,
@@ -3749,9 +3801,11 @@
 				04CECEA92758023600ECCB2D /* TaskCreationModel.swift in Sources */,
 				6D4034A0265D3CF300248E9E /* ATYCalendarCollectionViewCell.swift in Sources */,
 				0487420C2768FBF400C0D94B /* DescriptionTaskCell.swift in Sources */,
+				04BA81E4277BCD7300239692 /* CourseTaskMinSanctionModel.swift in Sources */,
 				6D55ADD626A18FAD00F7DD4A /* ATYEditTimerCourseTaskTimeCell.swift in Sources */,
 				0469093E277209B300F3CE3C /* Request.swift in Sources */,
 				6D55ADE826A1CAC400F7DD4A /* ATYEditCourseCountTaskCell.swift in Sources */,
+				04F2FE33277C823200CE7CC4 /* ButtonFactory.swift in Sources */,
 				6D118EBB26A9A51100601F34 /* ATYShareCourseLinkCell.swift in Sources */,
 				6D6F6AEB269EFDDE009AD9E1 /* ATYCategoryCourseCell.swift in Sources */,
 				04FD269A27623C900062EEF7 /* NaturalNumberTextField.swift in Sources */,
@@ -3814,6 +3868,7 @@
 				6D4928BA26A950EA000E5346 /* ATYBuyingACourseViewController.swift in Sources */,
 				04E14272275E779B0076D8FC /* SelectWeekdayCell.swift in Sources */,
 				04403444275F953B0095EB8A /* TextCreateTaskModel.swift in Sources */,
+				04BA81E2277BCA7700239692 /* CourseTaskMinSanctionCell.swift in Sources */,
 				6D2ADD3C26B92A28009A1DE6 /* ATYYourAccBlockedCell.swift in Sources */,
 				6D40CA4D2667740600A78CEC /* ATYSelectWeekDaysCell.swift in Sources */,
 				045BEB1327723E7B0030358C /* NetworkResponseError.swift in Sources */,
@@ -3915,6 +3970,7 @@
 				6D568ED826B2FC56000619B2 /* ATYProfileSignInButtonsCell.swift in Sources */,
 				04587BA7277A3605001715BE /* CourseAdminMembersCell.swift in Sources */,
 				6D91B85E265BDEEE00EB2589 /* UITextView.swift in Sources */,
+				04F2FE2C277C775600CE7CC4 /* UIView+Opacity.swift in Sources */,
 				04587BAB277A3952001715BE /* JoinCourseChatCell.swift in Sources */,
 				6D2DEADC26CBB8F700D91496 /* ATYAboutCourseViewModel.swift in Sources */,
 				6D4928CE26A994D8000E5346 /* ATYJoinToCloseCourseViewController.swift in Sources */,
@@ -3976,6 +4032,7 @@
 				04095E03275EADBA00306CD7 /* SelectWeekdayModel.swift in Sources */,
 				6D79938F26BAAE5C0071EF4E /* ATYYourBalanceView.swift in Sources */,
 				6D7399B0268B4DC60026D81D /* ATYDatabaseService+CDCourse.swift in Sources */,
+				04BA81DF277BCA3D00239692 /* CourseTaskLockModel.swift in Sources */,
 				041A730B274C38820021B6FC /* EnterNameViewModel.swift in Sources */,
 				6D91B877265BF4C400EB2589 /* ATYImagePicker.swift in Sources */,
 				6D6E7EFC26B1AC31005C8C62 /* ATYAboutAppCell.swift in Sources */,
@@ -4048,6 +4105,7 @@
 				0463D0EC277B1A650023C7E8 /* Formatter+withSeparator.swift in Sources */,
 				6DF82869266FB054006487B0 /* ATYCreateCourseChatCell.swift in Sources */,
 				6DA60DD62680748900885650 /* ATYMembersAboutCourseCell.swift in Sources */,
+				04BA81DD277BC67700239692 /* CourseTaskLockHeaderCell.swift in Sources */,
 				04B3D605276E384A006BF9FC /* TitledCheckBox.swift in Sources */,
 				048C22C9276780F900F3FF4D /* TaskDurationView.swift in Sources */,
 				045BEB11277238C50030358C /* LoginResponse.swift in Sources */,
@@ -4115,6 +4173,7 @@
 				6DC4AE24268DC5AE0028CDDE /* ATYUserTask.swift in Sources */,
 				6D91B85A265BDBF600EB2589 /* ATYRegistrationViewController.swift in Sources */,
 				0443461E27748F8500F07FBA /* PayForCourseCell.swift in Sources */,
+				04F2FE31277C80EA00CE7CC4 /* LockButtonModel.swift in Sources */,
 				6D32D85B26651227009D62C9 /* ATYNotificationAboutTaskView.swift in Sources */,
 				6D79938926BA79890071EF4E /* ATYWalletHistoryViewController.swift in Sources */,
 				6DA15F9C266A396E00201DD3 /* ATYCourseTableViewCell.swift in Sources */,
@@ -4133,6 +4192,7 @@
 				6D315F4F2668B95800889FD7 /* UIStackView+RemoveFullySubviews.swift in Sources */,
 				6D79938326BA794C0071EF4E /* ATYWalletShopViewController.swift in Sources */,
 				6D118EC726A9AFDB00601F34 /* UIImage+Letters.swift in Sources */,
+				04BA81DA277BC5FE00239692 /* CreateCourseTaskViewModel.swift in Sources */,
 				044346362774CCC000F07FBA /* InflatableView.swift in Sources */,
 				6DF5396C268381F50086A64E /* CDWallet+CoreDataClass.swift in Sources */,
 				6DC767F926BBE51200B8811C /* ATYRatingCourseParticipantCell.swift in Sources */,

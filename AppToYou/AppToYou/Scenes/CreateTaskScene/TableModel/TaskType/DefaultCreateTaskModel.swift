@@ -17,6 +17,9 @@ class DefaultCreateTaskModel {
     private var prevPeriodModel: TaskPeriodModel?
     var periodModel: TaskPeriodModel?
     
+    var minSanctionModel: CourseTaskMinSanctionModel?
+    var lockHeaderModel: CourseTaskLockModel?
+    
     required init() {
         
     }
@@ -85,21 +88,33 @@ class DefaultCreateTaskModel {
     }
     
     // Sanction
-    func addSanction(model: NaturalNumberFieldModel, isEnabled: Bool, questionCallback: @escaping () -> Void) {
-        sanctionModel = TaskSanctionModel(fieldModel: model, isEnabled: isEnabled, questionCallback: questionCallback)
+    func addSanction(model: NaturalNumberFieldModel, isEnabled: Bool, minValue: Int,
+                     switchChanged: @escaping (Bool) -> Void, questionCallback: @escaping () -> Void) {
+        
+        sanctionModel = TaskSanctionModel(fieldModel: model, isEnabled: isEnabled, minValue: minValue,
+                                          switchChanged: switchChanged, questionCallback: questionCallback)
+    }
+    
+    func addCourseMinSanction(model: NaturalNumberFieldModel) {
+        minSanctionModel = CourseTaskMinSanctionModel(fieldModel: model)
+    }
+    
+    func addLockHeaderModel() {
+        lockHeaderModel = CourseTaskLockModel()
     }
     
     func prepare() -> [AnyObject] {
-        var result: [AnyObject] = [nameModel]
+        var result: [AnyObject?] = [lockHeaderModel, nameModel]
         // TODO: - сделать функцию, которая решает между `selectDateModel, weekdayModel, periodModel`
         let tail: [AnyObject?] = [
             frequencyModel, selectDateModel, weekdayModel,
-            periodModel, notificationModel, sanctionModel
+            periodModel, notificationModel, sanctionModel,
+            minSanctionModel,
         ]
         
         result.append(contentsOf: getAdditionalModels())
         result.append(contentsOf: tail.compactMap({ $0 }))
-        return result
+        return result.compactMap { $0 }
     }
     
     func getAdditionalModels() -> [AnyObject] {

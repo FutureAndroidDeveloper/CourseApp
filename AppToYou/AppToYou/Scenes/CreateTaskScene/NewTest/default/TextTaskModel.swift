@@ -3,7 +3,7 @@ import Foundation
 
 protocol TextTaskCreationDelegate: DefaultTaskCreationDelegate {
     func getDescriptionModel() -> PlaceholderTextViewModel
-    func getMinSymbolsModel() -> NaturalNumberFieldModel
+    func getMinSymbolsModel() -> (field: NaturalNumberFieldModel, lock: LockButtonModel?)
 }
 
 
@@ -25,8 +25,8 @@ class TextTaskModel<DataProvider>: DefaultTaskModel<TextCreateTaskModel, DataPro
     }
     
     private func addLimit(_ dataProvider: TextTaskCreationDelegate) {
-        let limitModel = dataProvider.getMinSymbolsModel()
-        model.addLimitHandler(model: limitModel)
+        let (limitModel, lockModel) = dataProvider.getMinSymbolsModel()
+        model.addLimitHandler(model: limitModel, lockModel: lockModel)
     }
     
 }

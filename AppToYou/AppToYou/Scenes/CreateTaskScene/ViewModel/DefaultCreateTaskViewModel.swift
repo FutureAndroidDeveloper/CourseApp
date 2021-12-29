@@ -3,9 +3,13 @@ import XCoordinator
 
 
 class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewModel, CreateTaskViewModelInput, CreateTaskViewModelOutput {
+    
+    private let notificationSeparator: Character = ":"
+    private let activeDayCode: String = "1"
+    private let inactiveDayCode: String = "0"
 
     private lazy var constructor: DefaultTaskModel = {
-        return DefaultTaskModel(delegate: self)
+        return DefaultTaskModel(mode: mode, delegate: self)
     }()
 
     private let type: ATYTaskType
@@ -15,13 +19,21 @@ class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewM
     private let taskService = TaskManager(deviceIdentifierService: DeviceIdentifierService())
     private let validator = CheckboxTaskValidator()
     
-    var data: Observable<[AnyObject]> = Observable([])
+    var sections: Observable<[TableViewSection]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
+    
+    let task: UserTaskResponse?
+    
+    // для создания запроса
     var taskRequest: UserTaskCreateRequest?
+    
+    let mode: CreateTaskMode
 
 
-    init(type: ATYTaskType, router: UnownedRouter<TasksRoute>) {
+    init(type: ATYTaskType, task: UserTaskResponse?, mode: CreateTaskMode, router: UnownedRouter<TasksRoute>) {
         self.type = type
+        self.task = task
+        self.mode = mode
         self.router = router
         update()
     }
@@ -76,12 +88,13 @@ class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewM
         taskRequest?.endDate = endDate?.toString(dateFormat: .localeYearDate)
         taskRequest?.daysCode = model.weekdayModel?.weekdayModels
             .compactMap { $0 }
-            .map { $0.isSelected ? "1" : "0" }
+            .map { $0.isSelected ? activeDayCode : inactiveDayCode }
             .joined()
         
         if model.notificationModel.isEnabled {
+            let separator = notificationSeparator
             taskRequest?.reminderList = model.notificationModel.notificationModels
-                .map { "\($0.hourModel.value):\($0.minModel.value)" }
+                .map { "\($0.hourModel.value)\(separator)\($0.minModel.value)" }
         }
     }
     
@@ -107,7 +120,9 @@ class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewM
      Приводит к вызову tableView.reload()
      */
     func update() {
-        data.value = constructor.getModels()
+        let models = constructor.getModels()
+        let section = TableViewSection(models: models)
+        sections.value = [section]
     }
     
     /**
@@ -129,51 +144,105 @@ extension DefaultCreateTaskViewModel: DefaultTaskCreationDelegate {
     }
     
     func getNameModel() -> TextFieldModel {
-        // TODO: - получать имя из модели задачи
+        let name = task?.taskName ?? String()
+        let model = TextFieldModel(value: name, placeholder:  R.string.localizable.forExampleDoExercises())
         
-        return .init(value: String(), placeholder: R.string.localizable.forExampleDoExercises())
+        return model
     }
     
     func getFrequncy() -> FrequncyValueModel {
-        // TODO: - получать частоту из модели задачи
-        
-        return FrequncyValueModel()
+        let frequency = task?.frequencyType ?? .EVERYDAY
+        return FrequncyValueModel(frequency: frequency)
     }
     
     func getPeriodModel() -> TaskPeriodModel {
-        // TODO: - получать isSelected, даты из модели задачи
+        let isInfinite = task?.infiniteExecution ?? true
+        let isInfiniteModel = TitledCheckBoxModel(title: "Бесконечная длительность курса", isSelected: isInfinite)
         
-        let isInfiniteModel = TitledCheckBoxModel(title: "Бесконечная длительность курса", isSelected: false)
-        return TaskPeriodModel(isInfiniteModel: isInfiniteModel, start: DateFieldModel(), end: DateFieldModel(value: nil))
+        let start = task?.startDate.toDate(dateFormat: .simpleDateFormatFullYear) ?? Date()
+        let end = task?.endDate?.toDate(dateFormat: .simpleDateFormatFullYear)
+        
+        let model = TaskPeriodModel(
+            isInfiniteModel: isInfiniteModel,
+            start: DateFieldModel(value: start),
+            end: DateFieldModel(value: end)
+        )
+        return model
     }
     
     func getNotificationModels() -> (models: [NotificationTaskTimeModel], isEnabled: Bool) {
-        // TODO: - получать нотификации из модели задачи
+        let notifications = task?.reminderList ?? []
+        var isEnabled = true
         
-        let model = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
-                                              minModel: TimeBlockModelFactory.getMinModel())
-        return ([model], false)
+        var notificationModels = notifications
+            .map { $0.split(separator: notificationSeparator) }
+            .map { notification -> NotificationTaskTimeModel in
+                let hourModel = TimeBlockModelFactory.getHourModel()
+                let minModel = TimeBlockModelFactory.getMinModel()
+                
+                notification.enumerated().forEach { item in
+                    let value = String(item.element)
+                    switch item.offset {
+                    case 0: hourModel.update(value: value)
+                    case 1: minModel.update(value: value)
+                    default: break
+                    }
+                }
+                return NotificationTaskTimeModel(hourModel: hourModel, minModel: minModel)
+            }
+        
+        if notificationModels.isEmpty {
+            let emptyModel = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
+                                                       minModel: TimeBlockModelFactory.getHourModel())
+            notificationModels.append(emptyModel)
+            isEnabled = false
+        }
+        
+        return (notificationModels, isEnabled)
     }
     
-    func getSanctionModel() -> (model: NaturalNumberFieldModel, isEnabled: Bool) {
-        // TODO: - получать штраф из модели
-        return (NaturalNumberFieldModel(), false)
+    func getSanctionModel() -> (model: NaturalNumberFieldModel, min: Int, isEnabled: Bool) {
+        let minValue = task?.minimumCourseTaskSanction ?? 0
+        let sanction = task?.taskSanction ?? minValue
+        let model = NaturalNumberFieldModel(value: sanction)
+        
+        return (model, minValue, sanction > .zero)
     }
     
     func getWeekdayModels() -> [WeekdayModel] {
-        // TODO: - получать модели из модели задачи или создавать новые из календаря
+        // получение названий дней недели
         let calendar = Calendar.autoupdatingCurrent
         let weekdaySymbols = calendar.shortWeekdaySymbols
         let bound = calendar.firstWeekday - 1
         let orderedSymbols = weekdaySymbols[bound...] + weekdaySymbols[..<bound]
         
-        return orderedSymbols.map { WeekdayModel(title: $0) }
+        let defaultDaysCode = orderedSymbols
+            .map { _ in "0" }
+            .joined()
+        
+        let daysCode = task?.daysCode ?? defaultDaysCode
+        let codeArray = Array(daysCode)
+        
+        let models = zip(orderedSymbols, codeArray).map { item in
+            return WeekdayModel(title: item.0, isSelected: String(item.1) == activeDayCode)
+        }
+        return models
     }
     
     func getOnceDateModel() -> DateFieldModel {
-        // TODO: - получать дату из модели задачи
+        let frequency = task?.frequencyType
+        let start = task?.startDate.toDate(dateFormat: .simpleDateFormatFullYear)
         
-        return DateFieldModel()
+        if let freq = frequency, freq == .ONCE {
+            return DateFieldModel(value: start)
+        } else {
+            return DateFieldModel()
+        }
+    }
+    
+    func getMinCourseSanctionModel() -> NaturalNumberFieldModel {
+        let minSanction = task?.minimumCourseTaskSanction ?? 0
+        return NaturalNumberFieldModel(value: minSanction)
     }
     
 }

@@ -4,8 +4,8 @@ import Foundation
 class TimerCreateTaskModel: DefaultCreateTaskModel {
     var durationModel: TaskDurationCellModel!
     
-    func addDurationHandler(duration: TaskDurationModel, timerCallback: @escaping () -> Void) {
-        durationModel = TaskDurationCellModel(durationModel: duration, timerCallback: timerCallback)
+    func addDurationHandler(duration: TaskDurationModel, lockModel: LockButtonModel?, timerCallback: @escaping () -> Void) {
+        durationModel = TaskDurationCellModel(durationModel: duration, lockModel: lockModel, timerCallback: timerCallback)
     }
     
     override func getAdditionalModels() -> [AnyObject] {

@@ -6,7 +6,7 @@ protocol CreateTaskViewModelInput: TimePickerDelegate {
 }
 
 protocol CreateTaskViewModelOutput: AnyObject {
-    var data: Observable<[AnyObject]> { get }
+    var sections: Observable<[TableViewSection]> { get }
     var updatedState: Observable<Void> { get }
 }
 

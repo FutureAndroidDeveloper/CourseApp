@@ -7,7 +7,7 @@ class CourseDurationCellModel: TaskDurationCellModel {
     
     init(isInfiniteModel: TitledCheckBoxModel, durationModel: TaskDurationModel, timerCallback: @escaping () -> Void) {
         self.isInfiniteModel = isInfiniteModel
-        super.init(durationModel: durationModel, timerCallback: timerCallback)
+        super.init(durationModel: durationModel, lockModel: nil, timerCallback: timerCallback)
     }
     
 }
