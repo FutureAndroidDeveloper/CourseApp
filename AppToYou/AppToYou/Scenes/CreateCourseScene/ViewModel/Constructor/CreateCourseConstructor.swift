@@ -80,7 +80,7 @@ class CreateCourseConstructor {
     private func addDuration(_ dataProvider: CreateCourseDataSource) {
         let (duration, isInfinite) = dataProvider.getDurationModel()
         createCourseModel.addDuration(duration, isInfinite) { [weak self] in
-            self?.delegate?.showTimePicker(pickerType: .duration)
+            self?.delegate?.showTimePicker(pickerType: .course)
         }
         
     }

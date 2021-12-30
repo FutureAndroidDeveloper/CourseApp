@@ -2,5 +2,9 @@ import Foundation
 
 
 protocol DurationTimeDelegate: AnyObject {
-    func durationPicked(_ duration: DurationTime)
+    func userTaskdurationPicked(_ duration: DurationTime)
+    func courseDurationPicked(_ duration: Duration)
+    func courseTaskDurationPicked(_ duration: Duration)
 }
+
+

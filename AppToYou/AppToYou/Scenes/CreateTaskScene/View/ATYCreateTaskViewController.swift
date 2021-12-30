@@ -78,6 +78,8 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         // course
         inflater.registerRow(model: CourseTaskMinSanctionModel.self, cell: CourseTaskMinSanctionCell.self)
         inflater.registerRow(model: CourseTaskLockModel.self, cell: CourseTaskLockHeaderCell.self)
+        inflater.registerRow(model: CourseTaskNameModel.self, cell: CourseTaskNameCell.self)
+        inflater.registerRow(model: CourseTaskDurationModel.self, cell: CourseTaskDurationCell.self)
     }
     
     func bindViewModel() {

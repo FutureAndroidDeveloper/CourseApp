@@ -137,6 +137,12 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView, Vali
             }
             self?.bind(error: error)
         }
+        
+        if model.isEditable {
+            startTextField.enable()
+        } else {
+            startTextField.disable()
+        }
     }
     
     private func infiniteStateChanged(_ isInfinite: Bool) {

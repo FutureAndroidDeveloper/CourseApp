@@ -47,8 +47,14 @@ class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewM
         updateState()
     }
     
-    func durationPicked(_ duration: DurationTime) {
-        // обработка получения происходит в TimerCreateTaskViewModel
+    func userTaskdurationPicked(_ duration: DurationTime) {
+        //
+    }
+    
+    func courseTaskDurationPicked(_ duration: Duration) {
+        let time = DurationTime(hour: "\(duration.year)", min: "\(duration.month)", sec: "\(duration.day)")
+        constructor.model.courseTaskDurationModel?.durationModel.update(durationTime: time)
+        update()
     }
 
     func saveDidTapped() {
@@ -80,14 +86,14 @@ class DefaultCreateTaskViewModel<Model: DefaultCreateTaskModel>: CreateTaskViewM
         }
         taskRequest = UserTaskCreateRequest(
             taskName: name, taskType: type, frequencyType: freq,
-            taskSanction: sanction, infiniteExecution: isInfinite, startDate: start.toString(dateFormat: .localeYearDate)
+            taskSanction: sanction, infiniteExecution: isInfinite,
+            startDate: start.toString(dateFormat: .localeYearDate)
         )
         
         let endDate = freq == .ONCE ? start : model.periodModel?.end.value
         
         taskRequest?.endDate = endDate?.toString(dateFormat: .localeYearDate)
         taskRequest?.daysCode = model.weekdayModel?.weekdayModels
-            .compactMap { $0 }
             .map { $0.isSelected ? activeDayCode : inactiveDayCode }
             .joined()
         
@@ -243,6 +249,24 @@ extension DefaultCreateTaskViewModel: DefaultTaskCreationDelegate {
     func getMinCourseSanctionModel() -> NaturalNumberFieldModel {
         let minSanction = task?.minimumCourseTaskSanction ?? 0
         return NaturalNumberFieldModel(value: minSanction)
+    }
+    
+    func getCourseTaskDurationModel() -> (duration: TaskDurationModel, isInfiniteModel: TitledCheckBoxModel) {
+        // В другом типе зад должно быть поле .duration
+        let hour = TimeBlockModelFactory.getHourModel()
+        let min = TimeBlockModelFactory.getMinModel()
+        let sec = TimeBlockModelFactory.getSecModel()
+        let duration = TaskDurationModel(hourModel: hour, minModel: min, secModel: sec)
+        
+        let isSelected = task?.infiniteExecution ?? true
+        let isInfiniteModel = TitledCheckBoxModel(title: "Бесконечное выполнение", isSelected: isSelected)
+        
+        return (duration, isInfiniteModel)
+    }
+    
+    func getCourseName() -> String {
+        let name = task?.courseName ?? String()
+        return name
     }
     
 }

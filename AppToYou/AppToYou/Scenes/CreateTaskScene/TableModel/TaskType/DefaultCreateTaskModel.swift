@@ -19,6 +19,10 @@ class DefaultCreateTaskModel {
     
     var minSanctionModel: CourseTaskMinSanctionModel?
     var lockHeaderModel: CourseTaskLockModel?
+    var courseNameModel: CourseTaskNameModel?
+    
+    private var prevcourseTaskDurationModel: CourseTaskDurationModel?
+    var courseTaskDurationModel: CourseTaskDurationModel?
     
     required init() {
         
@@ -30,8 +34,8 @@ class DefaultCreateTaskModel {
     }
     
     // Freq
-    func addFrequency(_ value: FrequncyValueModel, _ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {
-        frequencyModel = FrequencyModel(value: value, frequencyPicked: handler)
+    func addFrequency(_ value: FrequncyValueModel, mode: CreateTaskMode, _ handler: @escaping (ATYFrequencyTypeEnum) -> Void) {
+        frequencyModel = FrequencyModel(value: value, taskMode: mode, frequencyPicked: handler)
     }
     
     // Days
@@ -103,13 +107,22 @@ class DefaultCreateTaskModel {
         lockHeaderModel = CourseTaskLockModel()
     }
     
+    func addCourseNameModel(name: String) {
+        courseNameModel = CourseTaskNameModel(courseName: name)
+    }
+    
+    func addCourseTaskDurationHandler(duration: TaskDurationModel, isInfiniteModel: TitledCheckBoxModel, timerCallback: @escaping () -> Void) {
+        let model = CourseTaskDurationModel(durationModel: duration, isInfiniteModel: isInfiniteModel, timerCallback: timerCallback)
+        prevcourseTaskDurationModel = prevcourseTaskDurationModel ?? model
+        courseTaskDurationModel = prevcourseTaskDurationModel
+    }
+    
     func prepare() -> [AnyObject] {
-        var result: [AnyObject?] = [lockHeaderModel, nameModel]
+        var result: [AnyObject?] = [lockHeaderModel, courseNameModel, nameModel]
         // TODO: - сделать функцию, которая решает между `selectDateModel, weekdayModel, periodModel`
         let tail: [AnyObject?] = [
-            frequencyModel, selectDateModel, weekdayModel,
-            periodModel, notificationModel, sanctionModel,
-            minSanctionModel,
+            frequencyModel, selectDateModel, weekdayModel, courseTaskDurationModel,
+            periodModel, notificationModel, sanctionModel, minSanctionModel,
         ]
         
         result.append(contentsOf: getAdditionalModels())

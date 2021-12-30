@@ -93,32 +93,6 @@ class TaskCreationModel {
     }
     
     private func addFrequency(initial frequency: ATYFrequencyTypeEnum) {
-        
-        model?.addFrequency(.init()) { [weak self] newFrequency in
-            if frequency == newFrequency {
-                return
-            }
-            print(newFrequency)
-            
-            if newFrequency != .ONCE || newFrequency != .CERTAIN_DAYS {
-                print("1")
-                self?.model?.removeWeekdayHandler()
-                self?.model?.removeSelectDateHandler()
-                self?.updatePeriod()
-            }
-            
-            if newFrequency == .ONCE {
-                self?.addselectDate()
-                self?.model?.removePeriodHandler()
-            }
-            
-            if newFrequency == .CERTAIN_DAYS {
-                self?.addWeekdayHandler()
-            }
-            
-            self?.addFrequency(initial: newFrequency)
-            self?.delegate?.update()
-        }
     }
     
     private func updatePeriod() {

@@ -10,6 +10,8 @@ protocol DefaultTaskCreationDataSource: AnyObject {
     func getNotificationModels() -> (models: [NotificationTaskTimeModel], isEnabled: Bool)
     func getSanctionModel() -> (model: NaturalNumberFieldModel, min: Int, isEnabled: Bool)
     func getMinCourseSanctionModel() -> NaturalNumberFieldModel
+    func getCourseName() -> String
+    func getCourseTaskDurationModel() -> (duration: TaskDurationModel, isInfiniteModel: TitledCheckBoxModel)
 }
 
 protocol DefaultTaskCreationDelegate: DefaultTaskCreationDataSource {
@@ -47,25 +49,40 @@ class DefaultTaskModel<DataModel: DefaultCreateTaskModel, DataProvider>: TaskCre
             return
         }
         
+        addName(dataProvider)
+        addFrequency(dataProvider)
+        addNotificationHandler(dataProvider)
+        addSanction(dataProvider)
+        addDuration(dataProvider)
+        
         switch mode {
-        case .createUserTask:
+        case .createUserTask, .editUserTask:
             break
+            
         case .createCourseTask:
             model.addLockHeaderModel()
             addMinSanctionModel(dataProvider)
-        case .editUserTask:
-            break
+            
         case .editCourseTask:
-            break
+            addCourseNameModel(dataProvider)
+            
+            model.nameModel.isEditable = false
+            model.periodModel?.isEditable = false
+            
         case .adminEditCourseTask:
-            break
+            model.addLockHeaderModel()
+            addMinSanctionModel(dataProvider)
+            addCourseNameModel(dataProvider)
         }
-        
-        addName(dataProvider)
-        addFrequency(dataProvider)
-        addPeriod(dataProvider)
-        addNotificationHandler(dataProvider)
-        addSanction(dataProvider)
+    }
+    
+    private func addDuration(_ dataProvider: DefaultTaskCreationDelegate) {
+        switch mode {
+        case .createUserTask, .editUserTask, .editCourseTask:
+            addPeriod(dataProvider)
+        default:
+            addCourseTaskDuration(dataProvider)
+        }
     }
     
     func getModels() -> [AnyObject] {
@@ -80,10 +97,10 @@ class DefaultTaskModel<DataModel: DefaultCreateTaskModel, DataProvider>: TaskCre
     private func addFrequency(_ dataProvider: DefaultTaskCreationDelegate) {
         let frequencyValue = dataProvider.getFrequncy()
         
-        model.addFrequency(frequencyValue) { [weak self] frequency in
+        model.addFrequency(frequencyValue, mode: mode) { [weak self] frequency in
             self?.model.removeWeekdayHandler()
             self?.model.removeSelectDateHandler()
-            self?.addPeriod(dataProvider)
+            self?.addDuration(dataProvider)
             
             if frequency == .ONCE {
                 self?.addselectDate(dataProvider)
@@ -136,6 +153,19 @@ class DefaultTaskModel<DataModel: DefaultCreateTaskModel, DataProvider>: TaskCre
     private func addWeekdayHandler(_ dataProvider: DefaultTaskCreationDelegate) {
         let weekdayModels = dataProvider.getWeekdayModels()
         model.addWeekdayHandler(models: weekdayModels)
+    }
+    
+    private func addCourseNameModel(_ dataProvider: DefaultTaskCreationDelegate) {
+        let name = dataProvider.getCourseName()
+        model.addCourseNameModel(name: name)
+    }
+    
+    private func addCourseTaskDuration(_ dataProvider: DefaultTaskCreationDelegate) {
+        let (durationModel, isInfinite) = dataProvider.getCourseTaskDurationModel()
+        model.addCourseTaskDurationHandler(duration: durationModel, isInfiniteModel: isInfinite, timerCallback: { [weak self] in
+            self?.delegate?.showTimePicker(pickerType: .courseTaskDuration, delegate: nil)
+            
+        })
     }
     
     func getModel() -> DefaultCreateTaskModel {

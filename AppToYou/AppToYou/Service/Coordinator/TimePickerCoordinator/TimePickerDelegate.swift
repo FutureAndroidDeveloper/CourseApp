@@ -7,11 +7,20 @@ protocol TimePickerDelegate: DurationTimeDelegate, NotificationTimeDelegate {
 
 
 extension TimePickerDelegate {
-    func durationPicked(_ duration: DurationTime) {
+    func userTaskdurationPicked(_ duration: DurationTime) {
+        return
+    }
+    
+    func courseDurationPicked(_ duration: Duration){
+        return
+    }
+    
+    func courseTaskDurationPicked(_ duration: Duration) {
         return
     }
     
     func notificationPicked(_ notification: NotificationTime) {
         return
     }
+    
 }

@@ -68,7 +68,7 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
             return .none()
             
         case .durationPicker:
-            let timePickerCoordinator = TimePickerCoordinator(type: .duration,
+            let timePickerCoordinator = TimePickerCoordinator(type: .course,
                                                               pickerDelegate: courseCreationInput,
                                                               rootViewController: self.rootViewController)
             addChild(timePickerCoordinator)

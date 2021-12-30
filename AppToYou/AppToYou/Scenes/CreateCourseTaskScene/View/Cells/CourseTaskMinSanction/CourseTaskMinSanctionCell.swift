@@ -91,9 +91,9 @@ class CourseTaskMinSanctionCell: UITableViewCell, InflatableView, ValidationErro
     
     private func changeOpacity(for state: Bool) {
         if state {
-            enable()
+            contentView.enable()
         } else {
-            disable()
+            contentView.disable()
         }
         model?.updateActiveState(state)
     }

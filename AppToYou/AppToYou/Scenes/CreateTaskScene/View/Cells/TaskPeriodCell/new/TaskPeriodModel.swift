@@ -6,6 +6,7 @@ class TaskPeriodModel: NSCopying, ValidatableModel {
     let isInfiniteModel: TitledCheckBoxModel
     let start: DateFieldModel
     let end: DateFieldModel
+    var isEditable: Bool = true
     var errorNotification: ((CheckboxTaskError?) -> Void)?
     
     init(isInfiniteModel: TitledCheckBoxModel, start: DateFieldModel, end: DateFieldModel) {

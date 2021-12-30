@@ -16,7 +16,12 @@ class ATYSelectTimeViewController: UIViewController, BindableType {
     
     var viewModel: SelectTimeViewModel!
     
-    private let dataProvider = TimePickerDataSource()
+    private lazy var dataProvider: TimePickerDataSource = {
+        let type = viewModel.output.getPickerType()
+        let dataSource = TimePickerDataSource(type: type)
+        return dataSource
+    }()
+    
     private let pickerContainer = UIView()
     private var pickerView: UIView?
 
@@ -65,7 +70,7 @@ class ATYSelectTimeViewController: UIViewController, BindableType {
         let type = viewModel.output.getPickerType()
         
         switch type {
-        case .duration:
+        case .userTaskDuration, .courseTaskDuration, .course:
             let picker = UIPickerView()
             picker.dataSource = dataProvider
             picker.delegate = dataProvider
@@ -100,8 +105,9 @@ class ATYSelectTimeViewController: UIViewController, BindableType {
         let comp = timePicker.calendar.dateComponents([.hour, .minute], from: timePicker.date)
         let hour = String(comp.hour ?? 0)
         let minutes = String(comp.minute ?? 0)
+        let notifiaction = NotificationTime(hour: hour, min: minutes)
         
-        viewModel.input.timePicked(hour: hour, min: minutes, sec: nil)
+        viewModel.input.notificationTimePicked(notifiaction)
     }
     
     @objc
@@ -112,71 +118,101 @@ class ATYSelectTimeViewController: UIViewController, BindableType {
         else {
             return
         }
-        let hour = String(dataSource.hour)
-        let minutes = String(dataSource.minutes)
-        let seconds = String(dataSource.seconds)
         
-        viewModel.input.timePicked(hour: hour, min: minutes, sec: seconds)
+        let type = viewModel.output.getPickerType()
+        if type == .userTaskDuration {
+            viewModel.input.userTaskDurationPicked(dataSource.taskDuration)
+        } else if type == .course {
+            viewModel.input.courseDurationPicked(dataSource.courseDuration)
+        } else if type == .courseTaskDuration {
+            viewModel.input.courseTaskDurationPicked(dataSource.courseDuration)
+        }
     }
+    
 }
 
 enum TimePickerType {
-    case duration
+    case userTaskDuration
+    case courseTaskDuration
+    case course
     case notification
-}
-
-class TimePickerDataSource: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
-    var hour:Int = 0
-    var minutes:Int = 0
-    var seconds:Int = 0
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch component {
-        case 0:
-            return 25
-        case 1,2:
-            return 60
-            
-        default:
+    var components: Int {
+        switch self {
+        case .userTaskDuration, .courseTaskDuration, .course:
+            return 3
+        case .notification:
             return 0
         }
     }
     
-//    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-////        return pickerView.frame.size.width/3
-//        return 50
-//    }
-//
-//    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-//        return 50
-//    }
+    func getNumberOfRows(for component: Int) -> Int {
+        switch component {
+        case 0:
+            switch self {
+            case .userTaskDuration: return 24
+            case .courseTaskDuration, .course: return 20
+            default: return 0
+            }
+        case 1, 2:
+            switch self {
+            case .userTaskDuration: return 60
+            case .courseTaskDuration, .course: return 12
+            default: return 0
+            }
+        default:
+            return 0
+        }
+    }
+}
+
+//enum TaskDuration {
+//    case user(duration: DurationTime)
+//    case course(duration: Duration)
+//}
+
+class TimePickerDataSource: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    private var firstComponentValue: Int = 0
+    private var secondComponentValue: Int = 0
+    private var thirdComponentValue: Int = 0
+    
+    var taskDuration: DurationTime {
+        return DurationTime(hour: "\(firstComponentValue)",
+                            min: "\(secondComponentValue)",
+                            sec: "\(thirdComponentValue)")
+    }
+    
+    var courseDuration: Duration {
+        return Duration(day: firstComponentValue, month: secondComponentValue, year: thirdComponentValue)
+    }
+    
+    private let type: TimePickerType
+    
+    init(type: TimePickerType) {
+        self.type = type
+        super.init()
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return type.components
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return type.getNumberOfRows(for: component)
+    }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch component {
-        case 0:
-            return "\(row)"
-        case 1:
-            return "\(row)"
-        case 2:
-            return "\(row)"
-        default:
-            return ""
-        }
+        return "\(row)"
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
-        case 0:
-            hour = row
-        case 1:
-            minutes = row
-        case 2:
-            seconds = row
-        default:
-            break;
+        case 0: firstComponentValue = row
+        case 1: secondComponentValue = row
+        case 2: thirdComponentValue = row
+        default: break
         }
     }
+    
 }

@@ -19,7 +19,7 @@ class TimerTaskModel<DataProvider>: DefaultTaskModel<TimerCreateTaskModel, DataP
     private func addDuration(_ dataProvider: TimerTaskCreationDelegate) {
         let (durationModel, lockModel) = dataProvider.getDurationModel()
         model.addDurationHandler(duration: durationModel, lockModel: lockModel) { [weak self] in
-            self?.delegate?.showTimePicker(pickerType: .duration, delegate: nil)
+            self?.delegate?.showTimePicker(pickerType: .userTaskDuration, delegate: nil)
         }
     }
     

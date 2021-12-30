@@ -2,7 +2,10 @@ import Foundation
 import XCoordinator
 
 protocol SelectTimeViewModelInput {
-    func timePicked(hour: String, min: String, sec: String?)
+    func userTaskDurationPicked(_ duration: DurationTime)
+    func courseDurationPicked(_ duration: Duration)
+    func courseTaskDurationPicked(_ duration: Duration)
+    func notificationTimePicked(_ notification: NotificationTime)
 }
 
 protocol SelectTimeViewModelOutput {
@@ -32,14 +35,20 @@ class SelectTimeViewModelImpl: SelectTimeViewModel, SelectTimeViewModelInput, Se
         self.router = router
     }
     
-    func timePicked(hour: String, min: String, sec: String?) {
-        if let second = sec {
-            let time = DurationTime(hour: hour, min: min, sec: second)
-            router.trigger(.durationTimePicked(time))
-        } else {
-            let time = NotificationTime(hour: hour, min: min)
-            router.trigger(.notificationTimePicked(time))
-        }
+    func userTaskDurationPicked(_ duration: DurationTime)  {
+        router.trigger(.userTaskDurationPicked(duration))
+    }
+    
+    func courseDurationPicked(_ duration: Duration) {
+        router.trigger(.courseDuration(duration))
+    }
+    
+    func courseTaskDurationPicked(_ duration: Duration) {
+        router.trigger(.courseTaskDurationPicked(duration))
+    }
+    
+    func notificationTimePicked(_ notification: NotificationTime) {
+        router.trigger(.notificationTimePicked(notification))
     }
     
     func getPickerType() -> TimePickerType {

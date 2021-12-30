@@ -52,6 +52,12 @@ class DescriptionTaskCell: UITableViewCell, InflatableView, ValidationErrorDispl
             self?.descriptionTextView.bind(error: error)
             self?.bind(error: error)
         }
+        
+        if model.isEditable {
+            contentView.enable()
+        } else {
+            contentView.disable()
+        }
     }
     
 }

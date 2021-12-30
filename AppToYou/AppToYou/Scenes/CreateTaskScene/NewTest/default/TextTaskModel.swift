@@ -17,6 +17,10 @@ class TextTaskModel<DataProvider>: DefaultTaskModel<TextCreateTaskModel, DataPro
         }
         addDescription(dataProvider)
         addLimit(dataProvider)
+        
+        if mode == .editCourseTask {
+            model.descriptionModel.isEditable = false
+        }
     }
     
     private func addDescription(_ dataProvider: TextTaskCreationDelegate) {

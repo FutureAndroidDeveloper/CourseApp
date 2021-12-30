@@ -5,7 +5,9 @@ import XCoordinator
 enum TimePickerRoute: Route {
     case picker
     case notificationTimePicked(_ time: NotificationTime)
-    case durationTimePicked(_ time: DurationTime)
+    case userTaskDurationPicked(_ duration: DurationTime)
+    case courseTaskDurationPicked(_ duration: Duration)
+    case courseDuration(_ duration: Duration)
 }
 
 
@@ -35,10 +37,17 @@ class TimePickerCoordinator: NavigationCoordinator<TimePickerRoute> {
             pickerDelegate?.notificationPicked(time)
             return .dismiss()
             
-        case .durationTimePicked(let duration):
-            pickerDelegate?.durationPicked(duration)
-            return .dismiss()
+        case .userTaskDurationPicked(let duration):
+            pickerDelegate?.userTaskdurationPicked(duration)
+            
+        case .courseTaskDurationPicked(let duration):
+            pickerDelegate?.courseTaskDurationPicked(duration)
+            
+        case .courseDuration(let duration):
+            pickerDelegate?.courseDurationPicked(duration)
         }
+        
+        return .dismiss()
     }
     
 }

@@ -12,12 +12,8 @@ class FrequencyView: UIView {
     private var model: FrequencyModel?
     
     private var frequencyChanged: ((ATYFrequencyTypeEnum) -> Void)?
-    
-    private let frequencyOrder: [[ATYFrequencyTypeEnum]] = [
-        [.EVERYDAY, .WEEKDAYS],
-        [.MONTHLY, .YEARLY],
-        [.ONCE, .CERTAIN_DAYS],
-    ]
+    private var frequencyOrder: [[ATYFrequencyTypeEnum]]
+    private var isPrepared: Bool
     
     private let contentStack: UIStackView = {
         let stack = UIStackView()
@@ -30,6 +26,9 @@ class FrequencyView: UIView {
     
     
     init() {
+        self.isPrepared = false
+        self.frequencyOrder = []
+        
         super.init(frame: .zero)
         setup()
     }
@@ -41,14 +40,12 @@ class FrequencyView: UIView {
     func configure(model: FrequencyModel, frequencyChanged: @escaping (ATYFrequencyTypeEnum) -> Void) {
         self.model = model
         self.frequencyChanged = frequencyChanged
+        
+        self.prepareForMode(mode: model.taskMode, selected: model.value.frequency)
         self.select(model.value.frequency)
     }
     
     private func setup() {
-        frequencyOrder
-            .map(convertToRowStack(_:))
-            .forEach { contentStack.addArrangedSubview($0) }
-        
         addSubview(contentStack)
         contentStack.snp.makeConstraints {
             $0.leading.top.bottom.equalToSuperview()
@@ -114,6 +111,29 @@ class FrequencyView: UIView {
             .compactMap { $0 as? UIStackView }
             .flatMap { $0.arrangedSubviews }
             .compactMap { $0 as? FrequencyButton }
+    }
+    
+    private func prepareForMode(mode: CreateTaskMode, selected: ATYFrequencyTypeEnum) {
+        guard !isPrepared else {
+            return
+        }
+        frequencyOrder = FrequencyPickerFactory.getFrequencyOrder(for: mode)
+        contentStack.removeFullyAllArrangedSubviews()
+        frequencyOrder
+            .map(convertToRowStack(_:))
+            .forEach { contentStack.addArrangedSubview($0) }
+        
+        let buttonsToModify = getButtons().filter { $0.type != selected }
+        
+        if mode == .editCourseTask {
+            getButtons().forEach { $0.disable() }
+            buttonsToModify.forEach { $0.removeFromSuperview() }
+        }
+        if mode == .adminEditCourseTask {
+            buttonsToModify.forEach { $0.disable() }
+        }
+        
+        isPrepared = true
     }
     
     @objc

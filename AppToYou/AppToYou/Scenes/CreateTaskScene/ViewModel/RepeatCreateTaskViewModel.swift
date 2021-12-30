@@ -34,7 +34,13 @@ class RepeatCreateTaskViewModel: DefaultCreateTaskViewModel<RepeatCreateTaskMode
         let repeatCount = constructor.model.countModel.valueModel.value
         taskRequest?.taskAttribute = "\(repeatCount)"
     }
-
+    
+    override func courseTaskDurationPicked(_ duration: Duration) {
+        let time = DurationTime(hour: "\(duration.year)", min: "\(duration.month)", sec: "\(duration.day)")
+        constructor.model.courseTaskDurationModel?.durationModel.update(durationTime: time)
+        update()
+    }
+    
     override func update() {
         let models = constructor.getModels()
         let section = TableViewSection(models: models)

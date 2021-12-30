@@ -62,8 +62,9 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
         updateStructure()
     }
 
-    func durationPicked(_ duration: DurationTime) {
-        courseConstructor.createCourseModel.durationModel.durationModel.update(durationTime: duration)
+    func courseDurationPicked(_ duration: Duration) {
+        let time = DurationTime(hour: "\(duration.year)", min: "\(duration.month)", sec: "\(duration.day)")
+        courseConstructor.createCourseModel.durationModel.durationModel.update(durationTime: time)
         updateStructure()
     }
 

@@ -11,6 +11,7 @@ enum CheckboxTaskError: ValidationError {
     case sanction
     case lessThanMin(value: Int)
     case minSanction
+    case coureTaskDuration(common: CommonValidationError.Duration)
     
     var message: String? {
         switch self {
@@ -32,6 +33,8 @@ enum CheckboxTaskError: ValidationError {
             return "Штраф не может быть меньше \(value)"
         case .minSanction:
             return "Укажите минимальный штраф за невыполнение"
+        case .coureTaskDuration(let common):
+            return common.message
         }
     }
 }
@@ -56,6 +59,7 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
         validete(notificationField: model.notificationModel)
         validate(minSanctionField: model.minSanctionModel, sanctionField: model.sanctionModel)
         validate(sanctionField: model.sanctionModel)
+        validate(courseTaskdurationField: model.courseTaskDurationModel)
     }
     
     func bind(error: CheckboxTaskError?, to receiver: ValidationErrorDisplayable) {
@@ -63,7 +67,11 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
         
         if case let .name(commonError) = error {
             receiver.bind(error: commonError)
-        } else {
+        }
+        else if case let .coureTaskDuration(commonError) = error {
+            receiver.bind(error: commonError)
+        }
+        else {
             receiver.bind(error: error)
         }
     }
@@ -171,6 +179,20 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
             bind(error: .minSanction, to: field)
         } else {
             sanctionField.updateMinValue(field.fieldModel.value)
+            bind(error: nil, to: field)
+        }
+    }
+    
+    private func validate(courseTaskdurationField: CourseTaskDurationModel?) {
+        guard let field = courseTaskdurationField else {
+            return
+        }
+        
+        if field.isInfiniteModel.isSelected {
+            bind(error: nil, to: field)
+        } else if field.durationModel.isDefault {
+            bind(error: .coureTaskDuration(common: .duration), to: field)
+        } else {
             bind(error: nil, to: field)
         }
     }

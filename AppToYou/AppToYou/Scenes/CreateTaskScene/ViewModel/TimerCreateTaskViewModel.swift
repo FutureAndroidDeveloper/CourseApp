@@ -43,8 +43,14 @@ class TimerCreateTaskViewModel: DefaultCreateTaskViewModel<TimerCreateTaskModel>
         taskRequest?.taskAttribute = "\(h)\(separator)\(m)\(separator)\(s)"
     }
     
-    override func durationPicked(_ duration: DurationTime) {
+    override func userTaskdurationPicked(_ duration: DurationTime) {
         constructor.model.durationModel.durationModel.update(durationTime: duration)
+        update()
+    }
+    
+    override func courseTaskDurationPicked(_ duration: Duration) {
+        let time = DurationTime(hour: "\(duration.year)", min: "\(duration.month)", sec: "\(duration.day)")
+        constructor.model.courseTaskDurationModel?.durationModel.update(durationTime: time)
         update()
     }
     
