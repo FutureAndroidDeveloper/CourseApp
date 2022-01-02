@@ -3,6 +3,7 @@ import Foundation
 
 protocol CreateTaskViewModelInput: TimePickerDelegate {
     func saveDidTapped()
+    func loadFields()
 }
 
 protocol CreateTaskViewModelOutput: AnyObject {

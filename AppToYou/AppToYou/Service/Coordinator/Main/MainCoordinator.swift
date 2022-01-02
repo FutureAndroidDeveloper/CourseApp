@@ -13,7 +13,6 @@ class MainCoordinator: TabBarCoordinator<MainRoute> {
     private let tasksRouter: StrongRouter<TasksRoute>
     private let coursesRouter: StrongRouter<CoursesRoute>
     private let profileRouter: StrongRouter<ProfileRoute>
-//    private let appCoordinator: UnownedRouter<AppRoute>
     
     convenience init(appRouter: UnownedRouter<AppRoute>) {
         let taskCoordinator = TasksCoordinator()

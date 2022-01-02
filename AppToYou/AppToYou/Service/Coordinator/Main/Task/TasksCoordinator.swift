@@ -1,11 +1,10 @@
 import Foundation
 import XCoordinator
 
+
 enum TasksRoute: Route {
     case tasks
-    case add
-    case create(ATYTaskType)
-    case timePicker(type: TimePickerType)
+    case create
 }
 
 
@@ -23,35 +22,20 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
     override func prepareTransition(for route: TasksRoute) -> NavigationTransition {
         switch route {
         case .tasks:
-            let vc = NavigationBarViewController(taskRouter: unownedRouter)
-            return .push(vc)
+            let allTasksViewController = ATYAllTasksViewController(title: R.string.localizable.allTasks())
+            let allTasksViewModel = AllTasksViewModelImpl(router: unownedRouter)
+            allTasksViewController.bind(to: allTasksViewModel)
             
-        case .add:
-            let vc = ATYAddTaskViewController()
-            let vm = AddTaskViewModelImpl(router: unownedRouter)
-            vc.bind(to: vm)
+            let toodayTaskViewController = ToodayTaskViewController(title: R.string.localizable.today())
+            let todayTasksViewModel = TodayTasksViewModelImpl(router: unownedRouter)
+            toodayTaskViewController.bind(to: todayTasksViewModel)
             
-            return .present(vc, animation: nil)
+            let tasksViewController = NavigationBarViewController(viewControllers: [toodayTaskViewController, allTasksViewController])
+            return .push(tasksViewController)
             
-        case .create(let taskType):
-            let factory = CreateTaskFactory(type: taskType, task: nil, mode: .createUserTask)
-            let viewModel = factory.getViewModel(unownedRouter)
-            createTaskInput = viewModel.input
-            
-            let vc = ATYCreateTaskViewController()
-            vc.hidesBottomBarWhenPushed = true
-            vc.bind(to: viewModel)
-            
-            return .multiple([
-                .dismiss(),
-                .push(vc)
-            ])
-            
-        case .timePicker(let type):
-            let timePickerCoordinator = TimePickerCoordinator(type: type,
-                                                              pickerDelegate: createTaskInput,
-                                                              rootViewController: self.rootViewController)
-            addChild(timePickerCoordinator)
+        case .create:
+            let taskCoordinator = TaskCoordinator(mode: .createUserTask, rootViewController: self.rootViewController)
+            addChild(taskCoordinator)
             return .none()
         }
     }

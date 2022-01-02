@@ -1,12 +1,6 @@
-//
-//  ATYSelectTimeScene.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 01.06.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
 import UIKit
+
+
 
 class ATYSelectTimeViewController: UIViewController, BindableType {
     
@@ -126,92 +120,6 @@ class ATYSelectTimeViewController: UIViewController, BindableType {
             viewModel.input.courseDurationPicked(dataSource.courseDuration)
         } else if type == .courseTaskDuration {
             viewModel.input.courseTaskDurationPicked(dataSource.courseDuration)
-        }
-    }
-    
-}
-
-enum TimePickerType {
-    case userTaskDuration
-    case courseTaskDuration
-    case course
-    case notification
-    
-    var components: Int {
-        switch self {
-        case .userTaskDuration, .courseTaskDuration, .course:
-            return 3
-        case .notification:
-            return 0
-        }
-    }
-    
-    func getNumberOfRows(for component: Int) -> Int {
-        switch component {
-        case 0:
-            switch self {
-            case .userTaskDuration: return 24
-            case .courseTaskDuration, .course: return 20
-            default: return 0
-            }
-        case 1, 2:
-            switch self {
-            case .userTaskDuration: return 60
-            case .courseTaskDuration, .course: return 12
-            default: return 0
-            }
-        default:
-            return 0
-        }
-    }
-}
-
-//enum TaskDuration {
-//    case user(duration: DurationTime)
-//    case course(duration: Duration)
-//}
-
-class TimePickerDataSource: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    private var firstComponentValue: Int = 0
-    private var secondComponentValue: Int = 0
-    private var thirdComponentValue: Int = 0
-    
-    var taskDuration: DurationTime {
-        return DurationTime(hour: "\(firstComponentValue)",
-                            min: "\(secondComponentValue)",
-                            sec: "\(thirdComponentValue)")
-    }
-    
-    var courseDuration: Duration {
-        return Duration(day: firstComponentValue, month: secondComponentValue, year: thirdComponentValue)
-    }
-    
-    private let type: TimePickerType
-    
-    init(type: TimePickerType) {
-        self.type = type
-        super.init()
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return type.components
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return type.getNumberOfRows(for: component)
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "\(row)"
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch component {
-        case 0: firstComponentValue = row
-        case 1: secondComponentValue = row
-        case 2: thirdComponentValue = row
-        default: break
         }
     }
     

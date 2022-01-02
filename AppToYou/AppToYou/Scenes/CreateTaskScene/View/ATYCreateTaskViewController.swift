@@ -30,6 +30,7 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         
         configure()
         configureInflater()
+        viewModel.input.loadFields()
     }
     
     private func configure() {

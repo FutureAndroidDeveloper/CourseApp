@@ -3,27 +3,46 @@ import XCoordinator
 
 
 class CreateTaskFactory {
-    
     private let type: ATYTaskType
-    private let task: UserTaskResponse?
     private let mode: CreateTaskMode
     
-    init(type: ATYTaskType, task: UserTaskResponse?, mode: CreateTaskMode) {
+    private var userTask: UserTaskResponse?
+    private var courseTask: CourseTaskResponse?
+    
+    convenience init(type: ATYTaskType, mode: CreateTaskMode, userTask: UserTaskResponse?) {
+        self.init(type: type, mode: mode)
+        self.userTask = userTask
+        self.courseTask = nil
+    }
+    
+    convenience init(type: ATYTaskType, mode: CreateTaskMode, courseTask: CourseTaskResponse?) {
+        self.init(type: type, mode: mode)
+        self.courseTask = courseTask
+        self.userTask = nil
+    }
+    
+    init(type: ATYTaskType, mode: CreateTaskMode) {
         self.type = type
-        self.task = task
         self.mode = mode
     }
     
-    func getViewModel(_ router: UnownedRouter<TasksRoute>) -> CreateTaskViewModel {
+    func getViewModel(_ router: UnownedRouter<TaskRoute>) -> CreateTaskViewModel {
         switch type {
         case .CHECKBOX:
-            return DefaultCreateTaskViewModel(type: type, task: task, mode: mode, router: router)
+            let constructor = CheckboxTaskConstructor(mode: mode, model: DefaultCreateTaskModel())
+            return CreateUserTaskViewModel(type: type, constructor: constructor, mode: mode, taskRouter: router)
+            
         case .TEXT:
-            return TextCreateTaskViewModel(type: type, task: task, mode: mode, router: router)
+            let constructor = TextTaskConstructor(mode: mode, model: TextCreateTaskModel())
+            return CreateTextUserTaskViewModel(type: type, constructor: constructor, mode: mode, taskRouter: router)
+            
         case .TIMER:
-            return TimerCreateTaskViewModel(type: type, task: task, mode: mode, router: router)
+            let constructor = TimerTaskConstructor(mode: mode, model: TimerCreateTaskModel())
+            return CreateTimerUserTaskViewModel(type: type, constructor: constructor, mode: mode, taskRouter: router)
+            
         case .RITUAL:
-            return RepeatCreateTaskViewModel(type: type, task: task, mode: mode, router: router)
+            let constructor = RepeatTaskConstructor(mode: mode, model: RepeatCreateTaskModel())
+            return CreateRepeatUserTaskViewModel(type: type, constructor: constructor, mode: mode, taskRouter: router)
         }
     }
     

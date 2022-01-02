@@ -2,12 +2,16 @@ import UIKit
 import XCoordinator
 
 
-final class ToodayTaskViewController: UIViewController {
+final class ToodayTaskViewController: UIViewController, BindableType {
+    
+    func bindViewModel() {
+    }
+    
 
     private var transition: PanelTransition!
 //    private let taskRouter: UnownedRouter<TasksRoute>
 
-    var viewModel : ATYTodayTasksViewModel!
+    var viewModel : TodayTasksViewModel!
 
     var calendarCollectionView: UICollectionView!
     var tasksTableView = UITableView()
@@ -166,15 +170,15 @@ final class ToodayTaskViewController: UIViewController {
     var filteredArrayDoneTasks = [TemporaryData]()
 
 
-    init(title: String, taskRouter: UnownedRouter<TasksRoute>) {
+    init(title: String?) {
         inflater = UITableViewIflater(tasksTableView)
         
         super.init(nibName: nil, bundle: nil)
         self.title = title
         view.backgroundColor = R.color.backgroundAppColor()
         
-        self.viewModel = ATYTodayTasksViewModel(router: taskRouter)
-        self.viewModel.delegate = self
+//        self.viewModel = ATYTodayTasksViewModel(router: taskRouter)
+//        self.viewModel.delegate = self
     }
 
     required init?(coder _: NSCoder) {
@@ -340,8 +344,9 @@ final class ToodayTaskViewController: UIViewController {
         }
     }
 
-    @objc func addButtonAction() {
-        viewModel.addTask()
+    @objc
+    private func addButtonAction() {
+        viewModel.input.addTask()
     }
     
 }

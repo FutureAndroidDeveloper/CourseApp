@@ -24,9 +24,9 @@ extension AddTaskViewModel where Self: AddTaskViewModelInput & AddTaskViewModelO
 
 class AddTaskViewModelImpl: AddTaskViewModel, AddTaskViewModelInput, AddTaskViewModelOutput {
 
-    private let router: UnownedRouter<TasksRoute>
+    private let router: UnownedRouter<TaskRoute>
 
-    init(router: UnownedRouter<TasksRoute>) {
+    init(router: UnownedRouter<TaskRoute>) {
         self.router = router
     }
     

@@ -17,16 +17,16 @@ class DefaultCreateTaskModel {
     private var prevPeriodModel: TaskPeriodModel?
     var periodModel: TaskPeriodModel?
     
-    var minSanctionModel: CourseTaskMinSanctionModel?
-    var lockHeaderModel: CourseTaskLockModel?
-    var courseNameModel: CourseTaskNameModel?
-    
-    private var prevcourseTaskDurationModel: CourseTaskDurationModel?
-    var courseTaskDurationModel: CourseTaskDurationModel?
-    
-    required init() {
-        
-    }
+//    var minSanctionModel: CourseTaskMinSanctionModel?
+//    var lockHeaderModel: CourseTaskLockModel?
+//    var courseNameModel: CourseTaskNameModel?
+//
+//    private var prevcourseTaskDurationModel: CourseTaskDurationModel?
+//    var courseTaskDurationModel: CourseTaskDurationModel?
+//
+//    required init() {
+//
+//    }
     
     // Name
     func addName(model: TextFieldModel) {
@@ -99,30 +99,30 @@ class DefaultCreateTaskModel {
                                           switchChanged: switchChanged, questionCallback: questionCallback)
     }
     
-    func addCourseMinSanction(model: NaturalNumberFieldModel) {
-        minSanctionModel = CourseTaskMinSanctionModel(fieldModel: model)
-    }
-    
-    func addLockHeaderModel() {
-        lockHeaderModel = CourseTaskLockModel()
-    }
-    
-    func addCourseNameModel(name: String) {
-        courseNameModel = CourseTaskNameModel(courseName: name)
-    }
-    
-    func addCourseTaskDurationHandler(duration: TaskDurationModel, isInfiniteModel: TitledCheckBoxModel, timerCallback: @escaping () -> Void) {
-        let model = CourseTaskDurationModel(durationModel: duration, isInfiniteModel: isInfiniteModel, timerCallback: timerCallback)
-        prevcourseTaskDurationModel = prevcourseTaskDurationModel ?? model
-        courseTaskDurationModel = prevcourseTaskDurationModel
-    }
+//    func addCourseMinSanction(model: NaturalNumberFieldModel) {
+//        minSanctionModel = CourseTaskMinSanctionModel(fieldModel: model)
+//    }
+//
+//    func addLockHeaderModel() {
+//        lockHeaderModel = CourseTaskLockModel()
+//    }
+//
+//    func addCourseNameModel(name: String) {
+//        courseNameModel = CourseTaskNameModel(courseName: name)
+//    }
+//
+//    func addCourseTaskDurationHandler(duration: TaskDurationModel, isInfiniteModel: TitledCheckBoxModel, timerCallback: @escaping () -> Void) {
+//        let model = CourseTaskDurationModel(durationModel: duration, isInfiniteModel: isInfiniteModel, timerCallback: timerCallback)
+//        prevcourseTaskDurationModel = prevcourseTaskDurationModel ?? model
+//        courseTaskDurationModel = prevcourseTaskDurationModel
+//    }
     
     func prepare() -> [AnyObject] {
-        var result: [AnyObject?] = [lockHeaderModel, courseNameModel, nameModel]
-        // TODO: - сделать функцию, которая решает между `selectDateModel, weekdayModel, periodModel`
+        var result: [AnyObject?] = [nameModel]
+        
         let tail: [AnyObject?] = [
-            frequencyModel, selectDateModel, weekdayModel, courseTaskDurationModel,
-            periodModel, notificationModel, sanctionModel, minSanctionModel,
+            frequencyModel, selectDateModel, weekdayModel,
+            periodModel, notificationModel, sanctionModel,
         ]
         
         result.append(contentsOf: getAdditionalModels())

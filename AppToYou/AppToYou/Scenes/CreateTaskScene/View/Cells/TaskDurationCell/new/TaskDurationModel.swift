@@ -55,4 +55,14 @@ class TaskDurationModel {
         secModel.update(value: durationTime.sec)
     }
     
+    func getDurationModel() -> Duration? {
+        guard
+            let day = Int(secModel.value),
+            let month = Int(minModel.value),
+            let year = Int(hourModel.value)
+        else {
+            return nil
+        }
+        return Duration(day: day, month: month, year: year)
+    }
 }

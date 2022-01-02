@@ -8,8 +8,21 @@
 
 import Foundation
 import UIKit
+import XCoordinator
 
-final class ATYAllTasksViewController: UIViewController {
+
+final class ATYAllTasksViewController: UIViewController, BindableType {
+    
+    func bindViewModel() {
+        viewModel.output.tasks.bind { [weak self] tasks in
+            self?.tasks = tasks
+            self?.futureTasksTableView.reloadData()
+        }
+        
+        viewModel.input.refresh()
+    }
+    
+    var viewModel: AllTasksViewModel!
 
     var futureTasksTableView = UITableView()
 
@@ -93,18 +106,21 @@ final class ATYAllTasksViewController: UIViewController {
 
     var resultArray = [TemporaryData]()
 
-    convenience init(name: String) {
-        self.init(title: name)
-    }
-
-    convenience init(title: String) {
-        self.init(title: title, content: title)
-    }
-
-    init(title: String, content: String) {
+    private var tasks = [UserTaskResponse]()
+    
+    init(title: String) {
+//        inflater = UITableViewIflater(tasksTableView)
+        
         super.init(nibName: nil, bundle: nil)
         self.title = title
+        view.backgroundColor = R.color.backgroundAppColor()
+        
+//        self.viewModel = AllTasksViewModelImpl(taskRouter: taskRouter)
+//        self.viewModel.delegate = self
+        
+//        switchButtonAction()
     }
+    
 
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -136,17 +152,6 @@ final class ATYAllTasksViewController: UIViewController {
 
     }
 
-    @objc func switchButtonAction() {
-        switch switchButton.isOn {
-        case true:
-            resultArray = temporaryArray.filter({ $0.courseName == nil })
-        case false:
-            resultArray = temporaryArray
-        }
-        self.futureTasksTableView.reloadData()
-        print(switchButton.isOn)
-    }
-
     private func configureTableView() {
         view.addSubview(futureTasksTableView)
         futureTasksTableView.backgroundColor = R.color.backgroundAppColor()
@@ -162,24 +167,39 @@ final class ATYAllTasksViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin)
         }
     }
+    
+    @objc
+    private func switchButtonAction() {
+        viewModel.input.showMyTasks(switchButton.isOn)
+    }
 }
 
 extension ATYAllTasksViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.resultArray.count
+//        self.resultArray.count
+        return tasks.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ATYTaskTableViewCell.reuseIdentifier, for: indexPath) as! ATYTaskTableViewCell
-        let temporary = self.resultArray[indexPath.row]
-        cell.setUp(typeTask: temporary.typeTask,
-                   courseName: temporary.courseName,
-                   hasSanction: temporary.hasSanction,
-                   titleLabel: temporary.titleLabel,
-                   firstSubtitleLabel: temporary.firstSubtitleLabel,
-                   secondSubtitleLabel: temporary.secondSubtitleLabel,
-                   state: temporary.state, userOrCourseTask: .user)
+//        let temporary = self.resultArray[indexPath.row]
+        let task = self.tasks[indexPath.row]
+        
+//        task.taskSanction
+        
+        cell.setUp(
+            typeTask: task.taskType, courseName: task.courseName, hasSanction: task.taskSanction > .zero,
+            titleLabel: task.taskName, firstSubtitleLabel: "Subtitle", secondSubtitleLabel: "Duration",
+            state: .didNotStart, userOrCourseTask: .user)
+        
+//        cell.setUp(typeTask: temporary.typeTask,
+//                   courseName: temporary.courseName,
+//                   hasSanction: temporary.hasSanction,
+//                   titleLabel: temporary.titleLabel,
+//                   firstSubtitleLabel: temporary.firstSubtitleLabel,
+//                   secondSubtitleLabel: temporary.secondSubtitleLabel,
+//                   state: temporary.state, userOrCourseTask: .user)
         cell.callback = {
             print("callback")
         }

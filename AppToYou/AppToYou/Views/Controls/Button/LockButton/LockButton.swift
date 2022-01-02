@@ -47,7 +47,6 @@ class LockButton: UIButton {
         
         lock(isLocked)
         model?.update(isLocked: isLocked)
-        model?.stateChanged(isLocked)
     }
     
 }

@@ -1,35 +1,13 @@
-//
-//  ATYTabBarController.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 25.05.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
 import Parchment
 import UIKit
-import XCoordinator
+
 
 class NavigationBarViewController: UIViewController {
+    private let pagingViewController: NavigationBarPagingViewController
     
-    private let taskRouter: UnownedRouter<TasksRoute>
     
-    private lazy var pagingViewController: NavigationBarPagingViewController = {
-        let viewController = NavigationBarPagingViewController(viewControllers: [
-            ToodayTaskViewController(title: R.string.localizable.today(), taskRouter: self.taskRouter),
-//            ATYTodayTasksViewController(title: R.string.localizable.today(), taskRouter: self.taskRouter),
-            ATYAllTasksViewController(name: R.string.localizable.allTasks())
-        ])
-        return viewController
-    }()
-    
-//    let pagingViewController = NavigationBarPagingViewController(viewControllers: [
-//        ATYTodayTasksViewController(title: R.string.localizable.today(), taskRouter: self.taskRouter),
-//        ATYAllTasksViewController(name: R.string.localizable.allTasks())
-//    ])
-//
-    init(taskRouter: UnownedRouter<TasksRoute>) {
-        self.taskRouter = taskRouter
+    init(viewControllers: [UIViewController]) {
+        pagingViewController = NavigationBarPagingViewController(viewControllers: viewControllers)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,7 +16,7 @@ class NavigationBarViewController: UIViewController {
     }
     
     //MARK:- Lifecycle methods
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configurePageView()

@@ -47,7 +47,7 @@ class ATYTodayTasksViewModel {
 //    }
     
     func addTask() {
-        router.trigger(.add)
+        router.trigger(.create)
     }
 
     func getData() {

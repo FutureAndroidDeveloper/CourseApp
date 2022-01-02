@@ -125,11 +125,11 @@ class FrequencyView: UIView {
         
         let buttonsToModify = getButtons().filter { $0.type != selected }
         
-        if mode == .editCourseTask {
+        if case .editCourseTask = mode {
             getButtons().forEach { $0.disable() }
             buttonsToModify.forEach { $0.removeFromSuperview() }
         }
-        if mode == .adminEditCourseTask {
+        if case .adminEditCourseTask = mode {
             buttonsToModify.forEach { $0.disable() }
         }
         

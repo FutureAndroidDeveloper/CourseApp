@@ -66,8 +66,9 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
             return .push(addTask)
             
         case .createTask:
-            let createCourseTask = ATYCreateCourseTaskViewController()
-            return .push(createCourseTask)
+            let taskCoordinator = TaskCoordinator(mode: .createCourseTask, rootViewController: self.rootViewController)
+            addChild(taskCoordinator)
+            return .none()
             
         case .editTask:
             break

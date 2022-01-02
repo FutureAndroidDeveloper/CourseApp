@@ -4,7 +4,7 @@ import Foundation
 enum TaskEndpoint: Endpoint {
     
     case create(task: UserTaskCreateRequest)
-    case update(task: UserTaskCreateRequest)
+    case update(task: UserTaskUpdateRequest)
     case remove(id: Int)
     case get(id: Int)
     case setResults(id: Int, result: [String])
@@ -61,8 +61,10 @@ enum TaskEndpoint: Endpoint {
         switch self {
         case .create(let task):
             return RequestWithParameters(body: task)
+            
         case .update(let task):
-            return Request()
+            return RequestWithParameters(body: task)
+            
         case .remove(let id):
             return Request()
         case .get(let id):
