@@ -2,7 +2,7 @@ import Foundation
 
 
 protocol CourseViewModelInput: AnyObject {
-    
+    func editCourseTask(index: Int)
 }
 
 protocol CourseViewModelOutput: AnyObject {

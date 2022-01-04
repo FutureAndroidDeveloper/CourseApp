@@ -2,26 +2,19 @@ import Foundation
 import XCoordinator
 
 
-class CreateCourseTaskViewModel: CreateUserTaskViewModel {
-    
-//    private let courseRouter: UnownedRouter<CourseRoute>
+class CreateCourseTaskViewModel: CreateUserTaskViewModel, CreateCourseTaskDataSourse {
     
     private let constructor: CreateCourseTaskConstructor
     private let validator = CreateCourseTaskValidator()
-    private let courseService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
+    let courseService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
     
+    private let courseId: Int
     var courseTaskRequest: CourseTaskCreateRequest?
     
-//    init(type: ATYTaskType, constructor: CreateCourseTaskConstructor, mode: CreateTaskMode,
-//         courseRouter: UnownedRouter<CourseRoute>, taskRouter: UnownedRouter<TaskRoute>) {
-//        self.courseRouter = courseRouter
-//        self.constructor = constructor
-//        super.init(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
-//    }
-    
-    init(type: ATYTaskType, constructor: CreateCourseTaskConstructor,
+    init(courseId: Int, type: ATYTaskType, constructor: CreateCourseTaskConstructor,
          mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
-//        self.courseRouter = courseRouter
+        
+        self.courseId = courseId
         self.constructor = constructor
         super.init(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
     }
@@ -37,7 +30,7 @@ class CreateCourseTaskViewModel: CreateUserTaskViewModel {
         guard validate(model: constructor.courseTaskModel) else {
             return
         }
-        prepare(model: constructor.checkboxModel)
+        prepare(model: constructor.courseTaskModel)
         save()
     }
     
@@ -69,16 +62,17 @@ class CreateCourseTaskViewModel: CreateUserTaskViewModel {
         guard let courseTask = courseTaskRequest else {
             return
         }
-        //  вызов ендпоита создания курсовой задачи
-//        taskService.create(task: task) { result in
-//            switch result {
-//            case .success(let newTask):
-//                print(newTask)
-//
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
+        
+        courseService.create(task: courseTask, id: courseId) { [weak self] result in
+            switch result {
+            case .success(let newTask):
+                print(newTask)
+                self?.taskRouter.trigger(.done)
+
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     override func courseTaskDurationPicked(_ duration: Duration) {
@@ -86,10 +80,6 @@ class CreateCourseTaskViewModel: CreateUserTaskViewModel {
         constructor.courseTaskModel.courseTaskDurationModel?.durationModel.update(durationTime: time)
         update()
     }
-}
-
-
-extension CreateCourseTaskViewModel: CreateCourseTaskDataSourse {
     
     func getMinCourseSanctionModel() -> NaturalNumberFieldModel {
         return NaturalNumberFieldModel()

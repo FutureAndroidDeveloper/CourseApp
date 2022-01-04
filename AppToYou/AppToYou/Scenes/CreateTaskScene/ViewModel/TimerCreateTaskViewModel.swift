@@ -65,12 +65,12 @@
 //        let hour = TimeBlockModelFactory.getHourModel()
 //        let min = TimeBlockModelFactory.getMinModel()
 //        let sec = TimeBlockModelFactory.getSecModel()
-//        
+//
 //        attribute.split(separator: Constants.timeSeparator)
 //            .enumerated()
 //            .forEach { item in
 //                let value = String(item.element)
-//                
+//
 //                switch item.offset {
 //                case 0: hour.update(value: value)
 //                case 1: min.update(value: value)
@@ -78,21 +78,21 @@
 //                default: break
 //                }
 //            }
-//        
+//
 //        let duration = TaskDurationModel(hourModel: hour, minModel: min, secModel: sec)
 //        var lockModel: LockButtonModel?
-//        
+//
 //        switch mode {
 //        case .createCourseTask, .adminEditCourseTask:
 //            let isLoced = userTask?.editableCourseTask ?? false
 //            lockModel = LockButtonModel(isLocked: isLoced, stateChanged: { isLocked in
 //                print("LOCK tapped = \(isLoced)")
 //            })
-//            
+//
 //        default:
 //            break
 //        }
-//        
+//
 //        return (duration, lockModel)
 //    }
 //    

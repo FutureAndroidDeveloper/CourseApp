@@ -66,7 +66,6 @@ class ATYCoursesViewController : UIViewController, BindableType {
         super.viewWillAppear(animated)
         configureNavBar()
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        tableView.reloadData()
     }
 
     private func configureTableView() {
@@ -106,6 +105,7 @@ class ATYCoursesViewController : UIViewController, BindableType {
             self?.refreshControl.endRefreshing()
             self?.tableView.reloadData()
         }
+        viewModel.input.refresh()
         
     }
     
@@ -114,9 +114,32 @@ class ATYCoursesViewController : UIViewController, BindableType {
         viewModel.input.refresh()
     }
     
+    var isFirstLoading = true
+    
 }
 
 extension ATYCoursesViewController : UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastSectionIndex = tableView.numberOfSections - 1
+        let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
+        
+        if indexPath.section == lastSectionIndex && indexPath.row == lastRowIndex && !isFirstLoading {
+            print("this is the last cell")
+            let spinner = UIActivityIndicatorView(style: .medium)
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+            
+            tableView.tableFooterView = spinner
+            tableView.tableFooterView?.isHidden = false
+            viewModel.input.loadMore()
+            isFirstLoading = true
+        } else if indexPath.section == lastSectionIndex && indexPath.row == lastRowIndex && isFirstLoading {
+            tableView.tableFooterView = nil
+            tableView.tableFooterView?.isHidden = true
+            isFirstLoading.toggle()
+        }
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2

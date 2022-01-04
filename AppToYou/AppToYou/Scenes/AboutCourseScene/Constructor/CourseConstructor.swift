@@ -9,27 +9,6 @@ class CourseConstructor {
     private weak var delegate: CourseConstructorDelegate?
     private weak var dataSourse: CourseConstructorDataSourse?
     
-//    private lazy var adminModels: [AnyObject?] = {
-//        var models: [AnyObject?] = [
-//            headerModel, descriptionModel, requestsModel,
-//            chatModel, tasksHeaderModel,
-//            createTaskModel, membersModel, shareModel,
-//        ]
-//        models.insert(contentsOf: tasksModel, at: 5)
-//
-//        return models
-//    }()
-//
-//    private lazy var userModels: [AnyObject?] = {
-//        var models: [AnyObject?] = [
-//            headerModel, descriptionModel, chatModel, tasksHeaderModel,
-//            membersModel, shareModel, reportModel,
-//        ]
-//        models.insert(contentsOf: tasksModel, at: 4)
-//
-//        return models
-//    }()
-    
     
     init(isEditable: Bool, delegate: CourseConstructorDelegate, dataSourse: CourseConstructorDataSourse) {
         self.isEditable = isEditable
@@ -58,8 +37,8 @@ class CourseConstructor {
         addMembers(dataSourse)
         addShare()
         
+        // вставка моделей задач.
         let mirror = Mirror(reflecting: model)
-        
         var models = mirror.children
             .compactMap { $0.value }
             .compactMap { $0 as? AnyObject }

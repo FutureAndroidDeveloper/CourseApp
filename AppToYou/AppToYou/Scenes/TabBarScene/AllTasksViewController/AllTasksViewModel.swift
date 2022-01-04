@@ -43,7 +43,11 @@ class AllTasksViewModelImpl: AllTasksViewModel, AllTasksViewModelInput, AllTasks
     }
     
     func edit(_ task: UserTaskResponse) {
-        
+        if let _ = task.courseTaskId {
+            router.trigger(.editCourseTask(task: task))
+        } else {
+            router.trigger(.editUserTask(task: task))
+        }
     }
     
     func showMyTasks(_ state: Bool) {

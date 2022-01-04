@@ -2,12 +2,12 @@ import Foundation
 
 enum CreateTaskMode {
     case createUserTask
-    case createCourseTask
+    case createCourseTask(courseId: Int)
     
     case editUserTask(task: UserTaskResponse)
-    case editCourseTask(task: CourseTaskResponse)
+    case editCourseTask(task: UserTaskResponse)
     
-    case adminEditCourseTask(task: CourseTaskResponse)
+    case adminEditCourseTask(courseName: String, task: CourseTaskResponse)
 }
 
 

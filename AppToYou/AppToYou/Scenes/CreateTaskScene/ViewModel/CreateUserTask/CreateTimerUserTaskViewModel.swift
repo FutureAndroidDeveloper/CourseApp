@@ -50,7 +50,7 @@ class CreateTimerUserTaskViewModel: CreateUserTaskViewModel, TimerTaskDataSource
     func prepare(model: TimerCreateTaskModel) {
         super.prepare(model: model)
         
-        let duration = constructor.timerModel.durationModel.durationModel
+        let duration = model.durationModel.durationModel
         let h = duration.hourModel.value
         let m = duration.minModel.value
         let s = duration.secModel.value

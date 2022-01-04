@@ -5,6 +5,8 @@ import XCoordinator
 enum TasksRoute: Route {
     case tasks
     case create
+    case editUserTask(task: UserTaskResponse)
+    case editCourseTask(task: UserTaskResponse)
 }
 
 
@@ -35,6 +37,16 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
             
         case .create:
             let taskCoordinator = TaskCoordinator(mode: .createUserTask, rootViewController: self.rootViewController)
+            addChild(taskCoordinator)
+            return .none()
+            
+        case .editUserTask(let task):
+            let taskCoordinator = TaskCoordinator(mode: .editUserTask(task: task), rootViewController: self.rootViewController)
+            addChild(taskCoordinator)
+            return .none()
+            
+        case .editCourseTask(let task):
+            let taskCoordinator = TaskCoordinator(mode: .editCourseTask(task: task), rootViewController: self.rootViewController)
             addChild(taskCoordinator)
             return .none()
         }

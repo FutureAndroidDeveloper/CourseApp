@@ -21,6 +21,10 @@ class CreateTimerCourseTask: CreateTimerUserTaskViewModel {
         constructor.timerCourseTaskModel.timerModel.durationModel.durationModel.update(durationTime: duration)
     }
     
+    override func getValidator() -> TimerTaskValidator {
+        return TimerCourseTaskValidator()
+    }
+    
     override func loadFields() {
         constructor.setDataSource(dataSource: self)
         constructor.construct()

@@ -3,7 +3,6 @@ import Foundation
 
 protocol CreateCourseTaskDataSourse: CheckboxTaskDataSource {
     func getMinCourseSanctionModel() -> NaturalNumberFieldModel
-//    func getCourseName() -> String
     func getCourseTaskDurationModel() -> (duration: TaskDurationModel, isInfiniteModel: TitledCheckBoxModel)
 }
 
@@ -33,30 +32,7 @@ class CreateCourseTaskConstructor: CheckboxTaskConstructor {
         adLockHeader()
         addMinSanctionModel(dataSource)
         addCourseTaskDuration(dataSource)
-        
-//        switch mode {
-//        case .createUserTask, .editUserTask:
-//            break
-//
-//        case .createCourseTask:
-//            adLockHeader()
-//            addMinSanctionModel(dataSource)
-//
-//        case .editCourseTask:
-//            addCourseNameModel(dataSource)
-//
-//        case .adminEditCourseTask:
-//            adLockHeader()
-//            addCourseNameModel(dataSource)
-//            addMinSanctionModel(dataSource)
-//        }
     }
-    
-    
-//    private func addCourseNameModel(_ dataProvider: CourseTaskDataSourse) {
-//        let name = dataProvider.getCourseName()
-//        courseTaskModel.addCourseNameModel(name: name)
-//    }
     
     private func adLockHeader() {
         courseTaskModel.addLockHeaderModel()

@@ -11,7 +11,7 @@ enum CourseRoute: Route {
     case addAll
     case addTask
     case createTask
-    case editTask
+    case editTask(task: CourseTaskResponse)
     case members
     case share
     case report
@@ -66,12 +66,16 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
             return .push(addTask)
             
         case .createTask:
-            let taskCoordinator = TaskCoordinator(mode: .createCourseTask, rootViewController: self.rootViewController)
+            let id = course.id
+            let taskCoordinator = TaskCoordinator(mode: .createCourseTask(courseId: id), rootViewController: self.rootViewController)
             addChild(taskCoordinator)
             return .none()
             
-        case .editTask:
-            break
+        case .editTask(let task):
+            let name = course.name
+            let taskCoordinator = TaskCoordinator(mode: .adminEditCourseTask(courseName: name, task: task), rootViewController: self.rootViewController)
+            addChild(taskCoordinator)
+            return .none()
             
         case .members:
             let members = ATYCourseRatingViewController()

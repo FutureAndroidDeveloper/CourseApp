@@ -36,7 +36,7 @@ class TextTaskValidator: CheckboxTaskValidator<TextCreateTaskModel> {
         }
     }
     
-    private func validate(descriptionField: DescriptionModel) {
+    func validate(descriptionField: DescriptionModel) {
         if let description = descriptionField.fieldModel.value, description.count > 255 {
             bind(error: .description(common: .descriptionLength), to: descriptionField)
         } else {
@@ -44,7 +44,7 @@ class TextTaskValidator: CheckboxTaskValidator<TextCreateTaskModel> {
         }
     }
     
-    private func validate(symbolsField: MinimumSymbolsModel) {
+    func validate(symbolsField: MinimumSymbolsModel) {
         let symbolsCount = symbolsField.fieldModel.value
         
         if symbolsCount == .zero {

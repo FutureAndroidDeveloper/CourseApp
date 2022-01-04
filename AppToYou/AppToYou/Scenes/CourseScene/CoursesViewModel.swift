@@ -6,9 +6,12 @@ protocol CoursesViewModelInput: AnyObject {
     func createDidTapped()
     func openCourse(_ course: CourseResponse)
     func refresh()
+    
+    func loadMore()
 }
 
 protocol CoursesViewModelOutput: AnyObject {
+    var isLoading: Bool { get }
     var courses: Observable<[CourseResponse]> { get set }
 }
 
@@ -25,15 +28,24 @@ extension CoursesViewModel where Self: CoursesViewModelInput & CoursesViewModelO
 
 class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesViewModelOutput {
     
+    private struct Constants {
+        static let startPage = 1
+        static let pageSize = 5
+    }
+    
     var courses: Observable<[CourseResponse]> = Observable([])
+    var isLoading: Bool = false
     
     private let coursesRouter: UnownedRouter<CoursesRoute>
+    private let searchModel: SearchCourseModel
     private let coursesService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
+    
+    private var coursesSlice: [CourseResponse] = []
     
 
     init(coursesRouter: UnownedRouter<CoursesRoute>) {
         self.coursesRouter = coursesRouter
-        loadCourses()
+        self.searchModel = SearchCourseModel(page: Constants.startPage, pageSize: Constants.pageSize)
     }
     
     func createDidTapped() {
@@ -45,7 +57,22 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
     }
     
     func refresh() {
-        loadCourses()
+//        searchModel.reset(page: Constants.startPage, pageSize: Constants.pageSize)
+//        courses.value = []
+        search()
+    }
+    
+    func loadMore() {
+        guard !isLoading, !coursesSlice.isEmpty else {
+            return
+        }
+        searchModel.nextPage()
+        search()
+    }
+    
+    private func prepareCourses() {
+        courses.value.append(contentsOf: coursesSlice)
+        isLoading = false
     }
     
     private func loadCourses() {
@@ -63,5 +90,20 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
             }
         }
     }
+    
+    private func search() {
+        isLoading = true
+        coursesService.search(model: searchModel) { [weak self] result in
+            switch result {
+            case .success(let courses):
+                self?.coursesSlice = courses
+                self?.prepareCourses()
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
 }
 

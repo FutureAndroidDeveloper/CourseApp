@@ -30,7 +30,7 @@ class TimerTaskValidator: CheckboxTaskValidator<TimerCreateTaskModel> {
         }
     }
     
-    private func validate(durationField: TaskDurationCellModel) {
+    func validate(durationField: TaskDurationCellModel) {
         let duration = durationField.durationModel
         
         if duration.isDefault {

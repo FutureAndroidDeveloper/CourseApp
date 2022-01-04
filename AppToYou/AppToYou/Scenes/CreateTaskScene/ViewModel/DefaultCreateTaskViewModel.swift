@@ -196,13 +196,13 @@
 //    func getNotificationModels() -> (models: [NotificationTaskTimeModel], isEnabled: Bool) {
 //        let notifications = userTask?.reminderList ?? []
 //        var isEnabled = true
-//        
+//
 //        var notificationModels = notifications
 //            .map { $0.split(separator: notificationSeparator) }
 //            .map { notification -> NotificationTaskTimeModel in
 //                let hourModel = TimeBlockModelFactory.getHourModel()
 //                let minModel = TimeBlockModelFactory.getMinModel()
-//                
+//
 //                notification.enumerated().forEach { item in
 //                    let value = String(item.element)
 //                    switch item.offset {
@@ -213,14 +213,14 @@
 //                }
 //                return NotificationTaskTimeModel(hourModel: hourModel, minModel: minModel)
 //            }
-//        
+//
 //        if notificationModels.isEmpty {
 //            let emptyModel = NotificationTaskTimeModel(hourModel: TimeBlockModelFactory.getHourModel(),
 //                                                       minModel: TimeBlockModelFactory.getHourModel())
 //            notificationModels.append(emptyModel)
 //            isEnabled = false
 //        }
-//        
+//
 //        return (notificationModels, isEnabled)
 //    }
 //    

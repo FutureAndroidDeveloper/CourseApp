@@ -44,7 +44,7 @@ class CourseTaskNameCell: UITableViewCell, InflatableView {
         contentView.addSubview(courseView)
         courseView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(Constants.courseViewInsets)
-            $0.leading.equalTo(titleLabel.snp.trailing).inset(Constants.courseViewInsets.left)
+            $0.leading.equalTo(titleLabel.snp.trailing).offset(Constants.courseViewInsets.left)
             $0.trailing.lessThanOrEqualToSuperview().inset(Constants.courseViewInsets)
             $0.height.equalTo(Constants.courseViewHeight)
         }

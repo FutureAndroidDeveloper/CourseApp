@@ -9,6 +9,9 @@ class TableTypesHolder {
     let inflatableType: InflatableView.Type
     let modelType: AnyObject.Type
     
+    var selectHandler: ((AnyObject, IndexPath) -> Void)?
+//    var selectHandler: ()
+    
     init(inflatableType: InflatableView.Type, modelType: AnyObject.Type) {
         self.inflatableType = inflatableType
         self.modelType = modelType

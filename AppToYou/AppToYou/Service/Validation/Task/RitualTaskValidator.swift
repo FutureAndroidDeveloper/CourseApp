@@ -28,7 +28,7 @@ class RitualTaskValidator: CheckboxTaskValidator<RepeatCreateTaskModel> {
         receiver.bind(error: error)
     }
     
-    private func validate(counterField: RepeatCounterModel) {
+    func validate(counterField: RepeatCounterModel) {
         let count = counterField.valueModel.value
         
         if count == .zero {

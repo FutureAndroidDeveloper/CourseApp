@@ -150,12 +150,13 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
         }
         var error: CheckboxTaskError?
         
-        if let end = field.end.value {
+        if let end = field.end.value, !field.isInfiniteModel.isSelected {
             if !(Calendar.current.compare(end, to: start, toGranularity: .day) == .orderedDescending) {
                 error = .endDate
             }
         }
-        else if !field.isInfiniteModel.isSelected {
+        
+        if field.end.value == nil, !field.isInfiniteModel.isSelected {
             error = .emptyEndDate
         }
         

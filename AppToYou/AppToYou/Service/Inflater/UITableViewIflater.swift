@@ -15,6 +15,30 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
         tableView.dataSource = self
     }
     
+    var rowDidSelect: ((_ model: AnyObject, _ indexPath: IndexPath) -> Void)?
+    
+    func addRowHandler<Model: AnyObject>(for model: Model.Type, handler: @escaping (Model, IndexPath) -> Void) {
+        guard let holder = holders.first(where: { $0.modelType == model }) else {
+            return
+        }
+        
+        holder.selectHandler = { [weak self] selectedModel, indexPath in
+            guard let selectedModel = selectedModel as? Model else {
+                return
+            }
+            handler(selectedModel, indexPath)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = sections[indexPath.section].models[indexPath.row]
+        guard let holder = holders.first(where: { $0.isModelEquals(model: model) }) else {
+            return
+        }
+        
+        holder.selectHandler?(model, indexPath)
+    }
+    
     func registerRow<Cell: UITableViewCell>(model: AnyObject.Type, cell: Cell.Type) where Cell: InflatableView {
         let holder = TableTypesHolder(inflatableType: cell, modelType: model)
         holders.append(holder)

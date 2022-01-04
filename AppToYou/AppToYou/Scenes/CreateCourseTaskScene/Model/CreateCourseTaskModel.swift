@@ -3,7 +3,6 @@ import Foundation
 
 class CreateCourseTaskModel: DefaultCreateTaskModel {
     var lockHeaderModel: CourseTaskLockModel?
-//    var courseNameModel: CourseTaskNameModel?
     var minSanctionModel: CourseTaskMinSanctionModel?
     
     private var prevcourseTaskDurationModel: CourseTaskDurationModel?
@@ -12,10 +11,6 @@ class CreateCourseTaskModel: DefaultCreateTaskModel {
     func addLockHeaderModel() {
         lockHeaderModel = CourseTaskLockModel()
     }
-    
-//    func addCourseNameModel(name: String) {
-//        courseNameModel = CourseTaskNameModel(courseName: name)
-//    }
     
     func addCourseMinSanction(model: NaturalNumberFieldModel) {
         minSanctionModel = CourseTaskMinSanctionModel(fieldModel: model)
@@ -28,12 +23,11 @@ class CreateCourseTaskModel: DefaultCreateTaskModel {
     }
     
     override func prepare() -> [AnyObject] {
-//        var result: [AnyObject?] = [lockHeaderModel, courseNameModel, nameModel]
         var result: [AnyObject?] = [lockHeaderModel, nameModel]
         
         let tail: [AnyObject?] = [
-            frequencyModel, selectDateModel, weekdayModel, courseTaskDurationModel,
-            notificationModel, sanctionModel, minSanctionModel,
+            frequencyModel, selectDateModel, weekdayModel,
+            courseTaskDurationModel, sanctionModel, minSanctionModel,
         ]
         
         result.append(contentsOf: getAdditionalModels())

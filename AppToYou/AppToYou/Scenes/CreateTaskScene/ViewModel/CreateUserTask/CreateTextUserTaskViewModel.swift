@@ -42,11 +42,11 @@ class CreateTextUserTaskViewModel: CreateUserTaskViewModel, TextTaskDataSource {
         return !validator.hasError && baseValidationResult
     }
 
-    func prepare(model: TimerCreateTaskModel) {
+    func prepare(model: TextCreateTaskModel) {
         super.prepare(model: model)
         
-        let description = constructor.textModel.descriptionModel.fieldModel.value
-        let minSymbols = constructor.textModel.lengthLimitModel.fieldModel.value
+        let description = model.descriptionModel.fieldModel.value
+        let minSymbols = model.lengthLimitModel.fieldModel.value
         userTaskRequest?.taskDescription = description
         userTaskRequest?.taskAttribute = "\(minSymbols)"
     }

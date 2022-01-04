@@ -149,9 +149,7 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView, Vali
         guard let dateModel = endTextField.model?.content.fieldModel else {
             return
         }
-        dateModel.update(value: nil)
         endTextField.bind(error: nil)
-        endTextField.setContentModel(dateModel)
         endBlock?.isHidden = isInfinite
     }
 

@@ -7,10 +7,10 @@ class CreateRepeatCourseTaskViewModel: CreateCourseTaskViewModel  {
     private let constructor: CreateRepeatCourseTaskConstructor
     private let repeatViewModel: CreateRepeatCourseTask
     
-    init(type: ATYTaskType, constructor: CreateRepeatCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseId: Int, type: ATYTaskType, constructor: CreateRepeatCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
         self.repeatViewModel = CreateRepeatCourseTask(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
-        super.init(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(courseId: courseId, type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
     }
     
     
@@ -25,7 +25,7 @@ class CreateRepeatCourseTaskViewModel: CreateCourseTaskViewModel  {
         guard validate(model: constructor.repeatCourseTaskModel) else {
             return
         }
-        prepare(model: constructor.repeatCourseTaskModel.repeatModel)
+        prepare(model: constructor.repeatCourseTaskModel)
         save()
     }
 
@@ -36,13 +36,13 @@ class CreateRepeatCourseTaskViewModel: CreateCourseTaskViewModel  {
         return repeatResult && baseValidationResult
     }
 
-    func prepare(model: RepeatCreateTaskModel) {
+    func prepare(model: CreateRepeatCourseTaskModel) {
         super.prepare(model: model)
         
-        if let isLocked = model.countModel.lockModel?.isLocked {
+        if let isLocked = model.repeatModel.countModel.lockModel?.isLocked {
             courseTaskRequest?.editable = !isLocked
         }
-        let repeatCount = model.countModel.valueModel.value
+        let repeatCount = model.repeatModel.countModel.valueModel.value
         courseTaskRequest?.taskAttribute = "\(repeatCount)"
     }
     

@@ -4,11 +4,16 @@ import UIKit
 
 
 class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewModelOutput {
+    
     var data: Observable<[AnyObject]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
     
     private let courseRouter: UnownedRouter<CourseRoute>
-    private let course: CourseResponse
+    private var course: CourseResponse
+    
+    private var courseTasks: [CourseTaskResponse] = []
+    
+    private let courseService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
     
     private lazy var constructor: CourseConstructor = {
         let isEditable = course.admin.id == UserSession.shared.getUser()?.id
@@ -19,10 +24,36 @@ class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewMode
     init(course: CourseResponse, coursesRouter: UnownedRouter<CourseRoute>) {
         self.course = course
         self.courseRouter = coursesRouter
-        
-        updateStructure()
+        loadCourseInfo()
     }
     
+    func editCourseTask(index: Int) {
+        guard let firstTaskIndex = constructor.getModels().firstIndex(where: { $0 is TaskCellModel }) else {
+            return
+        }
+        
+        let taskIndex = index - firstTaskIndex
+        let task = courseTasks[taskIndex]
+        courseRouter.trigger(.editTask(task: task))
+    }
+    
+    private func loadCourseInfo() {
+        courseService.getFullCourseInfo(id: course.id) { [weak self] result in
+            switch result {
+            case .success(let model):
+                self?.course = model.course
+                self?.courseTasks = model.tasks
+                self?.updateStructure()
+                self?.updateState()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func updateState() {
+        updatedState.value = ()
+    }
     
     func updateStructure() {
         data.value = constructor.getModels()
@@ -83,7 +114,8 @@ extension CourseViewModelImpl: CourseConstructorDataSourse, CourseConstructorDel
     
     func getTasks() -> [TemporaryData] {
         // TODO: - получение задач курса
-        return ATYTaskType.allCases.map(getstubTaskModel(_:))
+        return courseTasks.map { self.getstubTaskModel($0.taskType) }
+//        return ATYTaskType.allCases.map(getstubTaskModel(_:))
     }
     
     func getMembers() -> CourseMembersViewModel {

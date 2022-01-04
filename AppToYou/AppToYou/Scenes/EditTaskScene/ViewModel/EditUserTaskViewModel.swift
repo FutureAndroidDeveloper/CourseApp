@@ -13,23 +13,16 @@ class EditUserTaskViewModel: CreateUserTaskViewModel {
         super.init(type: userTask.taskType, constructor: constructor, mode: mode, taskRouter: taskRouter)
     }
     
-//    override func saveDidTapped() {
-//        guard validate(model: constructor.checkboxModel) else {
-//            return
-//        }
-//        prepare(model: constructor.checkboxModel)
-//        save()
-//    }
-    
     override func save() {
         guard let updateTask = updateUserTaskRequest else {
             return
         }
         
-        taskService.update(task: updateTask) { result in
+        taskService.update(task: updateTask) { [weak self] result in
             switch result {
             case .success(let updatedTask):
                 print(updatedTask)
+                self?.taskRouter.trigger(.done)
 
             case .failure(let error):
                 print(error)
@@ -83,8 +76,8 @@ class EditUserTaskViewModel: CreateUserTaskViewModel {
     
     override func getPeriodModel() -> TaskPeriodModel {
         let model = super.getPeriodModel()
-        let startDate = userTask.startDate.toDate(dateFormat: .simpleDateFormatFullYear)
-        let endDate = userTask.endDate?.toDate(dateFormat: .simpleDateFormatFullYear)
+        let startDate = userTask.startDate.toDate(dateFormat: .localeYearDate)
+        let endDate = userTask.endDate?.toDate(dateFormat: .localeYearDate)
         
         model.isInfiniteModel.chandeSelectedState(userTask.infiniteExecution)
         model.start.update(value: startDate)
@@ -148,7 +141,7 @@ class EditUserTaskViewModel: CreateUserTaskViewModel {
         let model = super.getOnceDateModel()
         
         if userTask.frequencyType == .ONCE {
-            let date = userTask.startDate.toDate(dateFormat: .simpleDateFormatFullYear)
+            let date = userTask.startDate.toDate(dateFormat: .localeYearDate)
             model.update(value: date)
         }
         return model

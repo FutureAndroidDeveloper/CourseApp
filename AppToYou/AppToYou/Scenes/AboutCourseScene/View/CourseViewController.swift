@@ -61,7 +61,9 @@ class CourseViewController: UIViewController, BindableType {
         inflater.registerRow(model: CourseMembersModel.self, cell: CourseMembersCell.self)
         inflater.registerRow(model: ShareCourseModel.self, cell: ShareCourseCell.self)
         inflater.registerRow(model: ReportCourseModel.self, cell: ReportCourseCell.self)
-
+        
+        handleRowSelection()
+        
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -79,6 +81,12 @@ class CourseViewController: UIViewController, BindableType {
     private func update(_ data: [AnyObject]) {
         let section = TableViewSection(models: data)
         inflater.inflate(sections: [section])
+    }
+    
+    private func handleRowSelection() {
+        inflater.addRowHandler(for: TaskCellModel.self) { [weak self] model, indexPath in
+            self?.viewModel.input.editCourseTask(index: indexPath.row)
+        }
     }
 
     private func showTaskAddedPopup() {

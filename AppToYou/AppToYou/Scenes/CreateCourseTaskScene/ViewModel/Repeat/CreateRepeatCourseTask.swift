@@ -17,6 +17,10 @@ class CreateRepeatCourseTask: CreateRepeatUserTaskViewModel {
                    mode: mode, taskRouter: taskRouter)
     }
     
+    override func getValidator() -> RitualTaskValidator {
+        return RitualCourseTaskValidator()
+    }
+    
     override func loadFields() {
         constructor.setDataSource(dataSource: self)
         constructor.construct()

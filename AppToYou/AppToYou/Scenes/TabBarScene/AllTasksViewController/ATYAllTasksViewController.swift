@@ -238,8 +238,11 @@ extension ATYAllTasksViewController: UITableViewDelegate, UITableViewDataSource 
 
         let edit = UIContextualAction(style: .destructive, title: "") { (action, view, boolValue) in
             boolValue(true)
-            self.resultArray.remove(at: indexPath.row)
-            self.futureTasksTableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let task = self.tasks[indexPath.row]
+            self.viewModel.input.edit(task)
+//            self.resultArray.remove(at: indexPath.row)
+//            self.futureTasksTableView.deleteRows(at: [indexPath], with: .fade)
         }
 
 

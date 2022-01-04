@@ -17,6 +17,10 @@ class CreateTextCourseTask: CreateTextUserTaskViewModel {
                    mode: mode, taskRouter: taskRouter)
     }
     
+    override func getValidator() -> TextTaskValidator {
+        return TextCourseTaskValidator()
+    }
+    
     override func loadFields() {
         constructor.setDataSource(dataSource: self)
         constructor.construct()
