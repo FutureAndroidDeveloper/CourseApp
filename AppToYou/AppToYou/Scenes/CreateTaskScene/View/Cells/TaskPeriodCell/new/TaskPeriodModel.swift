@@ -6,7 +6,8 @@ class TaskPeriodModel: NSCopying, ValidatableModel {
     let isInfiniteModel: TitledCheckBoxModel
     let start: DateFieldModel
     let end: DateFieldModel
-    var isEditable: Bool = true
+    
+    private(set) var isActive: Bool = true
     var errorNotification: ((CheckboxTaskError?) -> Void)?
     
     init(isInfiniteModel: TitledCheckBoxModel, start: DateFieldModel, end: DateFieldModel) {
@@ -18,6 +19,10 @@ class TaskPeriodModel: NSCopying, ValidatableModel {
     func copy(with zone: NSZone? = nil) -> Any {
         let model = TaskPeriodModel(isInfiniteModel: isInfiniteModel, start: start, end: end)
         return model
+    }
+    
+    func updateActiveState(_ isActive: Bool) {
+        self.isActive = isActive
     }
     
 }

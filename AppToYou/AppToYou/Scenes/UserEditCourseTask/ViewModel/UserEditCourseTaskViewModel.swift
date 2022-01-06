@@ -1,33 +1,57 @@
-//
-//  UserEditCourseTaskViewModel.swift
-//  AppToYou
-//
-//  Created by mac on 3.01.22.
-//  Copyright © 2022 QITTIQ. All rights reserved.
-//
-
 import Foundation
+import XCoordinator
 
 
+class UserEditCourseTaskViewModel: EditUserTaskViewModel, EditCourseTaskDataSource {
+    
+    private let constructor: UserEditCourseTaskConstructor
+    private let validator = UserEditCourseTaskValidator()
+    
+    init(userTask: UserTaskResponse, constructor: UserEditCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+        
+        self.constructor = constructor
+        super.init(userTask: userTask, constructor: constructor, mode: mode, taskRouter: taskRouter)
+    }
+    
+    override func update() {
+        let models = constructor.getModels()
+        let section = TableViewSection(models: models)
+        sections.value = [section]
+        
+        constructor.setEnableStateForFields()
+        updateState()
+    }
+    
+    override func loadFields() {
+//        super.loadFields()
+        constructor.setDelegate(delegate: self)
+        constructor.setDataSource(dataSource: self)
+        constructor.setConstructorDataSource(dataSource: self)
+        constructor.construct()
+        update()
+    }
 
-//class UserEditCourseTaskViewModel: CreateCourseTaskModel {
-//    var courseNameModel: CourseTaskNameModel?
-//    
-//    func addCourseNameModel(name: String) {
-//        courseNameModel = CourseTaskNameModel(courseName: name)
-//    }
-//    
-//    override func prepare() -> [AnyObject] {
-////        var result: [AnyObject?] = [lockHeaderModel, courseNameModel, nameModel]
-//        var result: [AnyObject?] = [lockHeaderModel, nameModel]
-//        
-//        let tail: [AnyObject?] = [
-//            frequencyModel, selectDateModel, weekdayModel, courseTaskDurationModel,
-//            notificationModel, sanctionModel, minSanctionModel,
-//        ]
-//        
-//        result.append(contentsOf: getAdditionalModels())
-//        result.append(contentsOf: tail.compactMap({ $0 }))
-//        return result.compactMap { $0 }
-//    }
-//}
+    override func validate(model: DefaultCreateTaskModel) -> Bool {
+        let baseValidationResult = super.validate(model: model)
+        validator.validate(model: constructor.userEditTaskModel)
+        
+        return !validator.hasError && baseValidationResult
+    }
+    
+    override func getSanctionModel() -> (model: NaturalNumberFieldModel, min: Int, isEnabled: Bool) {
+        let (field, _, _) = super.getSanctionModel()
+        
+        let minSanction = userTask.minimumCourseTaskSanction ?? 0
+        let taskSanction = userTask.taskSanction
+        let sanction = max(taskSanction, minSanction)
+        let isEnabled = sanction > .zero
+        
+        field.update(value: sanction)
+        return (field, minSanction, isEnabled)
+    }
+    
+    func getCourseName() -> String {
+        return userTask.courseName ?? String()
+    }
+    
+}

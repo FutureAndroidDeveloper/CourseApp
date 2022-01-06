@@ -50,6 +50,12 @@ class SelectWeekdayCell: UITableViewCell, InflatableView, ValidationErrorDisplay
         model.errorNotification = { [weak self] error in
             self?.bind(error: error)
         }
+        
+        if model.isActive {
+            contentView.enable()
+        } else {
+            contentView.disable()
+        }
     }
 
 }

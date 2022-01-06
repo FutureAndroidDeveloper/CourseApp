@@ -2,7 +2,7 @@ import Foundation
 import XCoordinator
 
 
-class AdminEditCourseTaskViewModel: CreateCourseTaskViewModel, AdminEditCourseTaskDataSourse {
+class AdminEditCourseTaskViewModel: CreateCourseTaskViewModel, AdminEditCourseTaskDataSource {
     
     private let constructor: AdminEditCourseTaskConstructor
     

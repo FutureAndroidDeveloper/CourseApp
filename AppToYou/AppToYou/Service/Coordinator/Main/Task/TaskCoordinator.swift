@@ -31,7 +31,7 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
             trigger(.create(task.taskType))
             
         case .editCourseTask(let task):
-            break
+            trigger(.courseTaskEdit(userTask: task))
             
         case .adminEditCourseTask(let name, let task):
             trigger(.adminEdit(courseName: name, courseTask: task))
@@ -78,7 +78,9 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
             return .push(taskViewController)
             
         case .courseTaskEdit(let userTask):
-            return .none()
+            let factory = UsereditCourseTaskFactory(task: userTask, mode: mode)
+            prepare(viewController: taskViewController, with: factory.getViewModel(unownedRouter))
+            return .push(taskViewController)
             
         case .timePicker(let type):
             let timePickerCoordinator = TimePickerCoordinator(type: type,

@@ -61,6 +61,12 @@ class RepeatCounterCell: UITableViewCell, InflatableView, ValidationErrorDisplay
             self?.repeatView.bind(error: error)
             self?.bind(error: error)
         }
+        
+        if model.isActive {
+            contentView.enable()
+        } else {
+            contentView.disable()
+        }
     }
     
 }

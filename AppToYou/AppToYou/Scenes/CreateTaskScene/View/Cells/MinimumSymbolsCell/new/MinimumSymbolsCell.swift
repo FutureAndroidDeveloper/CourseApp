@@ -70,6 +70,12 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView, ValidationErrorDispla
             self?.countOfSymbolsTextField.bind(error: error)
             self?.bind(error: error)
         }
+        
+        if model.isActive {
+            contentView.enable()
+        } else {
+            contentView.disable()
+        }
     }
     
 }

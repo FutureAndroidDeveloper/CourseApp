@@ -160,7 +160,7 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
             error = .emptyEndDate
         }
         
-        if Calendar.current.compare(start, to: Date(), toGranularity: .day) == .orderedAscending {
+        if field.isActive, Calendar.current.compare(start, to: Date(), toGranularity: .day) == .orderedAscending {
             error = .startDate
         }
         

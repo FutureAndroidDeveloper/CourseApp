@@ -18,6 +18,7 @@ extension UIView {
         if let opacityView = subviews.first(where: { $0.tag == opacity.tag }) {
             opacityView.backgroundColor = opacityColor?.withAlphaComponent(opacity.value)
             opacityView.isUserInteractionEnabled = !isEnabled
+            bringSubviewToFront(opacityView)
         } else {
             let opacityView = UIView()
             opacityView.isUserInteractionEnabled = !isEnabled
@@ -27,6 +28,7 @@ extension UIView {
             opacityView.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
+            bringSubviewToFront(opacityView)
         }
     }
     

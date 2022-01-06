@@ -27,6 +27,7 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView, Vali
     private let startTextField = FieldFactory.shared.getDateField(style: .standart)
     private let endTextField = FieldFactory.shared.getDateField(style: .standart)
     private let infiniteView = TitledCheckBox()
+    private var startBlock: UIView?
     private var endBlock: UIView?
     
     private let datePicker: UIDatePicker = {
@@ -65,6 +66,7 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView, Vali
         startBlock.snp.makeConstraints {
             $0.leading.top.equalToSuperview().inset(Constants.edgeInsets)
         }
+        self.startBlock = startBlock
         
         let endBlock = buildDateBlock(title: Constants.Field.Title.end, pickerView: endTextField)
         contentView.addSubview(endBlock)
@@ -138,10 +140,11 @@ class TaskPeriodCell: UITableViewCell, UITextFieldDelegate, InflatableView, Vali
             self?.bind(error: error)
         }
         
-        if model.isEditable {
-            startTextField.enable()
+        if model.isActive {
+            self.startBlock?.enable()
+            
         } else {
-            startTextField.disable()
+            self.startBlock?.disable()
         }
     }
     

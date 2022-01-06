@@ -15,7 +15,7 @@ class AdminEditTextCourseTaskConstructor: AdminEditCourseTaskConstructor {
         super.init(mode: mode, model: model)
     }
     
-    override func setDataSource(dataSource: AdminEditCourseTaskDataSourse?) {
+    override func setDataSource(dataSource: AdminEditCourseTaskDataSource?) {
         super.setDataSource(dataSource: dataSource)
     }
     

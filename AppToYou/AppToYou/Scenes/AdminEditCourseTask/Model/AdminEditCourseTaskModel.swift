@@ -1,12 +1,7 @@
 import Foundation
 
 
-class AdminEditCourseTaskModel: CreateCourseTaskModel {
-    var courseNameModel: CourseTaskNameModel?
-    
-    func addCourseNameModel(name: String) {
-        courseNameModel = CourseTaskNameModel(courseName: name)
-    }
+class AdminEditCourseTaskModel: EditCourseTaskModel {
     
     override func prepare() -> [AnyObject] {
         var result: [AnyObject?] = [lockHeaderModel, courseNameModel, nameModel]
@@ -20,4 +15,5 @@ class AdminEditCourseTaskModel: CreateCourseTaskModel {
         result.append(contentsOf: tail.compactMap({ $0 }))
         return result.compactMap { $0 }
     }
+    
 }

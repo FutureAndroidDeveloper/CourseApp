@@ -67,6 +67,12 @@ class TaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
             self?.durationView.bind(error: error)
             self?.bind(error: error)
         }
+        
+        if model.isActive {
+            contentView.enable()
+        } else {
+            contentView.disable()
+        }
     }
     
     @objc

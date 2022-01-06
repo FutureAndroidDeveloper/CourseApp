@@ -1,15 +1,10 @@
 import Foundation
 
 
-protocol AdminEditCourseTaskDataSourse: CreateCourseTaskDataSourse {
-    func getCourseName() -> String
-}
-
-
 class AdminEditCourseTaskConstructor: CreateCourseTaskConstructor {
     
     let adminEditTaskModel: AdminEditCourseTaskModel
-    private weak var dataSource: AdminEditCourseTaskDataSourse?
+    private weak var dataSource: AdminEditCourseTaskDataSource?
     
     
     init(mode: CreateTaskMode, model: AdminEditCourseTaskModel) {
@@ -17,7 +12,7 @@ class AdminEditCourseTaskConstructor: CreateCourseTaskConstructor {
         super.init(mode: mode, model: model)
     }
     
-    func setDataSource(dataSource: AdminEditCourseTaskDataSourse?) {
+    func setDataSource(dataSource: AdminEditCourseTaskDataSource?) {
         super.setDataSource(dataSource: dataSource)
         self.dataSource = dataSource
     }
@@ -30,7 +25,7 @@ class AdminEditCourseTaskConstructor: CreateCourseTaskConstructor {
         addCourseNameModel(dataSource)
     }
     
-    private func addCourseNameModel(_ dataProvider: AdminEditCourseTaskDataSourse) {
+    private func addCourseNameModel(_ dataProvider: EditCourseTaskDataSource) {
         let name = dataProvider.getCourseName()
         adminEditTaskModel.addCourseNameModel(name: name)
     }

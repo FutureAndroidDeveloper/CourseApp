@@ -10,12 +10,17 @@ class TaskDurationCellModel: ValidatableModel {
      */
     let timerCallback: () -> Void
     
+    private(set) var isActive: Bool = true
     var errorNotification: ((CommonValidationError.Duration?) -> Void)?
     
     init(durationModel: TaskDurationModel, lockModel: LockButtonModel?, timerCallback: @escaping () -> Void) {
         self.durationModel = durationModel
         self.lockModel = lockModel
         self.timerCallback = timerCallback
+    }
+    
+    func updateActiveState(_ isActive: Bool) {
+        self.isActive = isActive
     }
     
 }

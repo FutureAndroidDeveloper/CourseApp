@@ -52,7 +52,7 @@ class TaskNameCell: UITableViewCell, InflatableView, ValidationErrorDisplayable 
         let fieldModel = FieldModel(content: contentModel)
         nameTextField.configure(with: fieldModel)
         
-        if model.isEditable {
+        if model.isActive {
             contentView.enable()
         } else {
             contentView.disable()
