@@ -10,6 +10,7 @@ class TaskDurationCellModel: ValidatableModel {
      */
     let timerCallback: () -> Void
     
+    private(set) var style: FieldStyle = StyleManager.standartTextField
     private(set) var isActive: Bool = true
     var errorNotification: ((CommonValidationError.Duration?) -> Void)?
     
@@ -21,6 +22,10 @@ class TaskDurationCellModel: ValidatableModel {
     
     func updateActiveState(_ isActive: Bool) {
         self.isActive = isActive
+    }
+    
+    func updateStyle(_ style: FieldStyle) {
+        self.style = style
     }
     
 }

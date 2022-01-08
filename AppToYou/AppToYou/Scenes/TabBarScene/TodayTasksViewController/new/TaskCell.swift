@@ -2,24 +2,24 @@ import UIKit
 
 class TaskCellModel {
     let model: TemporaryData
-    let userOrCourse: TaskCell.UserOrCourseTask
+    let task: CourseTaskResponse
     
-    init(model: TemporaryData, task: TaskCell.UserOrCourseTask) {
+    let callBackSwitch: (CourseTaskResponse) -> Void
+    
+    init(model: TemporaryData, task: CourseTaskResponse, callBackSwitch: @escaping (CourseTaskResponse) -> Void) {
         self.model = model
-        userOrCourse = task
+        self.task = task
+        self.callBackSwitch = callBackSwitch
     }
 }
 
 class TaskCell: UITableViewCell, InflatableView {
 
-    enum UserOrCourseTask {
-        case user
-        case course
-    }
-    
     static var staticHeight: CGFloat? {
         return 90
     }
+    
+    private var model: TaskCellModel?
 
     let backContentView : UIView = {
         let view = UIView()
@@ -114,8 +114,6 @@ class TaskCell: UITableViewCell, InflatableView {
 
     var callback: (() -> Void)?
 
-    var callBackSwitch: ((ATYTaskType?) -> ())?
-
     var typeTask : ATYTaskType?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -136,9 +134,10 @@ class TaskCell: UITableViewCell, InflatableView {
     }
 
     @objc func switchAction(button: UISwitch!) {
-        if button.isOn {
-            callBackSwitch?(self.typeTask)
+        guard let model = model, button.isOn else {
+            return
         }
+        model.callBackSwitch(model.task)
     }
 
     func inflate(model: AnyObject) {
@@ -146,8 +145,9 @@ class TaskCell: UITableViewCell, InflatableView {
             return
         }
         
+        self.model = model
+        
         self.typeTask = model.model.typeTask
-        switchButton.isHidden = (model.userOrCourse == .user) || typeTask == .CHECKBOX
         var image : UIImage?
         var backgroundButtonColor : UIColor?
 

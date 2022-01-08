@@ -20,8 +20,9 @@ class FrequencyCell: UITableViewCell, InflatableView {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         selectionStyle = .none
-        backgroundColor = R.color.backgroundAppColor()
         
         configure()
     }

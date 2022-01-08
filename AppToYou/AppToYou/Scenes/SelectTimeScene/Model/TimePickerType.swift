@@ -6,6 +6,15 @@ enum TimePickerType {
     case course
     case notification
     
+    var title: String? {
+        switch self {
+        case .userTaskDuration, .courseTaskDuration, .course:
+            return "Выбрать длительность"
+        case .notification:
+            return "Добавить напоминание"
+        }
+    }
+    
     var components: Int {
         switch self {
         case .userTaskDuration, .courseTaskDuration, .course:

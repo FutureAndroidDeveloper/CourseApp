@@ -2,7 +2,6 @@ import UIKit
 
 
 class ATYCreateTaskViewController: UIViewController, BindableType {
-    
     private struct Constants {
         static let saveInsets = UIEdgeInsets(top: 0, left: 20, bottom: 13, right: 20)
     }
@@ -110,7 +109,8 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         present(child, animated: true)
     }
     
-    @objc func saveTapped() {
+    @objc
+    private func saveTapped() {
         viewModel.input.saveDidTapped()
     }
 }

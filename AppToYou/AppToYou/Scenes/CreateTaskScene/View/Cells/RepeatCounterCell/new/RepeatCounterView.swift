@@ -94,4 +94,8 @@ class RepeatCounterView: UIView, ValidationErrorDisplayable {
         configure(model: valueModel)
     }
     
+    func updateStyle(_ style: FieldStyle) {
+        repeatTextField.updateStyle(style)
+    }
+    
 }

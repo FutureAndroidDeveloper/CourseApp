@@ -74,6 +74,7 @@ class CourseDurationCell: UITableViewCell, InflatableView, ValidationErrorDispla
         self.model = model
         
         durationView.configure(with: model.durationModel)
+        durationView.updateStyle(model.style)
         infiniteView.configure(with: model.isInfiniteModel) { [weak self] isInfinite in
             self?.infiniteStateChanged(isInfinite)
         }

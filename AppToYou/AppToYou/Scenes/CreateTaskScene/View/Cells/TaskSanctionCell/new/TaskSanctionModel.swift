@@ -4,11 +4,13 @@ import Foundation
 class TaskSanctionModel: ValidatableModel {
     let fieldModel: NaturalNumberFieldModel
     private(set) var minValue: Int
-    
     private(set) var isEnabled: Bool
+    private(set) var style: FieldStyle = StyleManager.standartTextField
+    private(set) var showsMinLabel: Bool = false
+    
     let questionCallback: () -> Void
     let switchChanged: (Bool) -> Void
-    var errorNotification: ((CheckboxTaskError?) -> Void)?
+    var errorNotification: ((CommonValidationError.Sanction?) -> Void)?
     
 
     init(fieldModel: NaturalNumberFieldModel, isEnabled: Bool, minValue: Int,
@@ -27,6 +29,14 @@ class TaskSanctionModel: ValidatableModel {
     
     func updateMinValue(_ value: Int) {
         self.minValue = value
+    }
+    
+    func showMinLabel() {
+        showsMinLabel = true
+    }
+    
+    func updateStyle(_ style: FieldStyle) {
+        self.style = style
     }
     
 }

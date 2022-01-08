@@ -94,8 +94,16 @@ class CourseConstructor {
     }
     
     private func addTasks(_ dataSource: CourseConstructorDataSourse) {
-        model.tasksModel = dataSource.getTasks()
-            .map { TaskCellModel(model: $0, task: .course) }
+        let (stub, tasks) = dataSource.getTasks()
+        let taskModels = zip(stub, tasks).map { stubData, task -> TaskCellModel in
+            let model = TaskCellModel(model: stubData, task: task) { [weak self] selectedTask in
+                self?.delegate?.add(task: selectedTask)
+            }
+            return model
+        }
+        
+        
+        model.tasksModel = taskModels
     }
     
     private func addCreateTask() {

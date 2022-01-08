@@ -112,9 +112,11 @@ extension CourseViewModelImpl: CourseConstructorDataSourse, CourseConstructorDel
         return (17, 9)
     }
     
-    func getTasks() -> [TemporaryData] {
+    func getTasks() -> ([TemporaryData], [CourseTaskResponse]) {
         // TODO: - получение задач курса
-        return courseTasks.map { self.getstubTaskModel($0.taskType) }
+        
+        let stubData = courseTasks.map { self.getstubTaskModel($0.taskType) }
+        return (stubData, self.courseTasks)
 //        return ATYTaskType.allCases.map(getstubTaskModel(_:))
     }
     
@@ -152,6 +154,10 @@ extension CourseViewModelImpl: CourseConstructorDataSourse, CourseConstructorDel
     
     func addTasks() {
         courseRouter.trigger(.addAll)
+    }
+    
+    func add(task: CourseTaskResponse) {
+        courseRouter.trigger(.add(task: task))
     }
     
     func openMemebrs() {

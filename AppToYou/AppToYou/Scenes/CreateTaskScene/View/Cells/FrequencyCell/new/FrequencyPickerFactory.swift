@@ -18,7 +18,7 @@ class FrequencyPickerFactory {
     
     static func getFrequencyOrder(for mode: CreateTaskMode) -> [[ATYFrequencyTypeEnum]] {
         switch mode {
-        case .createUserTask, .editUserTask:
+        case .createUserTask, .editUserTask, .addCourseTask:
             return standartOrder
             
         case .createCourseTask, .editCourseTask, .adminEditCourseTask:

@@ -17,7 +17,8 @@ class TaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = R.color.backgroundAppColor()
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         selectionStyle = .none
         
         configure()
@@ -61,6 +62,7 @@ class TaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
             lockButton.isHidden = false
         }
         durationView.configure(with: model.durationModel)
+        durationView.updateStyle(model.style)
         timerCallback = model.timerCallback
         
         model.errorNotification = { [weak self] error in

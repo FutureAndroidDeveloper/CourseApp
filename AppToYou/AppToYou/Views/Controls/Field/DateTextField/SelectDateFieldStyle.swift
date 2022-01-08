@@ -19,6 +19,9 @@ class StyleManager {
     
     static let highlightedTextField = FieldStyle(backgroundColor: R.color.textColorSecondary(),
                                                  textColor: R.color.backgroundTextFieldsColor())
+    
+    static let reversedcolorsTextField = FieldStyle(backgroundColor: R.color.backgroundAppColor(),
+                                                    textColor: R.color.titleTextColor())
 }
 
 enum SelectDateFieldStyle {

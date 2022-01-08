@@ -202,24 +202,24 @@ final class ToodayTaskViewController: UIViewController, BindableType {
     }
     
     private func loadData() {
-        let firstModels = filteredArrayCurrent.map { task -> TaskCellModel in
-            let myBool = Int.random(in: 0...100).isMultiple(of: 2)
-            let taskType: TaskCell.UserOrCourseTask = myBool ? .user : .course
-            return TaskCellModel(model: task, task: taskType)
-            
-        }
-        let firstSection = TableViewSection(models: firstModels, header: nil)
-        
-        let secondModels = filteredArrayDoneTasks.map { task -> TaskCellModel in
-            let myBool = Int.random(in: 0...100).isMultiple(of: 2)
-            let taskType: TaskCell.UserOrCourseTask = myBool ? .user : .course
-            return TaskCellModel(model: task, task: taskType)
-            
-        }
-        let doneSection = TitleSectionModel(title: "Выполненные задачи")
-        let secondSection = TableViewSection(models: secondModels, header: doneSection)
-        
-        inflater.inflate(sections: [firstSection, secondSection])
+//        let firstModels = filteredArrayCurrent.map { task -> TaskCellModel in
+//            let myBool = Int.random(in: 0...100).isMultiple(of: 2)
+//            let taskType: TaskCell.UserOrCourseTask = myBool ? .user : .course
+//            return TaskCellModel(model: task, task: taskType)
+//            
+//        }
+//        let firstSection = TableViewSection(models: firstModels, header: nil)
+//        
+//        let secondModels = filteredArrayDoneTasks.map { task -> TaskCellModel in
+//            let myBool = Int.random(in: 0...100).isMultiple(of: 2)
+//            let taskType: TaskCell.UserOrCourseTask = myBool ? .user : .course
+//            return TaskCellModel(model: task, task: taskType)
+//            
+//        }
+//        let doneSection = TitleSectionModel(title: "Выполненные задачи")
+//        let secondSection = TableViewSection(models: secondModels, header: doneSection)
+//        
+//        inflater.inflate(sections: [firstSection, secondSection])
     }
 
     func addBlurEffect() {

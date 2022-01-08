@@ -3,7 +3,7 @@ import UIKit
 
 final class ContentSizedTableView: UITableView {
     
-    override var contentSize:CGSize {
+    override var contentSize: CGSize {
         didSet {
             invalidateIntrinsicContentSize()
         }
@@ -11,7 +11,9 @@ final class ContentSizedTableView: UITableView {
     
     override var intrinsicContentSize: CGSize {
         layoutIfNeeded()
-        return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+        let insets = (adjustedContentInset.bottom + adjustedContentInset.top)
+        let height = insets + contentSize.height
+        return CGSize(width: UIView.noIntrinsicMetric, height: height)
     }
     
 }

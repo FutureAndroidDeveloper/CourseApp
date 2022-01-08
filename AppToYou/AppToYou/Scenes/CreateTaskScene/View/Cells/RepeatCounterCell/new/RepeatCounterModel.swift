@@ -5,6 +5,7 @@ class RepeatCounterModel: ValidatableModel {
     let valueModel: NaturalNumberFieldModel
     let lockModel: LockButtonModel?
     
+    private(set) var style: FieldStyle = StyleManager.standartTextField
     private(set) var isActive: Bool = true
     var errorNotification: ((RitualTaskError?) -> Void)?
     
@@ -17,4 +18,7 @@ class RepeatCounterModel: ValidatableModel {
         self.isActive = isActive
     }
     
+    func updateStyle(_ style: FieldStyle) {
+        self.style = style
+    }
 }

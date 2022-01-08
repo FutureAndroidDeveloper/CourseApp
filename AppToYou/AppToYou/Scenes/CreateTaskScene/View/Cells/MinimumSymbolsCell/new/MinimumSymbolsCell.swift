@@ -21,7 +21,8 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView, ValidationErrorDispla
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = R.color.backgroundAppColor()
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         selectionStyle = .none
         
         configure()
@@ -65,6 +66,7 @@ class MinimumSymbolsCell: UITableViewCell, InflatableView, ValidationErrorDispla
         let contentModel = FieldContentModel(fieldModel: model.fieldModel, insets: Constants.Field.textInsets)
         let fieldModel = FieldModel(content: contentModel)
         countOfSymbolsTextField.configure(with: fieldModel)
+        countOfSymbolsTextField.updateStyle(model.style)
         
         model.errorNotification = { [weak self] error in
             self?.countOfSymbolsTextField.bind(error: error)

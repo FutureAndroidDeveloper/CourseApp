@@ -53,6 +53,8 @@ class NotificationTaskTimeView: UIView {
         self.model = model
         hourTimeView.configure(with: model.hourModel)
         minTimeView.configure(with: model.minModel)
+        hourTimeView.updateStyle(StyleManager.standartTextField)
+        minTimeView.updateStyle(StyleManager.standartTextField)
     }
     
 }

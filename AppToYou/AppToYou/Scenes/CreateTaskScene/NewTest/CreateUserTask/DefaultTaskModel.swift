@@ -7,6 +7,8 @@ enum CreateTaskMode {
     case editUserTask(task: UserTaskResponse)
     case editCourseTask(task: UserTaskResponse)
     
+    case addCourseTask(_ task: CourseTaskResponse)
+    
     case adminEditCourseTask(courseName: String, task: CourseTaskResponse)
 }
 

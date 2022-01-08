@@ -53,8 +53,6 @@ class TimeBlockView: UIView, ValidationErrorDisplayable {
         unitLabel.snp.makeConstraints {
             $0.trailing.top.bottom.equalToSuperview().inset(Constants.padding)
         }
-        
-        backgroundColor = R.color.backgroundTextFieldsColor()
     }
     
     /**
@@ -78,4 +76,9 @@ class TimeBlockView: UIView, ValidationErrorDisplayable {
         }
     }
     
+    func updateStyle(_ style: FieldStyle) {
+        backgroundColor = style.backgroundColor
+        valueLabel.textColor = style.textColor
+        unitLabel.textColor = style.textColor
+    }
 }

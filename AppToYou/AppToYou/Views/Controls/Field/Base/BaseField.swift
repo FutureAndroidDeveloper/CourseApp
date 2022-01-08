@@ -7,7 +7,7 @@ import UIKit
 class BaseField<Value>: UITextField, ValidationErrorDisplayable {
     
     private(set) var model: FieldModel<Value>?
-    private let style: FieldStyle
+    private var style: FieldStyle
     
     private var textPadding: UIEdgeInsets {
         guard let contentModel = model?.content else {
@@ -40,6 +40,11 @@ class BaseField<Value>: UITextField, ValidationErrorDisplayable {
     }
     
     private func setup() {
+        updateStyle(style)
+    }
+    
+    func updateStyle(_ style: FieldStyle) {
+        self.style = style
         backgroundColor = style.backgroundColor
         textColor = style.textColor
     }

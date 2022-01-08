@@ -17,7 +17,8 @@ class CourseTaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDi
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = R.color.backgroundAppColor()
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         selectionStyle = .none
         
         configure()
@@ -56,6 +57,7 @@ class CourseTaskDurationCell: UITableViewCell, InflatableView, ValidationErrorDi
         }
         
         durationView.configure(with: model.durationModel)
+        durationView.updateStyle(model.style)
         timerCallback = model.timerCallback
         
         infiniteView.configure(with: model.isInfiniteModel) { [weak self] isInfinite in

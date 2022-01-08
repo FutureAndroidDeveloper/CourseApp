@@ -25,7 +25,8 @@ class SelectDateCell: UITableViewCell, InflatableView, ValidationErrorDisplayabl
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = R.color.backgroundAppColor()
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         selectionStyle = .none
         configure()
     }

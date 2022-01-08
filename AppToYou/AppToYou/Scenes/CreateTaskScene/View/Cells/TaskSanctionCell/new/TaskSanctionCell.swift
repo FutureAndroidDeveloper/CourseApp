@@ -6,6 +6,7 @@ class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
     private struct Constants {
         static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         static let edgeInsets = UIEdgeInsets(top: 9, left: 20, bottom: 32, right: 20)
+        static let minInsets = UIEdgeInsets(top: 6, left: 20, bottom: 0, right: 20)
         
         struct Field {
             static let width: CGFloat = 182
@@ -23,6 +24,7 @@ class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
 
     private let titleLabel = LabelFactory.getTitleLabel(title: R.string.localizable.penaltyForNonCompliance())
     private let sanctionField = FieldFactory.shared.getNaturalNumberField()
+    private let minLabel = MinTaskSanctionView()
 
     private let questionButton: UIButton = {
         let button = UIButton()
@@ -39,8 +41,9 @@ class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         selectionStyle = .none
-        backgroundColor = R.color.backgroundAppColor()
         
         configure()
     }
@@ -76,6 +79,12 @@ class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
             $0.centerY.equalTo(questionButton)
         }
         
+        contentView.addSubview(minLabel)
+        minLabel.snp.makeConstraints {
+            $0.top.equalTo(sanctionField.snp.bottom).offset(Constants.minInsets.top)
+            $0.leading.trailing.equalToSuperview().inset(Constants.minInsets)
+        }
+        
         questionButton.addTarget(self, action: #selector(questionButtonAction), for: .touchUpInside)
         switchButton.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
     }
@@ -93,13 +102,19 @@ class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
         let fieldModel = FieldModel(content: contentModel, rightContent: rightModel)
         
         sanctionField.configure(with: fieldModel)
+        sanctionField.updateStyle(model.style)
         switchButton.isOn = model.isEnabled
         switchChanged(switchButton)
+        
+        minLabel.configure(min: model.minValue)
+        minLabel.isHidden = !model.showsMinLabel
         
         model.errorNotification = { [weak self] error in
             self?.sanctionField.bind(error: error)
             self?.bind(error: error)
         }
+        
+        
     }
     
     @objc
@@ -109,7 +124,12 @@ class TaskSanctionCell: UITableViewCell, InflatableView, ValidationErrorDisplaya
     
     @objc
     private func switchChanged(_ switch: UISwitch) {
-        model?.setIsEnabled(`switch`.isOn)
-        model?.switchChanged(`switch`.isOn)
+        guard let model = model, !model.showsMinLabel else {
+            `switch`.isOn = true
+            return
+        }
+        model.setIsEnabled(`switch`.isOn)
+        model.switchChanged(`switch`.isOn)
     }
+    
 }

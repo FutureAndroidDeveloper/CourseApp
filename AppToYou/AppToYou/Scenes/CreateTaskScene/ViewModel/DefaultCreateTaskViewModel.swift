@@ -233,7 +233,7 @@
 //    }
 //    
 //    func getWeekdayModels() -> [WeekdayModel] {
-//        // получение названий дней недели
+        // получение названий дней недели
 //        let calendar = Calendar.autoupdatingCurrent
 //        let weekdaySymbols = calendar.shortWeekdaySymbols
 //        let bound = calendar.firstWeekday - 1

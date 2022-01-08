@@ -3,26 +3,26 @@ import UIKit
 
 
 class ATYSelectTimeViewController: UIViewController, BindableType {
-    
     private struct Constants {
-        static let edgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        static let pickerInsets = UIEdgeInsets(top: 45, left: 20, bottom: 0, right: 20)
+        static let buttonInsets = UIEdgeInsets(top: 17, left: 20, bottom: 47, right: 20)
+        static let buttonHeight: CGFloat = 45
     }
     
     var viewModel: SelectTimeViewModel!
+    
+    private let pickerContainer = UIView()
+    private var pickerView: UIView?
     
     private lazy var dataProvider: TimePickerDataSource = {
         let type = viewModel.output.getPickerType()
         let dataSource = TimePickerDataSource(type: type)
         return dataSource
     }()
-    
-    private let pickerContainer = UIView()
-    private var pickerView: UIView?
 
-    var saveButton : UIButton = {
+    private let saveButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = R.color.buttonColor()
-        button.setTitle("Добавить напоминание", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         button.setTitleColor(R.color.backgroundTextFieldsColor(), for: .normal)
         return button
@@ -33,35 +33,32 @@ class ATYSelectTimeViewController: UIViewController, BindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = R.color.backgroundAppColor()
         view.backgroundColor = R.color.backgroundTextFieldsColor()
-        view.layer.cornerRadius = 24
-        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        configureButton()
         configure()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        saveButton.layer.cornerRadius = saveButton.bounds.height / 2
     }
 
     private func configure() {
         view.addSubview(pickerContainer)
-        pickerContainer.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-10)
-            make.bottom.equalTo(saveButton.snp.top).offset(-30)
-            make.height.equalTo(215)
+        pickerContainer.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.pickerInsets)
         }
-    }
-
-    private func configureButton() {
+        
         view.addSubview(saveButton)
-        saveButton.layer.cornerRadius = 22.5
         saveButton.snp.makeConstraints {
-            $0.leading.bottom.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.edgeInsets)
-            $0.height.equalTo(45)
+            $0.top.equalTo(pickerContainer.snp.bottom).offset(Constants.buttonInsets.top)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.buttonInsets)
+            $0.height.equalTo(Constants.buttonHeight)
         }
     }
     
     func bindViewModel() {
         let type = viewModel.output.getPickerType()
+        saveButton.setTitle(type.title, for: .normal)
         
         switch type {
         case .userTaskDuration, .courseTaskDuration, .course:

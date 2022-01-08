@@ -22,4 +22,29 @@ class LabelFactory {
         label.tag = Self.errorTag
         return label
     }
+    
+    static func getAddTaskTitleLabel(title: String?) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        label.textColor = R.color.titleTextColor()
+        return label
+    }
+    
+    static func getAddTaskSubtitleLabel(title: String?) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = R.color.textSecondaryColor()
+        return label
+    }
+    
+    static func getAddTaskDescriptionLabel(title: String?) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = R.color.titleTextColor()
+        label.numberOfLines = 2
+        return label
+    }
 }

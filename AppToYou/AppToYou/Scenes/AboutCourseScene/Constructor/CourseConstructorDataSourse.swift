@@ -13,6 +13,6 @@ protocol CourseConstructorDataSourse: AnyObject {
     func getLikes() -> Int
     func getRequests() -> Int
     func getPickedTasks() -> (amount: Int, picked: Int)
-    func getTasks() -> [TemporaryData]
+    func getTasks() -> ([TemporaryData], [CourseTaskResponse])
     func getMembers() -> CourseMembersViewModel
 }

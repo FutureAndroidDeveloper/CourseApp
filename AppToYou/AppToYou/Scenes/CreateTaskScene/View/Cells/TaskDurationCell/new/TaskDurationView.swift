@@ -33,7 +33,7 @@ class TaskDurationView: UIView, ValidationErrorDisplayable {
     }
 
     private func setup() {
-        backgroundColor = R.color.backgroundAppColor()
+        backgroundColor = .clear
         
         addSubview(stackView)
         stackView.snp.makeConstraints {
@@ -62,6 +62,12 @@ class TaskDurationView: UIView, ValidationErrorDisplayable {
         hourTimeView.bind(error: error)
         minTimeView.bind(error: error)
         secTimeView.bind(error: error)
+    }
+    
+    func updateStyle(_ style: FieldStyle) {
+        hourTimeView.updateStyle(style)
+        minTimeView.updateStyle(style)
+        secTimeView.updateStyle(style)
     }
     
 }

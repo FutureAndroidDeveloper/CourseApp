@@ -5,7 +5,7 @@ enum Opacity {
     
     private struct Constants {
         static let enabledOpacity: CGFloat = 0
-        static let diabledOpacity: CGFloat = 0.3
+        static let diabledOpacity: CGFloat = 0.6
         
         static let opacityViewTag = 12_48_93_54
         static let opacityColor = R.color.backgroundAppColor()

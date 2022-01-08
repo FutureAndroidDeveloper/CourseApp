@@ -16,7 +16,8 @@ class RepeatCounterCell: UITableViewCell, InflatableView, ValidationErrorDisplay
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = R.color.backgroundAppColor()
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         selectionStyle = .none
         
         configure()
@@ -56,6 +57,7 @@ class RepeatCounterCell: UITableViewCell, InflatableView, ValidationErrorDisplay
             lockButton.isHidden = false
         }
         repeatView.configure(model: model.valueModel)
+        repeatView.updateStyle(model.style)
         
         model.errorNotification = { [weak self] error in
             self?.repeatView.bind(error: error)

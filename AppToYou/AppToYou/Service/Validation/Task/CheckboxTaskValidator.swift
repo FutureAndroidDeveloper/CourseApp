@@ -8,10 +8,7 @@ enum CheckboxTaskError: ValidationError {
     case endDate
     case emptyEndDate
     case notifications
-    case sanction
-    case lessThanMin(value: Int)
-//    case minSanction
-//    case coureTaskDuration(common: CommonValidationError.Duration)
+    case sanction(common: CommonValidationError.Sanction)
     
     var message: String? {
         switch self {
@@ -27,21 +24,14 @@ enum CheckboxTaskError: ValidationError {
             return "Выберите дату"
         case .notifications:
             return "Установите напоминания или откючите поле"
-        case .sanction:
-            return "Введите штраф за невыполнение или откючите поле"
-        case .lessThanMin(let value):
-            return "Штраф не может быть меньше \(value)"
-//        case .minSanction:
-//            return "Укажите минимальный штраф за невыполнение"
-//        case .coureTaskDuration(let common):
-//            return common.message
+        case .sanction(let common):
+            return common.message
         }
     }
 }
 
 
 class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskModel {
-    
     var hasError: Bool
     
     init() {
@@ -57,15 +47,16 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
         validate(weekdayField: model.weekdayModel)
         validate(periodField: model.periodModel)
         validete(notificationField: model.notificationModel)
-//        validate(minSanctionField: model.minSanctionModel, sanctionField: model.sanctionModel)
         validate(sanctionField: model.sanctionModel)
-//        validate(courseTaskdurationField: model.courseTaskDurationModel)
     }
     
     func bind(error: CheckboxTaskError?, to receiver: ValidationErrorDisplayable) {
         updateErrorState(new: error)
         
         if case let .name(commonError) = error {
+            receiver.bind(error: commonError)
+        }
+        else if case let .sanction(commonError) = error {
             receiver.bind(error: commonError)
         }
         else {
@@ -108,9 +99,9 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
         let value = sanctionField.fieldModel.value
         
         if sanctionField.isEnabled, value < sanctionField.minValue {
-            bind(error: .lessThanMin(value: sanctionField.minValue), to: sanctionField)
+            bind(error: .sanction(common: .lessThanMin(value: sanctionField.minValue)), to: sanctionField)
         } else if sanctionField.isEnabled, value == .zero {
-            bind(error: .sanction, to: sanctionField)
+            bind(error: .sanction(common: .sanction), to: sanctionField)
         } else {
             bind(error: nil, to: sanctionField)
         }
@@ -166,33 +157,5 @@ class CheckboxTaskValidator<Model>: Validating where Model: DefaultCreateTaskMod
         
         bind(error: error, to: field)
     }
-    
-//    private func validate(minSanctionField: CourseTaskMinSanctionModel?, sanctionField: TaskSanctionModel) {
-//        guard let field = minSanctionField else {
-//            return
-//        }
-//        
-//        if field.fieldModel.value == .zero, field.isActive {
-//            sanctionField.updateMinValue(.zero)
-//            bind(error: .minSanction, to: field)
-//        } else {
-//            sanctionField.updateMinValue(field.fieldModel.value)
-//            bind(error: nil, to: field)
-//        }
-//    }
-//    
-//    private func validate(courseTaskdurationField: CourseTaskDurationModel?) {
-//        guard let field = courseTaskdurationField else {
-//            return
-//        }
-//        
-//        if field.isInfiniteModel.isSelected {
-//            bind(error: nil, to: field)
-//        } else if field.durationModel.isDefault {
-//            bind(error: .coureTaskDuration(common: .duration), to: field)
-//        } else {
-//            bind(error: nil, to: field)
-//        }
-//    }
     
 }

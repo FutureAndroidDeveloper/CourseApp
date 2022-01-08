@@ -1,5 +1,6 @@
 import Foundation
 import XCoordinator
+import UIKit
 
 
 enum TaskRoute: Route {
@@ -9,6 +10,8 @@ enum TaskRoute: Route {
     case adminEdit(courseName: String, courseTask: CourseTaskResponse)
     case courseTaskEdit(userTask: UserTaskResponse)
     
+    case addCourseTask(_ task: CourseTaskResponse)
+    
     case timePicker(type: TimePickerType)
     case done
 }
@@ -16,7 +19,7 @@ enum TaskRoute: Route {
 
 class TaskCoordinator: NavigationCoordinator<TaskRoute> {
     
-    private weak var createTaskInput: CreateTaskViewModelInput?
+    private weak var timeReceiver: TimePickerDelegate?
     private let mode: CreateTaskMode
     
     init(mode: CreateTaskMode, rootViewController: RootViewController) {
@@ -26,6 +29,9 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
         switch mode {
         case .createUserTask, .createCourseTask:
             trigger(.add)
+            
+        case .addCourseTask(let task):
+            trigger(.addCourseTask(task))
             
         case .editUserTask(let task):
             trigger(.create(task.taskType))
@@ -49,6 +55,19 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
             let addTaskViewModel = AddTaskViewModelImpl(router: unownedRouter)
             prepare(viewController: addTaskViewController, with: addTaskViewModel)
             return .present(addTaskViewController, animation: nil)
+            
+        case .addCourseTask(let task):
+            guard let topViewController = self.rootViewController.topViewController else {
+                return .none()
+            }
+            let addTaskCoordinator = AddTaskSheetCoordinator(rootViewController: topViewController, taskRouter: unownedRouter)
+            
+            addTaskCoordinator.timeReceiverChanged = { [weak self] reciever in
+                self?.timeReceiver = reciever
+            }
+            
+            addChild(addTaskCoordinator)
+            return .route(.add(task: task), on: addTaskCoordinator)
             
         case .create(let taskType):
             switch mode {
@@ -83,9 +102,14 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
             return .push(taskViewController)
             
         case .timePicker(let type):
-            let timePickerCoordinator = TimePickerCoordinator(type: type,
-                                                              pickerDelegate: createTaskInput,
-                                                              rootViewController: self.rootViewController)
+            guard let topController = rootViewController.topViewController else {
+                return .none()
+            }
+            let timePickerCoordinator = TimePickerCoordinator(
+                type: type,
+                pickerDelegate: timeReceiver,
+                rootViewController: topController
+            )
             addChild(timePickerCoordinator)
             return .none()
             
@@ -97,9 +121,10 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
     private func prepare<T: BindableType>(viewController: T, with viewModel: T.ViewModelType) where T: UIViewController {
         viewController.bind(to: viewModel)
         
-        guard let input = viewModel as? CreateTaskViewModelInput else {
+        guard let input = viewModel as? TimePickerDelegate else {
             return
         }
-        createTaskInput = input
+        timeReceiver = input
     }
+    
 }

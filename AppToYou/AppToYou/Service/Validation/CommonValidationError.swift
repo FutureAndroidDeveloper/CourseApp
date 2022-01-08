@@ -20,6 +20,20 @@ struct CommonValidationError {
         
     }
     
+    enum Sanction: ValidationError {
+        case sanction
+        case lessThanMin(value: Int)
+        
+        var message: String? {
+            switch self {
+            case .sanction:
+                return "Введите штраф за невыполнение или откючите поле"
+            case .lessThanMin(let value):
+                return "Штраф не может быть меньше \(value)"
+            }
+        }
+    }
+    
     enum Description: ValidationError {
         case description
         case descriptionLength

@@ -11,7 +11,7 @@ enum TimePickerRoute: Route {
 }
 
 
-class TimePickerCoordinator: NavigationCoordinator<TimePickerRoute> {
+class TimePickerCoordinator: ViewCoordinator<TimePickerRoute> {
     
     private let type: TimePickerType
     private weak var pickerDelegate: TimePickerDelegate?
@@ -21,21 +21,22 @@ class TimePickerCoordinator: NavigationCoordinator<TimePickerRoute> {
         self.pickerDelegate = pickerDelegate
         super.init(rootViewController: rootViewController)
         trigger(.picker)
-        
     }
     
-    override func prepareTransition(for route: TimePickerRoute) -> NavigationTransition {
+    override func prepareTransition(for route: TimePickerRoute) -> ViewTransition {
+        let timePickerViewController = ATYSelectTimeViewController()
+        let timePickerViewModel = SelectTimeViewModelImpl(pickerType: type, router: unownedRouter)
+        timePickerViewController.bind(to: timePickerViewModel)
+        
+        let bottomSheetCoordinator = BottomSheetCoordinator(rootViewController: self.rootViewController)
+        
         switch route {
         case .picker:
-            let timePickerViewController = ATYSelectTimeViewController()
-            let timePickerViewModel = SelectTimeViewModelImpl(pickerType: type, router: unownedRouter)
-            timePickerViewController.bind(to: timePickerViewModel)
-
-            return .present(timePickerViewController, animation: nil)
+            addChild(bottomSheetCoordinator)
+            return .route(.show(timePickerViewController), on: bottomSheetCoordinator)
             
         case .notificationTimePicked(let time):
             pickerDelegate?.notificationPicked(time)
-            return .dismiss()
             
         case .userTaskDurationPicked(let duration):
             pickerDelegate?.userTaskdurationPicked(duration)
@@ -47,7 +48,9 @@ class TimePickerCoordinator: NavigationCoordinator<TimePickerRoute> {
             pickerDelegate?.courseDurationPicked(duration)
         }
         
-        return .dismiss()
+        removeChild(bottomSheetCoordinator)
+        removeChildrenIfNeeded()
+        return .trigger(.close, on: bottomSheetCoordinator)
     }
     
 }

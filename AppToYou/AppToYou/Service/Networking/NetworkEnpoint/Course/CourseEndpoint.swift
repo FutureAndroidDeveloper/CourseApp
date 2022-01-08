@@ -5,6 +5,7 @@ enum CourseEndpoint: Endpoint {
     
     case create(course: CourseCreateRequest)
     case createTask(courseId: Int, task: CourseTaskCreateRequest)
+    case addCourseTask(_ model: AddConfiguredCourseTaskModel)
     case getCourse(id: Int)
     case getTasks(courseId: Int)
     case remove(taskId: Int)
@@ -30,6 +31,8 @@ enum CourseEndpoint: Endpoint {
             result.append("/id\(id)")
         case .createTask(let courseId, _):
             result.append("/id\(courseId)/task")
+        case .addCourseTask(let model):
+            result.append("/id\(model.courseId)/add")
         case .getTasks(let courseId):
             result.append("/id\(courseId)/taskList")
         case .remove(let taskId):
@@ -48,6 +51,7 @@ enum CourseEndpoint: Endpoint {
         case .create: return .post
         case .createTask: return .post
         case .remove: return .delete
+        case .addCourseTask: return .get
         case .getCourse: return .get
         case .getTasks: return .get
         case .admin: return .get
@@ -61,6 +65,8 @@ enum CourseEndpoint: Endpoint {
             return RequestWithParameters(body: course)
         case .createTask(_, let task):
             return RequestWithParameters(body: task)
+        case .addCourseTask(let model):
+            return RequestWithParameters(urlParameters: model.getParameters())
         case .getCourse:
             return Request()
         case .getTasks:

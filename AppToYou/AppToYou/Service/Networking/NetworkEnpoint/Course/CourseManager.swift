@@ -11,6 +11,10 @@ class CourseManager: NetworkManager<CourseEndpoint> {
         request(.createTask(courseId: id, task: task), responseType: CourseTaskResponse.self, completion)
     }
     
+    func addCourseTask(_ model: AddConfiguredCourseTaskModel, completion: @escaping (Result<UserTaskResponse, NetworkResponseError>) -> Void) {
+        request(.addCourseTask(model), responseType: UserTaskResponse.self, completion)
+    }
+    
     func getCourse(id: Int, completion: @escaping (Result<CourseResponse, NetworkResponseError>) -> Void) {
         request(.getCourse(id: id), responseType: CourseResponse.self, completion)
     }

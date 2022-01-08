@@ -12,8 +12,11 @@ extension UIView {
     }
     
     func setOpacity(_ opacity: Opacity, color: UIColor? = nil) {
-        let opacityColor = color ?? opacity.color
         let isEnabled = opacity.value == .zero
+        let viewWithColor = getFirstViewWithColor(root: self)
+        let viewColor = viewWithColor?.backgroundColor
+        
+        let opacityColor = color ?? viewColor ?? opacity.color
         
         if let opacityView = subviews.first(where: { $0.tag == opacity.tag }) {
             opacityView.backgroundColor = opacityColor?.withAlphaComponent(opacity.value)
@@ -30,6 +33,14 @@ extension UIView {
             }
             bringSubviewToFront(opacityView)
         }
+    }
+    
+    
+    private func getFirstViewWithColor(root view: UIView?) -> UIView? {
+        guard let superview = view?.superview, superview.backgroundColor == .clear else {
+            return view?.superview
+        }
+        return getFirstViewWithColor(root: superview)
     }
     
 }

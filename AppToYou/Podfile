@@ -16,4 +16,6 @@ target 'AppToYou' do
   pod 'XCoordinator', '~> 2.0'
   pod 'KeychainAccess'
   pod 'DropDown'
+  pod 'FittedSheets'
+
 end

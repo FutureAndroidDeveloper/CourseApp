@@ -10,6 +10,7 @@ protocol CourseConstructorDelegate: AnyObject {
     func openChat()
     
     func addTasks()
+    func add(task: CourseTaskResponse)
     func createTask()
     
     func openMemebrs()

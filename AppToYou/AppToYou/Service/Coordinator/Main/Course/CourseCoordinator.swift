@@ -9,7 +9,7 @@ enum CourseRoute: Route {
     case requests
     case chat
     case addAll
-    case addTask
+    case add(task: CourseTaskResponse)
     case createTask
     case editTask(task: CourseTaskResponse)
     case members
@@ -32,7 +32,7 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
     }
     
     override func prepareTransition(for route: CourseRoute) -> NavigationTransition {
-        configureContainer(hideNavBar: false)
+//        configureContainer(hideNavBar: false)
         
         switch route {
         case .course(let course):
@@ -61,9 +61,11 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
             let notification = ATYTaskAddedViewController(type: .allTasks)
             return .push(notification)
             
-        case .addTask:
-            let addTask = ATYAddTaskViewController()
-            return .push(addTask)
+        case .add(let task):
+            configureContainer(hideNavBar: true)
+            let taskCoordinator = TaskCoordinator(mode: .addCourseTask(task), rootViewController: self.rootViewController)
+            addChild(taskCoordinator)
+            return .none()
             
         case .createTask:
             let id = course.id
