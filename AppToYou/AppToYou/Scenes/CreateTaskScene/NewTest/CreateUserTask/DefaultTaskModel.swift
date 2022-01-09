@@ -7,8 +7,6 @@ enum CreateTaskMode {
     case editUserTask(task: UserTaskResponse)
     case editCourseTask(task: UserTaskResponse)
     
-    case addCourseTask(_ task: CourseTaskResponse)
-    
     case adminEditCourseTask(courseName: String, task: CourseTaskResponse)
 }
 
@@ -27,6 +25,7 @@ protocol CreatorDelegate: AnyObject {
     func update()
     func updateState()
     func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?)
+    func showSanctionQuestion()
 }
 
 
@@ -135,7 +134,7 @@ class CheckboxTaskConstructor {
                 // TODO - 
 //                self?.checkboxModel.minSanctionModel?.didActivate?(isOn)
             }, questionCallback: { [weak self] in
-                print("Question")
+                self?.delegate?.showSanctionQuestion()
             })
     }
     

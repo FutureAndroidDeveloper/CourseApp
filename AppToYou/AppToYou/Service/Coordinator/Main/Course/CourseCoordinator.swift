@@ -9,6 +9,7 @@ enum CourseRoute: Route {
     case requests
     case chat
     case addAll
+    case taskDidAdd
     case add(task: CourseTaskResponse)
     case createTask
     case editTask(task: CourseTaskResponse)
@@ -19,7 +20,6 @@ enum CourseRoute: Route {
 
 
 class CourseCoordinator: NavigationCoordinator<CourseRoute> {
-    
     private let coursesRouter: UnownedRouter<CoursesRoute>
     private let course: CourseResponse
     
@@ -28,7 +28,6 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
         self.course = course
         self.coursesRouter = coursesRouter
         super.init(rootViewController: rootViewController)
-        trigger(.course(course))
     }
     
     override func prepareTransition(for route: CourseRoute) -> NavigationTransition {
@@ -36,7 +35,7 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
         
         switch route {
         case .course(let course):
-            configureContainer(hideNavBar: true)
+//            configureContainer(hideNavBar: true)
             let courseViewController = CourseViewController()
             let courseViewModel = CourseViewModelImpl(course: course, coursesRouter: unownedRouter)
             courseViewController.bind(to: courseViewModel)
@@ -58,14 +57,28 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
             break
             
         case .addAll:
-            let notification = ATYTaskAddedViewController(type: .allTasks)
-            return .push(notification)
+            let infoCoordinator = UserInfoNotificationCoordinator(notification: .allCourseTasksAdded)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: infoCoordinator)
+            infoCoordinator.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
             
         case .add(let task):
-            configureContainer(hideNavBar: true)
-            let taskCoordinator = TaskCoordinator(mode: .addCourseTask(task), rootViewController: self.rootViewController)
-            addChild(taskCoordinator)
-            return .none()
+            let addTaskCoordinator = AddTaskSheetCoordinator(task: task)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: addTaskCoordinator)
+            addTaskCoordinator.flowDelegate = bottomSheetCoordinator
+            
+            addTaskCoordinator.taskDidAdd = {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                    self?.trigger(.taskDidAdd)
+                }
+            }
+            return .present(bottomSheetCoordinator)
+            
+        case .taskDidAdd:
+            let infoCoordinator = UserInfoNotificationCoordinator(notification: .courseTaskAdded)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: infoCoordinator)
+            infoCoordinator.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
             
         case .createTask:
             let id = course.id

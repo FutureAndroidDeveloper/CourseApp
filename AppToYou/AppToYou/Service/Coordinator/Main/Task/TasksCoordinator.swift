@@ -7,10 +7,10 @@ enum TasksRoute: Route {
     case create
     case editUserTask(task: UserTaskResponse)
     case editCourseTask(task: UserTaskResponse)
+    case showSanction(task: UserTaskResponse)
 }
 
 
-// Разбить координатор на отдельные
 class TasksCoordinator: NavigationCoordinator<TasksRoute> {
     
     private weak var createTaskInput: CreateTaskViewModelInput?
@@ -49,6 +49,12 @@ class TasksCoordinator: NavigationCoordinator<TasksRoute> {
             let taskCoordinator = TaskCoordinator(mode: .editCourseTask(task: task), rootViewController: self.rootViewController)
             addChild(taskCoordinator)
             return .none()
+            
+        case .showSanction(let task):
+            let infoCoordinator = UserInfoNotificationCoordinator(notification: .paySanction(task: task))
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: infoCoordinator)
+            infoCoordinator.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
         }
     }
     

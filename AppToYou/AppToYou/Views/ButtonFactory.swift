@@ -13,8 +13,6 @@ class ButtonFactory {
         return button
     }
     
-    
-    
     static func setSize(for button: UIView, size: CGSize) {
         button.snp.makeConstraints {
             $0.size.equalTo(size)

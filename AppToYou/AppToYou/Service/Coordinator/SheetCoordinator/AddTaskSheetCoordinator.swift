@@ -1,46 +1,46 @@
-import UIKit
 import XCoordinator
-import FittedSheets
 
 
 enum AddCourseTaskRoute: Route {
-    case add(task: CourseTaskResponse)
-    case allAdded
     case taskAdded
+    case timePicker
+    case sanctionQuestion
 }
 
 
 class AddTaskSheetCoordinator: ViewCoordinator<AddCourseTaskRoute> {
+    private weak var timeReceiver: TimePickerDelegate?
+    weak var flowDelegate: FlowEndHandlerDelegate?
+    var taskDidAdd: (() -> Void)?
     
-    private let taskRouter: UnownedRouter<TaskRoute>
-    
-    var timeReceiverChanged: ((TimePickerDelegate) -> Void)?
-    
-    
-    init(rootViewController: RootViewController, taskRouter: UnownedRouter<TaskRoute>) {
-        self.taskRouter = taskRouter
-        super.init(rootViewController: rootViewController)
+    init(task: CourseTaskResponse) {
+        let addCourseTaskViewController = AddCourseTaskViewController()
+        super.init(rootViewController: addCourseTaskViewController)
+        
+        let constructor = AddCourseTaskConstructor(model: AddCourseTaskModel())
+        let addCourseTaskViewModel = AddCourseTaskViewModelImpl(courseTask: task, constructor: constructor, addTaskRouter: unownedRouter)
+        addCourseTaskViewController.bind(to: addCourseTaskViewModel)
+        timeReceiver = addCourseTaskViewModel
     }
     
     override func prepareTransition(for route: AddCourseTaskRoute) -> ViewTransition {
         switch route {
-        case .add(let task):
-            let addCourseTaskViewController = AddCourseTaskViewController()
-            let constructor = AddCourseTaskConstructor(model: AddCourseTaskModel())
-            let addCourseTaskViewModel = AddCourseTaskViewModelImpl(courseTask: task, constructor: constructor, taskRouter: taskRouter)
-            addCourseTaskViewController.bind(to: addCourseTaskViewModel)
-            
-            timeReceiverChanged?(addCourseTaskViewModel)
-            
-            let bottomSheetCoordinator = BottomSheetCoordinator(rootViewController: self.rootViewController)
-            addChild(bottomSheetCoordinator)
-            return .route(.show(addCourseTaskViewController), on: bottomSheetCoordinator)
-            
-        case .allAdded:
-            return .none()
-            
         case .taskAdded:
+            flowDelegate?.flowDidEnd()
+            taskDidAdd?()
             return .none()
+            
+        case .timePicker:
+            let timePickerCoordinator = TimePickerCoordinator(type: .userTaskDuration, pickerDelegate: timeReceiver)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: timePickerCoordinator)
+            timePickerCoordinator.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
+            
+        case .sanctionQuestion:
+            let infoCoordinator = UserInfoNotificationCoordinator(notification: .failureSanction)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: infoCoordinator)
+            infoCoordinator.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
         }
     }
     

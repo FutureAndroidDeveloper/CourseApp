@@ -44,7 +44,7 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
                                                       coursesRouter: unownedRouter,
                                                       rootViewController: self.rootViewController)
             addChild(courseCoordinator)
-            return .none()
+            return .route(.course(course), on: courseCoordinator)
             
         case .createEdit(let course):
             let createCourseViewController = CreateCourseViewController()
@@ -68,11 +68,10 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
             return .none()
             
         case .durationPicker:
-            let timePickerCoordinator = TimePickerCoordinator(type: .course,
-                                                              pickerDelegate: courseCreationInput,
-                                                              rootViewController: self.rootViewController)
-            addChild(timePickerCoordinator)
-            return .none()
+            let timePickerCoordinator = TimePickerCoordinator(type: .course, pickerDelegate: courseCreationInput)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: timePickerCoordinator)
+            timePickerCoordinator.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
         }
     }
     

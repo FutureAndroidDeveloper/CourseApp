@@ -76,7 +76,7 @@ class AddCourseTaskConstructor {
             switchChanged: { [weak self] isOn in
                 print(isOn)
             }, questionCallback: { [weak self] in
-                print("Question")
+                self?.delegate?.showSanctionQuestion()
             })
         
         if min > .zero {

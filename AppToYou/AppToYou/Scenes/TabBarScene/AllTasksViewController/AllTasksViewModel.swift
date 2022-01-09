@@ -5,6 +5,7 @@ import XCoordinator
 protocol AllTasksViewModelInput: AnyObject {
     func edit(_ task: UserTaskResponse)
     func showMyTasks(_ state: Bool)
+    func showTestSanction(for task: UserTaskResponse)
     func refresh()
 }
 
@@ -40,6 +41,10 @@ class AllTasksViewModelImpl: AllTasksViewModel, AllTasksViewModelInput, AllTasks
     
     func refresh() {
         loadTasks()
+    }
+    
+    func showTestSanction(for task: UserTaskResponse) {
+        router.trigger(.showSanction(task: task))
     }
     
     func edit(_ task: UserTaskResponse) {

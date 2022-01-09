@@ -1,9 +1,7 @@
-import UIKit
 import XCoordinator
 
 
 enum TimePickerRoute: Route {
-    case picker
     case notificationTimePicked(_ time: NotificationTime)
     case userTaskDurationPicked(_ duration: DurationTime)
     case courseTaskDurationPicked(_ duration: Duration)
@@ -15,26 +13,20 @@ class TimePickerCoordinator: ViewCoordinator<TimePickerRoute> {
     
     private let type: TimePickerType
     private weak var pickerDelegate: TimePickerDelegate?
+    weak var flowDelegate: FlowEndHandlerDelegate?
     
-    init(type: TimePickerType, pickerDelegate: TimePickerDelegate?, rootViewController: RootViewController) {
+    init(type: TimePickerType, pickerDelegate: TimePickerDelegate?) {
         self.type = type
         self.pickerDelegate = pickerDelegate
-        super.init(rootViewController: rootViewController)
-        trigger(.picker)
+        let timePickerViewController = ATYSelectTimeViewController()
+        super.init(rootViewController: timePickerViewController)
+        
+        let timePickerViewModel = SelectTimeViewModelImpl(pickerType: type, router: unownedRouter)
+        timePickerViewController.bind(to: timePickerViewModel)
     }
     
     override func prepareTransition(for route: TimePickerRoute) -> ViewTransition {
-        let timePickerViewController = ATYSelectTimeViewController()
-        let timePickerViewModel = SelectTimeViewModelImpl(pickerType: type, router: unownedRouter)
-        timePickerViewController.bind(to: timePickerViewModel)
-        
-        let bottomSheetCoordinator = BottomSheetCoordinator(rootViewController: self.rootViewController)
-        
         switch route {
-        case .picker:
-            addChild(bottomSheetCoordinator)
-            return .route(.show(timePickerViewController), on: bottomSheetCoordinator)
-            
         case .notificationTimePicked(let time):
             pickerDelegate?.notificationPicked(time)
             
@@ -48,9 +40,8 @@ class TimePickerCoordinator: ViewCoordinator<TimePickerRoute> {
             pickerDelegate?.courseDurationPicked(duration)
         }
         
-        removeChild(bottomSheetCoordinator)
-        removeChildrenIfNeeded()
-        return .trigger(.close, on: bottomSheetCoordinator)
+        flowDelegate?.flowDidEnd()
+        return .none()
     }
     
 }

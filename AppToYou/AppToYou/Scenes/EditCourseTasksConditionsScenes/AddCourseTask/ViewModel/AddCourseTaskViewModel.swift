@@ -34,7 +34,7 @@ class AddCourseTaskViewModelImpl: AddCourseTaskViewModel, AddCourseTaskViewModel
     
     var updatedState: Observable<Void> = Observable(Void())
     
-    private let taskRouter: UnownedRouter<TaskRoute>
+    private let addTaskRouter: UnownedRouter<AddCourseTaskRoute>
     private let courseService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
     private let constructor: AddCourseTaskConstructor
     private let validator = ConfiguredCourseTaskValidator()
@@ -43,10 +43,10 @@ class AddCourseTaskViewModelImpl: AddCourseTaskViewModel, AddCourseTaskViewModel
     
     private let configuredtaskModel: AddConfiguredCourseTaskModel
     
-    init(courseTask: CourseTaskResponse, constructor: AddCourseTaskConstructor, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseTask: CourseTaskResponse, constructor: AddCourseTaskConstructor,addTaskRouter: UnownedRouter<AddCourseTaskRoute>) {
         self.courseTask = courseTask
         self.constructor = constructor
-        self.taskRouter = taskRouter
+        self.addTaskRouter = addTaskRouter
         
         configuredtaskModel = AddConfiguredCourseTaskModel(courseId: courseTask.courseId, taskId: courseTask.identifier.id)
         loadFields()
@@ -81,7 +81,7 @@ class AddCourseTaskViewModelImpl: AddCourseTaskViewModel, AddCourseTaskViewModel
         courseService.addCourseTask(configuredtaskModel) { [weak self] result in
             switch result {
             case .success(let userTask):
-                print(userTask)
+                self?.addTaskRouter.trigger(.taskAdded)
             case .failure(let error):
                 print(error)
             }
@@ -89,7 +89,11 @@ class AddCourseTaskViewModelImpl: AddCourseTaskViewModel, AddCourseTaskViewModel
     }
     
     func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?) {
-        taskRouter.trigger(.timePicker(type: pickerType))
+        addTaskRouter.trigger(.timePicker)
+    }
+    
+    func showSanctionQuestion() {
+        addTaskRouter.trigger(.sanctionQuestion)
     }
     
     func userTaskdurationPicked(_ duration: DurationTime) {

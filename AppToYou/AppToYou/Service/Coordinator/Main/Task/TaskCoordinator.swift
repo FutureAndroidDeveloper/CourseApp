@@ -1,4 +1,3 @@
-import Foundation
 import XCoordinator
 import UIKit
 
@@ -9,10 +8,9 @@ enum TaskRoute: Route {
     
     case adminEdit(courseName: String, courseTask: CourseTaskResponse)
     case courseTaskEdit(userTask: UserTaskResponse)
-    
-    case addCourseTask(_ task: CourseTaskResponse)
-    
+        
     case timePicker(type: TimePickerType)
+    case sanctionQuestion
     case done
 }
 
@@ -30,9 +28,6 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
         case .createUserTask, .createCourseTask:
             trigger(.add)
             
-        case .addCourseTask(let task):
-            trigger(.addCourseTask(task))
-            
         case .editUserTask(let task):
             trigger(.create(task.taskType))
             
@@ -48,26 +43,12 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
         let taskViewController = ATYCreateTaskViewController()
         taskViewController.hidesBottomBarWhenPushed = true
         
-        
         switch route {
         case .add:
             let addTaskViewController = ATYAddTaskViewController()
             let addTaskViewModel = AddTaskViewModelImpl(router: unownedRouter)
             prepare(viewController: addTaskViewController, with: addTaskViewModel)
             return .present(addTaskViewController, animation: nil)
-            
-        case .addCourseTask(let task):
-            guard let topViewController = self.rootViewController.topViewController else {
-                return .none()
-            }
-            let addTaskCoordinator = AddTaskSheetCoordinator(rootViewController: topViewController, taskRouter: unownedRouter)
-            
-            addTaskCoordinator.timeReceiverChanged = { [weak self] reciever in
-                self?.timeReceiver = reciever
-            }
-            
-            addChild(addTaskCoordinator)
-            return .route(.add(task: task), on: addTaskCoordinator)
             
         case .create(let taskType):
             switch mode {
@@ -102,16 +83,16 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
             return .push(taskViewController)
             
         case .timePicker(let type):
-            guard let topController = rootViewController.topViewController else {
-                return .none()
-            }
-            let timePickerCoordinator = TimePickerCoordinator(
-                type: type,
-                pickerDelegate: timeReceiver,
-                rootViewController: topController
-            )
-            addChild(timePickerCoordinator)
-            return .none()
+            let timePickerCoordinator = TimePickerCoordinator(type: type, pickerDelegate: timeReceiver)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: timePickerCoordinator)
+            timePickerCoordinator.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
+            
+        case .sanctionQuestion:
+            let infoCoordinator = UserInfoNotificationCoordinator(notification: .failureSanction)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: infoCoordinator)
+            infoCoordinator.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
             
         case .done:
             return .pop()
