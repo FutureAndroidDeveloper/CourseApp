@@ -45,6 +45,7 @@ class RequestWithParameters<Body: Encodable>: HTTPTask {
     }
 
     func prepare(for request: inout URLRequest) {
+        
         try? encoding.encode(urlRequest: &request, body: body, urlParameters: urlParameters)
     }
 

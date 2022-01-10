@@ -40,4 +40,10 @@ class CourseManager: NetworkManager<CourseEndpoint> {
         courseGroupRequest.loadCourse(id: id, completion: completion)
     }
     
+    func createCourse(_ course: CourseCreateRequest, photo: MediaPhoto?, completion: @escaping (Result<CourseResponse, NetworkResponseError>) -> Void) {
+        let attachmentService = AttachmentManager(deviceIdentifierService: DeviceIdentifierService())
+        let createCourseGroupRequest = CreateCourseWithPhoto(courseService: self, attachmentService: attachmentService)
+        createCourseGroupRequest.createCourse(course, photo: photo, completion: completion)
+    }
+    
 }

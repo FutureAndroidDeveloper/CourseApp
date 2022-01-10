@@ -98,8 +98,14 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
         guard let course = courseRequest else {
             return
         }
+        let photoModel = courseConstructor.createCourseModel.photoModel
+        var photo: MediaPhoto?
         
-        courseService.create(course: course) { [weak self] result in
+        if let path = photoModel?.path, let imageData = photoModel?.photoImage?.jpegData(compressionQuality: 1.0) {
+            photo = MediaPhoto(data: imageData, fileName: path)
+        }
+        
+        courseService.createCourse(course, photo: photo) { [weak self] result in
             switch result {
             case .success(let newCourse):
                 self?.coursesRouter.trigger(.courseCreated(course: newCourse))

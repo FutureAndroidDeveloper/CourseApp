@@ -37,10 +37,12 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
      - parameters:
         - endpoind: endpoind сервера.
         - responseType: ожидаемый тип ответа от сервера.
+        - decoder: декодер ответа сервера.
         - completion: результат обращения к серверу.
      */
     func request<Response: Decodable>(_ endpoind: NetworkEndPoint,
                                       responseType: Response.Type,
+                                      decoder: APIResponseDecoder = .json,
                                       _ completion: @escaping (Result<Response, NetworkResponseError>) -> Void) {
 
         router.request(endpoind) { [weak self] data, response, error in
@@ -48,7 +50,7 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
                 return
             }
             
-            let result = self.build(responseType, with: (data, response, error))
+            let result = self.build(responseType, decoder: decoder.decoder, with: (data, response, error))
             DispatchQueue.main.async {
                 completion(result)
             }
@@ -60,10 +62,14 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
      
      - parameters:
         - response: ожидаемый тип ответа от сервера.
+        - decoder: декодер ответа сервера.
         - routerData: данные полученные после ответа от сервера.
      - returns: Результат работы роутера. `Succsess` - модель ответа сервера.  `Failire` - ошибка.
      */
-    private func build<T: Decodable>(_ response: T.Type, with routerData: RouterCompletionData) -> Result<T, NetworkResponseError> {
+    private func build<T: Decodable>(_ response: T.Type,
+                                     decoder: ResponseDecoder,
+                                     with routerData: RouterCompletionData) -> Result<T, NetworkResponseError> {
+        
         if let _ = routerData.error {
             return .failure(.connection)
         }
@@ -79,7 +85,7 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
             }
             
             do {
-                let apiResponse = try decode(response, from: responseData)
+                let apiResponse = try decoder.decode(response, from: responseData)
                 return .success(apiResponse)
             } catch let decodeError {
                 print(decodeError)
@@ -90,21 +96,6 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
             return .failure(networkFailureError)
         }
         
-    }
-
-    /**
-     Декодинг ответа сервера.
-     
-     - parameters:
-        - type: ожидаемый тип ответа от сервера.
-        - data: данные ответа для декодинга.
-     
-     - returns: Модель ответа сервера.
-     */
-    private func decode<T: Decodable >(_ type: T.Type, from data: Data) throws -> T {
-        print("\nResponse:")
-        debugPrint(data.prettyPrintedJSONString)
-        return try JSONDecoder().decode(T.self, from: data)
     }
     
     private func handleNetworkResponse(_ response: HTTPURLResponse) -> Result<Void, NetworkResponseError> {

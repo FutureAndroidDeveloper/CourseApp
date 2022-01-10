@@ -5,8 +5,8 @@ import XCoordinator
 class ImagePickerDelegate: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private struct Constants {
-        static let compressionQuality: CGFloat = 0.25
-        static let fileExtension = "png"
+        static let compressionQuality: CGFloat = 0.4
+        static let fileExtension = "jpg"
     }
     
     private let pickerRouter: UnownedRouter<ImagePickerRoute>
@@ -38,15 +38,17 @@ class ImagePickerDelegate: NSObject, UIImagePickerControllerDelegate, UINavigati
         let filePathComponent = "\(imageUniqueName).\(Constants.fileExtension)"
         let filePath = docDir.appendingPathComponent(filePathComponent)
         
-        do {
-            // сжатие картинки и запись сжатой на диск?
-            if let imageData = image.jpegData(compressionQuality: Constants.compressionQuality) {
+        do {            
+            if
+                let imageData = image.jpegData(compressionQuality: Constants.compressionQuality),
+                let compressedImage = UIImage(data: imageData)
+            {
                 try imageData.write(to: filePath, options: .atomic)
+                didSelect(image: compressedImage, with: filePathComponent)
             }
         } catch {
             showError(message: "Couldn't write image")
         }
-        didSelect(image: image, with: filePathComponent)
     }
     
     private func didSelect(image: UIImage?, with path: String? = nil) {

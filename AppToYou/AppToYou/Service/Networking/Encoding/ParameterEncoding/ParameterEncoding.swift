@@ -20,9 +20,7 @@ public enum ParameterEncoding {
      */
     case urlAndJsonEncoding
 
-    public func encode<T: Encodable>(urlRequest: inout URLRequest,
-                       body: T?,
-                       urlParameters: [Parameter]?) throws {
+    public func encode<T: Encodable>(urlRequest: inout URLRequest, body: T?, urlParameters: [Parameter]?) throws {
         do {
             switch self {
             case .urlEncoding:

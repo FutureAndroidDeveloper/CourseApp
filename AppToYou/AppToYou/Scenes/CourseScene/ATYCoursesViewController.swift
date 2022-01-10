@@ -29,8 +29,6 @@ class ATYCoursesViewController : UIViewController, BindableType {
 
     private var transitionSecond: PanelTransition!
     private var transitionOne: PanelTransition!
-
-    private let store = FileStore()
     
     var courseArray = [CourseCreateRequest]()
     
@@ -61,7 +59,6 @@ class ATYCoursesViewController : UIViewController, BindableType {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        courseArray = store.getCourses()
         filteredArray = courseArray
         super.viewWillAppear(animated)
         configureNavBar()
