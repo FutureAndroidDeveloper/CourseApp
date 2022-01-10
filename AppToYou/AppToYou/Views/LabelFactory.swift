@@ -47,4 +47,22 @@ class LabelFactory {
         label.numberOfLines = 2
         return label
     }
+    
+    static func getChooseTaskTypeTitleLable(title: String?) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.textColor = R.color.titleTextColor()
+        return label
+    }
+    
+    static func getChooseTaskDescriptionLable(title: String?) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        label.textColor = R.color.textSecondaryColor()
+        label.numberOfLines = 0
+        return label
+    }
+    
 }

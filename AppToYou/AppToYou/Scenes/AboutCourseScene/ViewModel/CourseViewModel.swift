@@ -6,7 +6,7 @@ protocol CourseViewModelInput: AnyObject {
 }
 
 protocol CourseViewModelOutput: AnyObject {
-    var data: Observable<[AnyObject]> { get }
+    var sections: Observable<[TableViewSection]> { get }
     var updatedState: Observable<Void> { get }
 }
 

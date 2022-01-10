@@ -36,7 +36,7 @@ class CreateCourseTaskCell: UITableViewCell, InflatableView {
         super.layoutSubviews()
         createTaskButton.layer.cornerRadius = createTaskButton.bounds.height / 2
     }
-
+    
     private func setup() {
         contentView.addSubview(createTaskButton)
         createTaskButton.snp.makeConstraints {

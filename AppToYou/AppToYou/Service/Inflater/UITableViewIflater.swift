@@ -16,6 +16,9 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     var rowDidSelect: ((_ model: AnyObject, _ indexPath: IndexPath) -> Void)?
+    var willSelectRow: ((_ indexPath: IndexPath) -> Void)?
+    var willDeselectRow: ((_ indexPath: IndexPath) -> Void)?
+    var willDisplayCell: ((_ cell: UITableViewCell, _ indexPath: IndexPath) -> Void)?
     
     func addRowHandler<Model: AnyObject>(for model: Model.Type, handler: @escaping (Model, IndexPath) -> Void) {
         guard let holder = holders.first(where: { $0.modelType == model }) else {
@@ -28,15 +31,6 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
             }
             handler(selectedModel, indexPath)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = sections[indexPath.section].models[indexPath.row]
-        guard let holder = holders.first(where: { $0.isModelEquals(model: model) }) else {
-            return
-        }
-        
-        holder.selectHandler?(model, indexPath)
     }
     
     func registerRow<Cell: UITableViewCell>(model: AnyObject.Type, cell: Cell.Type) where Cell: InflatableView {
@@ -66,6 +60,10 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
         return sections[section].models.count
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        willDisplayCell?(cell, indexPath)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = sections[indexPath.section].models[indexPath.row]
         
@@ -82,6 +80,25 @@ class UITableViewIflater: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         inflatableCell.inflate(model: model)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        willSelectRow?(indexPath)
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
+        willDeselectRow?(indexPath)
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = sections[indexPath.section].models[indexPath.row]
+        guard let holder = holders.first(where: { $0.isModelEquals(model: model) }) else {
+            return
+        }
+        
+        holder.selectHandler?(model, indexPath)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -28,7 +28,6 @@ class AddTaskSheetCoordinator: ViewCoordinator<AddCourseTaskRoute> {
         case .taskAdded:
             flowDelegate?.flowDidEnd()
             taskDidAdd?()
-            return .none()
             
         case .timePicker:
             let timePickerCoordinator = TimePickerCoordinator(type: .userTaskDuration, pickerDelegate: timeReceiver)
@@ -42,6 +41,8 @@ class AddTaskSheetCoordinator: ViewCoordinator<AddCourseTaskRoute> {
             infoCoordinator.flowDelegate = bottomSheetCoordinator
             return .present(bottomSheetCoordinator)
         }
+        
+        return .none()
     }
     
 }

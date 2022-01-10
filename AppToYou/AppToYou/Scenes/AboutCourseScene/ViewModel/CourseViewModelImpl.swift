@@ -5,7 +5,7 @@ import UIKit
 
 class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewModelOutput {
     
-    var data: Observable<[AnyObject]> = Observable([])
+    var sections: Observable<[TableViewSection]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
     
     private let courseRouter: UnownedRouter<CourseRoute>
@@ -56,7 +56,9 @@ class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewMode
     }
     
     func updateStructure() {
-        data.value = constructor.getModels()
+        let models = constructor.getModels()
+        let section = TableViewSection(models: models)
+        sections.value = [section]
     }
 
     private func getstubTaskModel(_ type: ATYTaskType) -> TemporaryData {

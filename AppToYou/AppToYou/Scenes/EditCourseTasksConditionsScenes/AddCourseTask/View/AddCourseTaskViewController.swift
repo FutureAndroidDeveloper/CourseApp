@@ -9,7 +9,7 @@ class AddCourseTaskViewController: UIViewController, BindableType {
 
     var viewModel: AddCourseTaskViewModel!
     
-    private var inflater: UITableViewIflater?
+    private let inflater: UITableViewIflater
     private let tableView = ContentSizedTableView()
     private let footerView = UIView()
     
@@ -23,7 +23,15 @@ class AddCourseTaskViewController: UIViewController, BindableType {
         return button
     }()
     
-
+    init() {
+        inflater = UITableViewIflater(tableView)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -57,19 +65,18 @@ class AddCourseTaskViewController: UIViewController, BindableType {
     }
     
     private func configureInflater() {
-        inflater = UITableViewIflater(tableView)
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.allowsSelection = false
         tableView.backgroundColor = R.color.backgroundTextFieldsColor()
         
-        inflater?.registerRow(model: AddTaskTitleModel.self, cell: AddTaskTitleCell.self)
-        inflater?.registerRow(model: AddTaskDescriptionModel.self, cell: AddTaskDescriptionCell.self)
-        inflater?.registerRow(model: AddTaskAttributeModel.self, cell: AddTaskAttributeCell.self)
-        inflater?.registerRow(model: TaskSanctionModel.self, cell: TaskSanctionCell.self)
-        inflater?.registerRow(model: MinimumSymbolsModel.self, cell: MinimumSymbolsCell.self)
-        inflater?.registerRow(model: TaskDurationCellModel.self, cell: TaskDurationCell.self)
-        inflater?.registerRow(model: RepeatCounterModel.self, cell: RepeatCounterCell.self)
+        inflater.registerRow(model: AddTaskTitleModel.self, cell: AddTaskTitleCell.self)
+        inflater.registerRow(model: AddTaskDescriptionModel.self, cell: AddTaskDescriptionCell.self)
+        inflater.registerRow(model: AddTaskAttributeModel.self, cell: AddTaskAttributeCell.self)
+        inflater.registerRow(model: TaskSanctionModel.self, cell: TaskSanctionCell.self)
+        inflater.registerRow(model: MinimumSymbolsModel.self, cell: MinimumSymbolsCell.self)
+        inflater.registerRow(model: TaskDurationCellModel.self, cell: TaskDurationCell.self)
+        inflater.registerRow(model: RepeatCounterModel.self, cell: RepeatCounterCell.self)
         
     }
     
@@ -82,7 +89,7 @@ class AddCourseTaskViewController: UIViewController, BindableType {
     }
     
     func update(_ sections: [TableViewSection]) {
-        inflater?.inflate(sections: sections)
+        inflater.inflate(sections: sections)
     }
 
     @objc

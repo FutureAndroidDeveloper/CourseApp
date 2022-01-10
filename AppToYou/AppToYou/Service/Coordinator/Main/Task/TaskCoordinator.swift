@@ -45,10 +45,13 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
         
         switch route {
         case .add:
-            let addTaskViewController = ATYAddTaskViewController()
-            let addTaskViewModel = AddTaskViewModelImpl(router: unownedRouter)
-            prepare(viewController: addTaskViewController, with: addTaskViewModel)
-            return .present(addTaskViewController, animation: nil)
+            let chooseTaskTypeViewController = ChooseTaskTypeViewController()
+            let chooseTaskTypeViewModel = ChooseTaskTypeViewModelImpl(router: unownedRouter)
+            prepare(viewController: chooseTaskTypeViewController, with: chooseTaskTypeViewModel)
+            
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: chooseTaskTypeViewController)
+            chooseTaskTypeViewModel.flowDelegate = bottomSheetCoordinator
+            return .present(bottomSheetCoordinator)
             
         case .create(let taskType):
             switch mode {

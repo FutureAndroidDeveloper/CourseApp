@@ -19,9 +19,9 @@ class BottomSheetCoordinator: ViewCoordinator<BottomSheetRoute>, FlowEndHandlerD
             shrinkPresentingViewController: false
         )
         let sheetController = SheetViewController(controller: content.viewController, sizes: [.intrinsic], options: options)
+        
         super.init(rootViewController: sheetController)
         configureSheet(sheetController)
-        
         addChild(content)
     }
     

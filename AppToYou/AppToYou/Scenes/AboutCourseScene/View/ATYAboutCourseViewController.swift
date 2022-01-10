@@ -141,18 +141,18 @@ extension ATYAboutCourseViewController: UITableViewDelegate, UITableViewDataSour
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYTasksForAboutCourseCell.reuseIdentifier, for: indexPath) as! ATYTasksForAboutCourseCell
             cell.setUp(isMyCourse: self.isMyCourse)
             cell.createTaskCallback = { [weak self] in
-                let child = ATYAddTaskViewController()
-                let vc = ATYCreateCourseTaskViewController()
-                vc.hidesBottomBarWhenPushed = true
+//                let child = ATYAddTaskViewController()
+//                let vc = ATYCreateCourseTaskViewController()
+//                vc.hidesBottomBarWhenPushed = true
 
 //                child.pushVcCallback = { [weak self] type in
 //                    vc.types = type
 //                    self?.navigationController?.pushViewController(vc, animated: true)
 //                }
-                child.transitioningDelegate = self?.transition
-                child.modalPresentationStyle = .custom
-
-                self?.present(child, animated: true)
+//                child.transitioningDelegate = self?.transition
+//                child.modalPresentationStyle = .custom
+//
+//                self?.present(child, animated: true)
             }
 
             cell.selectSwitchButtonCallback = { [weak self] typeTask in
