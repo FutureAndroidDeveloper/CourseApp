@@ -1,5 +1,6 @@
 import Foundation
 
+
 enum UserEndpoint: Endpoint {
     
     case create(_ user: UserCreateRequest)

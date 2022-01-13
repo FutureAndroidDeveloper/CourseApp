@@ -65,4 +65,13 @@ class LabelFactory {
         return label
     }
     
+    
+    static func createHeaderLabel(title: String?) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 28, weight: .medium)
+        label.textColor = R.color.titleTextColor()
+        return label
+    }
+    
 }

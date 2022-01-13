@@ -1,29 +1,5 @@
-import UIKit
+import Foundation
 import XCoordinator
-
-
-protocol CoursesViewModelInput: AnyObject {
-    func createDidTapped()
-    func openCourse(_ course: CourseResponse)
-    func refresh()
-    
-    func loadMore()
-}
-
-protocol CoursesViewModelOutput: AnyObject {
-    var isLoading: Bool { get }
-    var courses: Observable<[CourseResponse]> { get set }
-}
-
-protocol CoursesViewModel: AnyObject {
-    var input: CoursesViewModelInput { get }
-    var output: CoursesViewModelOutput { get }
-}
-
-extension CoursesViewModel where Self: CoursesViewModelInput & CoursesViewModelOutput {
-    var input: CoursesViewModelInput { return self }
-    var output: CoursesViewModelOutput { return self }
-}
 
 
 class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesViewModelOutput {
@@ -34,6 +10,8 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
     }
     
     var courses: Observable<[CourseResponse]> = Observable([])
+    var coursesBatch: Observable<[CourseResponse]> = Observable([])
+    var updatedState: Observable<Void> = Observable(())
     var isLoading: Bool = false
     
     private let coursesRouter: UnownedRouter<CoursesRoute>
@@ -42,10 +20,25 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
     
     private var coursesSlice: [CourseResponse] = []
     
+    private var courseImagesLoader: CourseImagesLoader?
+    
 
     init(coursesRouter: UnownedRouter<CoursesRoute>) {
         self.coursesRouter = coursesRouter
         self.searchModel = SearchCourseModel(page: Constants.startPage, pageSize: Constants.pageSize)
+        courseImagesLoader = CourseImagesLoader()
+    }
+    
+    func updateState() {
+        updatedState.value = ()
+    }
+    
+    func downloadCourseImages(for model: CourseCellModel) {
+        courseImagesLoader?.load(with: model)
+    }
+    
+    func closeCourseImagesDowloading(for model: CourseCellModel) {
+        courseImagesLoader?.cancel(for: model)
     }
     
     func createDidTapped() {
@@ -57,12 +50,14 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
     }
     
     func refresh() {
-//        searchModel.reset(page: Constants.startPage, pageSize: Constants.pageSize)
+        courseImagesLoader = CourseImagesLoader()
+        searchModel.reset(page: Constants.startPage, pageSize: Constants.pageSize)
 //        courses.value = []
         search()
     }
     
     func loadMore() {
+        print("THE new slice = \(coursesSlice.count)")
         guard !isLoading, !coursesSlice.isEmpty else {
             return
         }
@@ -71,7 +66,8 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
     }
     
     private func prepareCourses() {
-        courses.value.append(contentsOf: coursesSlice)
+//        courses.value.append(contentsOf: coursesSlice)
+        coursesBatch.value = coursesSlice
         isLoading = false
     }
     
@@ -83,7 +79,8 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
         coursesService.adminList(id: adminId) { [weak self] result in
             switch result {
             case .success(let courses):
-                self?.courses.value = courses
+                break
+//                self?.courses.value = courses
                 
             case .failure(let error):
                 print(error)
@@ -95,8 +92,8 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
         isLoading = true
         coursesService.search(model: searchModel) { [weak self] result in
             switch result {
-            case .success(let courses):
-                self?.coursesSlice = courses
+            case .success(let coursesBach):
+                self?.coursesSlice = coursesBach
                 self?.prepareCourses()
                 
             case .failure(let error):

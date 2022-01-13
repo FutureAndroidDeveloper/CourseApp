@@ -261,8 +261,13 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
 
     @objc func signInButtonAction() {
 //        let login = emailTextField.text ?? String()
-        let login = "task@mail.com"
+//        let login = "task@mail.com"
+//        let password = "12345678Qq"
+        
+        let login = "Lol@mail.ru"
         let password = "12345678Qq"
+        
+        
 //        let password = passwordTextField.text ?? String()
         let credentials = Credentials(mail: login, password: password)
         

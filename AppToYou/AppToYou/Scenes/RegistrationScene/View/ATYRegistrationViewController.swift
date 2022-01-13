@@ -1,127 +1,179 @@
-//
-//  ATYRegistrationScene.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 24.05.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
 import UIKit
 
-class ATYRegistrationViewController: UIViewController, BindableType {
+
+class ATYRegistrationViewController: UIViewController, UITextViewDelegate, BindableType {
+    
+    private struct Constants {
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: -49, right: 20)
+        
+        static let passwordInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let passwordHintInsets = UIEdgeInsets(top: 8, left: 20, bottom: 0, right: 20)
+        
+        static let passwordContainerInsets = UIEdgeInsets(top: 0, left: 0, bottom: 32, right: 0)
+        
+        static let emailInsets = UIEdgeInsets(top: 0, left: 20, bottom: 32, right: 20)
+        
+        static let registerInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        
+        static let agreementInsets = UIEdgeInsets(top: 16, left: 20, bottom: 0, right: 20)
+        static let agreementHeight: CGFloat = 48
+        static let accountInstes = UIEdgeInsets(top: 31, left: 0, bottom: 0, right: 0)
+        static let servicesInsets = UIEdgeInsets(top: 17, left: 0, bottom: 0, right: 0)
+        
+        struct Email {
+            static let textInsets = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 10)
+        }
+        
+        struct Password {
+            static let textInsets = UIEdgeInsets(top: 11, left: 16, bottom: 13, right: 10)
+            static let iconInsets = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 16)
+        }
+    }
     
     var viewModel: RegistrationViewModel!
+
+    private let emailTextField = FieldFactory.shared.getTextField()
+    private var emailContainer = ValidatableViewWrapper()
+
+    private let passwordTextField = HidePasswordTextField()
+    private var passwordContainer = ValidatableViewWrapper()
     
-    
-    func bindViewModel() {
-        //
-    }
-
-    let registrationLabel : UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font =  UIFont.Regular(size: 28)
-        label.text = R.string.localizable.registerNow()
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
-
-    let emailTextField : UITextField = {
-        let textField = UITextField()
-        textField.placeholder = R.string.localizable.enterYourEmail()
-        textField.backgroundColor = R.color.backgroundTextFieldsColor()
-        textField.textColor = R.color.titleTextColor()
-        return textField
-    }()
-
-    let passwordTextField : ATYShowHideTextField = {
-        let textField = ATYShowHideTextField()
-        textField.placeholder = R.string.localizable.pickAPassword()
-        textField.backgroundColor = R.color.backgroundTextFieldsColor()
-        textField.textColor = R.color.titleTextColor()
-        return textField
-    }()
-
-    let minimumSixLabel : UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font =  UIFont.Regular(size: 13)
-        label.text =  R.string.localizable.minimumSix()
-        label.textColor = R.color.textSecondaryColor()
-        return label
-    }()
-
-    let doneButton : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = R.color.buttonColor()
-        button.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
-        button.setTitle(R.string.localizable.register(), for: .normal)
-        return button
-    }()
-
+    private let titleLabel = LabelFactory.createHeaderLabel(title: R.string.localizable.registerNow())
+    private let passwordHintLabel = LabelFactory.getChooseTaskDescriptionLable(title: R.string.localizable.minimumSix())
+    private let registerButton = ButtonFactory.getStandartButton(title: R.string.localizable.register())
     private let userAgreementInfoTextView = UITextView()
+    private let servicesView = ServiceLoginView()
+    
+    private lazy var accountView: UIStackView = {
+        let titleLabel = UILabel()
+        titleLabel.text = "Есть аккаунт?"
+        titleLabel.font = UIFont.systemFont(ofSize: 13)
+        titleLabel.textColor = R.color.titleTextColor()
+        
+        let actionButton = UIButton()
+        actionButton.setTitle("Войти", for: .normal)
+        actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        actionButton.setTitleColor(R.color.buttonColor(), for: .normal)
+        actionButton.addTarget(self, action: #selector(accountAction), for: .touchUpInside)
+        
+        let stack = UIStackView(arrangedSubviews: [titleLabel, actionButton])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.spacing = 8
+        return stack
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = R.color.backgroundAppColor()
         configureViews()
         setupUserAgreementInfoLabel()
-        view.backgroundColor = R.color.backgroundAppColor()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        emailTextField.layer.cornerRadius = emailTextField.frame.height / 2
-        passwordTextField.layer.cornerRadius = passwordTextField.frame.height / 2
-        doneButton.layer.cornerRadius = doneButton.frame.height / 2
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        registerButton.layer.cornerRadius = registerButton.bounds.height / 2
     }
-
-
-    //MARK:- Configure views
 
     private func configureViews() {
-        view.addSubview(registrationLabel)
-        registrationLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.centerY.equalToSuperview().multipliedBy(0.6)
+        let passwordView = UIView()
+        passwordView.addSubview(passwordTextField)
+        passwordTextField.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview().inset(Constants.passwordInsets)
         }
-
-        view.addSubview(emailTextField)
-        emailTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
-        emailTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(registrationLabel.snp.bottom).offset(70)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(50)
+        passwordView.addSubview(passwordHintLabel)
+        passwordHintLabel.snp.makeConstraints {
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(Constants.passwordHintInsets.top)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.passwordHintInsets)
         }
-
-        view.addSubview(passwordTextField)
-        passwordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
-        passwordTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(emailTextField.snp.bottom).offset(15)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(50)
+        
+        let passContainer = createContainer(for: passwordView, insets: Constants.passwordContainerInsets)
+        passwordContainer = ValidatableViewWrapper(content: passContainer)
+        view.addSubview(passwordContainer)
+        passwordContainer.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.center.equalToSuperview()
         }
-
-        view.addSubview(minimumSixLabel)
-        minimumSixLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
+        
+        let mailContainer = createContainer(for: emailTextField, insets: Constants.emailInsets)
+        emailContainer = ValidatableViewWrapper(content: mailContainer)
+        view.addSubview(emailContainer)
+        emailContainer.snp.makeConstraints {
+            $0.bottom.equalTo(passwordContainer.snp.top)
+            $0.leading.trailing.equalToSuperview()
         }
-
-        view.addSubview(doneButton)
-        doneButton.snp.makeConstraints { (make) in
-            make.top.equalTo(minimumSixLabel.snp.bottom).offset(25)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(50)
+        
+        titleLabel.textAlignment = .center
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.bottom.equalTo(emailContainer.snp.top).offset(Constants.titleInsets.bottom)
+            $0.leading.trailing.equalToSuperview().inset(Constants.titleInsets)
+        }
+        
+        view.addSubview(registerButton)
+        registerButton.snp.makeConstraints {
+            $0.top.equalTo(passwordContainer.snp.bottom)
+            $0.leading.trailing.equalToSuperview().inset(Constants.registerInsets)
+        }
+        
+        view.addSubview(userAgreementInfoTextView)
+        userAgreementInfoTextView.snp.makeConstraints {
+            $0.top.equalTo(registerButton.snp.bottom).offset(Constants.agreementInsets.top)
+            $0.leading.trailing.equalToSuperview().inset(Constants.agreementInsets)
+            $0.height.equalTo(Constants.agreementHeight)
+        }
+        
+        view.addSubview(accountView)
+        accountView.snp.makeConstraints {
+            $0.top.equalTo(userAgreementInfoTextView.snp.bottom).offset(Constants.accountInstes.top)
+            $0.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(servicesView)
+        servicesView.snp.makeConstraints {
+            $0.top.equalTo(accountView.snp.bottom).offset(Constants.servicesInsets.top)
+            $0.leading.trailing.equalToSuperview().inset(Constants.servicesInsets)
+        }
+        
+        registerButton.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
+    }
+    
+    private func createContainer(for view: UIView, insets: UIEdgeInsets) -> UIView {
+        let container = UIView()
+        container.addSubview(view)
+        view.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(insets)
+        }
+        return container
+    }
+    
+    func bindViewModel() {
+        let emailModel = viewModel.output.emailModel
+        let contentModel = FieldContentModel(fieldModel: emailModel.fieldModel, insets: Constants.Email.textInsets)
+        emailTextField.configure(with: FieldModel(content: contentModel))
+        emailModel.errorNotification = { [weak self] error in
+            self?.emailTextField.bind(error: error)
+            self?.emailContainer.bind(error: error)
+        }
+        
+        let passwordModel = viewModel.output.passwordModel
+        passwordTextField.configure(with: passwordModel.fieldModel)
+        passwordModel.errorNotification = { [weak self] error in
+            self?.passwordTextField.bind(error: error)
+            self?.passwordContainer.bind(error: error)
+        }
+        
+        servicesView.appleAction = { [weak self] in
+            self?.viewModel.input.createAppleAccount()
+        }
+        
+        servicesView.googleAction = { [weak self] in
+            self?.viewModel.input.createGoogleAccount()
         }
     }
 
     private func setupUserAgreementInfoLabel() {
-
         let byAcceptingString = NSMutableAttributedString(string: R.string.localizable.byClicking(), attributes: nil)
         let byAcceptingStringTwo = NSMutableAttributedString(string: R.string.localizable.appWith(), attributes: nil)
         let spaceString = NSMutableAttributedString(string: " ", attributes: nil)
@@ -146,31 +198,21 @@ class ATYRegistrationViewController: UIViewController, BindableType {
         self.userAgreementInfoTextView.centerVerticalText()
         self.userAgreementInfoTextView.textColor = R.color.textSecondaryColor()
         self.userAgreementInfoTextView.isEditable = false
-
-        self.view.addSubview(self.userAgreementInfoTextView)
-        self.userAgreementInfoTextView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(self.doneButton.snp.bottom).offset(20)
-            make.height.equalTo(65)
-            make.width.equalTo(UIScreen.main.bounds.width-70)
-        }
     }
 
-    //MARK:- Handlers
+    @objc
+    private func doneButtonAction() {
+        viewModel.input.register()
+    }
     
-    @objc func doneButtonAction() {
-        let mail = emailTextField.text ?? String()
-        let pass = passwordTextField.text ?? String()
-        
-        viewModel.input.credentialsEntered(mail: mail, password: pass)
-//        let nameVc = ATYEnterNameViewController()
-//        navigationController?.pushViewController(nameVc, animated: true)
+    @objc
+    private func accountAction() {
+        viewModel.input.back()
     }
-}
-
-extension ATYRegistrationViewController: UITextViewDelegate {
+    
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         viewModel.input.open(url: URL)
         return false
     }
+    
 }

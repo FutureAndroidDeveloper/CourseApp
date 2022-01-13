@@ -7,7 +7,6 @@ struct CourseInfoModel {
 }
 
 
-
 class FullCourseInfo {
     private let group = DispatchGroup()
     private let courseService: CourseManager

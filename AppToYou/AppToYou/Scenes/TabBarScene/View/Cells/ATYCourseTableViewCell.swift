@@ -8,6 +8,18 @@
 
 import UIKit
 
+class ATYCourseTableViewModel {
+    var imageDidSet: ((UIImage?) -> Void)?
+    
+    let course: CourseResponse
+    
+    init(course: CourseResponse) {
+        self.course = course
+    }
+    
+}
+
+
 class ATYCourseTableViewCell : UITableViewCell {
 
     var widthConstraint = NSLayoutConstraint()
@@ -129,6 +141,18 @@ class ATYCourseTableViewCell : UITableViewCell {
         selectionStyle = .none
         configure()
     }
+    
+    private var model: ATYCourseTableViewModel?
+    
+    func set(model: ATYCourseTableViewModel) {
+        self.model = model
+        print("setup for = \(model.course.name)")
+        
+        model.imageDidSet = { [weak self] photo in
+            print("image for \(self?.model?.course.name)")
+            self?.imageViewCourse.image = photo
+        }
+    }
 
     func setUp(courseName: String,
                categories: [ATYCourseCategory],
@@ -153,7 +177,7 @@ class ATYCourseTableViewCell : UITableViewCell {
             allStackViews.addArrangedSubview(label)
         }
         descriptionCourseLabel.text = courseDescription
-        imageViewCourse.image = UIImage(imageName: avatarPath ?? "")
+//        imageViewCourse.image = UIImage(imageName: avatarPath ?? "")
         nameCourseLabel.text = courseName
         countTaskLabel.text = countOfCoin == nil ? "" : String(countOfCoin!) + " монет"
         coinImageView.isHidden = countOfCoin == nil
@@ -193,6 +217,7 @@ class ATYCourseTableViewCell : UITableViewCell {
         countPeopleLabel.text = nil
         countLikesLabel.text = nil
         typeOfCourseLabel.text = nil
+        imageViewCourse.image = nil
         coinImageView.isHidden = false
     }
 

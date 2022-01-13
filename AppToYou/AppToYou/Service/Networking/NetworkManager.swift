@@ -30,6 +30,9 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
         router = Router(deviceIdentifierService: deviceIdentifierService)
     }
     
+    func cancelTask() {
+        router.cancel()
+    }
     
     /**
      Выполнить запрос к серверу.

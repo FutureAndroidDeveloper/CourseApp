@@ -16,7 +16,7 @@
 "!@#$CompleteRegistration" = "Complete registration";
 "!@#$RegisterNow" = "Register now";
 "!@#$PickAPassword" = "Pick a password";
-"!@#$MinimumSix" = "⃰Minimum 6 characters, 1 number and an uppercase letter";
+"!@#$MinimumSix" = "⃰Minimum 8 characters, 1 capital and small letter";
 "!@#$Register" = "Register";
 "!@#$ByClicking" = "By clicking on the continue button you agree to";
 "!@#$AppWith" = "applications and with";

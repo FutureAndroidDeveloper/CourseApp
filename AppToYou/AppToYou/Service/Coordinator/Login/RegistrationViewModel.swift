@@ -2,12 +2,16 @@ import Foundation
 import XCoordinator
 
 protocol RegistrationViewModelInput {
-    func credentialsEntered(mail: String, password: String)
+    func register()
+    func back()
+    func createAppleAccount()
+    func createGoogleAccount()
     func open(url: URL)
 }
 
 protocol RegistrationViewModelOutput {
-    
+    var emailModel: RegistrationEmailModel { get }
+    var passwordModel: RegistrationPasswordModel { get }
 }
 
 
@@ -24,17 +28,46 @@ extension RegistrationViewModel where Self: RegistrationViewModelInput & Registr
 
 
 class RegistrationViewModelImpl: RegistrationViewModel, RegistrationViewModelInput, RegistrationViewModelOutput {
+    
+    var emailModel: RegistrationEmailModel
+    var passwordModel: RegistrationPasswordModel
 
     private let router: UnownedRouter<RegistrationRoute>
+    private let validator = RegistrationValidator()
 
     init(router: UnownedRouter<RegistrationRoute>) {
         self.router = router
+        
+        let emailFieldModel = TextFieldModel(value: String(), placeholder: R.string.localizable.enterYourEmail())
+        let passwordFieldModel = TextFieldModel(value: String(), placeholder: R.string.localizable.pickAPassword())
+        emailModel = RegistrationEmailModel(fieldModel: emailFieldModel)
+        passwordModel = RegistrationPasswordModel(fieldModel: passwordFieldModel)
     }
     
-    func credentialsEntered(mail: String, password: String) {
-        // validation
+    func register() {
+        validator.reset()
+        validator.validate(email: emailModel)
+        validator.validate(password: passwordModel)
+        guard !validator.hasError else {
+            return
+        }
         
-        router.trigger(.credentials(mail: mail, password: password))
+        let mail = emailModel.fieldModel.value
+        let password = passwordModel.fieldModel.value
+        let credentials = Credentials(mail: mail, password: password)
+        router.trigger(.name(credentials))
+    }
+    
+    func back() {
+        router.trigger(.haveAccount)
+    }
+    
+    func createAppleAccount() {
+        print("Apple")
+    }
+    
+    func createGoogleAccount() {
+        print("Google")
     }
     
     func open(url: URL) {

@@ -31,7 +31,7 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
         
         switch route {
         case .courses:
-            let coursesViewController = ATYCoursesViewController()
+            let coursesViewController = CoursesViewController()
             let coursesViewModel = CoursesViewModelImpl(coursesRouter: unownedRouter)
             coursesViewController.bind(to: coursesViewModel)
             

@@ -27,4 +27,3 @@ class TextField: BaseField<String>, UITextFieldDelegate {
     }
     
 }
-
