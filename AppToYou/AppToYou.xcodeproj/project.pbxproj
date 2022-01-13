@@ -317,6 +317,8 @@
 		04D4468627908036007F34B6 /* RegistrationPasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D4468527908036007F34B6 /* RegistrationPasswordModel.swift */; };
 		04D4468927908685007F34B6 /* ValidatableViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D4468827908685007F34B6 /* ValidatableViewWrapper.swift */; };
 		04D4468C27908B61007F34B6 /* RegistrationNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D4468B27908B61007F34B6 /* RegistrationNameModel.swift */; };
+		04D4468F2790A849007F34B6 /* LoginEmailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D4468E2790A849007F34B6 /* LoginEmailModel.swift */; };
+		04D446912790A885007F34B6 /* LoginPasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D446902790A885007F34B6 /* LoginPasswordModel.swift */; };
 		04D556E8277B1392007A601A /* MembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D556E7277B1392007A601A /* MembersView.swift */; };
 		04D556EA277B13F3007A601A /* LCTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D556E9277B13F3007A601A /* LCTextLayer.swift */; };
 		04D909DB277F2251001B7329 /* CreateTimerUserTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D909DA277F2251001B7329 /* CreateTimerUserTaskViewModel.swift */; };
@@ -945,6 +947,8 @@
 		04D4468527908036007F34B6 /* RegistrationPasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPasswordModel.swift; sourceTree = "<group>"; };
 		04D4468827908685007F34B6 /* ValidatableViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatableViewWrapper.swift; sourceTree = "<group>"; };
 		04D4468B27908B61007F34B6 /* RegistrationNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationNameModel.swift; sourceTree = "<group>"; };
+		04D4468E2790A849007F34B6 /* LoginEmailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginEmailModel.swift; sourceTree = "<group>"; };
+		04D446902790A885007F34B6 /* LoginPasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPasswordModel.swift; sourceTree = "<group>"; };
 		04D556E7277B1392007A601A /* MembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersView.swift; sourceTree = "<group>"; };
 		04D556E9277B13F3007A601A /* LCTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCTextLayer.swift; sourceTree = "<group>"; };
 		04D909DA277F2251001B7329 /* CreateTimerUserTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTimerUserTaskViewModel.swift; sourceTree = "<group>"; };
@@ -2941,6 +2945,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		04D4468D2790A834007F34B6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04D4468E2790A849007F34B6 /* LoginEmailModel.swift */,
+				04D446902790A885007F34B6 /* LoginPasswordModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		04D909D9277F2215001B7329 /* CreateUserTask */ = {
 			isa = PBXGroup;
 			children = (
@@ -4621,6 +4634,7 @@
 		6DDA1280265B9145004124E7 /* AuthorizationScene */ = {
 			isa = PBXGroup;
 			children = (
+				04D4468D2790A834007F34B6 /* Model */,
 				6DDA1285265B91BE004124E7 /* ViewModel */,
 				6DDA128A265B91CD004124E7 /* View */,
 			);
@@ -5210,6 +5224,7 @@
 				6DC42F5E2670E361006CB865 /* ATYAboutCourseViewController.swift in Sources */,
 				04FBBEC22784B2AE0073CA4B /* AdminEditTextCourseTaskModel.swift in Sources */,
 				04FBBEC42784B2D30073CA4B /* AdminEditTextCourseTaskConstructor.swift in Sources */,
+				04D4468F2790A849007F34B6 /* LoginEmailModel.swift in Sources */,
 				041F2242278D6EA000094F7E /* CourseCellPriceView.swift in Sources */,
 				048C22CD2767918D00F3FF4D /* DurationTime.swift in Sources */,
 				0429A4B2275AB37D00B1BFD9 /* TimeBlockView.swift in Sources */,
@@ -5331,6 +5346,7 @@
 				0482E120274EAD5400B0F3AF /* NewPasswordViewModel.swift in Sources */,
 				0469094D27721D5600F3CE3C /* Authorization.swift in Sources */,
 				6D3AC1E126846BE0007AC57D /* CDUserTask+CoreDataProperties.swift in Sources */,
+				04D446912790A885007F34B6 /* LoginPasswordModel.swift in Sources */,
 				0481B4272780ABA80055B8B5 /* CreateTextCourseTaskViewModel.swift in Sources */,
 				044346382774CCD600F07FBA /* TableViewSection.swift in Sources */,
 				6DC7680C26BC0F5200B8811C /* ATYNeedAuthorizationForTaskSanctionViewController.swift in Sources */,

@@ -4,12 +4,17 @@ import XCoordinator
 protocol AuthorizationViewModelInput {
     func resetTapped()
     func registrationTapped()
-    func loginTapped(_ credentials: Credentials)
+    func loginTapped()
     func didLogin()
+    func continueFlow()
+    
+    func useAppleAccount()
+    func useGoogleAccount()
 }
 
 protocol AuthorizationViewModelOutput {
-    
+    var emailModel: LoginEmailModel { get }
+    var passwordModel: LoginPasswordModel { get }
 }
 
 
@@ -30,16 +35,28 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     private let appRouter: UnownedRouter<AppRoute>
     private let router: UnownedRouter<LoginRoute>
     
-    private let loginManager: LoginManager
+    var emailModel: LoginEmailModel
+    var passwordModel: LoginPasswordModel
+    
+    private let loginManager = LoginManager(deviceIdentifierService: DeviceIdentifierService())
 
     init(router: UnownedRouter<LoginRoute>, appRouter: UnownedRouter<AppRoute>) {
         self.router = router
         self.appRouter = appRouter
-        loginManager = LoginManager(deviceIdentifierService: DeviceIdentifierService())
+        
+        let emailFieldModel = TextFieldModel(value: String(), placeholder: R.string.localizable.enterYourEmail())
+        let passwordFieldModel = TextFieldModel(value: String(), placeholder: R.string.localizable.enterPassword())
+        emailModel = LoginEmailModel(fieldModel: emailFieldModel)
+        passwordModel = LoginPasswordModel(fieldModel: passwordFieldModel)
     }
     
-    func loginTapped(_ credentials: Credentials) {
-        // validate
+    func loginTapped() {
+        let mail = emailModel.fieldModel.value
+        let password = passwordModel.fieldModel.value
+        let credentials = Credentials(mail: mail, password: password)
+        guard validate(credentials: credentials) else {
+            return
+        }
         
         loginManager.login(credentials: credentials) { [weak self] result in
             guard let self = self else {
@@ -53,13 +70,33 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
                     self.didLogin()
                 }
                 else {
-                    self.showLogin(message: loginResponse.loginStatus.message)
+                    self.bindError(loginResponse.loginStatus)
                 }
-                
             case .failure(let error):
                 print(error.description)
             }
         }
+    }
+    
+    func validate(credentials: Credentials) -> Bool {
+        var result = true
+        let mail = credentials.mail
+        let password = credentials.password
+        
+        if mail.isEmpty {
+            emailModel.bind(error: LoginStsatus.empty)
+            result = false
+        } else {
+            emailModel.bind(error: nil)
+        }
+        
+        if password.isEmpty {
+            passwordModel.bind(error: LoginStsatus.empty)
+            result = false
+        } else {
+            passwordModel.bind(error: nil)
+        }
+        return result
     }
     
     func didLogin() {
@@ -74,12 +111,27 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
         router.trigger(.registration)
     }
     
-    private func showLogin(message: String?) {
-        guard let message = message else {
-            return
+    func continueFlow() {
+        print("Continue")
+    }
+    
+    func useAppleAccount() {
+        print("Apple")
+    }
+    
+    func useGoogleAccount() {
+        print("Google")
+    }
+    
+    private func bindError(_ error: LoginStsatus) {
+        switch error {
+        case .empty, .ok:
+            break
+        case .userNotFound:
+            emailModel.bind(error: LoginStsatus.userNotFound)
+        case .wrongPassword:
+            passwordModel.bind(error: LoginStsatus.wrongPassword)
         }
-        
-        print(message)
     }
     
     private func updateUser(credentials: Credentials, user: UserResponse?) {

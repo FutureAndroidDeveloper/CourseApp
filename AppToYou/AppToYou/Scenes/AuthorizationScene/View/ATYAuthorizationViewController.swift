@@ -1,290 +1,203 @@
-//
-//  View.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 24.05.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
-import Foundation
 import SnapKit
+import UIKit
+
 
 class ATYAuthorizationViewController: UIViewController, BindableType {
     
+    private struct Constants {
+        static let loginImageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -20, right: 0)
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: -34, right: 20)
+        
+        static let passwordInsets = UIEdgeInsets(top: -5, left: 20, bottom: 30, right: 20)
+        static let emailInsets = UIEdgeInsets(top: 0, left: 20, bottom: 30, right: 20)
+        
+        static let loginInstes = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        static let registrationInsets = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
+        static let servicesInsets = UIEdgeInsets(top: 17, left: 0, bottom: 0, right: 0)
+        static let continueInsets = UIEdgeInsets(top: 22, left: 20, bottom: 0, right: 20)
+        
+        struct Email {
+            static let textInsets = UIEdgeInsets(top: 12, left: 16, bottom: 13, right: 12)
+            static let iconInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 0)
+        }
+        
+        struct Password {
+            static let textInsets = UIEdgeInsets(top: 12, left: 16, bottom: 13, right: 100)
+            static let iconInsets = UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 0)
+            static let restoreInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 36)
+        }
+    }
+    
     var viewModel: AuthorizationViewModel!
     
+    private let emailTextField = FieldFactory.shared.getTextField()
+    private var emailContainer = ValidatableViewWrapper()
+
+    private let passwordTextField = FieldFactory.shared.getTextField()
+    private var passwordContainer = ValidatableViewWrapper()
     
-    func bindViewModel() {
-        //
-    }
-
-    private let inAccountLabel : UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font =  UIFont.Regular(size: 28)
-        label.text = R.string.localizable.signIn()
-        label.textColor = R.color.titleTextColor()
-        return label
+    private let loginImageView = UIImageView()
+    private let titleLabel = LabelFactory.createHeaderLabel(title: R.string.localizable.signIn())
+    private let loginButton = ButtonFactory.getStandartButton(title: R.string.localizable.signInAcc())
+    private let servicesView = ServiceLoginView()
+    private let continueButton = ButtonFactory.getTansparentButton(title: "Продолжить без регистрации")
+    
+    private lazy var registrationView: UIStackView = {
+        let titleLabel = UILabel()
+        titleLabel.text = R.string.localizable.dontHaveAnAccount()
+        titleLabel.font = UIFont.systemFont(ofSize: 13)
+        titleLabel.textColor = R.color.titleTextColor()
+        
+        let actionButton = UIButton()
+        actionButton.setTitle(R.string.localizable.registerNow(), for: .normal)
+        actionButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        actionButton.setTitleColor(R.color.buttonColor(), for: .normal)
+        actionButton.addTarget(self, action: #selector(registrationAction), for: .touchUpInside)
+        
+        let stack = UIStackView(arrangedSubviews: [titleLabel, actionButton])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.spacing = 8
+        return stack
     }()
-
-    private let emailTextField : UITextField = {
-        let textField = UITextField()
-        textField.placeholder = R.string.localizable.enterYourEmail()
-        textField.backgroundColor = R.color.backgroundTextFieldsColor()
-        textField.textColor = R.color.titleTextColor()
-        return textField
-    }()
-
-    private let passwordTextField : ATYTextField = {
-        let textField = ATYTextField()
-        textField.backgroundColor = R.color.backgroundTextFieldsColor()
-        textField.placeholder = R.string.localizable.enterPassword()
-        textField.textColor = R.color.titleTextColor()
-        return textField
-    }()
-
-    private let signInButton : UIButton = {
-        let button = UIButton()
-        button.backgroundColor = R.color.buttonColor()
-        button.addTarget(self, action: #selector(signInButtonAction), for: .touchUpInside)
-        button.setTitle(R.string.localizable.signInAcc(), for: .normal)
-        return button
-    }()
-
-    private let dontHaveAccountLabel : UILabel = {
-        let label = UILabel()
-        label.text = R.string.localizable.dontHaveAnAccount()
-        label.font = UIFont.systemFont(ofSize: 13)
-        return label
-    }()
-
-    private let registrationButton : UIButton = {
-        let button = UIButton()
-        button.setTitle(R.string.localizable.registerNow(), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        button.addTarget(self, action: #selector(registrationButtonAction), for: .touchUpInside)
-        button.setTitleColor(R.color.buttonColor(), for: .normal)
-        return button
-    }()
-
-    private let forgotButton : UIButton = {
-        let button = UIButton()
-        button.setTitle(R.string.localizable.forgot(), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        button.setTitleColor(R.color.titleTextColor(), for: .normal)
-        button.addTarget(self, action: #selector(forgotButtonAction), for: .touchUpInside)
-        return button
-    }()
-
-    private let orLabel : UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font =  UIFont.Regular(size: 13)
-        label.text = R.string.localizable.or()
-        label.textColor = R.color.titleTextColor()
-        return label
-    }()
-
-    private let googleButton : UIButton = {
-        let button = UIButton()
-        button.addTarget(self, action: #selector(googleButtonAction), for: .touchUpInside)
-        button.setImage(R.image.google(), for: .normal)
-        return button
-    }()
-
-    private let fbButton : UIButton = {
-        let button = UIButton()
-        button.addTarget(self, action: #selector(fbButtonAction), for: .touchUpInside)
-        button.setImage(R.image.appleSignInImage(), for: .normal)
-        return button
-    }()
-
-    private var leftLineView = UIView()
-    private var rightLineView = UIView()
-
-    private let dontHaveAccountStackView = UIStackView()
-    private let googleOrFacebookStackView = UIStackView()
-
-    //MARK:- Lifecycle methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = R.color.backgroundAppColor()
-        configureNavBar()
-        configureViews()
-        configureDontHaveAccountStackView()
-        configureOrViews()
-        configureGoogleOrFacebookStackView()
+        configure()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        emailTextField.layer.cornerRadius = emailTextField.frame.height / 2
-        passwordTextField.layer.cornerRadius = passwordTextField.frame.height / 2
-        signInButton.layer.cornerRadius = signInButton.frame.height / 2
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        loginButton.layer.cornerRadius = loginButton.bounds.height / 2
     }
 
-    //MARK:- Configure UI
 
-
-    private func configureNavBar() {
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.layoutIfNeeded()
+    private func configure() {
+        let mailContainer = createContainer(for: emailTextField, insets: Constants.emailInsets)
+        emailContainer = ValidatableViewWrapper(content: mailContainer)
+        view.addSubview(emailContainer)
+        emailContainer.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.center.equalToSuperview()
+        }
+        
+        let passContainer = createContainer(for: passwordTextField, insets: Constants.passwordInsets)
+        passwordContainer = ValidatableViewWrapper(content: passContainer)
+        view.addSubview(passwordContainer)
+        passwordContainer.snp.makeConstraints {
+            $0.top.equalTo(mailContainer.snp.bottom)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        titleLabel.textAlignment = .center
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.bottom.equalTo(emailContainer.snp.top).offset(Constants.titleInsets.bottom)
+            $0.leading.trailing.equalToSuperview().inset(Constants.titleInsets)
+        }
+        
+        loginImageView.image = R.image.login()
+        view.addSubview(loginImageView)
+        loginImageView.snp.makeConstraints {
+            $0.bottom.equalTo(titleLabel.snp.top).offset(Constants.loginImageInsets.bottom)
+            $0.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(loginButton)
+        loginButton.snp.makeConstraints {
+            $0.top.equalTo(passwordContainer.snp.bottom).offset(Constants.loginInstes.top)
+            $0.leading.trailing.equalToSuperview().inset(Constants.loginInstes)
+        }
+        
+        view.addSubview(registrationView)
+        registrationView.snp.makeConstraints {
+            $0.top.equalTo(loginButton.snp.bottom).offset(Constants.registrationInsets.top)
+            $0.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(servicesView)
+        servicesView.snp.makeConstraints {
+            $0.top.equalTo(registrationView.snp.bottom).offset(Constants.servicesInsets.top)
+            $0.leading.trailing.equalToSuperview().inset(Constants.servicesInsets)
+        }
+        
+        view.addSubview(continueButton)
+        continueButton.snp.makeConstraints {
+            $0.top.equalTo(servicesView.snp.bottom).offset(Constants.continueInsets.top)
+            $0.leading.trailing.equalToSuperview().inset(Constants.continueInsets)
+        }
+        
+        let forgotButton = UIButton()
+        forgotButton.setTitle(R.string.localizable.forgot(), for: .normal)
+        forgotButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        forgotButton.setTitleColor(R.color.titleTextColor(), for: .normal)
+        
+        passContainer.addSubview(forgotButton)
+        forgotButton.snp.makeConstraints {
+            $0.top.trailing.equalToSuperview().inset(Constants.Password.restoreInsets)
+        }
+        
+        forgotButton.addTarget(self, action: #selector(forgotButtonAction), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(signInButtonAction), for: .touchUpInside)
     }
-
-    private func configureViews() {
-        view.addSubview(inAccountLabel)
-        inAccountLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.centerY.equalToSuperview().multipliedBy(0.6)
+    
+    private func createContainer(for view: UIView, insets: UIEdgeInsets) -> UIView {
+        let container = UIView()
+        container.addSubview(view)
+        view.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(insets)
         }
-
-        let mailImageView = UIImageView(frame: CGRect(x: 0, y: 2, width: 26, height: 26))
-        mailImageView.image = R.image.mail()
-
-        let backView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 32))
-        backView.addSubview(mailImageView)
-
-        view.addSubview(emailTextField)
-
-        emailTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 0.0)
-        emailTextField.leftView = backView
-        emailTextField.leftViewMode = .always
-        emailTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(inAccountLabel.snp.bottom).offset(40)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(50)
-        }
-
-        let chainImageView = UIImageView(frame: CGRect(x: 0, y: 2, width: 26, height: 26))
-        chainImageView.image = R.image.chain()
-
-        let backChainView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 32))
-        backChainView.addSubview(chainImageView)
-
-        passwordTextField.layer.sublayerTransform = CATransform3DMakeTranslation(10.0, 0.0, 20)
-        passwordTextField.leftView = backChainView
-        passwordTextField.leftViewMode = .always
-        passwordTextField.rightView = forgotButton
-        passwordTextField.rightViewMode = .always
-
-        view.addSubview(passwordTextField)
-        passwordTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(emailTextField.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(50)
-        }
-
-        view.addSubview(signInButton)
-
-        signInButton.snp.makeConstraints { (make) in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(50)
-        }
+        return container
     }
-
-    private func configureDontHaveAccountStackView() {
-        dontHaveAccountStackView.translatesAutoresizingMaskIntoConstraints = false
-        dontHaveAccountStackView.axis = .horizontal
-        dontHaveAccountStackView.alignment = .center
-        dontHaveAccountStackView.spacing = 5
-
-        dontHaveAccountStackView.addArrangedSubview(dontHaveAccountLabel)
-        dontHaveAccountStackView.addArrangedSubview(registrationButton)
-
-        view.addSubview(dontHaveAccountStackView)
-
-        dontHaveAccountStackView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(signInButton.snp.bottom).offset(10)
+    
+    func bindViewModel() {
+        let emailModel = viewModel.output.emailModel
+        let emailContentModel = FieldContentModel(fieldModel: emailModel.fieldModel, insets: Constants.Email.textInsets)
+        let mailImageView = UIImageView(image: R.image.mail(), highlightedImage: nil)
+        let mailContent = FieldAdditionalContentModel(contentView: mailImageView, insets: Constants.Email.iconInsets)
+        let emailFieldModel = FieldModel(content: emailContentModel, leftContent: mailContent)
+        
+        emailTextField.configure(with: emailFieldModel)
+        emailModel.errorNotification = { [weak self] error in
+            self?.emailTextField.bind(error: error)
+            self?.emailContainer.bind(error: error)
         }
-    }
-
-    private func configureOrViews() {
-        view.addSubview(leftLineView)
-        view.addSubview(orLabel)
-        view.addSubview(rightLineView)
-
-        orLabel.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(dontHaveAccountStackView.snp.bottom).offset(10)
+        
+        let passwordModel = viewModel.output.passwordModel
+        let passwordContentModel = FieldContentModel(fieldModel: passwordModel.fieldModel, insets: Constants.Password.textInsets)
+        let passwordImageView = UIImageView(image: R.image.chain(), highlightedImage: nil)
+        let passwordContent = FieldAdditionalContentModel(contentView: passwordImageView, insets: Constants.Password.iconInsets)
+        let passwordFieldModel = FieldModel(content: passwordContentModel, leftContent: passwordContent)
+        
+        passwordTextField.configure(with: passwordFieldModel)
+        passwordModel.errorNotification = { [weak self] error in
+            self?.passwordTextField.bind(error: error)
+            self?.passwordContainer.bind(error: error)
         }
-
-        leftLineView.backgroundColor = R.color.lineViewBackgroundColor()
-        leftLineView.alpha = 0.15
-        leftLineView.snp.makeConstraints { (make) in
-            make.width.equalTo(UIScreen.main.bounds.width / 5)
-            make.trailing.equalTo(orLabel.snp.leading).offset(-5)
-            make.centerY.equalTo(orLabel)
-            make.height.equalTo(1)
+        
+        servicesView.appleAction = { [weak self] in
+            self?.viewModel.input.useAppleAccount()
         }
-
-        rightLineView.backgroundColor = R.color.lineViewBackgroundColor()
-        rightLineView.alpha = 0.15
-        rightLineView.snp.makeConstraints { (make) in
-            make.width.equalTo(UIScreen.main.bounds.width / 5)
-            make.leading.equalTo(orLabel.snp.trailing).offset(5)
-            make.centerY.equalTo(orLabel)
-            make.height.equalTo(1)
+        
+        servicesView.googleAction = { [weak self] in
+            self?.viewModel.input.useGoogleAccount()
         }
     }
 
-    private func configureGoogleOrFacebookStackView() {
-        googleOrFacebookStackView.translatesAutoresizingMaskIntoConstraints = false
-        googleOrFacebookStackView.axis = .horizontal
-        googleOrFacebookStackView.alignment = .center
-        googleOrFacebookStackView.spacing = 16
-
-        googleOrFacebookStackView.addArrangedSubview(googleButton)
-        googleOrFacebookStackView.addArrangedSubview(fbButton)
-
-        view.addSubview(googleOrFacebookStackView)
-
-        googleOrFacebookStackView.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(orLabel.snp.bottom).offset(10)
-        }
-
-    }
-
-    //MARK:- Handlers
-
-    @objc func forgotButtonAction() {
+    @objc
+    private func forgotButtonAction() {
         viewModel.input.resetTapped()
     }
-
-    @objc func signInButtonAction() {
-//        let login = emailTextField.text ?? String()
-//        let login = "task@mail.com"
-//        let password = "12345678Qq"
-        
-        let login = "Lol@mail.ru"
-        let password = "12345678Qq"
-        
-        
-//        let password = passwordTextField.text ?? String()
-        let credentials = Credentials(mail: login, password: password)
-        
-        viewModel.input.loginTapped(credentials)
-//        viewModel.input.didLogin()
-    }
-
-    @objc func registrationButtonAction() {
+    
+    @objc
+    private func registrationAction() {
         viewModel.input.registrationTapped()
     }
 
-    @objc func googleButtonAction() {
-        print(DeviceIdentifierService().getDeviceUUID())
-        print("registrationButtonAction")
+    @objc
+    private func signInButtonAction() {
+        viewModel.input.loginTapped()
     }
-
-    @objc func fbButtonAction() {
-        print("registrationButtonAction")
-    }
+    
 }

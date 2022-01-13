@@ -57,7 +57,7 @@ class ResetPasswordCoordinator: NavigationCoordinator<ResetPasswordRoute> {
             if UIApplication.shared.canOpenURL(mailURL) {
                 UIApplication.shared.open(mailURL, options: [:], completionHandler: nil)
             }
-            trigger(.newPassword(token: ""))
+//            trigger(.newPassword(token: ""))
             return .none()
         }
     }
