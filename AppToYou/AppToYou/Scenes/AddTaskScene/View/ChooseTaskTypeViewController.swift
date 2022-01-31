@@ -60,8 +60,7 @@ class ChooseTaskTypeViewController: UIViewController, BindableType {
     func bindViewModel() {
         viewModel.output.sections.bind(self.update(_:))
         viewModel.output.updatedState.bind { [weak self] _ in
-            self?.taskTypesTableview.beginUpdates()
-            self?.taskTypesTableview.endUpdates()
+            self?.taskTypesTableview.reloadData()
         }
     }
     

@@ -18,6 +18,7 @@ class ProfilePhotoViewController: UIViewController, BindableType {
     
     var viewModel: AddPhotoViewModel!
     
+    private let spinner = OverlaySpinner()
     private let titleLabel = LabelFactory.createHeaderLabel(title: R.string.localizable.downloadPhoto())
     private let addPhotoButton = ButtonFactory.getProfileImageButton(title: nil)
     private let saveButton = ButtonFactory.getStandartButton(title: R.string.localizable.save())
@@ -82,6 +83,11 @@ class ProfilePhotoViewController: UIViewController, BindableType {
             $0.leading.trailing.equalToSuperview().inset(Constants.laterInsets)
         }
         
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         addPhotoButton.addTarget(self, action: #selector(addButtonAction), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(saveButtonAction), for: .touchUpInside)
         laterButton.addTarget(self, action: #selector(laterButtonAction), for: .touchUpInside)
@@ -102,6 +108,11 @@ class ProfilePhotoViewController: UIViewController, BindableType {
             } else {
                 self?.saveButton.disable()
             }
+        }
+        
+        viewModel.output.isLoading.bind { [weak self] isLoading in
+            let spinnerAction: (() -> Void)? = isLoading ? self?.spinner.show : self?.spinner.hide
+            spinnerAction?()
         }
     }
     

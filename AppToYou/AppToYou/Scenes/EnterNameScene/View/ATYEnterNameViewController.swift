@@ -20,6 +20,7 @@ class ATYEnterNameViewController: UIViewController, BindableType {
 
     private let titleLabel = LabelFactory.createHeaderLabel(title: R.string.localizable.letSGetAcquainted())
     private let doneButton = ButtonFactory.getStandartButton(title: R.string.localizable.completeRegistration())
+    private let spinner = OverlaySpinner()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,11 @@ class ATYEnterNameViewController: UIViewController, BindableType {
             $0.leading.trailing.equalToSuperview().inset(Constants.doneInsets)
         }
         
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         doneButton.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
     }
     
@@ -74,6 +80,11 @@ class ATYEnterNameViewController: UIViewController, BindableType {
         nameModel.errorNotification = { [weak self] error in
             self?.nameTextField.bind(error: error)
             self?.nameContainer.bind(error: error)
+        }
+        
+        viewModel.output.isLoading.bind { [weak self] isLoading in
+            let spinnerAction: (() -> Void)? = isLoading ? self?.spinner.show : self?.spinner.hide
+            spinnerAction?()
         }
     }
     

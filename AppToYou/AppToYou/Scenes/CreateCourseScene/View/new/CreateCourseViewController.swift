@@ -83,8 +83,7 @@ class CreateCourseViewController: UIViewController, BindableType {
     func bindViewModel() {
         viewModel.output.data.bind(self.update(_:))
         viewModel.output.updatedState.bind { [weak self] _ in
-            self?.createCourseTableView.beginUpdates()
-            self?.createCourseTableView.endUpdates()
+            self?.createCourseTableView.reloadData()
         }
         
         doneButton.setTitle(viewModel.output.doneButtonTitle, for: .normal)

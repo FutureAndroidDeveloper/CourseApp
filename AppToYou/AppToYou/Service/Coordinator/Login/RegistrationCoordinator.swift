@@ -10,6 +10,7 @@ enum RegistrationRoute: Route {
     case haveAccount
     case didRegister
     case url(_ url: URL)
+    case error(message: String)
 }
 
 
@@ -62,6 +63,10 @@ class RegistrationCoordinator: NavigationCoordinator<RegistrationRoute> {
             
         case .url(let url):
             UIApplication.shared.open(url)
+            
+        case .error(let message):
+            let errorCoordinator = ErrorAlertCoordinator(message: message)
+            return .present(errorCoordinator)
         }
         
         return .none()

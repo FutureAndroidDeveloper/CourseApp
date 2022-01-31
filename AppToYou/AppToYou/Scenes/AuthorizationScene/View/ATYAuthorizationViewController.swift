@@ -30,6 +30,7 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
     
     var viewModel: AuthorizationViewModel!
     
+    private let spinner = OverlaySpinner()
     private let emailTextField = FieldFactory.shared.getTextField()
     private var emailContainer = ValidatableViewWrapper()
 
@@ -138,8 +139,14 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
             $0.top.trailing.equalToSuperview().inset(Constants.Password.restoreInsets)
         }
         
+        view.addSubview(spinner)
+        spinner.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         forgotButton.addTarget(self, action: #selector(forgotButtonAction), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(signInButtonAction), for: .touchUpInside)
+        continueButton.addTarget(self, action: #selector(continueFlow), for: .touchUpInside)
     }
     
     private func createContainer(for view: UIView, insets: UIEdgeInsets) -> UIView {
@@ -183,6 +190,11 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
         servicesView.googleAction = { [weak self] in
             self?.viewModel.input.useGoogleAccount()
         }
+        
+        viewModel.output.isLoading.bind { [weak self] isLoading in
+            let spinnerAction: (() -> Void)? = isLoading ? self?.spinner.show : self?.spinner.hide
+            spinnerAction?()
+        }
     }
 
     @objc
@@ -198,6 +210,11 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
     @objc
     private func signInButtonAction() {
         viewModel.input.loginTapped()
+    }
+    
+    @objc
+    private func continueFlow() {
+        viewModel.input.continueFlow()
     }
     
 }

@@ -83,8 +83,7 @@ class AddCourseTaskViewController: UIViewController, BindableType {
     func bindViewModel() {
         viewModel.output.sections.bind(self.update(_:))
         viewModel.output.updatedState.bind { [weak self] _ in
-            self?.tableView.beginUpdates()
-            self?.tableView.endUpdates()
+            self?.tableView.reloadData()
         }
     }
     

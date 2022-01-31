@@ -63,8 +63,7 @@ class CourseViewController: UIViewController, BindableType {
             self?.update(sections)
         }
         viewModel.output.updatedState.bind { [weak self] _ in
-            self?.tableView.beginUpdates()
-            self?.tableView.endUpdates()
+            self?.tableView.reloadData()
         }
     }
     

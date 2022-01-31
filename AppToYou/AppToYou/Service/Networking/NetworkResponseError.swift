@@ -11,6 +11,7 @@ enum NetworkResponseError: Error, CustomStringConvertible {
     case unableToDecode
     case invalidResponse
     case canceled
+    case custom(message: String)
     
     var description: String {
         switch self {
@@ -23,6 +24,7 @@ enum NetworkResponseError: Error, CustomStringConvertible {
         case .unableToDecode: return "R.string.localizable.decodeProblem()"
         case .invalidResponse: return "Invalid Response"
         case .canceled: return "Request canceled"
+        case .custom(let message): return message
         }
     }
     

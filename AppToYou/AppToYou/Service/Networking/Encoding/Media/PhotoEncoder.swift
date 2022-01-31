@@ -23,7 +23,7 @@ public struct PhotoEncoder {
         let firstData = try getData(for: "--" + boundary + "\r\n")
         fullData.append(firstData)
         
-        let dispositionData = try getData(for: "Content-Disposition: form-data; name=\"\(media.key)\"; filename=\"" + media.fileName + "\"\r\n")
+        let dispositionData = try getData(for: "Content-Disposition: form-data; name=\"\(media.key)\"; filename=\"\(media.fileName)\"\r\n")
         fullData.append(dispositionData)
         
         let contentTypeData = try getData(for: "Content-Type: \(media.mimeType.rawValue)\r\n\r\n")

@@ -23,14 +23,15 @@ class UpdateUserWithPhoto {
             self.group.leave()
         }
         
+        group.enter()
         if let photo = photo {
-            group.enter()
             attachmentService.upload(photo: photo) { result in
                 photoResult = result
                 self.group.leave()
             }
         } else {
             photoResult = .success(String())
+            self.group.leave()
         }
         
         group.notify(queue: DispatchQueue.main) {

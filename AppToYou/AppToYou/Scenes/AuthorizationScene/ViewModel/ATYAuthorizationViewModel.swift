@@ -15,6 +15,7 @@ protocol AuthorizationViewModelInput {
 protocol AuthorizationViewModelOutput {
     var emailModel: LoginEmailModel { get }
     var passwordModel: LoginPasswordModel { get }
+    var isLoading: Observable<Bool> { get }
 }
 
 
@@ -37,6 +38,7 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     
     var emailModel: LoginEmailModel
     var passwordModel: LoginPasswordModel
+    var isLoading: Observable<Bool> = Observable(false)
     
     private let loginManager = LoginManager(deviceIdentifierService: DeviceIdentifierService())
 
@@ -58,11 +60,12 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
             return
         }
         
+        isLoading.value = true
         loginManager.login(credentials: credentials) { [weak self] result in
             guard let self = self else {
                 return
             }
-            
+            self.isLoading.value = false
             switch result {
             case .success(let loginResponse):
                 if loginResponse.loginStatus == .ok {
@@ -71,11 +74,16 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
                 }
                 else {
                     self.bindError(loginResponse.loginStatus)
+                    self.displayError(message: loginResponse.loginStatus.message ?? String())
                 }
             case .failure(let error):
-                print(error.description)
+                self.displayError(message: error.localizedDescription)
             }
         }
+    }
+    
+    private func displayError(message: String) {
+        router.trigger(.error(message: message))
     }
     
     func validate(credentials: Credentials) -> Bool {
@@ -112,7 +120,7 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     }
     
     func continueFlow() {
-        print("Continue")
+        router.trigger(.didLogin)
     }
     
     func useAppleAccount() {

@@ -50,8 +50,7 @@ class InfoViewController: UIViewController, BindableType {
             self?.update(sections)
         }
         viewModel.output.updatedState.bind { [weak self] _ in
-            self?.infoTable.beginUpdates()
-            self?.infoTable.endUpdates()
+            self?.infoTable.reloadData()
         }
     }
     

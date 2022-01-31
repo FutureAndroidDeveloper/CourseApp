@@ -41,4 +41,13 @@ enum UserEndpoint: Endpoint {
         }
     }
     
+    var headers: HTTPHeaders {
+        switch self {
+        case .update, .delete:
+            return UserSession.shared.getAuthorizationHeader()
+        default:
+            return [:]
+        }
+    }
+    
 }

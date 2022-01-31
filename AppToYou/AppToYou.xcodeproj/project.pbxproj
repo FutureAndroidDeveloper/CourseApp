@@ -300,6 +300,8 @@
 		04BB1806274BD81B00C584F8 /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */; };
 		04BB9B8E2788CDFE00353F84 /* AddTaskSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB9B8D2788CDFE00353F84 /* AddTaskSheetCoordinator.swift */; };
 		04C3AF652778CCE1005388BD /* CommonValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C3AF642778CCE1005388BD /* CommonValidationError.swift */; };
+		04C9C0882791A9DF00D5FFB6 /* OverlaySpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9C0872791A9DF00D5FFB6 /* OverlaySpinner.swift */; };
+		04C9C08B2791C37200D5FFB6 /* ErrorAlertCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9C08A2791C37100D5FFB6 /* ErrorAlertCoordinator.swift */; };
 		04C9D05B2777D0F000837A05 /* MinimumSymbolsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9D05A2777D0F000837A05 /* MinimumSymbolsModel.swift */; };
 		04CECEAB27581CD100ECCB2D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CECEAA27581CD100ECCB2D /* Observable.swift */; };
 		04D1FA5D2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D1FA5C2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift */; };
@@ -930,6 +932,8 @@
 		04BB1805274BD81B00C584F8 /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
 		04BB9B8D2788CDFE00353F84 /* AddTaskSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskSheetCoordinator.swift; sourceTree = "<group>"; };
 		04C3AF642778CCE1005388BD /* CommonValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonValidationError.swift; sourceTree = "<group>"; };
+		04C9C0872791A9DF00D5FFB6 /* OverlaySpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlaySpinner.swift; sourceTree = "<group>"; };
+		04C9C08A2791C37100D5FFB6 /* ErrorAlertCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertCoordinator.swift; sourceTree = "<group>"; };
 		04C9D05A2777D0F000837A05 /* MinimumSymbolsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimumSymbolsModel.swift; sourceTree = "<group>"; };
 		04CECEAA27581CD100ECCB2D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		04D1FA5C2770F7DB0011ECC0 /* TimerCreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCreateTaskViewModel.swift; sourceTree = "<group>"; };
@@ -2393,6 +2397,7 @@
 		048413C62775DD67003C1296 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				04C9C0892791C35F00D5FFB6 /* ErrorAlertCoordinator */,
 				048413C72775DD77003C1296 /* ImageActionsCoordinator.swift */,
 				046974BF27754BB300BAFAD0 /* PermissionAlertCoordinator.swift */,
 			);
@@ -2877,6 +2882,22 @@
 				045BF633278B66CA007F201F /* BottomSheetCoordinator */,
 			);
 			path = SheetCoordinator;
+			sourceTree = "<group>";
+		};
+		04C9C0862791A9D100D5FFB6 /* OverlaySpinner */ = {
+			isa = PBXGroup;
+			children = (
+				04C9C0872791A9DF00D5FFB6 /* OverlaySpinner.swift */,
+			);
+			path = OverlaySpinner;
+			sourceTree = "<group>";
+		};
+		04C9C0892791C35F00D5FFB6 /* ErrorAlertCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				04C9C08A2791C37100D5FFB6 /* ErrorAlertCoordinator.swift */,
+			);
+			path = ErrorAlertCoordinator;
 			sourceTree = "<group>";
 		};
 		04D1FA6427711A040011ECC0 /* TextView */ = {
@@ -4195,6 +4216,7 @@
 		6D91B875265BF4AD00EB2589 /* ReusableViews */ = {
 			isa = PBXGroup;
 			children = (
+				04C9C0862791A9D100D5FFB6 /* OverlaySpinner */,
 				04D446872790867C007F34B6 /* ValidatableViewWrapper */,
 				04D4467D27905C3F007F34B6 /* ServiceLoginView */,
 				0426BA95277CC05300A7EFE9 /* HighlitedTieleView */,
@@ -4996,6 +5018,7 @@
 				04072C55277A611500C9B2EF /* CreateCourseTaskCell.swift in Sources */,
 				6D40CA5526679BBB00A78CEC /* Date+ToString.swift in Sources */,
 				04F71BC1276D291100A0B181 /* SelectDateModel.swift in Sources */,
+				04C9C0882791A9DF00D5FFB6 /* OverlaySpinner.swift in Sources */,
 				6DC4AE18268DA6A60028CDDE /* ATYCreateTaskViewModel.swift in Sources */,
 				042C76AE278DF2320064C82B /* CourseImagesLoader.swift in Sources */,
 				6D8A280E265E465200BAAEF5 /* ATYStackProgressView.swift in Sources */,
@@ -5425,6 +5448,7 @@
 				040E1818277BBC3300F7DF79 /* CourseCoordinator.swift in Sources */,
 				049E2089278740D000AB4346 /* UserEditTimerCourseTaskModel.swift in Sources */,
 				04D909E2277F5DA2001B7329 /* CreateRepeatCourseTaskViewModel.swift in Sources */,
+				04C9C08B2791C37200D5FFB6 /* ErrorAlertCoordinator.swift in Sources */,
 				04E8B9B627728A3500CF9E7D /* TaskCell.swift in Sources */,
 				6D6E7EF926B1A9C2005C8C62 /* ATYProfileNeedHelpCell.swift in Sources */,
 				040550BF2787593A001B64ED /* AddTaskTitleCell.swift in Sources */,
@@ -5614,7 +5638,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qittiq.apptoyou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -5636,9 +5660,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qittiq.apptoyou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

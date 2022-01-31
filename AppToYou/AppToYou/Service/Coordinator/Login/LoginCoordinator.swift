@@ -6,6 +6,7 @@ enum LoginRoute: Route {
     case reset
     case registration
     case didLogin
+    case error(message: String)
 }
 
 
@@ -45,6 +46,10 @@ class LoginCoordinator: NavigationCoordinator<LoginRoute> {
         case .didLogin:
             appRouter.trigger(.main)
             return .none()
+            
+        case .error(let message):
+            let errorCoordinator = ErrorAlertCoordinator(message: message)
+            return .present(errorCoordinator)
         }
     }
     

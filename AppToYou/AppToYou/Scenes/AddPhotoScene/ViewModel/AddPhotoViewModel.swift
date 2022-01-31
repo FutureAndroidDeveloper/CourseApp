@@ -13,6 +13,7 @@ protocol AddPhotoViewModelOutput {
     var photo: Observable<UIImage?> { get set }
     var pickPhotoButtonTitle: Observable<String?> { get set }
     var saveIsActive: Observable<Bool> { get set }
+    var isLoading: Observable<Bool> { get }
 }
 
 
@@ -20,6 +21,7 @@ protocol AddPhotoViewModelOutput {
 protocol AddPhotoViewModel {
     var input: AddPhotoViewModelInput { get }
     var output: AddPhotoViewModelOutput { get }
+    
 }
 
 extension AddPhotoViewModel where Self: AddPhotoViewModelInput & AddPhotoViewModelOutput {
@@ -39,6 +41,7 @@ class AddPhotoViewModelImpl: AddPhotoViewModel, AddPhotoViewModelInput, AddPhoto
     var photo: Observable<UIImage?> = Observable(nil)
     var pickPhotoButtonTitle: Observable<String?> = Observable(nil)
     var saveIsActive: Observable<Bool> = Observable(false)
+    var isLoading: Observable<Bool> = Observable(false)
     
     private let router: UnownedRouter<RegistrationRoute>
     private let userService = UserManager(deviceIdentifierService: DeviceIdentifierService())
@@ -72,19 +75,26 @@ class AddPhotoViewModelImpl: AddPhotoViewModel, AddPhotoViewModelInput, AddPhoto
             return
         }
 
+        isLoading.value = true
         let photo = MediaPhoto(data: data, fileName: path)
         userService.updateUser(userUpdateRequest, photo: photo) { [weak self] result in
+            self?.isLoading.value = false
             switch result {
             case .success(let user):
                 UserSession.shared.updateUser(user)
                 self?.router.trigger(.didRegister)
             case .failure(let error):
-                print(error)
+                self?.displayError(message: error.localizedDescription)
             }
         }
+    }
+    
+    private func displayError(message: String) {
+        router.trigger(.error(message: message))
     }
     
     func pickPhotoLater() {
         router.trigger(.didRegister)
     }
+    
 }

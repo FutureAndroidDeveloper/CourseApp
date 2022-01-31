@@ -49,6 +49,7 @@ class RegistrationViewModelImpl: RegistrationViewModel, RegistrationViewModelInp
         validator.validate(email: emailModel)
         validator.validate(password: passwordModel)
         guard !validator.hasError else {
+            displayError(message: "Ошибка валидации полей")
             return
         }
         
@@ -56,6 +57,10 @@ class RegistrationViewModelImpl: RegistrationViewModel, RegistrationViewModelInp
         let password = passwordModel.fieldModel.value
         let credentials = Credentials(mail: mail, password: password)
         router.trigger(.name(credentials))
+    }
+    
+    private func displayError(message: String) {
+        router.trigger(.error(message: message))
     }
     
     func back() {

@@ -8,6 +8,7 @@ protocol EnterNameViewModelInput {
 
 protocol EnterNameViewModelOutput {
     var nameModel: RegistrationNameModel { get }
+    var isLoading: Observable<Bool> { get }
 }
 
 
@@ -30,8 +31,11 @@ class EnterNameViewModelImpl: EnterNameViewModel, EnterNameViewModelInput, Enter
     private let router: UnownedRouter<RegistrationRoute>
     private let validator = RegistrationValidator()
     private let userService = UserManager(deviceIdentifierService: DeviceIdentifierService())
+    private let loginManager = LoginManager(deviceIdentifierService: DeviceIdentifierService())
     private let credentials: Credentials
     private var createUserRequest: UserCreateRequest?
+    
+    var isLoading: Observable<Bool> = Observable(false)
     
     init(credentials: Credentials, router: UnownedRouter<RegistrationRoute>) {
         self.credentials = credentials
@@ -57,19 +61,41 @@ class EnterNameViewModelImpl: EnterNameViewModel, EnterNameViewModelInput, Enter
         guard let user = createUserRequest else {
             return
         }
-        
+        isLoading.value = true
         userService.create(user: user) { [weak self] result in
+            switch result {
+            case .success(let user):
+                self?.login()
+            case .failure(let error):
+                self?.isLoading.value = false
+                self?.displayError(message: error.localizedDescription)
+            }
+        }
+    }
+    
+    private func login() {
+        loginManager.login(credentials: credentials) { [weak self] result in
             guard let self = self else {
                 return
             }
+            self.isLoading.value = false
             switch result {
-            case .success(let user):
-                self.updateUser(credentials: self.credentials, user: user)
-                self.router.trigger(.profileImage)
+            case .success(let loginResponse):
+                if loginResponse.loginStatus == .ok {
+                    self.updateUser(credentials: self.credentials, user: loginResponse.userResponse)
+                    self.router.trigger(.profileImage)
+                }
+                else {
+                    self.displayError(message: loginResponse.loginStatus.message ?? String())
+                }
             case .failure(let error):
-                print(error)
+                self.displayError(message: error.localizedDescription)
             }
         }
+    }
+    
+    private func displayError(message: String) {
+        router.trigger(.error(message: message))
     }
     
     private func updateUser(credentials: Credentials, user: UserResponse?) {

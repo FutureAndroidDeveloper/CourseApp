@@ -73,8 +73,8 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
                                      decoder: ResponseDecoder,
                                      with routerData: RouterCompletionData) -> Result<T, NetworkResponseError> {
         
-        if let _ = routerData.error {
-            return .failure(.connection)
+        if let routerError = routerData.error {
+            return .failure(.custom(message: routerError.localizedDescription))
         }
         
         guard let routerResponse = routerData.response as? HTTPURLResponse else {
@@ -102,13 +102,11 @@ class NetworkManager<NetworkEndPoint: Endpoint> {
     }
     
     private func handleNetworkResponse(_ response: HTTPURLResponse) -> Result<Void, NetworkResponseError> {
-        print(response.statusCode)
+        let message: String = HTTPURLResponse.localizedString(forStatusCode: response.statusCode)
+        
         switch response.statusCode {
         case 200...299: return .success(())
-        case 401...500: return .failure(.authenticationError)
-        case 501...599: return .failure(.badRequest)
-        case 600: return .failure(.outdated)
-        default: return .failure(.failed)
+        default: return .failure(.custom(message: message))
         }
     }
     

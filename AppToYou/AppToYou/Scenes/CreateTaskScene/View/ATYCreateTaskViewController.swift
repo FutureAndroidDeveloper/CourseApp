@@ -85,8 +85,7 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
     func bindViewModel() {
         viewModel.output.sections.bind(self.update(_:))
         viewModel.output.updatedState.bind { [weak self] _ in
-            self?.createTaskTableView.beginUpdates()
-            self?.createTaskTableView.endUpdates()
+            self?.createTaskTableView.reloadData()
         }
     }
     

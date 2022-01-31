@@ -16,6 +16,6 @@ public struct MediaPhoto {
 
 
 public enum MimeType: String {
-    case jpeg = "image/jpeg"
+    case jpeg = "image/jpg"
     case aiff = "audio/aiff"
 }
