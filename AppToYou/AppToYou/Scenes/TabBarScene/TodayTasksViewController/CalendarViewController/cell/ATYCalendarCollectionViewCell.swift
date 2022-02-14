@@ -1,27 +1,15 @@
-//
-//  ATYCalendarCollectionViewCell.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 25.05.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
 import UIKit
+
 
 class ATYCalendarCollectionViewCell: UICollectionViewCell {
 
     var dayOfWeekLabel = UILabel()
     var dayOfMonthLabel = UILabel()
+    
     var selectedView = UIView()
     var circleView = UIView()
 
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        dayOfWeekLabel.text = nil
-        dayOfMonthLabel.text = nil
-        selectedView.backgroundColor = .clear
-        circleView.backgroundColor = .clear
-    }
+    private var model: CalendarCellModel?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -82,30 +70,39 @@ class ATYCalendarCollectionViewCell: UICollectionViewCell {
             circleView.widthAnchor.constraint(equalToConstant: 7)
         ])
     }
-
-    func setUp() {
-
-        dayOfWeekLabel.textColor = .white
-        dayOfMonthLabel.textColor = .white
-        if circleView.backgroundColor == R.color.failureColor() {
-            selectedView.backgroundColor = R.color.failureColor()
-        } else if circleView.backgroundColor == R.color.succesColor() {
-            selectedView.backgroundColor = R.color.succesColor()
-        } else {
-            selectedView.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.6666666667, blue: 0.05490196078, alpha: 1)
-        }
-        circleView.backgroundColor = .white
-    }
-
-    func setUpAnother(indexPath: IndexPath) {
-        selectedView.backgroundColor = .clear
-        dayOfWeekLabel.textColor = #colorLiteral(red: 0.6196078431, green: 0.6156862745, blue: 0.6431372549, alpha: 1)
-        dayOfMonthLabel.textColor = .black
-        circleView.backgroundColor = indexPath.row % 2 == 0 ? R.color.succesColor() : R.color.failureColor()
-    }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    var date: Date?
+    
+    func configure(with model: CalendarCellModel) {
+        self.model = model
+        dayOfWeekLabel.text = model.weekdayTitle
+        dayOfMonthLabel.text = model.dateLabel
+        circleView.backgroundColor = model.progress.color
+        
+        model.selectHandler = { [weak self] isSelected in
+            guard let model = self?.model else {
+                return
+            }
+            let backColor = isSelected ? model.progress.backgroundColor : .clear
+            self?.selectedView.backgroundColor = backColor
+            let _ = isSelected ? self?.setSelectedColors() : self?.setDeselectedColors()
+        }
+        
+        model.selectHandler?(model.isSelected)
+    }
+    
+    private func setSelectedColors() {
+        dayOfWeekLabel.textColor = R.color.backgroundTextFieldsColor()
+        dayOfMonthLabel.textColor = R.color.backgroundTextFieldsColor()
+        circleView.backgroundColor = R.color.backgroundTextFieldsColor()
+    }
+    
+    private func setDeselectedColors() {
+        dayOfWeekLabel.textColor = R.color.textSecondaryColor()
+        dayOfMonthLabel.textColor = R.color.titleTextColor()
+        circleView.backgroundColor = model?.progress.color
+    }
+
 }

@@ -18,7 +18,7 @@ final class ATYTodayTasksViewController: UIViewController {
 
     var calendarCollectionView: UICollectionView!
     var tasksTableView = UITableView()
-    var calendarCollectionViewController: ATYCalendarCollectionViewController!
+    var calendarCollectionViewController: CalendarViewController!
 
     let typeButton = UIButton()
     let tipImageView = UIImageView()
@@ -235,17 +235,17 @@ final class ATYTodayTasksViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.calendarCollectionViewController.updateData()
-        self.calendarCollectionViewController.dateCallback = { [weak self] dateString in
-            let date = dateString.toDate(dateFormat: .calendarFormat)
-
-            self?.filteredArrayCurrent = self?.temporaryArray.filter({ Calendar.current.compare( $0.date ?? Date(), to: date ?? Date(), toGranularity: .day) == .orderedSame}) ?? []
-
-            self?.filteredArrayDoneTasks = self?.completedTask.filter({ Calendar.current.compare( $0.date ?? Date(), to: date ?? Date(), toGranularity: .day) == .orderedSame}) ?? []
-            self?.tasksTableView.reloadData()
-            self?.updateProgressView()
-            print("CallbackDate: \(String(describing: date))")
-        }
+//        self.calendarCollectionViewController.updateData()
+//        self.calendarCollectionViewController.dateCallback = { [weak self] dateString in
+//            let date = dateString.toDate(dateFormat: .calendarFormat)
+//
+//            self?.filteredArrayCurrent = self?.temporaryArray.filter({ Calendar.current.compare( $0.date ?? Date(), to: date ?? Date(), toGranularity: .day) == .orderedSame}) ?? []
+//
+//            self?.filteredArrayDoneTasks = self?.completedTask.filter({ Calendar.current.compare( $0.date ?? Date(), to: date ?? Date(), toGranularity: .day) == .orderedSame}) ?? []
+//            self?.tasksTableView.reloadData()
+//            self?.updateProgressView()
+//            print("CallbackDate: \(String(describing: date))")
+//        }
     }
 
     override func viewWillLayoutSubviews() {
@@ -266,8 +266,8 @@ final class ATYTodayTasksViewController: UIViewController {
         let filteredStates = states.compactMap { (temporaryData) -> CurrentStateTask? in
             return temporaryData.state
         }
-        progressView.countOfViews = (count: self.filteredArrayCurrent.count + self.filteredArrayDoneTasks.count, typeState: filteredStates)
-        progressView.layoutSubviews()
+//        progressView.countOfViews = (count: self.filteredArrayCurrent.count + self.filteredArrayDoneTasks.count, typeState: filteredStates)
+//        progressView.layoutSubviews()
     }
 
     private func configureAddButtonAndTipImage() {
@@ -293,7 +293,7 @@ final class ATYTodayTasksViewController: UIViewController {
     }
 
     private func configureViewControllers() {
-        self.calendarCollectionViewController = ATYCalendarCollectionViewController()
+        self.calendarCollectionViewController = CalendarViewController()
         self.calendarCollectionView = self.calendarCollectionViewController.collectionView
 
         view.addSubview(self.calendarCollectionView)

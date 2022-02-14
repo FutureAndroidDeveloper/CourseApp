@@ -11,6 +11,11 @@ PODS:
   - R.swift (5.4.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
+  - Realm (10.21.1):
+    - Realm/Headers (= 10.21.1)
+  - Realm/Headers (10.21.1)
+  - RealmSwift (10.21.1):
+    - Realm (= 10.21.1)
   - SnapKit (5.0.1)
   - Toast-Swift (5.0.1)
   - XCoordinator (2.0.7):
@@ -26,6 +31,7 @@ DEPENDENCIES:
   - Parchment (~> 3.0)
   - PopupDialog (~> 1.1)
   - R.swift
+  - RealmSwift
   - SnapKit (~> 5.0.0)
   - Toast-Swift (~> 5.0.1)
   - XCoordinator (~> 2.0)
@@ -42,6 +48,8 @@ SPEC REPOS:
     - PopupDialog
     - R.swift
     - R.swift.Library
+    - Realm
+    - RealmSwift
     - SnapKit
     - Toast-Swift
     - XCoordinator
@@ -57,10 +65,12 @@ SPEC CHECKSUMS:
   PopupDialog: 720c92befd8bc23c13442254945213db5612f149
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
+  Realm: 44b41c3ae39e3ecfded71a04434bfde066c7b317
+  RealmSwift: dbf9a4eb06e0c929d51c4ef2e8f951bca541feab
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   XCoordinator: 9ee654fedef1ffede33d5c11677708a555c00542
 
-PODFILE CHECKSUM: 97d120c3b12068293dd45525d2c115ad4b6ef489
+PODFILE CHECKSUM: d711011efa52cad9e96c2f47d8efee2ec3733982
 
 COCOAPODS: 1.11.2
