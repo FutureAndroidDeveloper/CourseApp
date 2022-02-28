@@ -34,7 +34,7 @@ public extension Date {
         case simpleTimeFormat = "HH:mm"
         case simpleDateTimeFormat = "dd.MM.yy HH:mm"
         case localeYearDate = "yyyy-MM-dd"
-        case localeDayMonthWithoutYear = "dd MMMM"
+        case localeDayMonthYear = "dd MMM, yy"
         case localeDayMonth = "dd MMMM, yyyy"
         case currentMonthName = "LLLL"
         case currentYear = "yyyy"

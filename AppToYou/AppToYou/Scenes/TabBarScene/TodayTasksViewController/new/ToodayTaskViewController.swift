@@ -17,10 +17,11 @@ class ToodayTaskViewController: UIViewController, BindableType {
     
     var viewModel : TodayTasksViewModel!
     
+    private let refreshControl = UIRefreshControl()
     private let tasksTableView = UITableView()
     private let calendarViewController = CalendarViewController()
     private let progressView = ATYStackProgressView()
-    private let emptyTasksHint = UIImageView.init(image: R.image.tip())
+    private let emptyTasksHint = UIImageView(image: R.image.tip())
 
     private lazy var createTaskButton: UIButton = {
         let button = UIButton()
@@ -83,7 +84,7 @@ class ToodayTaskViewController: UIViewController, BindableType {
         tasksTableView.separatorStyle = .none
         tasksTableView.delegate = self
         tasksTableView.dataSource = self
-        tasksTableView.register(ATYTaskTableViewCell.self, forCellReuseIdentifier: ATYTaskTableViewCell.reuseIdentifier)
+        tasksTableView.register(CommonTaskCell.self, forCellReuseIdentifier: CommonTaskCell.reuseIdentifier)
         
         view.addSubview(createTaskButton)
         createTaskButton.snp.makeConstraints {
@@ -97,18 +98,36 @@ class ToodayTaskViewController: UIViewController, BindableType {
             $0.trailing.equalTo(createTaskButton.snp.leading).offset(Constants.hintOffset)
             $0.centerY.equalTo(createTaskButton)
         }
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        tasksTableView.addSubview(refreshControl)
     }
     
     private func loadData() {
     }
     
     func bindViewModel() {
+        viewModel.output.models.bind { [weak self] _ in
+            self?.tasksTableView.reloadData()
+            self?.refreshControl.endRefreshing()
+        }
         
+//        models
+//        viewModel.output.tasks.bind { [weak self] tasks in
+//            self?.tasksTableView.reloadData()
+//            self?.refreshControl.endRefreshing()
+//        }
     }
     
     private func updateProgressView() {
         let tmpStates: [CurrentStateTask] = [.didNotStart, .done, .failed, .performed]
         progressView.update(states: tmpStates)
+    }
+    
+    @objc
+    private func refresh(_ sender: AnyObject) {
+        viewModel.input.refresh()
     }
 
     @objc
@@ -121,11 +140,22 @@ class ToodayTaskViewController: UIViewController, BindableType {
 
 extension ToodayTaskViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return viewModel.output.models.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CommonTaskCell.reuseIdentifier, for: indexPath) as? CommonTaskCell else {
+            return UITableViewCell()
+        }
+        
+        let model = viewModel.output.models.value[indexPath.row]
+        cell.configure(with: model)
+        
+        cell.timerTapped = { [weak self] cellModel in
+            self?.viewModel.input.startTimer(for: cellModel)
+        }
+        
+        return cell
     }
     
     

@@ -53,8 +53,11 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     }
     
     func loginTapped() {
-        let mail = emailModel.fieldModel.value
-        let password = passwordModel.fieldModel.value
+//        let mail = emailModel.fieldModel.value
+//        let password = passwordModel.fieldModel.value
+        
+        let mail = "And@mail.com"
+        let password = "12345678Qq"
         let credentials = Credentials(mail: mail, password: password)
         guard validate(credentials: credentials) else {
             return

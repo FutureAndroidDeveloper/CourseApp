@@ -5,7 +5,7 @@ class CalendarViewController: UICollectionViewController {
     private struct Constants {
         static let calendarOffset = 1
     }
-
+    
     private let currentDate = Date()
     private var models: [CalendarCellModel] = []
 
@@ -33,6 +33,13 @@ class CalendarViewController: UICollectionViewController {
         
         let indexPath = IndexPath(item: index, section: 0)
         scroll(to: indexPath, selection: true)
+    }
+    
+    func getSelectedDate() -> Date {
+        guard let model = models.first(where: { $0.isSelected }) else {
+            return currentDate
+        }
+        return model.date
     }
     
     
