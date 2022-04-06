@@ -7,9 +7,13 @@ class UserEditTextCourseTaskViewModel: UserEditCourseTaskViewModel, TextTaskData
     private let constructor: UserEditTextCourseTaskConstructor
     private let validator = TextTaskValidator()
     
-    init(userTask: UserTaskResponse, constructor: UserEditTextCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(task: Task, constructor: UserEditTextCourseTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(userTask: userTask, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(
+            task: task, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     override func loadFields() {
@@ -40,19 +44,19 @@ class UserEditTextCourseTaskViewModel: UserEditCourseTaskViewModel, TextTaskData
         
         let description = model.textModel.descriptionModel.fieldModel.value
         let minSymbols = model.textModel.lengthLimitModel.fieldModel.value
-        updateUserTaskRequest?.taskDescription = description
-        updateUserTaskRequest?.taskAttribute = "\(minSymbols)"
+        updatedTask.taskDescription = description
+        updatedTask.taskAttribute = "\(minSymbols)"
     }
     
     func getDescriptionModel() -> PlaceholderTextViewModel {
-        let description = userTask.taskDescription
+        let description = task.taskDescription
         return PlaceholderTextViewModel(value: description, placeholder: "Например, положительные моменты")
     }
     
     func getMinSymbolsModel() -> (field: NaturalNumberFieldModel, lock: LockButtonModel?) {
-        let attribute = userTask.taskAttribute ?? String()
+        let attribute = task.taskAttribute ?? String()
         let minSymbols = Int(attribute) ?? 0
-        let lockModel = LockButtonModel(isLocked: userTask.editableCourseTask)
+        let lockModel = LockButtonModel(isLocked: task.editableCourseTask)
         let sybmolsModel = NaturalNumberFieldModel(value: minSymbols)
         
         return (sybmolsModel, lockModel)

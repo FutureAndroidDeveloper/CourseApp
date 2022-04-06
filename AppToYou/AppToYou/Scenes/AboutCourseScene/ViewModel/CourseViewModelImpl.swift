@@ -60,14 +60,6 @@ class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewMode
         let section = TableViewSection(models: models)
         sections.value = [section]
     }
-
-    private func getstubTaskModel(_ type: ATYTaskType) -> TemporaryData {
-        let sanction = Int.random(in: 0...100).isMultiple(of: 2) ? true : false
-        
-        return TemporaryData.init(
-            typeTask: type, courseName: nil, hasSanction: sanction, titleLabel: "Название задачи",
-            firstSubtitleLabel: "Каждый день", secondSubtitleLabel: "60 раз", state: .didNotStart, date: nil)
-    }
 }
 
 extension CourseViewModelImpl: CourseConstructorDataSourse, CourseConstructorDelegate {
@@ -114,12 +106,9 @@ extension CourseViewModelImpl: CourseConstructorDataSourse, CourseConstructorDel
         return (17, 9)
     }
     
-    func getTasks() -> ([TemporaryData], [CourseTaskResponse]) {
+    func getTasks() -> ([TaskCellModel], [CourseTaskResponse]) {
         // TODO: - получение задач курса
-        
-        let stubData = courseTasks.map { self.getstubTaskModel($0.taskType) }
-        return (stubData, self.courseTasks)
-//        return ATYTaskType.allCases.map(getstubTaskModel(_:))
+        return ([], [])
     }
     
     func getMembers() -> CourseMembersViewModel {

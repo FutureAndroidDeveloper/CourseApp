@@ -16,7 +16,7 @@ class TopBottomBlocksContainerView: UIView {
     
     private var contentHeightConstraint: Constraint?
     
-    private let scrollView = UIScrollView()
+    private(set) var scrollView = UIScrollView()
     private let contentView = UIView()
     private let topBlock = UIView()
     private let bottomBlock = UIView()

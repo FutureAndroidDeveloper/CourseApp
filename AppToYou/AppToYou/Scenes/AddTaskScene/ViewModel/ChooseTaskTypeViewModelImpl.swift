@@ -16,13 +16,13 @@ class ChooseTaskTypeViewModelImpl: ChooseTaskTypeViewModel, ChooseTaskTypeViewMo
         update()
     }
     
-    func typePicked(_ taskType: ATYTaskType) {
+    func typePicked(_ taskType: TaskType) {
         flowDelegate?.flowDidEnd()
         router.trigger(.create(taskType))
     }
     
     func update() {
-        let models = ATYTaskType.allCases.map(getTaskTypeModel(_:))
+        let models = TaskType.allCases.map(getTaskTypeModel(_:))
         let section = TableViewSection(models: models)
         sections.value = [section]
     }
@@ -31,7 +31,7 @@ class ChooseTaskTypeViewModelImpl: ChooseTaskTypeViewModel, ChooseTaskTypeViewMo
         updatedState.value = ()
     }
     
-    private func getTaskTypeModel(_ taskType: ATYTaskType) -> ChooseTaskTypeModel {
+    private func getTaskTypeModel(_ taskType: TaskType) -> ChooseTaskTypeModel {
         var icon: UIImage?
         var title: String?
         var description: String?

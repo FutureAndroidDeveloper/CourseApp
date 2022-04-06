@@ -20,5 +20,6 @@ target 'AppToYou' do
   pod 'KeychainAccess'
   pod 'DropDown'
   pod 'FittedSheets'
+  pod 'JGProgressHUD'
 
 end

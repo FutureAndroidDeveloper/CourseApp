@@ -1,7 +1,6 @@
 import Foundation
 
 
-
 class UserTaskResponse: UserTaskCreateRequest {
     var identifier: TaskResponse
     var editableCourseTask: Bool
@@ -16,8 +15,18 @@ class UserTaskResponse: UserTaskCreateRequest {
     var taskCompleteTime: String?
     var taskResults: [TaskResult]?
     
+    convenience init(createRequest: UserTaskCreateRequest, phoneId: Int) {
+        let identifier = TaskResponse()
+        self.init(
+            identifier: identifier, editableCourseTask: false, taskName: createRequest.taskName, taskType: createRequest.taskType,
+            frequencyType: createRequest.frequencyType, taskSanction: createRequest.taskSanction, infiniteExecution: createRequest.infiniteExecution,
+            startDate: createRequest.startDate, endDate: createRequest.endDate, reminderList: createRequest.reminderList,
+            daysCode: createRequest.daysCode, taskDescription: createRequest.taskDescription, taskAttribute: createRequest.taskAttribute, phoneId: phoneId
+        )
+    }
+    
     init(
-        identifier: TaskResponse, editableCourseTask: Bool, taskName: String, taskType: ATYTaskType, frequencyType: ATYFrequencyTypeEnum,
+        identifier: TaskResponse, editableCourseTask: Bool, taskName: String, taskType: TaskType, frequencyType: Frequency,
         taskSanction: Int, infiniteExecution: Bool, startDate: String, endDate: String? = nil, reminderList: [String]? = nil,
         daysCode: String? = nil, taskDescription: String? = nil, taskAttribute: String? = nil, userId: Int? = nil,
         courseTaskId: Int? = nil, courseName: String? = nil, minimumCourseTaskSanction: Int? = nil, phoneId: Int? = nil,
@@ -61,6 +70,10 @@ class UserTaskResponse: UserTaskCreateRequest {
         try? container.encode(phoneId, forKey: .phoneId)
         try? container.encode(taskCompleteTime, forKey: .taskCompleteTime)
         try? container.encode(taskResults, forKey: .taskResults)
+        
+//        encoder.container(keyedBy: <#T##CodingKey.Protocol#>)
+//        
+//        try? container.encode(identifier.updatedTimestamp, forKey: identifier.)
 
         try super.encode(to: encoder)
     }

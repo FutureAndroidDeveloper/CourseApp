@@ -9,12 +9,12 @@ class CreateTextCourseTask: CreateTextUserTaskViewModel {
     
     private let constructor: CreateTextCourseTaskConstructor
     
-     init(type: ATYTaskType, constructor: CreateTextCourseTaskConstructor,
-          mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>)
+     init(type: TaskType, constructor: CreateTextCourseTaskConstructor, mode: CreateTaskMode,
+          synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>)
     {
         self.constructor = constructor
-        super.init(type: type, constructor: constructor.baseConstructor,
-                   mode: mode, taskRouter: taskRouter)
+        super.init(type: type, constructor: constructor.baseConstructor, mode: mode,
+                   synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func getValidator() -> TextTaskValidator {

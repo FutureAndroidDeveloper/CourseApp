@@ -7,10 +7,11 @@ class UserEditCourseTaskViewModel: EditUserTaskViewModel, EditCourseTaskDataSour
     private let constructor: UserEditCourseTaskConstructor
     private let validator = UserEditCourseTaskValidator()
     
-    init(userTask: UserTaskResponse, constructor: UserEditCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
-        
+    init(task: Task, constructor: UserEditCourseTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(userTask: userTask, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(task: task, constructor: constructor, mode: mode,
+                   synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func update() {
@@ -23,7 +24,6 @@ class UserEditCourseTaskViewModel: EditUserTaskViewModel, EditCourseTaskDataSour
     }
     
     override func loadFields() {
-//        super.loadFields()
         constructor.setDelegate(delegate: self)
         constructor.setDataSource(dataSource: self)
         constructor.setConstructorDataSource(dataSource: self)
@@ -41,8 +41,8 @@ class UserEditCourseTaskViewModel: EditUserTaskViewModel, EditCourseTaskDataSour
     override func getSanctionModel() -> (model: NaturalNumberFieldModel, min: Int, isEnabled: Bool) {
         let (field, _, _) = super.getSanctionModel()
         
-        let minSanction = userTask.minimumCourseTaskSanction ?? 0
-        let taskSanction = userTask.taskSanction
+        let minSanction = task.minimumCourseTaskSanction ?? 0
+        let taskSanction = task.taskSanction
         let sanction = max(taskSanction, minSanction)
         let isEnabled = sanction > .zero
         
@@ -51,7 +51,7 @@ class UserEditCourseTaskViewModel: EditUserTaskViewModel, EditCourseTaskDataSour
     }
     
     func getCourseName() -> String {
-        return userTask.courseName ?? String()
+        return task.courseName ?? String()
     }
     
 }

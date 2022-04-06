@@ -5,11 +5,12 @@ import XCoordinator
 class AdminEditTextCourseTask: CreateTextUserTaskViewModel {
     private let constructor: AdminEditTextCourseTaskConstructor
     
-     init(type: ATYTaskType, constructor: AdminEditTextCourseTaskConstructor,
-          mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+     init(type: TaskType, constructor: AdminEditTextCourseTaskConstructor, mode: CreateTaskMode,
+          synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
          
         self.constructor = constructor
-        super.init(type: type, constructor: constructor.baseConstructor, mode: mode, taskRouter: taskRouter)
+         super.init(type: type, constructor: constructor.baseConstructor, mode: mode,
+                    synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func getValidator() -> TextTaskValidator {

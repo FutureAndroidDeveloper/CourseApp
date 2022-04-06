@@ -7,15 +7,18 @@ class AdminEditTimerCourseTaskViewModel: AdminEditCourseTaskViewModel, TimerTask
     private let repeatViewModel: AdminEditTimerCourseTask
     
     
-    init(courseName: String, courseTask: CourseTaskResponse,
-         constructor: AdminEditTimerCourseTaskConstructor,
-         mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseName: String, courseTask: CourseTaskResponse, constructor: AdminEditTimerCourseTaskConstructor,
+         mode: CreateTaskMode, synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         
         self.constructor = constructor
-        self.repeatViewModel = AdminEditTimerCourseTask(type: courseTask.taskType, constructor: constructor,
-                                                         mode: mode, taskRouter: taskRouter)
-        super.init(courseName: courseName, courseTask: courseTask, constructor: constructor,
-                   mode: mode, taskRouter: taskRouter)
+        self.repeatViewModel = AdminEditTimerCourseTask(
+            type: courseTask.taskType, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
+        super.init(
+            courseName: courseName, courseTask: courseTask, constructor: constructor,
+            mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     override func userTaskdurationPicked(_ duration: DurationTime) {

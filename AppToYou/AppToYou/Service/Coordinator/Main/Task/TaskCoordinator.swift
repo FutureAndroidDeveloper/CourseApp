@@ -4,13 +4,15 @@ import UIKit
 
 enum TaskRoute: Route {
     case add
-    case create(ATYTaskType)
+    case create(TaskType)
     
     case adminEdit(courseName: String, courseTask: CourseTaskResponse)
-    case courseTaskEdit(userTask: UserTaskResponse)
+    case courseTaskEdit(task: Task)
+    case editUserTask(task: Task)
         
     case timePicker(type: TimePickerType)
     case sanctionQuestion
+    case taskDidCreate
     case done
 }
 
@@ -18,10 +20,14 @@ enum TaskRoute: Route {
 class TaskCoordinator: NavigationCoordinator<TaskRoute> {
     
     private weak var timeReceiver: TimePickerDelegate?
+    private let tasksRouter: UnownedRouter<TasksRoute>?
     private let mode: CreateTaskMode
+    private let synchronizationService: SynchronizationService
     
-    init(mode: CreateTaskMode, rootViewController: RootViewController) {
+    init(mode: CreateTaskMode, synchronizationService: SynchronizationService, rootViewController: RootViewController, tasksRouter: UnownedRouter<TasksRoute>? = nil) {
         self.mode = mode
+        self.synchronizationService = synchronizationService
+        self.tasksRouter = tasksRouter
         super.init(rootViewController: rootViewController)
         
         switch mode {
@@ -29,10 +35,10 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
             trigger(.add)
             
         case .editUserTask(let task):
-            trigger(.create(task.taskType))
+            trigger(.editUserTask(task: task))
             
         case .editCourseTask(let task):
-            trigger(.courseTaskEdit(userTask: task))
+            trigger(.courseTaskEdit(task: task))
             
         case .adminEditCourseTask(let name, let task):
             trigger(.adminEdit(courseName: name, courseTask: task))
@@ -40,6 +46,7 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
     }
     
     override func prepareTransition(for route: TaskRoute) -> NavigationTransition {
+        configureContainer()
         let taskViewController = ATYCreateTaskViewController()
         taskViewController.hidesBottomBarWhenPushed = true
         
@@ -56,15 +63,14 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
         case .create(let taskType):
             switch mode {
             case .createUserTask:
-                let factory = CreateTaskFactory(type: taskType, mode: mode)
+                let factory = CreateTaskFactory(type: taskType, mode: mode, synchronizationService: synchronizationService)
                 prepare(viewController: taskViewController, with: factory.getViewModel(unownedRouter))
                 
             case .createCourseTask(let id):
-                let factory = CreateCourseTaskFactory(courseId: id, type: taskType, mode: mode)
-                prepare(viewController: taskViewController, with: factory.getViewModel(unownedRouter))
-                
-            case .editUserTask(let task):
-                let factory = EditUserTaskFactory(task: task, mode: mode)
+                let factory = CreateCourseTaskFactory(
+                    courseId: id, type: taskType, mode: mode,
+                    synchronizationService: synchronizationService
+                )
                 prepare(viewController: taskViewController, with: factory.getViewModel(unownedRouter))
                 
             default:
@@ -76,12 +82,20 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
             ])
             
         case .adminEdit(let courseName, let courseTask):
-            let factory = AdminEditCourseTaskFactory(courseName: courseName, courseTask: courseTask, mode: mode)
+            let factory = AdminEditCourseTaskFactory(
+                courseName: courseName, courseTask: courseTask, mode: mode,
+                synchronizationService: synchronizationService
+            )
             prepare(viewController: taskViewController, with: factory.getViewModel(unownedRouter))
             return .push(taskViewController)
             
-        case .courseTaskEdit(let userTask):
-            let factory = UsereditCourseTaskFactory(task: userTask, mode: mode)
+        case .courseTaskEdit(let task):
+            let factory = UsereditCourseTaskFactory(task: task, mode: mode, synchronizationService: synchronizationService)
+            prepare(viewController: taskViewController, with: factory.getViewModel(unownedRouter))
+            return .push(taskViewController)
+            
+        case .editUserTask(let task):
+            let factory = EditUserTaskFactory(task: task, mode: mode, synchronizationService: synchronizationService)
             prepare(viewController: taskViewController, with: factory.getViewModel(unownedRouter))
             return .push(taskViewController)
             
@@ -97,9 +111,18 @@ class TaskCoordinator: NavigationCoordinator<TaskRoute> {
             infoCoordinator.flowDelegate = bottomSheetCoordinator
             return .present(bottomSheetCoordinator)
             
+        case .taskDidCreate:
+            tasksRouter?.trigger(.showTaskDidAddToast)
+            return .pop()
+            
         case .done:
             return .pop()
         }
+    }
+    
+    private func configureContainer() {
+        self.rootViewController.navigationBar.tintColor = R.color.lineViewBackgroundColor()
+        self.rootViewController.navigationBar.topItem?.title = String()
     }
     
     private func prepare<T: BindableType>(viewController: T, with viewModel: T.ViewModelType) where T: UIViewController {

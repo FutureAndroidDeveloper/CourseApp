@@ -3,12 +3,14 @@ import XCoordinator
 
 
 class UsereditCourseTaskFactory {
-    private let task: UserTaskResponse
+    private let task: Task
     private let mode: CreateTaskMode
+    private let synchronizationService: SynchronizationService
     
-    init(task: UserTaskResponse, mode: CreateTaskMode) {
+    init(task: Task, mode: CreateTaskMode, synchronizationService: SynchronizationService) {
         self.task = task
         self.mode = mode
+        self.synchronizationService = synchronizationService
     }
     
     func getViewModel(_ router: UnownedRouter<TaskRoute>) -> CreateTaskViewModel {
@@ -16,19 +18,31 @@ class UsereditCourseTaskFactory {
         switch task.taskType {
         case .CHECKBOX:
             let constructor = UserEditCourseTaskConstructor(mode: mode, model: UserEditCourseTaskModel())
-            return UserEditCourseTaskViewModel(userTask: task, constructor: constructor, mode: mode, taskRouter: router)
+            return UserEditCourseTaskViewModel(
+                task: task, constructor: constructor, mode: mode,
+                synchronizationService: synchronizationService, taskRouter: router
+            )
             
         case .TEXT:
             let constructor = UserEditTextCourseTaskConstructor(mode: mode, model: UserEditTextCourseTaskModel())
-            return UserEditTextCourseTaskViewModel(userTask: task, constructor: constructor, mode: mode, taskRouter: router)
+            return UserEditTextCourseTaskViewModel(
+                task: task, constructor: constructor, mode: mode,
+                synchronizationService: synchronizationService, taskRouter: router
+            )
             
         case .TIMER:
             let constructor = UserEditTimerCourseTaskConstructor(mode: mode, model: UserEditTimerCourseTaskModel())
-            return UserEditTimerCourseTaskViewModel(userTask: task, constructor: constructor, mode: mode, taskRouter: router)
+            return UserEditTimerCourseTaskViewModel(
+                task: task, constructor: constructor, mode: mode,
+                synchronizationService: synchronizationService, taskRouter: router
+            )
             
         case .RITUAL:
             let constructor = UserEditRepeatCourseTaskConstructor(mode: mode, model: UserEditRepeatCourseTaskModel())
-            return UserEditRepeatCourseTaskViewModel(userTask: task, constructor: constructor, mode: mode, taskRouter: router)
+            return UserEditRepeatCourseTaskViewModel(
+                task: task, constructor: constructor, mode: mode,
+                synchronizationService: synchronizationService, taskRouter: router
+            )
 
         }
     }

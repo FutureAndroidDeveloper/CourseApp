@@ -34,7 +34,14 @@ class ATYAuthorizationViewController: UIViewController, BindableType {
     private let emailTextField = FieldFactory.shared.getTextField()
     private var emailContainer = ValidatableViewWrapper()
 
-    private let passwordTextField = FieldFactory.shared.getTextField()
+    private let passwordTextField: TextField = {
+        let field = FieldFactory.shared.getTextField()
+        field.textContentType = .password
+        field.autocorrectionType = .no
+        field.autocapitalizationType = .none
+        field.isSecureTextEntry = true
+        return field
+    }()
     private var passwordContainer = ValidatableViewWrapper()
     
     private let loginImageView = UIImageView()

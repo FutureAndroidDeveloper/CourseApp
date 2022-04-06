@@ -3,20 +3,20 @@ import Foundation
 
 class FrequncyValueModel {
     private struct Constants {
-        static let defaultValue = ATYFrequencyTypeEnum.EVERYDAY
+        static let defaultValue = Frequency.EVERYDAY
     }
     
-    private(set) var frequency: ATYFrequencyTypeEnum
+    private(set) var frequency: Frequency
     
     convenience init() {
         self.init(frequency: Constants.defaultValue)
     }
     
-    init(frequency: ATYFrequencyTypeEnum) {
+    init(frequency: Frequency) {
         self.frequency = frequency
     }
     
-    func update(_ frequency: ATYFrequencyTypeEnum) {
+    func update(_ frequency: Frequency) {
         self.frequency = frequency
     }
     

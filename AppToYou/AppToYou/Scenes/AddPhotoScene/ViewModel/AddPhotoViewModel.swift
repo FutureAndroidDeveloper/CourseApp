@@ -80,8 +80,8 @@ class AddPhotoViewModelImpl: AddPhotoViewModel, AddPhotoViewModelInput, AddPhoto
         userService.updateUser(userUpdateRequest, photo: photo) { [weak self] result in
             self?.isLoading.value = false
             switch result {
-            case .success(let user):
-                UserSession.shared.updateUser(user)
+            case .success:
+                UserSession.shared.logout()
                 self?.router.trigger(.didRegister)
             case .failure(let error):
                 self?.displayError(message: error.localizedDescription)

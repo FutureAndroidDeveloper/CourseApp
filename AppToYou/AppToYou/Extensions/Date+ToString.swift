@@ -13,7 +13,7 @@ public extension Date {
 
     static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = .current
+        dateFormatter.locale = .autoupdatingCurrent
         dateFormatter.dateFormat = "yyyy/MM/dd"
         dateFormatter.timeZone = .autoupdatingCurrent
         return dateFormatter
@@ -28,6 +28,7 @@ public extension Date {
     }
 
     enum ATYDateFormat: String {
+        case fullTime = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
         case localDateTime = "yyyy-MM-dd'T'HH:mm:ss"
         case simpleDateFormat = "dd.MM.YY"
         case simpleDateFormatFullYear = "dd.MM.YYYY"
@@ -45,6 +46,17 @@ public extension Date {
         let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: self)
         return Calendar.current.date(from: dateComponents)
     }
+    
+    var startOfDay: Date {
+        return Calendar.current.startOfDay(for: self)
+    }
+
+    var endOfDay: Date {
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        return Calendar.current.date(byAdding: components, to: startOfDay)!
+    }
 
     init(millis: Int64) {
         self = Date(timeIntervalSince1970: TimeInterval(millis / 1000))
@@ -61,6 +73,10 @@ public extension Date {
 
     func getYesterday() -> Date? {
         return Calendar.current.date(byAdding: .day, value: -1, to: self)
+    }
+    
+    func getTomorrow() -> Date? {
+        return Calendar.current.date(byAdding: .day, value: 1, to: self)
     }
 
     func getLast7Day() -> Date? {
@@ -88,7 +104,8 @@ public extension Date {
         return Calendar.current.date(from: components as DateComponents)!
     }
 
-    func orderedSameDateOnDays(firstDate: Date? , secondDate: Date?) -> Bool {
-        return Calendar.current.compare( firstDate?.ignoringTime ?? Date(), to: secondDate?.ignoringTime ?? Date(), toGranularity: .day) == .orderedSame
+    static func orderedSameDateOnDays(firstDate: Date, secondDate: Date) -> Bool {
+        return Calendar.current.compare(firstDate, to: secondDate, toGranularity: .day) == .orderedSame
+//        return Calendar.current.compare( firstDate?.ignoringTime ?? Date(), to: secondDate?.ignoringTime ?? Date(), toGranularity: .day) == .orderedSame
     }
 }

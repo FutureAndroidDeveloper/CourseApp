@@ -53,7 +53,7 @@ class InfoViewModelImpl: InfoViewModel, InfoViewModelInput, InfoViewModelOutput,
     
     func getSanctionTimerForTask() -> Int {
         if case .paySanction(let task) = notification {
-            return task.identifier.id
+            return task.identifier.id ?? .zero
         } else {
             return .zero
         }

@@ -3,14 +3,16 @@ import XCoordinator
 
 
 protocol AllTasksViewModelInput: AnyObject {
-    func edit(_ task: UserTaskResponse)
+    func edit(_ taskIndex: Int)
+    func remove(_ taskIndex: Int)
     func showMyTasks(_ state: Bool)
-    func showTestSanction(for task: UserTaskResponse)
     func refresh()
+    func createTask()
 }
 
 protocol AllTasksViewModelOutput: AnyObject {
-    var tasks: Observable<[UserTaskResponse]> { get set }
+    var tasks: [TaskCellModel] { get set }
+    var update: Observable<Void> { get set }
 }
 
 protocol AllTasksViewModel: AnyObject {
@@ -25,29 +27,50 @@ extension AllTasksViewModel where Self: AllTasksViewModelInput & AllTasksViewMod
 
 
 class AllTasksViewModelImpl: AllTasksViewModel, AllTasksViewModelInput, AllTasksViewModelOutput {
-    
-    var tasks: Observable<[UserTaskResponse]> = Observable([])
-    
-    private var receivedTasks: [UserTaskResponse] = []
+    var tasks: [TaskCellModel] = []
+    var update: Observable<Void> = Observable(Void())
     
     private let router: UnownedRouter<TasksRoute>
-    private let tasksService = TaskManager(deviceIdentifierService: DeviceIdentifierService())
+    private let synchronizationService: SynchronizationService
+    private let infoProvider = TaskInfoProvider()
+    private let database: Database = RealmDatabase()
     
 
-    init(router: UnownedRouter<TasksRoute>) {
+    init(synchronizationService: SynchronizationService, router: UnownedRouter<TasksRoute>) {
+        self.synchronizationService = synchronizationService
         self.router = router
+        loadTasks()
     }
-    
     
     func refresh() {
         loadTasks()
     }
     
-    func showTestSanction(for task: UserTaskResponse) {
-        router.trigger(.showSanction(task: task))
+    private func loadTasks() {
+        let calendar = Calendar.autoupdatingCurrent
+        var components = DateComponents()
+        components.setValue(1, for: .year)
+        guard let futureDate = Calendar.current.date(byAdding: components, to: Date()) else {
+            print("cant create date in future")
+            return
+        }
+        
+        tasks = database.getTasks()
+            .filter { task in
+                guard let endDate = task.endDate?.toDate(dateFormat: .localeYearDate) else {
+                    return true
+                }
+                let result = calendar.compare(endDate, to: Date(), toGranularity: .day)
+                return (result == .orderedSame || result == .orderedDescending)
+            }
+            .map { infoProvider.convert(task: $0, for: futureDate) }
+        
+        update.value = Void()
     }
     
-    func edit(_ task: UserTaskResponse) {
+    func edit(_ taskIndex: Int) {
+        let task = tasks[taskIndex].task
+        
         if let _ = task.courseTaskId {
             router.trigger(.editCourseTask(task: task))
         } else {
@@ -55,28 +78,25 @@ class AllTasksViewModelImpl: AllTasksViewModel, AllTasksViewModelInput, AllTasks
         }
     }
     
+    func remove(_ taskIndex: Int) {
+        let task = tasks[taskIndex].task
+        synchronizationService.remove(task: task)
+        
+        tasks.remove(at: taskIndex)
+        update.value = Void()
+    }
+    
     func showMyTasks(_ state: Bool) {
         if state {
-            let userId = UserSession.shared.getUser()?.id
-            tasks.value = receivedTasks.filter { $0.userId == userId }
+            tasks = tasks.filter { $0.task.courseTaskId == nil }
+            update.value = Void()
         } else {
-            tasks.value = receivedTasks
-        }
-        
-    }
-    
-    private func loadTasks() {
-        tasksService.getTaskFullList { [weak self] result in
-            switch result {
-            case .success(let tasks):
-                self?.receivedTasks = tasks
-                self?.tasks.value = tasks
-                
-            case .failure(let error):
-                print(error)
-            }
+            loadTasks()
         }
     }
     
+    func createTask() {
+        router.trigger(.create)
+    }
 }
 

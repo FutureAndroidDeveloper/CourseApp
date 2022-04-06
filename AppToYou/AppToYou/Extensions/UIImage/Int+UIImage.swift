@@ -3,7 +3,7 @@ import UIKit
 
 
 protocol Drawable {
-    associatedtype Value
+    associatedtype Value: CustomStringConvertible
     
     func draw(value: Value)
 }
@@ -20,7 +20,6 @@ extension UIView: Drawable {
         repeatCountLayer.alignmentMode = .center
         repeatCountLayer.rasterizationScale = UIScreen.main.scale
         repeatCountLayer.contentsScale = UIScreen.main.scale
-//        repeatCountLayer.backgroundColor = R.color.textColorSecondary()?.cgColor
         repeatCountLayer.foregroundColor = R.color.backgroundTextFieldsColor()?.cgColor
         
         

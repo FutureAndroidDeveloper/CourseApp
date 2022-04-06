@@ -19,6 +19,7 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
     
     private weak var courseCreationInput: CreateCourseViewModelInput?
     private weak var coursesInput: CoursesViewModelInput?
+    private let synchronizationService = SynchronizationService()
     
     
     init() {
@@ -42,6 +43,7 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
         case .openCourse(let course):
             let courseCoordinator = CourseCoordinator(course: course,
                                                       coursesRouter: unownedRouter,
+                                                      synchronizationService: synchronizationService,
                                                       rootViewController: self.rootViewController)
             addChild(courseCoordinator)
             return .route(.course(course), on: courseCoordinator)

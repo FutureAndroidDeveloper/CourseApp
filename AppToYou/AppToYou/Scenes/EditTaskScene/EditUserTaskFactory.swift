@@ -3,12 +3,14 @@ import XCoordinator
 
 
 class EditUserTaskFactory {
-    private let task: UserTaskResponse
+    private let task: Task
     private let mode: CreateTaskMode
+    private let synchronizationService: SynchronizationService
     
-    init(task: UserTaskResponse, mode: CreateTaskMode) {
+    init(task: Task, mode: CreateTaskMode, synchronizationService: SynchronizationService) {
         self.task = task
         self.mode = mode
+        self.synchronizationService = synchronizationService
     }
     
     func getViewModel(_ router: UnownedRouter<TaskRoute>) -> CreateTaskViewModel {
@@ -16,18 +18,42 @@ class EditUserTaskFactory {
         switch task.taskType {
         case .CHECKBOX:
             let constructor = CheckboxTaskConstructor(mode: mode, model: DefaultCreateTaskModel())
-            return EditUserTaskViewModel(userTask: task, constructor: constructor, mode: mode, taskRouter: router)
+            return EditUserTaskViewModel(
+                task: task,
+                constructor: constructor,
+                mode: mode,
+                synchronizationService: synchronizationService,
+                taskRouter: router
+            )
             
         case .TEXT:
             let constructor = TextTaskConstructor(mode: mode, model: TextCreateTaskModel())
-            return EditTextUserTaskViewModel(userTask: task, constructor: constructor, mode: mode, taskRouter: router)
+            return EditTextUserTaskViewModel(
+                task: task,
+                constructor: constructor,
+                mode: mode,
+                synchronizationService: synchronizationService,
+                taskRouter: router
+            )
         case .TIMER:
             let constructor = TimerTaskConstructor(mode: mode, model: TimerCreateTaskModel())
-            return EditTimerUserTaskViewModel(userTask: task, constructor: constructor, mode: mode, taskRouter: router)
+            return EditTimerUserTaskViewModel(
+                task: task,
+                constructor: constructor,
+                mode: mode,
+                synchronizationService: synchronizationService,
+                taskRouter: router
+            )
             
         case .RITUAL:
             let constructor = RepeatTaskConstructor(mode: mode, model: RepeatCreateTaskModel())
-            return EditRepeatUserTaskViewModel(userTask: task, constructor: constructor, mode: mode, taskRouter: router)
+            return EditRepeatUserTaskViewModel(
+                task: task,
+                constructor: constructor,
+                mode: mode,
+                synchronizationService: synchronizationService,
+                taskRouter: router
+            )
         }
     }
     

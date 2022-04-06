@@ -44,7 +44,8 @@ class CourseViewController: UIViewController, BindableType {
         inflater.registerRow(model: CourseAdminMembersModel.self, cell: CourseAdminMembersCell.self)
         inflater.registerRow(model: JoinCourseChatModel.self, cell: JoinCourseChatCell.self)
         inflater.registerRow(model: CourseTasksModel.self, cell: CourseTasksCell.self)
-        inflater.registerRow(model: TaskCellModel.self, cell: TaskCell.self)
+        // TODO: - заменить на CommonTask
+//        inflater.registerRow(model: TaskCellModel.self, cell: TaskCell.self)
         inflater.registerRow(model: CreateCourseTaskCellModel.self, cell: CreateCourseTaskCell.self)
         inflater.registerRow(model: CourseMembersModel.self, cell: CourseMembersCell.self)
         inflater.registerRow(model: ShareCourseModel.self, cell: ShareCourseCell.self)

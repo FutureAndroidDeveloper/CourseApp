@@ -7,7 +7,7 @@ class CourseTaskResponse: CourseTaskCreateRequest {
     var materials: String?
     
     init(
-        identifier: TaskResponse, courseId: Int, taskName: String, taskType: ATYTaskType, frequencyType: ATYFrequencyTypeEnum,
+        identifier: TaskResponse, courseId: Int, taskName: String, taskType: TaskType, frequencyType: Frequency,
         taskSanction: Int, infiniteExecution: Bool, duration: Duration? = nil, editable: Bool? = nil, minSanction: Int? = nil,
         daysCode: String? = nil, taskDescription: String? = nil, taskAttribute: String? = nil, materials: String? = nil)
     {

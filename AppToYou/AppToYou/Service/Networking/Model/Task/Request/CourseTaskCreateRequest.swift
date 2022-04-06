@@ -8,7 +8,7 @@ class CourseTaskCreateRequest: CreateTaskRequest {
     
     
     init(
-        taskName: String, taskType: ATYTaskType, frequencyType: ATYFrequencyTypeEnum,
+        taskName: String, taskType: TaskType, frequencyType: Frequency,
         taskSanction: Int, infiniteExecution: Bool, duration: Duration? = nil,
         editable: Bool? = nil, minSanction: Int? = nil, daysCode: String? = nil,
         taskDescription: String? = nil, taskAttribute: String? = nil)

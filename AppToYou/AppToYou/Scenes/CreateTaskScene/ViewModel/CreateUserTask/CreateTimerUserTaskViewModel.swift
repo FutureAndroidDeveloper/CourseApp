@@ -7,9 +7,10 @@ class CreateTimerUserTaskViewModel: CreateUserTaskViewModel, TimerTaskDataSource
     private let constructor: TimerTaskConstructor
     private let validator = TimerTaskValidator()
     
-    init(type: ATYTaskType, constructor: TimerTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(type: TaskType, constructor: TimerTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(type: type, constructor: constructor, mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func getConstructor() -> TimerTaskConstructor {
@@ -56,7 +57,7 @@ class CreateTimerUserTaskViewModel: CreateUserTaskViewModel, TimerTaskDataSource
         let s = duration.secModel.value
         let separator = Self.timeSeparator
         
-        userTaskRequest?.taskAttribute = "\(h)\(separator)\(m)\(separator)\(s)"
+        task.taskAttribute = "\(h)\(separator)\(m)\(separator)\(s)"
     }
     
     override func update() {

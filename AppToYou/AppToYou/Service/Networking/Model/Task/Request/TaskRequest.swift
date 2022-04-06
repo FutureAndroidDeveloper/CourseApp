@@ -3,7 +3,7 @@ import Foundation
 
 class TaskRequest: Codable {
     var taskName: String
-    var frequencyType: ATYFrequencyTypeEnum
+    var frequencyType: Frequency
     var infiniteExecution: Bool
     var taskSanction: Int
 
@@ -12,7 +12,7 @@ class TaskRequest: Codable {
     var taskDescription: String?
     
     init(
-        taskName: String, frequencyType: ATYFrequencyTypeEnum,
+        taskName: String, frequencyType: Frequency,
         taskSanction: Int, infiniteExecution: Bool, daysCode: String? = nil,
         taskDescription: String? = nil, taskAttribute: String? = nil)
     {
@@ -39,7 +39,7 @@ class TaskRequest: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         taskName = try container.decode(String.self, forKey: .taskName)
-        frequencyType = try container.decode(ATYFrequencyTypeEnum.self, forKey: .frequencyType)
+        frequencyType = try container.decode(Frequency.self, forKey: .frequencyType)
         infiniteExecution = try container.decode(Bool.self, forKey: .infiniteExecution)
         taskSanction = try container.decode(Int.self, forKey: .taskSanction)
         

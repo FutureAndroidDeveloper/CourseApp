@@ -11,6 +11,10 @@ class TaskManager: NetworkManager<TaskEndpoint> {
         request(.update(task: task), responseType: UserTaskResponse.self, completion)
     }
     
+    func remove(taskId: Int, completion: @escaping (Result<Bool, NetworkResponseError>) -> Void) {
+        request(.remove(id: taskId), responseType: Bool.self, decoder: .value, completion)
+    }
+    
     func getTaskFullList(completion: @escaping (Result<[UserTaskResponse], NetworkResponseError>) -> Void) {
         request(.fullList, responseType: [UserTaskResponse].self, completion)
     }

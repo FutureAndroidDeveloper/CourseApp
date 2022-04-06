@@ -62,6 +62,7 @@ class EnterNameViewModelImpl: EnterNameViewModel, EnterNameViewModelInput, Enter
             return
         }
         isLoading.value = true
+        
         userService.create(user: user) { [weak self] result in
             switch result {
             case .success(let user):

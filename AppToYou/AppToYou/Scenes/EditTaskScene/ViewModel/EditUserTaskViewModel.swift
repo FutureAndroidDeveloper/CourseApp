@@ -3,90 +3,78 @@ import XCoordinator
 
 
 class EditUserTaskViewModel: CreateUserTaskViewModel {
+    let updatedTask: Task
     
-    var updateUserTaskRequest: UserTaskUpdateRequest?
-    let userTask: UserTaskResponse
-    
-    init(userTask: UserTaskResponse, constructor: CheckboxTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(task: Task, constructor: CheckboxTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
+        updatedTask = Task(value: task)
+        super.init(type: task.taskType, constructor: constructor, mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter)
+        self.task = task
         
-        self.userTask = userTask
-        super.init(type: userTask.taskType, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        title.value = "Редактирование задачи"
+    }
+    
+    override func update() {
+        super.update()
+        getConstructor().setEnableStateForFields()
     }
     
     override func save() {
-        guard let updateTask = updateUserTaskRequest else {
-            return
-        }
-        
-        taskService.update(task: updateTask) { [weak self] result in
-            switch result {
-            case .success(let updatedTask):
-                print(updatedTask)
-                self?.taskRouter.trigger(.done)
-
-            case .failure(let error):
-                print(error)
-            }
-        }
+        synchronizationService.update(task: updatedTask)
+        taskRouter.trigger(.done)
     }
     
     override func prepare(model: DefaultCreateTaskModel) {
-        let id = userTask.identifier.id
-        let type = userTask.taskType
-        let name = model.nameModel.fieldModel.value
-        let freq = model.frequencyModel.value.frequency
-        let sanction = model.sanctionModel.fieldModel.value
-        let isInfinite = model.periodModel?.isInfiniteModel.isSelected ?? false
-        
         guard let start = model.periodModel?.start.value ?? model.selectDateModel?.date.value else {
             return
         }
+        let frequency = model.frequencyModel.value.frequency
+        let endDate = frequency == .ONCE ? start : model.periodModel?.end.value
         
-        updateUserTaskRequest = UserTaskUpdateRequest(
-            id: id, taskType: type, taskName: name, frequencyType: freq, taskSanction: sanction, infiniteExecution: isInfinite,
-            startDate: start.toString(dateFormat: .localeYearDate)
-        )
-        let endDate = freq == .ONCE ? start : model.periodModel?.end.value
-
-        updateUserTaskRequest?.endDate = endDate?.toString(dateFormat: .localeYearDate)
-        updateUserTaskRequest?.daysCode = model.weekdayModel?.weekdayModels
+        updatedTask.taskName = model.nameModel.fieldModel.value
+        updatedTask.frequencyType = frequency
+        updatedTask.infiniteExecution = model.periodModel?.isInfiniteModel.isSelected ?? false
+        updatedTask.taskSanction = model.sanctionModel.fieldModel.value
+        updatedTask.startDate = start.toString(dateFormat: .localeYearDate)
+        updatedTask.endDate = endDate?.toString(dateFormat: .localeYearDate)
+        updatedTask.daysCode = model.weekdayModel?.weekdayModels
             .map { $0.isSelected ? Self.activeDayCode : Self.inactiveDayCode }
             .joined()
-
+        
+        updatedTask.reminderList.removeAll()
+        
         if model.notificationModel.isEnabled {
-            let separator = Self.timeSeparator
-            updateUserTaskRequest?.reminderList = model.notificationModel.notificationModels
-                .map { "\($0.hourModel.value)\(separator)\($0.minModel.value)" }
-        } else {
-            updateUserTaskRequest?.reminderList = []
+            model.notificationModel.notificationModels
+                .map { "\($0.hourModel.value)\(Self.timeSeparator)\($0.minModel.value)" }
+                .forEach { updatedTask.reminderList.append($0) }
         }
     }
     
     override func getNameModel() -> TextFieldModel {
         let nameField = super.getNameModel()
-        nameField.update(value: userTask.taskName)
+        nameField.update(value: task.taskName)
         return nameField
     }
     
     override func getFrequncy() -> FrequncyValueModel {
         let frequencyField = super.getFrequncy()
-        frequencyField.update(userTask.frequencyType)
+        frequencyField.update(task.frequencyType)
         return frequencyField
     }
     
     override func getPeriodModel() -> TaskPeriodModel {
         let model = super.getPeriodModel()
-        let startDate = userTask.startDate.toDate(dateFormat: .localeYearDate)
-        let endDate = userTask.endDate?.toDate(dateFormat: .localeYearDate)
+        let startDate = task.startDate.toDate(dateFormat: .localeYearDate)
+        let endDate = task.endDate?.toDate(dateFormat: .localeYearDate)
         
-        model.isInfiniteModel.chandeSelectedState(userTask.infiniteExecution)
+        model.isInfiniteModel.chandeSelectedState(task.infiniteExecution)
         model.start.update(value: startDate)
         model.end.update(value: endDate)
         return model
     }
     
     override func getNotificationModels() -> (models: [NotificationTaskTimeModel], isEnabled: Bool) {
-        let notifications = userTask.reminderList ?? []
+        let notifications = Array(task.reminderList)
         var isEnabled = true
         
         var notificationModels = notifications
@@ -119,15 +107,15 @@ class EditUserTaskViewModel: CreateUserTaskViewModel {
     
     override func getSanctionModel() -> (model: NaturalNumberFieldModel, min: Int, isEnabled: Bool) {
         let (field, min, _) = super.getSanctionModel()
-        field.update(value: userTask.taskSanction)
+        field.update(value: task.taskSanction)
         
-        return (field, min, userTask.taskSanction > .zero)
+        return (field, min, task.taskSanction > .zero)
     }
     
     override func getWeekdayModels() -> [WeekdayModel] {
         let models = super.getWeekdayModels()
         
-        if let daysCode = userTask.daysCode {
+        if let daysCode = task.daysCode {
             let codeArray = Array(daysCode)
             zip(models, codeArray).forEach { item in
                 let isSelected = String(item.1) == Self.activeDayCode
@@ -140,8 +128,8 @@ class EditUserTaskViewModel: CreateUserTaskViewModel {
     override func getOnceDateModel() -> DateFieldModel {
         let model = super.getOnceDateModel()
         
-        if userTask.frequencyType == .ONCE {
-            let date = userTask.startDate.toDate(dateFormat: .localeYearDate)
+        if task.frequencyType == .ONCE {
+            let date = task.startDate.toDate(dateFormat: .localeYearDate)
             model.update(value: date)
         }
         return model

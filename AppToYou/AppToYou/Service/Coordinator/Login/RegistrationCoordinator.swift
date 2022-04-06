@@ -16,11 +16,9 @@ enum RegistrationRoute: Route {
 
 class RegistrationCoordinator: NavigationCoordinator<RegistrationRoute> {
     
-    private let loginRouter: UnownedRouter<LoginRoute>
     private weak var photoReceiver: PhotoDelegate?
     
-    init(loginRouter: UnownedRouter<LoginRoute>, rootViewController: RootViewController) {
-        self.loginRouter = loginRouter
+    init(rootViewController: RootViewController) {
         super.init(rootViewController: rootViewController)
         trigger(.credentials)
     }
@@ -56,7 +54,7 @@ class RegistrationCoordinator: NavigationCoordinator<RegistrationRoute> {
             return .none()
             
         case .didRegister:
-            loginRouter.trigger(.didLogin)
+            return .popToRoot()
             
         case .haveAccount:
             return .pop()

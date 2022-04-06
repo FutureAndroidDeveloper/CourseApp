@@ -2,32 +2,36 @@ import Foundation
 import XCoordinator
 
 
-
 class CreateUserTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput, CreateTaskViewModelOutput, CheckboxTaskDataSource, CreatorDelegate {
     static let timeSeparator: Character = ":"
     static let activeDayCode: String = "1"
     static let inactiveDayCode: String = "0"
-
     
     private let constructor: CheckboxTaskConstructor
     private let validator = CheckboxTaskValidator()
     private weak var notificationDelegate: TaskNoticationDelegate?
     
-    let type: ATYTaskType
+    let type: TaskType
     let mode: CreateTaskMode
     let taskRouter: UnownedRouter<TaskRoute>
-    let taskService = TaskManager(deviceIdentifierService: DeviceIdentifierService())
-    var userTaskRequest: UserTaskCreateRequest?
+    let synchronizationService: SynchronizationService
     
+    var task: Task
     var sections: Observable<[TableViewSection]> = Observable([])
     var updatedState: Observable<Void> = Observable(())
+    var title: Observable<String?> = Observable(String())
     
 
-    init(type: ATYTaskType, constructor: CheckboxTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(type: TaskType, constructor: CheckboxTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.type = type
         self.mode = mode
+        self.synchronizationService = synchronizationService
         self.taskRouter = taskRouter
         self.constructor = constructor
+        
+        task = Task()
+        title.value = "Создание новой задачи"
     }
     
     func getConstructor() -> CheckboxTaskConstructor {
@@ -59,48 +63,35 @@ class CreateUserTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput, Cr
     }
     
     func prepare(model: DefaultCreateTaskModel) {
-        let name = model.nameModel.fieldModel.value
-        let freq = model.frequencyModel.value.frequency
-        let sanction = model.sanctionModel.fieldModel.value
-        let isInfinite = model.periodModel?.isInfiniteModel.isSelected ?? false
-
         guard let start = model.periodModel?.start.value ?? model.selectDateModel?.date.value else {
             return
         }
+        let frequency = model.frequencyModel.value.frequency
+        let endDate = frequency == .ONCE ? start : model.periodModel?.end.value
         
-        userTaskRequest = UserTaskCreateRequest(
-            taskName: name, taskType: type, frequencyType: freq, taskSanction: sanction,
-            infiniteExecution: isInfinite, startDate: start.toString(dateFormat: .localeYearDate)
-        )
-        let endDate = freq == .ONCE ? start : model.periodModel?.end.value
-        
-        userTaskRequest?.endDate = endDate?.toString(dateFormat: .localeYearDate)
-        userTaskRequest?.daysCode = model.weekdayModel?.weekdayModels
+        task.taskType = type
+        task.frequencyType = frequency
+        task.taskName = model.nameModel.fieldModel.value
+        task.taskSanction = model.sanctionModel.fieldModel.value
+        task.infiniteExecution = model.periodModel?.isInfiniteModel.isSelected ?? false
+        task.startDate = start.toString(dateFormat: .localeYearDate)
+        task.endDate = endDate?.toString(dateFormat: .localeYearDate)
+        task.daysCode = model.weekdayModel?.weekdayModels
             .map { $0.isSelected ? Self.activeDayCode : Self.inactiveDayCode }
             .joined()
         
+        task.reminderList.removeAll()
+        
         if model.notificationModel.isEnabled {
-            let separator = Self.timeSeparator
-            userTaskRequest?.reminderList = model.notificationModel.notificationModels
-                .map { "\($0.hourModel.value)\(separator)\($0.minModel.value)" }
+            model.notificationModel.notificationModels
+                .map { "\($0.hourModel.value)\(Self.timeSeparator)\($0.minModel.value)" }
+                .forEach { task.reminderList.append($0) }
         }
     }
     
     func save() {
-        guard let userTask = userTaskRequest else {
-            return
-        }
-        
-        taskService.create(task: userTask) { [weak self] result in
-            switch result {
-            case .success(let newTask):
-                print(newTask)
-                self?.taskRouter.trigger(.done)
-
-            case .failure(let error):
-                print(error)
-            }
-        }
+        synchronizationService.create(task: task)
+        taskRouter.trigger(.taskDidCreate)
     }
     
     func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?) {
@@ -150,8 +141,8 @@ class CreateUserTaskViewModel: CreateTaskViewModel, CreateTaskViewModelInput, Cr
     
     func getPeriodModel() -> TaskPeriodModel {
         let isInfiniteModel = TitledCheckBoxModel(title: "Бесконечная длительность задачи", isSelected: true)
-        let start = DateFieldModel(value: Date())
-        let end = DateFieldModel()
+        let start = DateFieldModel()
+        let end = DateFieldModel(value: nil)
         let model = TaskPeriodModel(isInfiniteModel: isInfiniteModel, start: start, end: end)
                                    
         return model

@@ -48,7 +48,7 @@ class AddCourseTaskViewModelImpl: AddCourseTaskViewModel, AddCourseTaskViewModel
         self.constructor = constructor
         self.addTaskRouter = addTaskRouter
         
-        configuredtaskModel = AddConfiguredCourseTaskModel(courseId: courseTask.courseId, taskId: courseTask.identifier.id)
+        configuredtaskModel = AddConfiguredCourseTaskModel(courseId: courseTask.courseId, taskId: courseTask.identifier.id ?? .zero)
         loadFields()
     }
     

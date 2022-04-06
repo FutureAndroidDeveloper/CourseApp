@@ -7,9 +7,10 @@ class EditRepeatUserTaskViewModel: EditUserTaskViewModel, CounterTaskDataSource 
     private let constructor: RepeatTaskConstructor
     private let validator = RitualTaskValidator()
     
-    init(userTask: UserTaskResponse, constructor: RepeatTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(task: Task, constructor: RepeatTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(userTask: userTask, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(task: task, constructor: constructor, mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func loadFields() {
@@ -37,11 +38,11 @@ class EditRepeatUserTaskViewModel: EditUserTaskViewModel, CounterTaskDataSource 
     func prepare(model: RepeatCreateTaskModel) {
         super.prepare(model: model)
         let repeatCount = model.countModel.valueModel.value
-        updateUserTaskRequest?.taskAttribute = "\(repeatCount)"
+        updatedTask.taskAttribute = "\(repeatCount)"
     }
     
     func getCounterModel() -> (field: NaturalNumberFieldModel, lock: LockButtonModel?) {
-        let attribute = userTask.taskAttribute ?? String()
+        let attribute = task.taskAttribute ?? String()
         let value = Int(attribute) ?? 0
         let model = NaturalNumberFieldModel(value: value)
         

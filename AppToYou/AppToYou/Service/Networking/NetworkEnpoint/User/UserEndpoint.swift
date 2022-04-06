@@ -6,6 +6,7 @@ enum UserEndpoint: Endpoint {
     case create(_ user: UserCreateRequest)
     case update(_ user: UserUpdateRequest)
     case delete
+    case updateInfo(_ info: UpdateInfoRequest)
     
     private static let basePath = "https://apptoyou.qittiq.by:6699/"
     
@@ -17,7 +18,15 @@ enum UserEndpoint: Endpoint {
     }
     
     var path: String {
-        return "user"
+        var userPath = "user"
+        
+        switch self {
+        case .create, .update, .delete:
+            break
+        case .updateInfo:
+            userPath.append("/updateInfo")
+        }
+        return userPath
     }
     
     var httpMethod: HTTPMethod {
@@ -25,6 +34,7 @@ enum UserEndpoint: Endpoint {
         case .create: return .post
         case .update: return .put
         case .delete: return .delete
+        case .updateInfo: return .put
         }
     }
     
@@ -38,12 +48,15 @@ enum UserEndpoint: Endpoint {
             
         case .delete:
             return Request()
+            
+        case .updateInfo(let info):
+            return RequestWithParameters(body: info)
         }
     }
     
     var headers: HTTPHeaders {
         switch self {
-        case .update, .delete:
+        case .update, .delete, .updateInfo:
             return UserSession.shared.getAuthorizationHeader()
         default:
             return [:]

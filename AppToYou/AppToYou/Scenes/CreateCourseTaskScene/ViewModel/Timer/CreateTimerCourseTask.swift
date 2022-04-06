@@ -9,12 +9,12 @@ class CreateTimerCourseTask: CreateTimerUserTaskViewModel {
     
     private let constructor: CreateTimerCourseTaskConstructor
     
-     init(type: ATYTaskType, constructor: CreateTimerCourseTaskConstructor,
-          mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>)
+     init(type: TaskType, constructor: CreateTimerCourseTaskConstructor, mode: CreateTaskMode,
+          synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>)
     {
         self.constructor = constructor
-        super.init(type: type, constructor: constructor.baseConstructor,
-                   mode: mode, taskRouter: taskRouter)
+        super.init(type: type, constructor: constructor.baseConstructor, mode: mode,
+                   synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func userTaskdurationPicked(_ duration: DurationTime) {

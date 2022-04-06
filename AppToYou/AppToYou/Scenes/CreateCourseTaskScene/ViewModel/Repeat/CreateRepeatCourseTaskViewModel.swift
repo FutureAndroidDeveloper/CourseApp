@@ -7,10 +7,17 @@ class CreateRepeatCourseTaskViewModel: CreateCourseTaskViewModel  {
     private let constructor: CreateRepeatCourseTaskConstructor
     private let repeatViewModel: CreateRepeatCourseTask
     
-    init(courseId: Int, type: ATYTaskType, constructor: CreateRepeatCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseId: Int, type: TaskType, constructor: CreateRepeatCourseTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        self.repeatViewModel = CreateRepeatCourseTask(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
-        super.init(courseId: courseId, type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        self.repeatViewModel = CreateRepeatCourseTask(
+            type: type, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
+        super.init(
+            courseId: courseId, type: type, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     

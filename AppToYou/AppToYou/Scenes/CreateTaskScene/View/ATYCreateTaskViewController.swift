@@ -6,7 +6,7 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         static let saveInsets = UIEdgeInsets(top: 0, left: 20, bottom: 13, right: 20)
     }
     
-    var viewModel : CreateTaskViewModel!
+    var viewModel: CreateTaskViewModel!
     
     private let createTaskTableView = ContentSizedTableView()
     private let contentContainer = TopBottomBlocksContainerView()
@@ -87,12 +87,22 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         viewModel.output.updatedState.bind { [weak self] _ in
             self?.createTaskTableView.reloadData()
         }
+        viewModel.output.title.bind { [weak self] title in
+            self?.title = title
+        }
     }
     
     func update(_ sections: [TableViewSection]) {
         inflater.inflate(sections: sections)
     }
     
+    @objc
+    private func saveTapped() {
+        viewModel.input.saveDidTapped()
+    }
+    
+    
+    // TODO: - Remove
     
     private func configureNavBar() {
         self.navigationItem.title = R.string.localizable.creatingNewTask()
@@ -108,8 +118,4 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
         present(child, animated: true)
     }
     
-    @objc
-    private func saveTapped() {
-        viewModel.input.saveDidTapped()
-    }
 }

@@ -21,4 +21,8 @@ class UserManager: NetworkManager<UserEndpoint> {
         updateUserWithPhoto.update(user, photo: photo, completion: completion)
     }
     
+    func updateInfo(_ info: UpdateInfoRequest, completion: @escaping (Result<UpdateInfoResponse, NetworkResponseError>) -> Void) {
+        request(.updateInfo(info), responseType: UpdateInfoResponse.self, completion)
+    }
+    
 }

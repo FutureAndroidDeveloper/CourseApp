@@ -2,10 +2,10 @@ import Foundation
 
 
 class UserTaskUpdateRequest: UserTaskCreateRequest {
-    var id: Int
+    var id: Int?
     
     init(
-        id: Int, taskType: ATYTaskType, taskName: String, frequencyType: ATYFrequencyTypeEnum,
+        id: Int?, taskType: TaskType, taskName: String, frequencyType: Frequency,
         taskSanction: Int, infiniteExecution: Bool, startDate: String, endDate: String? = nil,
         reminderList: [String]? = nil, daysCode: String? = nil, taskDescription: String? = nil,
         taskAttribute: String? = nil)
@@ -24,14 +24,14 @@ class UserTaskUpdateRequest: UserTaskCreateRequest {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        id = try container.decode(Int.self, forKey: .id)
+        id = try? container.decode(Int.self, forKey: .id)
         try super.init(from: decoder)
     }
     
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(id, forKey: .id)
+        try? container.encode(id, forKey: .id)
         try super.encode(to: encoder)
     }
     

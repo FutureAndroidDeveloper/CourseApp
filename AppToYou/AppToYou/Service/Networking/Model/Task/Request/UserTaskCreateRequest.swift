@@ -7,7 +7,7 @@ class UserTaskCreateRequest: CreateTaskRequest {
     var reminderList: [String]?
     
     init(
-        taskName: String, taskType: ATYTaskType, frequencyType: ATYFrequencyTypeEnum,
+        taskName: String, taskType: TaskType, frequencyType: Frequency,
         taskSanction: Int, infiniteExecution: Bool, startDate: String,
         endDate: String? = nil, reminderList: [String]? = nil, daysCode: String? = nil,
         taskDescription: String? = nil, taskAttribute: String? = nil)

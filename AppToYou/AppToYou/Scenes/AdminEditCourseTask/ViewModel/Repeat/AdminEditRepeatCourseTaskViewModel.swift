@@ -9,13 +9,18 @@ class AdminEditRepeatCourseTaskViewModel: AdminEditCourseTaskViewModel, CounterT
     
     init(courseName: String, courseTask: CourseTaskResponse,
          constructor: AdminEditRepeatCourseTaskConstructor,
+         synchronizationService: SynchronizationService,
          mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
         
         self.constructor = constructor
-        self.repeatViewModel = AdminEditRepeatCourseTask(type: courseTask.taskType, constructor: constructor,
-                                                         mode: mode, taskRouter: taskRouter)
-        super.init(courseName: courseName, courseTask: courseTask, constructor: constructor,
-                   mode: mode, taskRouter: taskRouter)
+        self.repeatViewModel = AdminEditRepeatCourseTask(
+            type: courseTask.taskType, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
+        super.init(
+            courseName: courseName, courseTask: courseTask, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     override func loadFields() {

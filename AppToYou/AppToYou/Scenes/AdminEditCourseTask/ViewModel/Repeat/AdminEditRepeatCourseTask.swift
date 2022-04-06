@@ -5,11 +5,11 @@ import XCoordinator
 class AdminEditRepeatCourseTask: CreateRepeatUserTaskViewModel {
     private let constructor: AdminEditRepeatCourseTaskConstructor
     
-     init(type: ATYTaskType, constructor: AdminEditRepeatCourseTaskConstructor,
-          mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+     init(type: TaskType, constructor: AdminEditRepeatCourseTaskConstructor, mode: CreateTaskMode,
+          synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
          
         self.constructor = constructor
-        super.init(type: type, constructor: constructor.baseConstructor, mode: mode, taskRouter: taskRouter)
+         super.init(type: type, constructor: constructor.baseConstructor, mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func getValidator() -> RitualCourseTaskValidator {

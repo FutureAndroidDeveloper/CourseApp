@@ -7,9 +7,13 @@ class UserEditRepeatCourseTaskViewModel: UserEditCourseTaskViewModel, CounterTas
     private let constructor: UserEditRepeatCourseTaskConstructor
     private let validator = RitualTaskValidator()
     
-    init(userTask: UserTaskResponse, constructor: UserEditRepeatCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(task: Task, constructor: UserEditRepeatCourseTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(userTask: userTask, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(
+            task: task, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     override func loadFields() {
@@ -38,15 +42,15 @@ class UserEditRepeatCourseTaskViewModel: UserEditCourseTaskViewModel, CounterTas
     func prepare(model: UserEditRepeatCourseTaskModel) {
         super.prepare(model: model)
         let repeatCount = model.repeatModel.countModel.valueModel.value
-        updateUserTaskRequest?.taskAttribute = "\(repeatCount)"
+        updatedTask.taskAttribute = "\(repeatCount)"
     }
     
     func getCounterModel() -> (field: NaturalNumberFieldModel, lock: LockButtonModel?) {
-        let attribute = userTask.taskAttribute ?? String()
+        let attribute = task.taskAttribute ?? String()
         let value = Int(attribute) ?? 0
         let model = NaturalNumberFieldModel(value: value)
         
-        let lockModel = LockButtonModel(isLocked: userTask.editableCourseTask)
+        let lockModel = LockButtonModel(isLocked: task.editableCourseTask)
         
         return (model, lockModel)
     }

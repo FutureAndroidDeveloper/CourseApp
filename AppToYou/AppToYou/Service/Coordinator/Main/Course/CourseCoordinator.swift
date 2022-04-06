@@ -22,11 +22,14 @@ enum CourseRoute: Route {
 class CourseCoordinator: NavigationCoordinator<CourseRoute> {
     private let coursesRouter: UnownedRouter<CoursesRoute>
     private let course: CourseResponse
+    private let synchronizationService: SynchronizationService
     
     
-    init(course: CourseResponse, coursesRouter: UnownedRouter<CoursesRoute>, rootViewController: RootViewController) {
+    init(course: CourseResponse, coursesRouter: UnownedRouter<CoursesRoute>,
+         synchronizationService: SynchronizationService, rootViewController: RootViewController) {
         self.course = course
         self.coursesRouter = coursesRouter
+        self.synchronizationService = synchronizationService
         super.init(rootViewController: rootViewController)
     }
     
@@ -82,13 +85,21 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
             
         case .createTask:
             let id = course.id
-            let taskCoordinator = TaskCoordinator(mode: .createCourseTask(courseId: id), rootViewController: self.rootViewController)
+            let taskCoordinator = TaskCoordinator(
+                mode: .createCourseTask(courseId: id),
+                synchronizationService: synchronizationService,
+                rootViewController: self.rootViewController
+            )
             addChild(taskCoordinator)
             return .none()
             
         case .editTask(let task):
             let name = course.name
-            let taskCoordinator = TaskCoordinator(mode: .adminEditCourseTask(courseName: name, task: task), rootViewController: self.rootViewController)
+            let taskCoordinator = TaskCoordinator(
+                mode: .adminEditCourseTask(courseName: name, task: task),
+                synchronizationService: synchronizationService,
+                rootViewController: self.rootViewController
+            )
             addChild(taskCoordinator)
             return .none()
             

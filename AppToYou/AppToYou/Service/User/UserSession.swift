@@ -21,6 +21,11 @@ class UserSession {
         encodedData = Data()
     }
     
+    func logout() {
+        updateEncodedData(Data())
+        updateUser(nil)
+    }
+    
     func getEncodedData() -> Data {
         return encodedData
     }

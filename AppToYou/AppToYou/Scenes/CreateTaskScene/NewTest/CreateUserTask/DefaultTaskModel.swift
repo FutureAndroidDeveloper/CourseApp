@@ -4,8 +4,8 @@ enum CreateTaskMode {
     case createUserTask
     case createCourseTask(courseId: Int)
     
-    case editUserTask(task: UserTaskResponse)
-    case editCourseTask(task: UserTaskResponse)
+    case editUserTask(task: Task)
+    case editCourseTask(task: Task)
     
     case adminEditCourseTask(courseName: String, task: CourseTaskResponse)
 }
@@ -60,26 +60,11 @@ class CheckboxTaskConstructor {
         addFrequency(dataSource)
         addNotificationHandler(dataSource)
         addSanction(dataSource)
-        
-//        switch mode {
-//        case .createUserTask, .editUserTask:
-//            break
-//
-//        case .createCourseTask:
-//            model.addLockHeaderModel()
-//            addMinSanctionModel(dataProvider)
-//
-//        case .editCourseTask:
-//            addCourseNameModel(dataProvider)
-//
-//            model.nameModel.isEditable = false
-//            model.periodModel?.isEditable = false
-//
-//        case .adminEditCourseTask:
-//            model.addLockHeaderModel()
-//            addMinSanctionModel(dataProvider)
-//            addCourseNameModel(dataProvider)
-//        }
+    }
+    
+    func setEnableStateForFields() {
+        checkboxModel.weekdayModel?.updateActiveState(false)
+        checkboxModel.periodModel?.updateActiveState(false)
     }
     
     func getModels() -> [AnyObject] {

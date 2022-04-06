@@ -2,7 +2,7 @@ import Foundation
 
 
 protocol ChooseTaskTypeViewModelInput {
-    func typePicked(_ taskType: ATYTaskType)
+    func typePicked(_ taskType: TaskType)
 }
 
 

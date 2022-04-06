@@ -8,9 +8,10 @@ class EditTextUserTaskViewModel: EditUserTaskViewModel, TextTaskDataSource {
     private let constructor: TextTaskConstructor
     private let validator = TextTaskValidator()
     
-    init(userTask: UserTaskResponse, constructor: TextTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(task: Task, constructor: TextTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(userTask: userTask, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(task: task, constructor: constructor, mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func loadFields() {
@@ -40,17 +41,17 @@ class EditTextUserTaskViewModel: EditUserTaskViewModel, TextTaskDataSource {
         
         let description = model.descriptionModel.fieldModel.value
         let minSymbols = model.lengthLimitModel.fieldModel.value
-        updateUserTaskRequest?.taskDescription = description
-        updateUserTaskRequest?.taskAttribute = "\(minSymbols)"
+        updatedTask.taskDescription = description
+        updatedTask.taskAttribute = "\(minSymbols)"
     }
     
     func getDescriptionModel() -> PlaceholderTextViewModel {
-        let description = userTask.taskDescription
+        let description = task.taskDescription
         return PlaceholderTextViewModel(value: description, placeholder: "Например, положительные моменты")
     }
     
     func getMinSymbolsModel() -> (field: NaturalNumberFieldModel, lock: LockButtonModel?) {
-        let attribute = userTask.taskAttribute ?? String()
+        let attribute = task.taskAttribute ?? String()
         let minSymbols = Int(attribute) ?? 0
         let model = NaturalNumberFieldModel(value: minSymbols)
         

@@ -7,9 +7,10 @@ class CreateTextUserTaskViewModel: CreateUserTaskViewModel, TextTaskDataSource {
     private let constructor: TextTaskConstructor
     private let validator = TextTaskValidator()
     
-    init(type: ATYTaskType, constructor: TextTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(type: TaskType, constructor: TextTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(type: type, constructor: constructor, mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func getConstructor() -> TextTaskConstructor {
@@ -47,8 +48,8 @@ class CreateTextUserTaskViewModel: CreateUserTaskViewModel, TextTaskDataSource {
         
         let description = model.descriptionModel.fieldModel.value
         let minSymbols = model.lengthLimitModel.fieldModel.value
-        userTaskRequest?.taskDescription = description
-        userTaskRequest?.taskAttribute = "\(minSymbols)"
+        task.taskDescription = description
+        task.taskAttribute = "\(minSymbols)"
     }
     
     override func update() {

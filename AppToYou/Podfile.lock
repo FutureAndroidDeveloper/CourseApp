@@ -4,6 +4,7 @@ PODS:
   - DynamicBlurView (4.1.0)
   - FittedSheets (2.4.2)
   - IQKeyboardManagerSwift (6.3.0)
+  - JGProgressHUD (2.2)
   - KeychainAccess (4.2.2)
   - Parchment (3.1.0)
   - PopupDialog (1.1.1):
@@ -27,6 +28,7 @@ DEPENDENCIES:
   - DropDown
   - FittedSheets
   - IQKeyboardManagerSwift (= 6.3.0)
+  - JGProgressHUD
   - KeychainAccess
   - Parchment (~> 3.0)
   - PopupDialog (~> 1.1)
@@ -43,6 +45,7 @@ SPEC REPOS:
     - DynamicBlurView
     - FittedSheets
     - IQKeyboardManagerSwift
+    - JGProgressHUD
     - KeychainAccess
     - Parchment
     - PopupDialog
@@ -60,6 +63,7 @@ SPEC CHECKSUMS:
   DynamicBlurView: 58e18fae80bb614e34681a4486870e7d257b62e8
   FittedSheets: 661408776eb4ff514a31da75b3600bd7222b2b3d
   IQKeyboardManagerSwift: a8228c257614af98743b4cd8584637025f36358f
+  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Parchment: 6250722ed0456d68f6bae03118eda722a28486f3
   PopupDialog: 720c92befd8bc23c13442254945213db5612f149
@@ -71,6 +75,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   XCoordinator: 9ee654fedef1ffede33d5c11677708a555c00542
 
-PODFILE CHECKSUM: d711011efa52cad9e96c2f47d8efee2ec3733982
+PODFILE CHECKSUM: dcdc11653bd3d73311379a9281fde232bb133336
 
 COCOAPODS: 1.11.2

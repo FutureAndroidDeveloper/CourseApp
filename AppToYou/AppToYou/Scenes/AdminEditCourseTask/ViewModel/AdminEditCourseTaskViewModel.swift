@@ -10,15 +10,16 @@ class AdminEditCourseTaskViewModel: CreateCourseTaskViewModel, AdminEditCourseTa
     private let courseName: String
      
     
-    init(courseName: String, courseTask: CourseTaskResponse, constructor: AdminEditCourseTaskConstructor,
-         mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseName: String, courseTask: CourseTaskResponse, constructor: AdminEditCourseTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         
         self.courseName = courseName
         self.courseTask = courseTask
         self.constructor = constructor
         super.init(
-            courseId: courseTask.courseId, type: courseTask.taskType,
-            constructor: constructor, mode: mode, taskRouter: taskRouter)
+            courseId: courseTask.courseId, type: courseTask.taskType, constructor: constructor,
+            mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     override func loadFields() {
@@ -37,7 +38,9 @@ class AdminEditCourseTaskViewModel: CreateCourseTaskViewModel, AdminEditCourseTa
     }
     
     override func save() {
-        let id = courseTask.identifier.id
+        guard let id = courseTask.identifier.id else {
+            return
+        }
         courseService.remove(taskId: id) { [weak self] result in
             switch result {
             case .success:

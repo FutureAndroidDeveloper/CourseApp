@@ -7,10 +7,17 @@ class CreateTextCourseTaskViewModel: CreateCourseTaskViewModel  {
     private let constructor: CreateTextCourseTaskConstructor
     private let timerViewModel: CreateTextCourseTask
     
-    init(courseId: Int, type: ATYTaskType, constructor: CreateTextCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseId: Int, type: TaskType, constructor: CreateTextCourseTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        self.timerViewModel = CreateTextCourseTask(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
-        super.init(courseId: courseId, type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        self.timerViewModel = CreateTextCourseTask(
+            type: type, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
+        super.init(
+            courseId: courseId, type: type, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     override func loadFields() {

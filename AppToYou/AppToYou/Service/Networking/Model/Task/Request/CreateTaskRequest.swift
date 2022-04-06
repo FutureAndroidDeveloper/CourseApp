@@ -2,10 +2,10 @@ import Foundation
 
 
 class CreateTaskRequest: TaskRequest {
-    var taskType: ATYTaskType
+    var taskType: TaskType
     
     init(
-        taskName: String, taskType: ATYTaskType, frequencyType: ATYFrequencyTypeEnum,
+        taskName: String, taskType: TaskType, frequencyType: Frequency,
         taskSanction: Int, infiniteExecution: Bool, daysCode: String? = nil,
         taskDescription: String? = nil, taskAttribute: String? = nil)
     {
@@ -22,7 +22,7 @@ class CreateTaskRequest: TaskRequest {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        taskType = try container.decode(ATYTaskType.self, forKey: .taskType)
+        taskType = try container.decode(TaskType.self, forKey: .taskType)
         try super.init(from: decoder)
     }
     

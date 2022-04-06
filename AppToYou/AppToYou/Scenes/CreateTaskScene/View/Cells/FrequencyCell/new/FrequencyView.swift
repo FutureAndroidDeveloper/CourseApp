@@ -11,8 +11,8 @@ class FrequencyView: UIView {
     
     private var model: FrequencyModel?
     
-    private var frequencyChanged: ((ATYFrequencyTypeEnum) -> Void)?
-    private var frequencyOrder: [[ATYFrequencyTypeEnum]]
+    private var frequencyChanged: ((Frequency) -> Void)?
+    private var frequencyOrder: [[Frequency]]
     private var isPrepared: Bool
     
     private let contentStack: UIStackView = {
@@ -37,7 +37,7 @@ class FrequencyView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(model: FrequencyModel, frequencyChanged: @escaping (ATYFrequencyTypeEnum) -> Void) {
+    func configure(model: FrequencyModel, frequencyChanged: @escaping (Frequency) -> Void) {
         self.model = model
         self.frequencyChanged = frequencyChanged
         
@@ -53,7 +53,7 @@ class FrequencyView: UIView {
         }
     }
     
-    private func convertToRowStack(_ types: [ATYFrequencyTypeEnum]) -> UIStackView {
+    private func convertToRowStack(_ types: [Frequency]) -> UIStackView {
         let rowStack = UIStackView()
         rowStack.distribution = .fillProportionally
         rowStack.spacing = Constants.buttonSpacing
@@ -65,7 +65,7 @@ class FrequencyView: UIView {
         return rowStack
     }
     
-    private func createButton(type: ATYFrequencyTypeEnum) -> FrequencyButton {
+    private func createButton(type: Frequency) -> FrequencyButton {
         let button = FrequencyButton(type: type)
         button.setTitle(getTitle(of: type), for: .normal)
         button.addTarget(self, action: #selector(frequencyDidChange(_:)), for: .touchUpInside)
@@ -75,7 +75,7 @@ class FrequencyView: UIView {
         return button
     }
     
-    private func getTitle(of type: ATYFrequencyTypeEnum) -> String? {
+    private func getTitle(of type: Frequency) -> String? {
         var title: String?
         
         switch type {
@@ -95,7 +95,7 @@ class FrequencyView: UIView {
         return title
     }
     
-    private func select(_ frequency: ATYFrequencyTypeEnum) {
+    private func select(_ frequency: Frequency) {
         guard let selectedButton = getButtons().first(where: { $0.type == frequency }) else {
             return
         }
@@ -113,7 +113,7 @@ class FrequencyView: UIView {
             .compactMap { $0 as? FrequencyButton }
     }
     
-    private func prepareForMode(mode: CreateTaskMode, selected: ATYFrequencyTypeEnum) {
+    private func prepareForMode(mode: CreateTaskMode, selected: Frequency) {
         guard !isPrepared else {
             return
         }
@@ -125,14 +125,16 @@ class FrequencyView: UIView {
         
         let buttonsToModify = getButtons().filter { $0.type != selected }
         
-        if case .editCourseTask = mode {
+        
+        switch mode {
+        case .editUserTask, .editCourseTask:
             getButtons().forEach { $0.disable() }
             buttonsToModify.forEach { $0.removeFromSuperview() }
-        }
-        if case .adminEditCourseTask = mode {
+        case .adminEditCourseTask:
             buttonsToModify.forEach { $0.disable() }
+        default:
+            break
         }
-        
         isPrepared = true
     }
     

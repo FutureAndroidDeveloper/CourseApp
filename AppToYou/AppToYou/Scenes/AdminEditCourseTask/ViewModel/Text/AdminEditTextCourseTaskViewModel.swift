@@ -7,15 +7,18 @@ class AdminEditTextCourseTaskViewModel: AdminEditCourseTaskViewModel, TextTaskDa
     private let repeatViewModel: AdminEditTextCourseTask
     
     
-    init(courseName: String, courseTask: CourseTaskResponse,
-         constructor: AdminEditTextCourseTaskConstructor,
-         mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseName: String, courseTask: CourseTaskResponse, constructor: AdminEditTextCourseTaskConstructor,
+         mode: CreateTaskMode, synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         
         self.constructor = constructor
-        self.repeatViewModel = AdminEditTextCourseTask(type: courseTask.taskType, constructor: constructor,
-                                                         mode: mode, taskRouter: taskRouter)
-        super.init(courseName: courseName, courseTask: courseTask, constructor: constructor,
-                   mode: mode, taskRouter: taskRouter)
+        self.repeatViewModel = AdminEditTextCourseTask(
+            type: courseTask.taskType, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
+        super.init(
+            courseName: courseName, courseTask: courseTask, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     override func loadFields() {

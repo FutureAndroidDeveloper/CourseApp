@@ -11,12 +11,13 @@ class CreateCourseTaskViewModel: CreateUserTaskViewModel, CreateCourseTaskDataSo
     private let courseId: Int
     var courseTaskRequest: CourseTaskCreateRequest?
     
-    init(courseId: Int, type: ATYTaskType, constructor: CreateCourseTaskConstructor,
-         mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseId: Int, type: TaskType, constructor: CreateCourseTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         
         self.courseId = courseId
         self.constructor = constructor
-        super.init(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(type: type, constructor: constructor, mode: mode,
+                   synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func loadFields() {

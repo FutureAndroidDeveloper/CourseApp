@@ -7,9 +7,10 @@ class EditTimerUserTaskViewModel: EditUserTaskViewModel, TimerTaskDataSource {
     private let constructor: TimerTaskConstructor
     private let validator = TimerTaskValidator()
     
-    init(userTask: UserTaskResponse, constructor: TimerTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(task: Task, constructor: TimerTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(userTask: userTask, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(task: task, constructor: constructor, mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func loadFields() {
@@ -47,11 +48,11 @@ class EditTimerUserTaskViewModel: EditUserTaskViewModel, TimerTaskDataSource {
         let m = duration.minModel.value
         let s = duration.secModel.value
         let separator = Self.timeSeparator
-        updateUserTaskRequest?.taskAttribute = "\(h)\(separator)\(m)\(separator)\(s)"
+        updatedTask.taskAttribute = "\(h)\(separator)\(m)\(separator)\(s)"
     }
     
     func getDurationModel() -> (field: TaskDurationModel, lock: LockButtonModel?) {
-        let attribute = userTask.taskAttribute ?? String()
+        let attribute = task.taskAttribute ?? String()
         let hour = TimeBlockModelFactory.getHourModel()
         let min = TimeBlockModelFactory.getMinModel()
         let sec = TimeBlockModelFactory.getSecModel()

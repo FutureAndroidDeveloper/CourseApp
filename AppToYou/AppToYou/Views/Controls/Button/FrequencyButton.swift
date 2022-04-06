@@ -8,10 +8,10 @@ class FrequencyButton: UIButton {
         static let imagePadding: CGFloat = 10
     }
     
-    private(set) var type: ATYFrequencyTypeEnum
+    private(set) var type: Frequency
     
     
-    init(type: ATYFrequencyTypeEnum) {
+    init(type: Frequency) {
         self.type = type
         super.init(frame: .zero)
         

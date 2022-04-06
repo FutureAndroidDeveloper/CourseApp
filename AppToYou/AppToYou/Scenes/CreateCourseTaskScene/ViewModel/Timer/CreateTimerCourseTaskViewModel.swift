@@ -7,10 +7,17 @@ class CreateTimerCourseTaskViewModel: CreateCourseTaskViewModel  {
     private let constructor: CreateTimerCourseTaskConstructor
     private let timerViewModel: CreateTimerCourseTask
     
-    init(courseId: Int, type: ATYTaskType, constructor: CreateTimerCourseTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(courseId: Int, type: TaskType, constructor: CreateTimerCourseTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        self.timerViewModel = CreateTimerCourseTask(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
-        super.init(courseId: courseId, type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        self.timerViewModel = CreateTimerCourseTask(
+            type: type, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
+        super.init(
+            courseId: courseId, type: type, constructor: constructor, mode: mode,
+            synchronizationService: synchronizationService, taskRouter: taskRouter
+        )
     }
     
     override func userTaskdurationPicked(_ duration: DurationTime) {

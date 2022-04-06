@@ -7,9 +7,10 @@ class CreateRepeatUserTaskViewModel: CreateUserTaskViewModel, CounterTaskDataSou
     private let constructor: RepeatTaskConstructor
     private let validator = RitualTaskValidator()
     
-    init(type: ATYTaskType, constructor: RepeatTaskConstructor, mode: CreateTaskMode, taskRouter: UnownedRouter<TaskRoute>) {
+    init(type: TaskType, constructor: RepeatTaskConstructor, mode: CreateTaskMode,
+         synchronizationService: SynchronizationService, taskRouter: UnownedRouter<TaskRoute>) {
         self.constructor = constructor
-        super.init(type: type, constructor: constructor, mode: mode, taskRouter: taskRouter)
+        super.init(type: type, constructor: constructor, mode: mode, synchronizationService: synchronizationService, taskRouter: taskRouter)
     }
     
     override func getConstructor() -> RepeatTaskConstructor {
@@ -46,7 +47,7 @@ class CreateRepeatUserTaskViewModel: CreateUserTaskViewModel, CounterTaskDataSou
         super.prepare(model: model)
         
         let repeatCount = model.countModel.valueModel.value
-        userTaskRequest?.taskAttribute = "\(repeatCount)"
+        task.taskAttribute = "\(repeatCount)"
     }
     
     override func update() {

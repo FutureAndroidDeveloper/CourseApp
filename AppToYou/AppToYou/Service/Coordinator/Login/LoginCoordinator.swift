@@ -10,20 +10,23 @@ enum LoginRoute: Route {
 }
 
 
-class LoginCoordinator: NavigationCoordinator<LoginRoute> {
-    
+class LoginCoordinator: NavigationCoordinator<LoginRoute>, SynchronizationDelegate {
     private let appRouter: UnownedRouter<AppRoute>
+    private let synchronizationService: SynchronizationService
 
-    init(appRouter: UnownedRouter<AppRoute>) {
+    init(synchronizationService: SynchronizationService, appRouter: UnownedRouter<AppRoute>) {
+        self.synchronizationService = synchronizationService
         self.appRouter = appRouter
         super.init(initialRoute: .signIn)
+        
+        synchronizationService.addHandler(self)
     }
     
     override func prepareTransition(for route: LoginRoute) -> NavigationTransition {
         switch route {
         case .signIn:
             let viewController = ATYAuthorizationViewController()
-            let viewModel = LoginViewModelImpl(router: unownedRouter, appRouter: appRouter)
+            let viewModel = LoginViewModelImpl(synchronizationService: synchronizationService, router: unownedRouter)
             viewController.bind(to: viewModel)
             
             return .multiple([
@@ -38,8 +41,7 @@ class LoginCoordinator: NavigationCoordinator<LoginRoute> {
             return .none()
             
         case .registration:
-            let registrationCoordinator = RegistrationCoordinator(loginRouter: unownedRouter,
-                                                                  rootViewController: self.rootViewController)
+            let registrationCoordinator = RegistrationCoordinator(rootViewController: self.rootViewController)
             addChild(registrationCoordinator)
             return .none()
             
@@ -50,6 +52,23 @@ class LoginCoordinator: NavigationCoordinator<LoginRoute> {
         case .error(let message):
             let errorCoordinator = ErrorAlertCoordinator(message: message)
             return .present(errorCoordinator)
+        }
+    }
+    
+    func synchronizationDidStart() {
+        // pass
+    }
+    
+    func synchronizationDidFinish(result: Result<Double, Error>) {
+        switch result {
+        case .success(let duration):
+            let delay = duration + synchronizationService.resultAlertDuration
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+                self?.trigger(.didLogin)
+            }
+            
+        case .failure:
+            break
         }
     }
     

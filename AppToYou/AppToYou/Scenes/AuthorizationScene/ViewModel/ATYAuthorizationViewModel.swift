@@ -5,7 +5,6 @@ protocol AuthorizationViewModelInput {
     func resetTapped()
     func registrationTapped()
     func loginTapped()
-    func didLogin()
     func continueFlow()
     
     func useAppleAccount()
@@ -32,19 +31,18 @@ extension AuthorizationViewModel where Self: AuthorizationViewModelInput & Autho
 
 
 class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, AuthorizationViewModelOutput {
-
-    private let appRouter: UnownedRouter<AppRoute>
-    private let router: UnownedRouter<LoginRoute>
     
     var emailModel: LoginEmailModel
     var passwordModel: LoginPasswordModel
     var isLoading: Observable<Bool> = Observable(false)
     
+    private let router: UnownedRouter<LoginRoute>
     private let loginManager = LoginManager(deviceIdentifierService: DeviceIdentifierService())
+    private let synchronizationService: SynchronizationService
 
-    init(router: UnownedRouter<LoginRoute>, appRouter: UnownedRouter<AppRoute>) {
+    init(synchronizationService: SynchronizationService, router: UnownedRouter<LoginRoute>) {
+        self.synchronizationService = synchronizationService
         self.router = router
-        self.appRouter = appRouter
         
         let emailFieldModel = TextFieldModel(value: String(), placeholder: R.string.localizable.enterYourEmail())
         let passwordFieldModel = TextFieldModel(value: String(), placeholder: R.string.localizable.enterPassword())
@@ -53,11 +51,9 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     }
     
     func loginTapped() {
-//        let mail = emailModel.fieldModel.value
-//        let password = passwordModel.fieldModel.value
+        let mail = emailModel.fieldModel.value
+        let password = passwordModel.fieldModel.value
         
-        let mail = "And@mail.com"
-        let password = "12345678Qq"
         let credentials = Credentials(mail: mail, password: password)
         guard validate(credentials: credentials) else {
             return
@@ -73,7 +69,8 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
             case .success(let loginResponse):
                 if loginResponse.loginStatus == .ok {
                     self.updateUser(credentials: credentials, user: loginResponse.userResponse)
-                    self.didLogin()
+                    self.synchronizationService.validateResults()
+                    self.synchronizationService.synchronize()
                 }
                 else {
                     self.bindError(loginResponse.loginStatus)
@@ -111,7 +108,7 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     }
     
     func didLogin() {
-        appRouter.trigger(.main)
+        router.trigger(.didLogin)
     }
     
     func resetTapped() {
@@ -123,10 +120,15 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     }
     
     func continueFlow() {
+        synchronizationService.validateResults()
         router.trigger(.didLogin)
     }
     
     func useAppleAccount() {
+        let testTask = Task()
+        synchronizationService.create(task: testTask)
+        synchronizationService.remove(task: testTask)
+        synchronizationService.update(task: testTask)
         print("Apple")
     }
     

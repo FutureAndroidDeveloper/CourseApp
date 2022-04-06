@@ -31,8 +31,7 @@ class ProfileViewModelImpl: ProfileViewModel, ProfileViewModelInput, ProfileView
     }
     
     func logout() {
-        UserSession.shared.updateEncodedData(Data())
-        UserSession.shared.updateUser(nil)
+        UserSession.shared.logout()
         router.trigger(.logout)
     }
 }

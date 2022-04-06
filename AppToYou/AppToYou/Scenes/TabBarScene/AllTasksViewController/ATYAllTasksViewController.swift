@@ -1,32 +1,27 @@
-//
-//  ATYAllTasksViewController.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 25.05.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
-import Foundation
 import UIKit
 import XCoordinator
 
 
-final class ATYAllTasksViewController: UIViewController, BindableType {
-    
-    func bindViewModel() {
-        viewModel.output.tasks.bind { [weak self] tasks in
-            self?.tasks = tasks
-            self?.futureTasksTableView.reloadData()
-        }
+class ATYAllTasksViewController: UIViewController, BindableType {
+    private struct Constants {
+        static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        static let switchInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 20)
+        static let tableInsets = UIEdgeInsets(top: 30, left: 20, bottom: 0, right: 20)
+        static let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
         
-        viewModel.input.refresh()
+        struct CreateButton {
+            static let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 13, right: 18)
+            static let size = CGSize(width: 44, height: 44)
+        }
     }
     
     var viewModel: AllTasksViewModel!
+    
+    private let refreshControl = UIRefreshControl()
+    private let tasksTableView = UITableView()
+    private var isCanEdit = true
 
-    var futureTasksTableView = UITableView()
-
-    var label : UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Отображать только мои задачи"
         label.font = UIFont.systemFont(ofSize: 16)
@@ -34,137 +29,98 @@ final class ATYAllTasksViewController: UIViewController, BindableType {
         return label
     }()
 
-    var switchButton : UISwitch = {
+    private let switchButton: UISwitch = {
         let switchButton = UISwitch()
+        switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         switchButton.onTintColor = R.color.textColorSecondary()
         return switchButton
     }()
-
-    var temporaryArray = [TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: "Бокс",
-                                        hasSanction: true,
-                                        titleLabel: "Медитация",
-                                        firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "40 мин",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
-                          TemporaryData(typeTask: .RITUAL,
-                                        courseName: nil,
-                                        hasSanction: true,
-                                        titleLabel: "Сходить на площадку",
-                                        firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "20 мин",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
-                          TemporaryData(typeTask: .TEXT,
-                                        courseName: "Спорт",
-                                        hasSanction: true,
-                                        titleLabel: "Отжимания",
-                                        firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "10 мин",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
-                          TemporaryData(typeTask: .TIMER,
-                                        courseName: "Энергетика",
-                                        hasSanction: true,
-                                        titleLabel: "Прочитать книгу",
-                                        firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "30 мин",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
-                          TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: nil,
-                                        hasSanction: false,
-                                        titleLabel: "Отжимания",
-                                        firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "20 раз",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
-                          TemporaryData(typeTask: .CHECKBOX,
-                                        courseName: nil,
-                                        hasSanction: true,
-                                        titleLabel: "Большой текст тест текст на длину длинный текст",
-                                        firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
-                          TemporaryData(typeTask: .RITUAL,
-                                        courseName: nil,
-                                        hasSanction: false,
-                                        titleLabel: "Прыжки",
-                                        firstSubtitleLabel: "Каждый месяц",
-                                        secondSubtitleLabel: "60 мин",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
-                          TemporaryData(typeTask: .TIMER,
-                                        courseName: "Автоспорт",
-                                        hasSanction: true,
-                                        titleLabel: "Дрифт",
-                                        firstSubtitleLabel: "Каждый день",
-                                        secondSubtitleLabel: "40 мин",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31")),
-                          TemporaryData(typeTask: .RITUAL,
-                                        courseName: nil,
-                                        hasSanction: false,
-                                        titleLabel: "Отжимания и длиный текст для проверки состояния названия",
-                                        firstSubtitleLabel: "пн, вт, ср, чт, пт, cб,  вс",
-                                        secondSubtitleLabel: "2022 раз",
-                                        state: .didNotStart, date: Date.dateFormatter.date(from: "2021/08/12 22:31"))]
-
-    var resultArray = [TemporaryData]()
-
-    private var tasks = [UserTaskResponse]()
+    
+    private lazy var createTaskButton: UIButton = {
+        let button = UIButton()
+        let icon = R.image.vBth_add()?.withRenderingMode(.alwaysTemplate)
+        button.setImage(icon, for: .normal)
+        button.tintColor = R.color.backgroundTextFieldsColor()
+        button.backgroundColor = R.color.buttonColor()
+        return button
+    }()
+    
     
     init(title: String) {
-//        inflater = UITableViewIflater(tasksTableView)
-        
         super.init(nibName: nil, bundle: nil)
         self.title = title
         view.backgroundColor = R.color.backgroundAppColor()
-        
-//        self.viewModel = AllTasksViewModelImpl(taskRouter: taskRouter)
-//        self.viewModel.delegate = self
-        
-//        switchButtonAction()
     }
     
-
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        resultArray = temporaryArray
-        configureLabelAndSwitch()
-        configureTableView()
+        setup()
+        configure()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.input.refresh()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        createTaskButton.layer.cornerRadius = createTaskButton.bounds.height / 2
     }
 
-    private func configureLabelAndSwitch() {
-        view.addSubview(label)
+    private func setup() {
         view.addSubview(switchButton)
-
+        switchButton.snp.makeConstraints {
+            $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.switchInsets)
+        }
+        
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.trailing.equalTo(self.switchButton.snp.leading)
+            $0.centerY.equalTo(self.switchButton)
+            $0.leading.equalToSuperview().inset(Constants.titleInsets)
+        }
+        
+        tasksTableView.addSubview(refreshControl)
+        view.addSubview(tasksTableView)
+        tasksTableView.snp.makeConstraints {
+            $0.top.equalTo(self.switchButton.snp.bottom).inset(Constants.tableInsets)
+            $0.leading.trailing.bottom.equalToSuperview().inset(Constants.tableInsets)
+        }
+        
+        view.addSubview(createTaskButton)
+        createTaskButton.snp.makeConstraints {
+            $0.bottom.trailing.equalToSuperview().inset(Constants.CreateButton.edgeInsets)
+            $0.size.equalTo(Constants.CreateButton.size)
+        }
+        
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        createTaskButton.addTarget(self, action: #selector(addButtonAction), for: .touchUpInside)
         switchButton.addTarget(self, action: #selector(switchButtonAction), for: .valueChanged)
-        switchButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
-        switchButton.snp.makeConstraints { (make) in
-            make.trailing.equalToSuperview().offset(-20)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.topMargin).offset(20)
-        }
-
-        label.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalTo(switchButton.snp.leading).offset(-10)
-            make.centerY.equalTo(switchButton)
-        }
-
     }
 
-    private func configureTableView() {
-        view.addSubview(futureTasksTableView)
-        futureTasksTableView.backgroundColor = R.color.backgroundAppColor()
-        futureTasksTableView.showsVerticalScrollIndicator = false
-        futureTasksTableView.separatorStyle = .none
-        futureTasksTableView.delegate = self
-        futureTasksTableView.dataSource = self
-        futureTasksTableView.register(ATYTaskTableViewCell.self, forCellReuseIdentifier: ATYTaskTableViewCell.reuseIdentifier)
-        futureTasksTableView.snp.makeConstraints { (make) in
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.top.equalTo(label.snp.bottom).offset(25)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin)
+    private func configure() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        tasksTableView.contentInset = Constants.contentInsets
+        tasksTableView.backgroundColor = R.color.backgroundAppColor()
+        tasksTableView.separatorStyle = .none
+        tasksTableView.showsVerticalScrollIndicator = false
+        tasksTableView.delegate = self
+        tasksTableView.dataSource = self
+        
+        tasksTableView.register(TaskCell.self, forCellReuseIdentifier: TaskCell.reuseIdentifier)
+        tasksTableView.register(CounterTaskCell.self, forCellReuseIdentifier: CounterTaskCell.reuseIdentifier)
+        tasksTableView.register(TimerTaskCell.self, forCellReuseIdentifier: TimerTaskCell.reuseIdentifier)
+    }
+    
+    func bindViewModel() {
+        viewModel.output.update.bind { [weak self] in
+            self?.tasksTableView.reloadData()
+            self?.refreshControl.endRefreshing()
         }
     }
     
@@ -172,85 +128,88 @@ final class ATYAllTasksViewController: UIViewController, BindableType {
     private func switchButtonAction() {
         viewModel.input.showMyTasks(switchButton.isOn)
     }
+    
+    @objc
+    private func refresh(_ sender: AnyObject) {
+        viewModel.input.refresh()
+    }
+
+    @objc
+    private func addButtonAction() {
+        viewModel.input.createTask()
+    }
 }
 
-extension ATYAllTasksViewController: UITableViewDelegate, UITableViewDataSource {
 
+extension ATYAllTasksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        self.resultArray.count
-        return tasks.count
+        return viewModel.output.tasks.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ATYTaskTableViewCell.reuseIdentifier, for: indexPath) as! ATYTaskTableViewCell
-//        let temporary = self.resultArray[indexPath.row]
-        let task = self.tasks[indexPath.row]
+        var cell: TaskCell?
+        let model = viewModel.output.tasks[indexPath.row]
         
-//        task.taskSanction
-        
-        cell.setUp(
-            typeTask: task.taskType, courseName: task.courseName, hasSanction: task.taskSanction > .zero,
-            titleLabel: task.taskName, firstSubtitleLabel: "Subtitle", secondSubtitleLabel: "Duration",
-            state: .didNotStart, userOrCourseTask: .user)
-        
-//        cell.setUp(typeTask: temporary.typeTask,
-//                   courseName: temporary.courseName,
-//                   hasSanction: temporary.hasSanction,
-//                   titleLabel: temporary.titleLabel,
-//                   firstSubtitleLabel: temporary.firstSubtitleLabel,
-//                   secondSubtitleLabel: temporary.secondSubtitleLabel,
-//                   state: temporary.state, userOrCourseTask: .user)
-        cell.callback = {
-            print("callback")
+        switch model.task.taskType {
+        case .CHECKBOX, .TEXT:
+            cell = tableView.dequeueReusableCell(withIdentifier: TaskCell.reuseIdentifier, for: indexPath) as? TaskCell
+        case .RITUAL:
+            cell = tableView.dequeueReusableCell(withIdentifier: CounterTaskCell.reuseIdentifier, for: indexPath) as? CounterTaskCell
+        case .TIMER:
+            cell = tableView.dequeueReusableCell(withIdentifier: TimerTaskCell.reuseIdentifier, for: indexPath) as? TimerTaskCell
         }
-        return cell
+        
+        cell?.configure(with: model)
+        return cell ?? UITableViewCell()
     }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.input.edit(indexPath.row)
     }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel()
-        label.backgroundColor = R.color.backgroundAppColor()
-        label.text = "Выполненные задачи"
-        label.textColor = R.color.textSecondaryColor()
-        label.font = UIFont.systemFont(ofSize: 15)
-
-        let view = UIView()
-        view.frame = CGRect(origin: .zero, size: .zero)
-        return section == 1 ? label : view
+    
+    // MARK: - Swipe
+    
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        isCanEdit = true
     }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 1 ? 40 : 0
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return isCanEdit
+    }
+    
+    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+        if let swipeContainerView = tableView.subviews.first(where: { String(describing: type(of: $0)) == "_UITableViewCellSwipeContainerView" }) {
+            let backView = UIView()
+            backView.backgroundColor = R.color.buttonColor()
+            
+            swipeContainerView.insertSubview(backView, at: 0)
+            backView.snp.makeConstraints {
+                $0.top.trailing.bottom.equalToSuperview().inset(UIEdgeInsets(top: 9, left: 0, bottom: 6, right: 0))
+                $0.width.equalToSuperview().multipliedBy(0.7)
+            }
+        }
+        isCanEdit = false
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
-        let delete = UIContextualAction(style: .destructive, title: "") { (action, view, boolValue) in
-            boolValue(true)
-
-            let task = self.tasks[indexPath.row]
-            self.viewModel.input.showTestSanction(for: task)
-//            self.resultArray.remove(at: indexPath.row)
-//            self.futureTasksTableView.deleteRows(at: [indexPath], with: .fade)
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completion in
+            self?.viewModel.input.remove(indexPath.row)
+            completion(true)
         }
-
-        let edit = UIContextualAction(style: .destructive, title: "") { (action, view, boolValue) in
-            boolValue(true)
-            
-            let task = self.tasks[indexPath.row]
-            self.viewModel.input.edit(task)
-//            self.resultArray.remove(at: indexPath.row)
-//            self.futureTasksTableView.deleteRows(at: [indexPath], with: .fade)
+        deleteAction.image = R.image.deleteImage()
+        deleteAction.backgroundColor = R.color.transparent()
+        
+        
+        let editAction = UIContextualAction(style: .normal, title: nil) { [weak self] _, _, completion in
+            self?.viewModel.input.edit(indexPath.row)
+            completion(true)
         }
-
-
-        delete.image = R.image.deleteImage()
-        edit.image = R.image.editImage()
-        let config = UISwipeActionsConfiguration(actions: [edit, delete])
-        config.performsFirstActionWithFullSwipe = false
-        return config
+        editAction.image = R.image.editImage()
+        editAction.backgroundColor = R.color.transparent()
+        
+        let configuration = UISwipeActionsConfiguration(actions: [editAction, deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
     }
+    
 }
