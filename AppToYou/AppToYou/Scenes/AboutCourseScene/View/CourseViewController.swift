@@ -25,6 +25,11 @@ class CourseViewController: UIViewController, BindableType {
         configureInflater()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.input.refresh()
+    }
+    
     private func configure() {
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
@@ -44,8 +49,11 @@ class CourseViewController: UIViewController, BindableType {
         inflater.registerRow(model: CourseAdminMembersModel.self, cell: CourseAdminMembersCell.self)
         inflater.registerRow(model: JoinCourseChatModel.self, cell: JoinCourseChatCell.self)
         inflater.registerRow(model: CourseTasksModel.self, cell: CourseTasksCell.self)
-        // TODO: - заменить на CommonTask
-//        inflater.registerRow(model: TaskCellModel.self, cell: TaskCell.self)
+        
+        inflater.registerRow(model: CourseLoadingTasksModel.self, cell: CourseLoadingTasksCell.self)
+        inflater.registerRow(model: CourseTaskCellModel.self, cell: CourseTaskCell.self)
+        inflater.registerRow(model: CourseCounterTaskCellModel.self, cell: CourseCounterTaskCell.self)
+        
         inflater.registerRow(model: CreateCourseTaskCellModel.self, cell: CreateCourseTaskCell.self)
         inflater.registerRow(model: CourseMembersModel.self, cell: CourseMembersCell.self)
         inflater.registerRow(model: ShareCourseModel.self, cell: ShareCourseCell.self)

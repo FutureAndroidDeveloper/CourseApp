@@ -10,6 +10,8 @@ protocol CourseConstructorDelegate: AnyObject {
     func openChat()
     
     func addTasks()
+    
+    func remove(task: CourseTaskResponse)
     func add(task: CourseTaskResponse)
     func createTask()
     

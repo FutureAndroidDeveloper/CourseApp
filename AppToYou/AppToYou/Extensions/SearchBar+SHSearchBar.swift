@@ -1,26 +1,13 @@
-//
-//  SearchBar+SHSearchBar.swift
-//  AppToYou
-//
-//  Created by Philip Bratov on 10.08.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
-//
-
 import SHSearchBar
 import UIKit
 
 // MARK: - Helper Functions
 
-func defaultSearchBar(withRasterSize rasterSize: CGFloat,
-                      leftView: UIView?,
-                      rightView: UIView?,
-                      delegate: SHSearchBarDelegate,
-                      useCancelButton: Bool = true, placeholder: String) -> SHSearchBar {
 
+func defaultSearchBar(rasterSize: CGFloat, placeholder: String? = nil, leftView: UIView? = nil, rightView: UIView? = nil) -> SHSearchBar {
     var config = defaultSearchBarConfig(rasterSize)
     config.leftView = leftView
     config.rightView = rightView
-    config.useCancelButton = useCancelButton
 
     if leftView != nil {
         config.leftViewMode = .always
@@ -30,20 +17,18 @@ func defaultSearchBar(withRasterSize rasterSize: CGFloat,
         config.rightViewMode = .unlessEditing
     }
 
-    let bar = SHSearchBar(config: config)
-    bar.delegate = delegate
-    bar.placeholder = NSLocalizedString(placeholder, comment: "")
-    bar.updateBackgroundImage(withRadius: 20, corners: [.allCorners], color: UIColor.white)
-    return bar
+    let searchBar = SHSearchBar(config: config)
+    searchBar.placeholder = placeholder
+//    searchBar.updateBackgroundImage(withRadius: 20, corners: [.allCorners], color: UIColor.white)
+    searchBar.updateBackgroundImage(withRadius: 1, corners: [.allCorners], color: UIColor.white)
+    return searchBar
 }
 
 func defaultSearchBarConfig(_ rasterSize: CGFloat) -> SHSearchBarConfig {
-    var config: SHSearchBarConfig = SHSearchBarConfig()
+    var config = SHSearchBarConfig()
     config.cancelButtonTitle = "Отменить"
     config.rasterSize = rasterSize
-//    config.cancelButtonTitle = NSLocalizedString("sbe.general.cancel", comment: "")
     config.cancelButtonTextAttributes = [.foregroundColor: UIColor.darkGray]
-    config.textContentType = UITextContentType.fullStreetAddress.rawValue
     config.textAttributes = [.foregroundColor: UIColor.gray]
     return config
 }

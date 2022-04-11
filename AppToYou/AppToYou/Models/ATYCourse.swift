@@ -57,9 +57,9 @@ enum ATYCourseCategory: String, CaseIterable, Codable {
     case OTHER
     case RELATIONSHIPS
     
-    var title : String? {
+    var title: String? {
         switch self {
-        case . EMPTY:
+        case .EMPTY:
             return nil
         case .HEALTHY_LIFESTYLE:
             return "ЗОЖ"

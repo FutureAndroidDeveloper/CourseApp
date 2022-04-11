@@ -12,6 +12,16 @@ import SHSearchBar
 class ATYSearchBarCollectionView: UIView , SHSearchBarDelegate {
 
     var searchBar : SHSearchBar!
+    
+//    private let searchBar: SHSearchBar = {
+//        let bar = defaultSearchBar(
+//            withRasterSize: rasterSize,
+//            leftView: leftView1,
+//            rightView: nil,
+//            delegate: self,
+//            placeholder: "Введите текст"
+//        )
+//    }()
 
     let allCoursesButton : UIButton = {
         let button = UIButton()
@@ -166,13 +176,21 @@ class ATYSearchBarCollectionView: UIView , SHSearchBarDelegate {
     }
 
     private func configureSecond() {
-        let rasterSize: CGFloat = 10.0
+//        let rasterSize: CGFloat = 10.0
+        let rasterSize: CGFloat = 30
         let leftView1 = imageViewWithIcon(R.image.searchImage()!, raster: rasterSize)
 
-        searchBar = defaultSearchBar(withRasterSize: rasterSize,
-                                      leftView: leftView1,
-                                      rightView: nil,
-                                      delegate: self, placeholder: "Введите текст")
+        
+        searchBar = defaultSearchBar(rasterSize: rasterSize,
+                                     placeholder: "Введите текст",
+                                      leftView: leftView1)
+        
+        searchBar.delegate = self
+        
+//        searchBar = defaultSearchBar(withRasterSize: rasterSize,
+//                                      leftView: leftView1,
+//                                      rightView: nil,
+//                                      delegate: self, placeholder: "Введите текст")
         self.addSubview(searchBar)
         searchBar.snp.makeConstraints { (make) in
             make.top.equalTo(myCoursesButton.snp.bottom).offset(25)

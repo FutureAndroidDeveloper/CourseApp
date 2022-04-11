@@ -1,27 +1,22 @@
 import UIKit
 
 
-class CoursesViewController: UIViewController, BindableType {
-    
+class CoursesViewController: UIViewController, BindableType, CourseSearchDelegate {
     private struct Constants {
         static let bottomLoadingSpinnerHeight: CGFloat = 44
     }
     
-    enum CreateCellCourses: Int, CaseIterable {
-        case courseBar
-        case courseTasks
-    }
-    
     var viewModel: CoursesViewModel!
-
-    private var courses = [CourseResponse]()
-    private var imageModels = [CourseCellModel]()
-    private var loadingNewPage = false
-    // TODO: - что за флаг
-    var flag = true
-
+    
     private let tableView = UITableView()
     private let refreshControl = UIRefreshControl()
+    
+    private lazy var searchView: UIView = {
+        let coursesSearchView = CourseSearchView(filterModel: viewModel.output.filterModel)
+        coursesSearchView.delegate = self
+        return coursesSearchView
+    }()
+    
     private lazy var endLoadingSpinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .medium)
         spinner.frame = CGRect(x: .zero, y: .zero, width: tableView.bounds.width, height: Constants.bottomLoadingSpinnerHeight)
@@ -31,87 +26,100 @@ class CoursesViewController: UIViewController, BindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = R.color.backgroundAppColor()
-        configureTableView()
+        setup()
+        configure()
     }
     
-    private func configureTableView() {
-        tableView.contentInsetAdjustmentBehavior = .never
-        view.addSubview(tableView)
-        tableView.separatorStyle = .none
-        tableView.showsVerticalScrollIndicator = false
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureContainer()
+    }
+    
+    private func setup() {
+        searchView.backgroundColor = R.color.backgroundAppColor()
         view.backgroundColor = R.color.backgroundAppColor()
         tableView.backgroundColor = R.color.backgroundAppColor()
-        tableView.keyboardDismissMode = .onDrag
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.prefetchDataSource = self
-        tableView.register(ATYCreateCourseCell.self, forCellReuseIdentifier: ATYCreateCourseCell.reuseIdentifier)
-        tableView.register(ATYCollectionViewTypeCourseTableCell.self, forCellReuseIdentifier: ATYCollectionViewTypeCourseTableCell.reuseIdentifier)
-        tableView.register(CourseCell.self, forCellReuseIdentifier: CourseCell.reuseIdentifier)
-        tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottomMargin)
+        view.addSubview(tableView)
+        tableView.addSubview(refreshControl)
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
-        tableView.addSubview(refreshControl)
+    }
+    
+    private func configureContainer() {
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    private func configure() {
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.keyboardDismissMode = .onDrag
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
+        tableView.prefetchDataSource = self
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.register(ATYCreateCourseCell.self, forCellReuseIdentifier: ATYCreateCourseCell.reuseIdentifier)
+        tableView.register(CourseCell.self, forCellReuseIdentifier: CourseCell.reuseIdentifier)
     }
     
     func bindViewModel() {
-        viewModel.input.refresh()
+        viewModel.output.isLoading.bind { [weak self] isLoading in
+            self?.tableView.tableFooterView = isLoading ? self?.endLoadingSpinner : nil
+        }
+        
+        viewModel.output.clearCourses.bind { [weak self] in
+            self?.tableView.reloadData()
+        }
+        
         viewModel.output.coursesBatch.bind { [weak self] batch in
             guard let self = self else {
                 return
             }
-            
-            if batch.count == .zero {
-                self.tableView.tableFooterView = nil
-            }
-            
+            let start = self.viewModel.output.models.count - batch.count
+            let end = self.viewModel.output.models.count
             self.refreshControl.endRefreshing()
-            self.tableView.tableFooterView = nil
-            self.loadingNewPage = false
-            
-            let start = self.courses.count
-            let end = self.courses.count + batch.count
-            
             
             self.tableView.performBatchUpdates {
-                let newImageModels = batch.map { CourseCellModel(course: $0) }
-                self.imageModels.append(contentsOf: newImageModels)
-                self.courses.append(contentsOf: batch)
-                
                 let indexPaths = (start..<end).map { IndexPath(row: $0, section: 1) }
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
             }
         }
     }
     
+    func searchText(_ text: String) {
+        viewModel.input.searchTextDidChange(text)
+    }
+    
     @objc
     private func refresh(_ sender: AnyObject) {
-        courses.removeAll()
-        imageModels.removeAll()
-        tableView.reloadData()
         viewModel.input.refresh()
     }
     
     private func downloadCourseImage(_ indexPath: IndexPath) {
-        let imageModel = imageModels[indexPath.row]
-        viewModel.input.downloadCourseImages(for: imageModel)
+        guard !viewModel.output.models.isEmpty else {
+            return
+        }
+        let model = viewModel.output.models[indexPath.row]
+        viewModel.input.downloadCourseImages(for: model)
     }
     
     private func cancelCourseImageLoading(_ indexPath: IndexPath) {
-        let imageModel = imageModels[indexPath.row]
-        viewModel.input.closeCourseImagesDowloading(for: imageModel)
+        guard !viewModel.output.models.isEmpty else {
+            return
+        }
+        let model = viewModel.output.models[indexPath.row]
+        viewModel.input.closeCourseImagesDowloading(for: model)
     }
     
 }
 
 extension CoursesViewController: UITableViewDataSourcePrefetching {
-    
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach(downloadCourseImage(_:))
     }
@@ -119,20 +127,16 @@ extension CoursesViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach(cancelCourseImageLoading(_:))
     }
-    
 }
 
 
 extension CoursesViewController : UITableViewDelegate, UITableViewDataSource {
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height
         let contentYoffset = scrollView.contentOffset.y
         let distanceFromBottom = scrollView.contentSize.height - contentYoffset
-        if distanceFromBottom < height, !loadingNewPage {
-            print("THE you reached end of the table")
-            loadingNewPage = true
-            tableView.tableFooterView = endLoadingSpinner
+        
+        if distanceFromBottom < height, !viewModel.output.isLoading.value {
             viewModel.input.loadMore()
         }
     }
@@ -142,11 +146,10 @@ extension CoursesViewController : UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : courses.count
+        return section == 0 ? 1 : viewModel.output.models.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         if indexPath.row == 0 && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ATYCreateCourseCell.reuseIdentifier, for: indexPath) as! ATYCreateCourseCell
             cell.createCourseCallback = { [weak self] in
@@ -156,33 +159,20 @@ extension CoursesViewController : UITableViewDelegate, UITableViewDataSource {
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: CourseCell.reuseIdentifier, for: indexPath) as! CourseCell
-        let imageModel = imageModels[indexPath.row]
-        cell.configure(with: imageModel)
+        let model = viewModel.output.models[indexPath.row]
+        cell.configure(with: model)
         
         return cell
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = ATYSearchBarCollectionView(flag: self.flag, frame: .zero)
-        header.callbackErrorThree = { [weak self] in
-            self?.showAlertCountSelectedCourseCategory(text: "Для выбора доступно максимум 3 категории!")
+        let container = UIView()
+        container.backgroundColor = .clear
+        container.addSubview(searchView)
+        searchView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 0, bottom: 32, right: 0))
         }
-        header.firstCallback = { [weak self] in
-            self?.flag = true
-            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-            self?.tableView.reloadData()
-        }
-
-        header.secondCallback = { [weak self] in
-            self?.flag = false
-            self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-            self?.tableView.reloadData()
-        }
-
-        header.searchTextCallback = { [weak self] text in
-            print(text)
-        }
-        return section == 1 ? header : nil
+        return section == 1 ? container : nil
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -194,18 +184,16 @@ extension CoursesViewController : UITableViewDelegate, UITableViewDataSource {
             return
         }
         
-        let model = courses[indexPath.row]
-        switch model.courseType {
-        case .PUBLIC:
-            break
-        case .PRIVATE:
-            break
-        case .PAID:
-            break
-        }
+        let model = viewModel.output.models[indexPath.row]
+        viewModel.input.previewCourse(model.course)
+//        switch model.course.courseType {
+//        case .PUBLIC:
+//            break
+//        case .PRIVATE:
+//            break
+//        case .PAID:
+//            break
+//        }
     }
     
 }
-
-
-

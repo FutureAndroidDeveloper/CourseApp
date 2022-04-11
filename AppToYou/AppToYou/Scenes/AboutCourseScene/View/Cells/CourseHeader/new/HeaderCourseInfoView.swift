@@ -10,6 +10,18 @@ class HeaderCourseInfoViewModel {
     }
 }
 
+class HeaderCourseInfoViewStyle {
+    let titleFont: UIFont?
+    let textColor: UIColor?
+    let iconTintColor: UIColor?
+    
+    init(titleFont: UIFont?, textColor: UIColor?, iconTintColor: UIColor?) {
+        self.titleFont = titleFont
+        self.textColor = textColor
+        self.iconTintColor = iconTintColor
+    }
+}
+
 class HeaderCourseInfoView: UIView {
     
     private struct Constants {

@@ -15,6 +15,7 @@ class CourseConstructor {
         self.delegate = delegate
         self.dataSourse = dataSourse
         model = CourseConstructorModel()
+        model.hintModel = CourseLoadingTasksModel()
     }
     
     func getModels() -> [AnyObject] {
@@ -33,26 +34,12 @@ class CourseConstructor {
         addDescription(dataSourse)
         addChat()
         addTasksHeader(dataSourse)
-        addTasks(dataSourse)
         addMembers(dataSourse)
         addShare()
         
-        // вставка моделей задач.
-        let mirror = Mirror(reflecting: model)
-        var models = mirror.children
-            .compactMap { $0.value }
-            .compactMap { $0 as? AnyObject }
-        
-        guard
-            let index = models.firstIndex(where: { $0 is [AnyObject] }),
-            let tasks = models.remove(at: index) as? [AnyObject]
-        else {
-            return []
-        }
-        
-        models.insert(contentsOf: tasks, at: index)
         return model.getConfiguredModels()
     }
+    
     
     private func addCourseHeader(_ dataSource: CourseConstructorDataSourse) {
         model.headerModel = CourseHeaderModel(
@@ -93,21 +80,6 @@ class CourseConstructor {
         })
     }
     
-    private func addTasks(_ dataSource: CourseConstructorDataSourse) {
-        // TODO: Проверить что тут
-//        let (stub, tasks) = dataSource.getTasks()
-//        let taskModels = zip(stub, tasks).map { stubData, task -> TaskCellModel in
-//            let model = TaskCellModel(model: stubData, task: task) { [weak self] selectedTask in
-//                self?.delegate?.add(task: selectedTask)
-//            }
-//            return model
-//        }
-        
-        
-//        model.tasksModel = taskModels
-        model.tasksModel = []
-    }
-    
     private func addCreateTask() {
         model.createTaskModel = CreateCourseTaskCellModel(createTapped: { [weak self] in
             self?.delegate?.createTask()
@@ -130,6 +102,63 @@ class CourseConstructor {
         model.reportModel = ReportCourseModel(reportTapped: { [weak self] in
             self?.delegate?.report()
         })
+    }
+    
+    func handleTasksResponse(_ tasks: [Task]) {
+        model.hintModel?.stopLoading?()
+        let descriptionProvider = TaskDescriptionProvider()
+        
+        if tasks.isEmpty {
+            model.hintModel?.setHint?("На курсе пока нет задач")
+        } else {
+            let models = tasks.map { task -> CourseTaskCellModel in
+                var progressModel: TaskProgressModel
+                var taskModel: CourseTaskCellModel
+                
+                let descriptionModel = descriptionProvider.convert(task: task)
+                let isSelected = dataSourse?.isTaskAddedToUser(task) ?? false
+                let icon = task.taskSanction == 0 ? nil : R.image.coinImage()
+                
+                if task.taskType == .RITUAL {
+                    progressModel = CountProgressModel(task: task, date: .distantFuture)
+                    taskModel = CourseCounterTaskCellModel(
+                        progressModel: progressModel,
+                        descriptionModel: descriptionModel,
+                        isSelected: isSelected,
+                        currencyIcon: icon
+                    )
+                } else {
+                    progressModel = IconProgressModel(task: task, date: .distantFuture)
+                    taskModel = CourseTaskCellModel(
+                        progressModel: progressModel,
+                        descriptionModel: descriptionModel,
+                        isSelected: isSelected,
+                        currencyIcon: icon
+                    )
+                }
+                taskModel.selectionDidChange = { [weak self] changedTask, isOn in
+                    guard
+                        let taskResponse = TaskAdapter().convert(task: changedTask, to: CourseTaskResponse.self)
+                    else {
+                        return
+                    }
+                    if isOn {
+                        self?.delegate?.add(task: taskResponse)
+                    } else {
+                        self?.delegate?.remove(task: taskResponse)
+                    }
+                    
+                }
+                return taskModel
+            }
+            model.tasksModel = models
+            model.hintModel = nil
+        }
+    }
+    
+    func tasksLoadingError() {
+        model.hintModel?.stopLoading?()
+        model.hintModel?.setHint?("Не удалось загузить задачи курса")
     }
     
 }

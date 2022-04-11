@@ -3,6 +3,7 @@ import Foundation
 
 protocol CourseViewModelInput: AnyObject {
     func editCourseTask(index: Int)
+    func refresh()
 }
 
 protocol CourseViewModelOutput: AnyObject {

@@ -9,6 +9,7 @@ class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewMode
     var updatedState: Observable<Void> = Observable(())
     
     private let courseRouter: UnownedRouter<CourseRoute>
+    private let adapter = TaskAdapter()
     private var course: CourseResponse
     
     private var courseTasks: [CourseTaskResponse] = []
@@ -24,6 +25,11 @@ class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewMode
     init(course: CourseResponse, coursesRouter: UnownedRouter<CourseRoute>) {
         self.course = course
         self.courseRouter = coursesRouter
+        updateStructure()
+        loadCourseInfo()
+    }
+    
+    func refresh() {
         loadCourseInfo()
     }
     
@@ -43,11 +49,16 @@ class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewMode
             case .success(let model):
                 self?.course = model.course
                 self?.courseTasks = model.tasks
-                self?.updateStructure()
-                self?.updateState()
+                let tasks = model.tasks.compactMap { self?.adapter.convert(courseTaskResponse: $0) }
+                self?.constructor.handleTasksResponse(tasks)
+                
             case .failure(let error):
                 print(error)
+                self?.constructor.tasksLoadingError()
             }
+            
+            self?.updateStructure()
+            self?.updateState()
         }
     }
     
@@ -62,7 +73,14 @@ class CourseViewModelImpl: CourseViewModel, CourseViewModelInput, CourseViewMode
     }
 }
 
+
 extension CourseViewModelImpl: CourseConstructorDataSourse, CourseConstructorDelegate {
+    
+    func isTaskAddedToUser(_ task: Task) -> Bool {
+        return false
+    }
+    
+    
     func getUsersAmount() -> Int {
         return course.usersAmount
     }
@@ -106,11 +124,6 @@ extension CourseViewModelImpl: CourseConstructorDataSourse, CourseConstructorDel
         return (17, 9)
     }
     
-    func getTasks() -> ([TaskCellModel], [CourseTaskResponse]) {
-        // TODO: - получение задач курса
-        return ([], [])
-    }
-    
     func getMembers() -> CourseMembersViewModel {
         // TODO: - получение участников
         let members = Array<UIImage?>(repeating: R.image.exampleCourse(), count: 5)
@@ -149,6 +162,10 @@ extension CourseViewModelImpl: CourseConstructorDataSourse, CourseConstructorDel
     
     func add(task: CourseTaskResponse) {
         courseRouter.trigger(.add(task: task))
+    }
+    
+    func remove(task: CourseTaskResponse) {
+        // TODO: -
     }
     
     func openMemebrs() {

@@ -51,4 +51,10 @@ class CourseCellInfoView: UIView {
         iconView.image = model.icon
     }
     
+    func setStyle(_ style: HeaderCourseInfoViewStyle) {
+        titleLabel.font = style.titleFont
+        titleLabel.textColor = style.textColor
+        iconView.tintColor = style.iconTintColor
+    }
+    
 }

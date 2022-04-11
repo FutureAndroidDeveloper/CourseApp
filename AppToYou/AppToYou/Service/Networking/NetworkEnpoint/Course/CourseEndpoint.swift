@@ -9,6 +9,20 @@ enum CourseEndpoint: Endpoint {
     case getCourse(id: Int)
     case getTasks(courseId: Int)
     case remove(taskId: Int)
+    
+    /**
+     Все курсы пользователя.
+     */
+    case userCourses
+    
+    /**
+     Курсы пользователя по его статусу в курсе.
+     */
+    case memebershipCourses(status: CourseUserStatus)
+    
+    /**
+     Курсы, в которых пользоваетль является администратором.
+     */
     case admin(id: Int)
     case search(model: SearchCourseModel)
     
@@ -37,6 +51,11 @@ enum CourseEndpoint: Endpoint {
             result.append("/id\(courseId)/taskList")
         case .remove(let taskId):
             result.append("/task/id\(taskId)")
+            
+        case .memebershipCourses:
+            result.append("/list")
+        case .userCourses:
+            result.append("/list/courseUser")
         case .admin:
             result.append("/list/admin")
         case .search:
@@ -54,6 +73,9 @@ enum CourseEndpoint: Endpoint {
         case .addCourseTask: return .get
         case .getCourse: return .get
         case .getTasks: return .get
+            
+        case .memebershipCourses: return .get
+        case .userCourses: return .get
         case .admin: return .get
         case .search: return .get
         }
@@ -73,6 +95,12 @@ enum CourseEndpoint: Endpoint {
             return Request()
         case .remove:
             return Request()
+            
+        case .memebershipCourses(let status):
+            let body = CourseUserStatusBody(status)
+            return RequestWithParameters(body: body)
+        case .userCourses:
+            return Request()
         case .admin(let id):
             let idParameter = Parameter(name: "id", value: id)
             return RequestWithParameters(urlParameters: [idParameter])
@@ -83,6 +111,7 @@ enum CourseEndpoint: Endpoint {
     }
     
     var headers: HTTPHeaders {
+        // TODO: - убрать хедер авторизации для запросов без его использования (search)
         return UserSession.shared.getAuthorizationHeader()
     }
     

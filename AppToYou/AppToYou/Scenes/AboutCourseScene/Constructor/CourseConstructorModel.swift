@@ -7,7 +7,8 @@ class CourseConstructorModel {
     var requestsModel: CourseAdminMembersModel?
     var chatModel: JoinCourseChatModel?
     var tasksHeaderModel: CourseTasksModel?
-    var tasksModel: [TaskCellModel]
+    var hintModel: CourseLoadingTasksModel?
+    var tasksModel: [CourseTaskCellModel]
     var createTaskModel: CreateCourseTaskCellModel?
     var membersModel: CourseMembersModel?
     var shareModel: ShareCourseModel?
@@ -21,9 +22,9 @@ class CourseConstructorModel {
     func getConfiguredModels() -> [AnyObject] {
         var models: [AnyObject?] = [
             headerModel, descriptionModel, requestsModel, chatModel, tasksHeaderModel,
-            createTaskModel, membersModel, shareModel, reportModel
+            hintModel, createTaskModel, membersModel, shareModel, reportModel
         ]
-        models.insert(contentsOf: tasksModel, at: 5)
+        models.insert(contentsOf: tasksModel, at: 6)
         
         return models.compactMap { $0 }
     }

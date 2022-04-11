@@ -2,7 +2,6 @@ import UIKit
 
 
 class AddTaskAttributeCell: UITableViewCell, InflatableView {
-    
     private struct Constants {
         static let titleInsets = UIEdgeInsets(top: 0, left: 20, bottom: 32, right: 20)
     }
@@ -30,12 +29,10 @@ class AddTaskAttributeCell: UITableViewCell, InflatableView {
         }
     }
     
-    
     func inflate(model: AnyObject) {
         guard let model = model as? AddTaskAttributeModel else {
             return
         }
         titleLabel.text = model.title
     }
-    
 }

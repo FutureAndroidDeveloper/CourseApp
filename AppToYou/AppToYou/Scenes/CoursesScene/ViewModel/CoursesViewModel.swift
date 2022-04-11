@@ -4,22 +4,24 @@ import Foundation
 protocol CoursesViewModelInput: AnyObject {
     func createDidTapped()
     func openCourse(_ course: CourseResponse)
-    func refresh()
+    func previewCourse(_ course: CourseResponse)
     
+    func refresh()
     func loadMore()
     
+    func searchTextDidChange(_ text: String)
     func downloadCourseImages(for model: CourseCellModel)
     func closeCourseImagesDowloading(for model: CourseCellModel)
 }
 
 
 protocol CoursesViewModelOutput: AnyObject {
-    var isLoading: Bool { get }
-    var courses: Observable<[CourseResponse]> { get set }
+    var models: [CourseCellModel] { get }
+    var filterModel: CoursesFilterModel { get }
     
+    var isLoading: Observable<Bool> { get set }
     var coursesBatch: Observable<[CourseResponse]> { get set }
-    
-    var updatedState: Observable<Void> { get }
+    var clearCourses: Observable<Void> { get set }
 }
 
 

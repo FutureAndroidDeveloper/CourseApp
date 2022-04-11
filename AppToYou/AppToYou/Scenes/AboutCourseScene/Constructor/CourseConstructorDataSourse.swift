@@ -7,12 +7,13 @@ protocol CourseConstructorDataSourse: AnyObject {
     func getPrice() -> Price
     func getAdminPhoto() -> UIImage?
     
+    func isTaskAddedToUser(_ task: Task) -> Bool
+    
     func getName() -> String
     func getDescription() -> String
     func getType() -> ATYCourseType
     func getLikes() -> Int
     func getRequests() -> Int
     func getPickedTasks() -> (amount: Int, picked: Int)
-    func getTasks() -> ([TaskCellModel], [CourseTaskResponse])
     func getMembers() -> CourseMembersViewModel
 }

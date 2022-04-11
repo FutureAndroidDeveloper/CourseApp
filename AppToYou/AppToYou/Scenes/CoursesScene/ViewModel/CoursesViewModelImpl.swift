@@ -3,34 +3,44 @@ import XCoordinator
 
 
 class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesViewModelOutput {
-    
     private struct Constants {
         static let startPage = 1
         static let pageSize = 5
     }
     
-    var courses: Observable<[CourseResponse]> = Observable([])
+    var models: [CourseCellModel] = []
+    var filterModel = CoursesFilterModel()
+    
+    var isLoading: Observable<Bool> = Observable(false)
     var coursesBatch: Observable<[CourseResponse]> = Observable([])
-    var updatedState: Observable<Void> = Observable(())
-    var isLoading: Bool = false
+    var clearCourses: Observable<Void> = Observable(())
     
     private let coursesRouter: UnownedRouter<CoursesRoute>
-    private let searchModel: SearchCourseModel
     private let coursesService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
+    private let searchModel = SearchCourseModel(page: Constants.startPage, pageSize: Constants.pageSize)
+    private var activeFitlerTab: CourseSearchSelection
     
-    private var coursesSlice: [CourseResponse] = []
-    
+    private var loadedCoursesSlice: [CourseResponse] = []
     private var courseImagesLoader: CourseImagesLoader?
     
 
     init(coursesRouter: UnownedRouter<CoursesRoute>) {
         self.coursesRouter = coursesRouter
-        self.searchModel = SearchCourseModel(page: Constants.startPage, pageSize: Constants.pageSize)
-        courseImagesLoader = CourseImagesLoader()
+        activeFitlerTab = .all
+        filterModel.delegate = self
     }
     
-    func updateState() {
-        updatedState.value = ()
+    func searchTextDidChange(_ text: String) {
+        searchModel.changeSearch(name: text)
+        
+        switch activeFitlerTab {
+        case .all:
+            refresh()
+        case .my:
+            clear()
+            let courses = models.map { $0.course }
+            handleLoadedCourses(.success(courses))
+        }
     }
     
     func downloadCourseImages(for model: CourseCellModel) {
@@ -49,58 +59,116 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
         coursesRouter.trigger(.openCourse(course: course))
     }
     
+    func previewCourse(_ course: CourseResponse) {
+        coursesRouter.trigger(.preview(course: course))
+    }
+    
     func refresh() {
-        courseImagesLoader = CourseImagesLoader()
-        searchModel.reset(page: Constants.startPage, pageSize: Constants.pageSize)
-//        courses.value = []
-        search()
+        clear()
+        switch activeFitlerTab {
+        case .all:
+            search()
+        case .my:
+            membershipFilterDidActive()
+        }
     }
     
     func loadMore() {
-        print("THE new slice = \(coursesSlice.count)")
-        guard !isLoading, !coursesSlice.isEmpty else {
+        guard !isLoading.value, !loadedCoursesSlice.isEmpty else {
             return
         }
-        searchModel.nextPage()
-        search()
-    }
-    
-    private func prepareCourses() {
-//        courses.value.append(contentsOf: coursesSlice)
-        coursesBatch.value = coursesSlice
-        isLoading = false
-    }
-    
-    private func loadCourses() {
-        guard let adminId = UserSession.shared.getUser()?.id else {
-            return
-        }
-        
-        coursesService.adminList(id: adminId) { [weak self] result in
-            switch result {
-            case .success(let courses):
-                break
-//                self?.courses.value = courses
-                
-            case .failure(let error):
-                print(error)
-            }
+        switch activeFitlerTab {
+        case .all:
+            searchModel.nextPage()
+            search()
+        case .my:
+            break
         }
     }
     
     private func search() {
-        isLoading = true
-        coursesService.search(model: searchModel) { [weak self] result in
-            switch result {
-            case .success(let coursesBach):
-                self?.coursesSlice = coursesBach
-                self?.prepareCourses()
-                
-            case .failure(let error):
-                print(error)
+        isLoading.value = true
+        coursesService.search(model: searchModel, completion: handleLoadedCourses(_:))
+    }
+    
+    private func handleLoadedCourses(_ result: Result<[CourseResponse], NetworkResponseError>) {
+        switch result {
+        case .success(let coursesBatch):
+            switch activeFitlerTab {
+            case .all:
+                loadedCoursesSlice = coursesBatch
+            case .my:
+                loadedCoursesSlice = coursesBatch.filter { $0.name.contains(searchModel.name) }
             }
+        case .failure:
+            loadedCoursesSlice = []
+        }
+        isLoading.value = false
+        prepareCourses()
+    }
+    
+    private func prepareCourses() {
+        models += loadedCoursesSlice.map { CourseCellModel(course: $0) }
+        coursesBatch.value = loadedCoursesSlice
+    }
+    
+    private func clear() {
+        courseImagesLoader = CourseImagesLoader()
+        searchModel.reset(page: Constants.startPage, pageSize: Constants.pageSize)
+        
+        models.removeAll()
+        loadedCoursesSlice.removeAll()
+        clearCourses.value = Void()
+    }
+}
+
+
+extension CoursesViewModelImpl: CourseFilterDelegate {
+    func categorySelected(_ category: ATYCourseCategory) {
+        searchModel.add(category: category)
+        refresh()
+    }
+    
+    func categoryDeselected(_ category: ATYCourseCategory) {
+        if searchModel.remove(category: category) {
+            refresh()
         }
     }
     
+    func allUserCoursesSelected() {
+        clear()
+        coursesService.allUserCourses(completion: handleLoadedCourses(_:))
+    }
+    
+    func adminCoursesSelected() {
+        guard let adminId = UserSession.shared.getUser()?.id else {
+            clear()
+            return
+        }
+        clear()
+        coursesService.adminList(id: adminId, completion: handleLoadedCourses(_:))
+    }
+    
+    func membershipCoursesSelected() {
+        clear()
+        coursesService.listWithStatus(.MEMBER, completion: handleLoadedCourses(_:))
+    }
+    
+    func requestCoursesSelected() {
+        clear()
+        coursesService.listWithStatus(.REQUEST, completion: handleLoadedCourses(_:))
+    }
+    
+    func coursesFilterDidActive() {
+        activeFitlerTab = .all
+        refresh()
+    }
+    
+    func membershipFilterDidActive() {
+        guard let selectedFilter = filterModel.activeFilters.first(where: { $0.isSelected }) else {
+            return
+        }
+        activeFitlerTab = .my
+        selectedFilter.isSelected = true
+    }
 }
-

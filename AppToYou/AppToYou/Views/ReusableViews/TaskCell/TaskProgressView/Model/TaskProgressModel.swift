@@ -14,7 +14,7 @@ class TaskProgressModel {
     var state: TaskProgress {
         result?.progress ?? .notStarted
     }
-    private let task: Task
+    private(set) var task: Task
     
     init(task: Task, date: Date) {
         result = task.taskResults.first(where: { $0.date.starts(with: date.toString(dateFormat: .localeYearDate)) })

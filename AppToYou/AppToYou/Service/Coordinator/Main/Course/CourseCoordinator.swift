@@ -38,7 +38,7 @@ class CourseCoordinator: NavigationCoordinator<CourseRoute> {
         
         switch route {
         case .course(let course):
-//            configureContainer(hideNavBar: true)
+            configureContainer(hideNavBar: true)
             let courseViewController = CourseViewController()
             let courseViewModel = CourseViewModelImpl(course: course, coursesRouter: unownedRouter)
             courseViewController.bind(to: courseViewModel)

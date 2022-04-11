@@ -22,12 +22,8 @@ class SearchCourseModel {
     }
     
     func reset(page: Int, pageSize: Int) {
-        name = String()
         self.page = page
         self.pageSize = pageSize
-        category1 = nil
-        category2 = nil
-        category3 = nil
     }
     
     func changeSearch(name: String) {
@@ -48,14 +44,18 @@ class SearchCourseModel {
         }
     }
     
-    func remove(category: ATYCourseCategory) {
+    @discardableResult
+    func remove(category: ATYCourseCategory) -> Bool {
         if category1 == category {
             category1 = nil
         } else if category2 == category {
             category2 = nil
-        } else {
+        } else if category3 == category {
             category3 = nil
+        } else {
+            return false
         }
+        return true
     }
     
     var parameters: [Parameter] {

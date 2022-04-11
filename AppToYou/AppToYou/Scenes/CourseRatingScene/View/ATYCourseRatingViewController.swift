@@ -97,10 +97,12 @@ extension ATYCourseRatingViewController: UITableViewDelegate, UITableViewDataSou
         let rasterSize: CGFloat = 10.0
         let leftView1 = imageViewWithIcon(R.image.searchImage()!, raster: rasterSize)
 
-        let searchBar = defaultSearchBar(withRasterSize: rasterSize,
-                                      leftView: leftView1,
-                                      rightView: nil,
-                                      delegate: self, placeholder: "Поиск среди участников курса")
+        let searchBar = defaultSearchBar(rasterSize: rasterSize, placeholder: "Поиск среди участников курса", leftView: leftView1)
+        searchBar.delegate = self
+//        let searchBar = defaultSearchBar(withRasterSize: rasterSize,
+//                                      leftView: leftView1,
+//                                      rightView: nil,
+//                                      delegate: self, placeholder: "Поиск среди участников курса")
         view.backgroundColor = R.color.backgroundAppColor()
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { (make) in

@@ -10,6 +10,8 @@ enum CoursesRoute: Route {
     
     case courseCreated(course: CourseResponse)
     
+    case preview(course: CourseResponse)
+    
     case photo(image: UIImage?)
     case durationPicker
 }
@@ -40,13 +42,22 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
             
             return .push(coursesViewController)
             
+        case .preview(let course):
+            let previewCourseCoordinator = PreviewCourseCoordinator(course: course, coursesRouter: unownedRouter)
+            let config = BottomSheetConfiguration(maxTopOffset: 0, pullBarHeight: 0, cornerRadius: nil)
+            let bottomSheetCoordinator = BottomSheetCoordinator(content: previewCourseCoordinator, config: config)
+            return .present(bottomSheetCoordinator)
+            
         case .openCourse(let course):
             let courseCoordinator = CourseCoordinator(course: course,
                                                       coursesRouter: unownedRouter,
                                                       synchronizationService: synchronizationService,
                                                       rootViewController: self.rootViewController)
             addChild(courseCoordinator)
-            return .route(.course(course), on: courseCoordinator)
+            return .multiple([
+                .dismiss(),
+                .route(.course(course), on: courseCoordinator)
+            ])
             
         case .createEdit(let course):
             let createCourseViewController = CreateCourseViewController()
@@ -88,9 +99,10 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
         backButton.title = ""
         backButton.tintColor = R.color.lineViewBackgroundColor()
         rootViewController.navigationBar.topItem?.backBarButtonItem = backButton
-        
+
         rootViewController.hidesBarsOnSwipe = false
         rootViewController.navigationBar.isHidden = false
+//        rootViewController.navigationBar.isHidden = true
         rootViewController.navigationBar.isTranslucent = false
         rootViewController.setNavigationBarHidden(false, animated: false)
     }

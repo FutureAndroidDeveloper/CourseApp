@@ -27,13 +27,24 @@ class CourseManager: NetworkManager<CourseEndpoint> {
         request(.remove(taskId: taskId), responseType: Bool.self, completion)
     }
     
+    
+    func allUserCourses(completion: @escaping (Result<[CourseResponse], NetworkResponseError>) -> Void) {
+        request(.userCourses, responseType: [CourseResponse].self, completion)
+    }
+    
+    func listWithStatus(_ status: CourseUserStatus, completion: @escaping (Result<[CourseResponse], NetworkResponseError>) -> Void) {
+        request(.memebershipCourses(status: status), responseType: [CourseResponse].self, completion)
+    }
+    
     func adminList(id: Int, completion: @escaping (Result<[CourseResponse], NetworkResponseError>) -> Void) {
         request(.admin(id: id), responseType: [CourseResponse].self, completion)
     }
     
     func search(model: SearchCourseModel, completion: @escaping (Result<[CourseResponse], NetworkResponseError>) -> Void) {
+        cancelTask()
         request(.search(model: model), responseType: [CourseResponse].self, completion)
     }
+    
     
     func getFullCourseInfo(id: Int, completion: @escaping (Result<CourseInfoModel, NetworkResponseError>) -> Void) {
         let courseGroupRequest = FullCourseInfo(courseService: self)
