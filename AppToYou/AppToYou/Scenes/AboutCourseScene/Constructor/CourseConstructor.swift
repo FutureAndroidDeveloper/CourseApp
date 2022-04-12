@@ -1,7 +1,10 @@
-import Foundation
+import UIKit
 
 
 class CourseConstructor {
+    private struct Constants {
+        static let defaultCourseImage = R.image.exampleAboutCourse()
+    }
     
     private let model: CourseConstructorModel
     private let isEditable: Bool
@@ -9,6 +12,9 @@ class CourseConstructor {
     private weak var delegate: CourseConstructorDelegate?
     private weak var dataSourse: CourseConstructorDataSourse?
     
+    private var loadedOwnerImage: UIImage?
+    private var loadedCourseImage: UIImage?
+    private var loadedMembersInfo: [UserAvatarInfo] = []
     
     init(isEditable: Bool, delegate: CourseConstructorDelegate, dataSourse: CourseConstructorDataSourse) {
         self.isEditable = isEditable
@@ -42,9 +48,15 @@ class CourseConstructor {
     
     
     private func addCourseHeader(_ dataSource: CourseConstructorDataSourse) {
+        let courseImage = loadedCourseImage ?? Constants.defaultCourseImage
+        let ownerImage = isEditable ? nil : loadedOwnerImage
         model.headerModel = CourseHeaderModel(
-            membersCount: dataSource.getUsersAmount(), duration: dataSource.getDuration(), isEditable: isEditable,
-            price: dataSource.getPrice(), adminPhoto: dataSource.getAdminPhoto(),
+            membersCount: dataSource.getUsersAmount(),
+            duration: dataSource.getDuration(),
+            isEditable: isEditable,
+            price: dataSource.getPrice(),
+            coursePhoto: courseImage,
+            adminPhoto: ownerImage,
             editTapped: { [weak self] in
                 self?.delegate?.edit()
             }, backTapped: { [weak self] in
@@ -87,7 +99,11 @@ class CourseConstructor {
     }
     
     private func addMembers(_ dataSource: CourseConstructorDataSourse) {
-        model.membersModel = CourseMembersModel(model: dataSource.getMembers(), membersTapped: { [weak self] in
+        let amount = dataSource.getUsersAmount()
+        let plusUsers = amount - loadedMembersInfo.count
+        let membersModel = CourseMembersViewModel(members: loadedMembersInfo, amountMembers: plusUsers)
+        
+        model.membersModel = CourseMembersModel(model: membersModel, membersTapped: { [weak self] in
             self?.delegate?.openMemebrs()
         })
     }
@@ -104,52 +120,29 @@ class CourseConstructor {
         })
     }
     
-    func handleTasksResponse(_ tasks: [Task]) {
+    func handleTasksResponse(_ tasks: [CourseTaskResponse]) {
         model.hintModel?.stopLoading?()
-        let descriptionProvider = TaskDescriptionProvider()
         
         if tasks.isEmpty {
             model.hintModel?.setHint?("На курсе пока нет задач")
         } else {
-            let models = tasks.map { task -> CourseTaskCellModel in
-                var progressModel: TaskProgressModel
-                var taskModel: CourseTaskCellModel
-                
-                let descriptionModel = descriptionProvider.convert(task: task)
+            let models = tasks.compactMap { task -> CourseTaskCellModel? in
+                var model: CourseTaskCellModel?
                 let isSelected = dataSourse?.isTaskAddedToUser(task) ?? false
-                let icon = task.taskSanction == 0 ? nil : R.image.coinImage()
                 
                 if task.taskType == .RITUAL {
-                    progressModel = CountProgressModel(task: task, date: .distantFuture)
-                    taskModel = CourseCounterTaskCellModel(
-                        progressModel: progressModel,
-                        descriptionModel: descriptionModel,
-                        isSelected: isSelected,
-                        currencyIcon: icon
-                    )
+                    model = CourseCounterTaskCellModel(courseTaskResponse: task, isSelected: isSelected)
                 } else {
-                    progressModel = IconProgressModel(task: task, date: .distantFuture)
-                    taskModel = CourseTaskCellModel(
-                        progressModel: progressModel,
-                        descriptionModel: descriptionModel,
-                        isSelected: isSelected,
-                        currencyIcon: icon
-                    )
+                    model = CourseTaskCellModel(courseTaskResponse: task, isSelected: isSelected)
                 }
-                taskModel.selectionDidChange = { [weak self] changedTask, isOn in
-                    guard
-                        let taskResponse = TaskAdapter().convert(task: changedTask, to: CourseTaskResponse.self)
-                    else {
-                        return
-                    }
+                model?.selectionDidChange = { [weak self] changedTask, isOn in
                     if isOn {
-                        self?.delegate?.add(task: taskResponse)
+                        self?.delegate?.add(task: changedTask)
                     } else {
-                        self?.delegate?.remove(task: taskResponse)
+                        self?.delegate?.remove(task: changedTask)
                     }
-                    
                 }
-                return taskModel
+                return model
             }
             model.tasksModel = models
             model.hintModel = nil
@@ -161,4 +154,15 @@ class CourseConstructor {
         model.hintModel?.setHint?("Не удалось загузить задачи курса")
     }
     
+    func setOwnerImage(_ image: UIImage?) {
+        loadedOwnerImage = image
+    }
+    
+    func setCourseImage(_ image: UIImage?) {
+        loadedCourseImage = image
+    }
+    
+    func setMembersInfo(_ info: [UserAvatarInfo]) {
+        loadedMembersInfo = info
+    }
 }

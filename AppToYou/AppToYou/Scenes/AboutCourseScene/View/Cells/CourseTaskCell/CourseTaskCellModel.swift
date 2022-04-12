@@ -2,17 +2,33 @@ import UIKit
 
 
 class CourseTaskCellModel {
-    let progressModel: TaskProgressModel
+    var progressModel: TaskProgressModel
     let descriptionModel: TaskDescriptionModel
     let isSelected: Bool
     let currencyIcon: UIImage?
     
-    var selectionDidChange: ((Task, Bool)-> Void)?
+    var selectionDidChange: ((CourseTaskResponse, Bool) -> Void)?
     
-    init(progressModel: TaskProgressModel, descriptionModel: TaskDescriptionModel, isSelected: Bool, currencyIcon: UIImage?) {
-        self.progressModel = progressModel
-        self.descriptionModel = descriptionModel
+    private(set) var task: Task?
+    private (set) var courseTaskResponse: CourseTaskResponse
+    private let descriptionProvider = TaskDescriptionProvider()
+    private let adapter = TaskAdapter()
+    
+    
+    init?(courseTaskResponse: CourseTaskResponse, isSelected: Bool = false) {
+        guard let task = adapter.convert(courseTaskResponse: courseTaskResponse) else {
+            return nil
+        }
+        self.courseTaskResponse = courseTaskResponse
         self.isSelected = isSelected
-        self.currencyIcon = currencyIcon
+        self.task = task
+        
+        progressModel = IconProgressModel(task: task, date: .distantFuture)
+        descriptionModel = descriptionProvider.convert(task: task)
+        currencyIcon = task.taskSanction == 0 ? nil : R.image.coinImage()
+    }
+    
+    func selectionChanged(_ isSelected: Bool) {
+        selectionDidChange?(courseTaskResponse, isSelected)
     }
 }

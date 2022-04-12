@@ -73,7 +73,7 @@ class CoursePreviewTaskCell: UITableViewCell, InflatableView {
         guard let model = model as? CoursePreviewTaskModel else {
             return
         }
-        progressView.configure(with: model.progress)
+        progressView.configure(with: model.progressModel)
         titleLabel.text = model.title
         currencyIcon.image = model.currencyIcon
         layoutIfNeeded()

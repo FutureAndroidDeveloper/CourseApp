@@ -34,8 +34,8 @@ class ProfileCoordinator: NavigationCoordinator<ProfileRoute> {
     
     private func configureContainer() {
         rootViewController.tabBarItem = UITabBarItem(title: R.string.localizable.profile(),
-                                                     image: R.image.targetNotActive(),
-                                                     selectedImage: R.image.targetActive())
+                                                     image: R.image.profileNotActive(),
+                                                     selectedImage: R.image.profileNotActive())
     }
     
 }

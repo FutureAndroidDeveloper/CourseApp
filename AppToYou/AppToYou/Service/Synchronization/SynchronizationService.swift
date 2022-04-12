@@ -167,6 +167,10 @@ class SynchronizationService: TaskResultHelperDelegate {
         }
     }
     
+    func isCourseTaskExist(_ task: CourseTaskResponse) -> Bool {
+        return database.isCourseTaskExist(task)
+    }
+    
     // MARK: TaskResultHelperDelegate
     
     func didFindTaskWithoutResult(_ task: Task, for date: Date) {

@@ -51,10 +51,27 @@ class MembersView: UIView {
                 memberLayer = amountMembersLayer
                 
             } else {
-                memberLayer = CALayer()
-                memberLayer.contents = model.members[index].avatar?.cgImage
-                memberLayer.contentsGravity = .resize
-                memberLayer.magnificationFilter = .linear
+                if let avatar = model.members[index].avatarIcon {
+                    memberLayer = CALayer()
+                    memberLayer.contents = avatar.cgImage
+                    memberLayer.contentsGravity = .resize
+                    memberLayer.magnificationFilter = .linear
+                } else {
+                    let amountMembersLayer = LCTextLayer()
+                    let letter = model.members[index].firstNameLetter
+                    amountMembersLayer.string = "\(letter)"
+                    
+                    let font = UIFont.systemFont(ofSize: 25)
+                    amountMembersLayer.font = font
+                    amountMembersLayer.fontSize = font.pointSize
+                    
+                    amountMembersLayer.alignmentMode = .center
+                    amountMembersLayer.rasterizationScale = UIScreen.main.scale
+                    amountMembersLayer.contentsScale = UIScreen.main.scale
+                    amountMembersLayer.backgroundColor = R.color.textColorSecondary()?.cgColor
+                    amountMembersLayer.foregroundColor = R.color.backgroundTextFieldsColor()?.cgColor
+                    memberLayer = amountMembersLayer
+                }
             }
             
             memberLayer.frame = CGRect(origin: CGPoint(x: xOffset, y: 0), size: Constants.memberSize)

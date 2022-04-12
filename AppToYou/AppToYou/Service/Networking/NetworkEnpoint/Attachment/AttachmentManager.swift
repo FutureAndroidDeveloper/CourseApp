@@ -16,4 +16,9 @@ class AttachmentManager: NetworkManager<AttachmentEndpoint> {
         request(.delete(filePath: path), responseType: Bool.self, decoder: .value, completion)
     }
     
+    func loadAvatars(_ users: [UserPublicResponse], completion: @escaping (Result<[UserAvatarInfo], NetworkResponseError>) -> Void) {
+        let groupLoad = LoadMembersAvatars(attachmentService: self)
+        groupLoad.loadAvatars(users: users, completion: completion)
+    }
+    
 }

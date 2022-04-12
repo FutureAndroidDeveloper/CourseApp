@@ -68,6 +68,15 @@ class RealmDatabase: Database {
         }
     }
     
+    func isCourseTaskExist(_ task: CourseTaskResponse) -> Bool {
+        return realm.objects(Task.self).contains {
+            guard let courseTaskId = $0.courseTaskId else {
+                return false
+            }
+            return courseTaskId == task.identifier.id
+        }
+    }
+    
     func set(task: Task, id: Int?) {
         do {
             try safeWrite(objects: task) {

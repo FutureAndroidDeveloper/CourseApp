@@ -21,6 +21,7 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
     private var activeFitlerTab: CourseSearchSelection
     
     private var loadedCoursesSlice: [CourseResponse] = []
+    private var filteredModels: [CourseCellModel] = []
     private var courseImagesLoader: CourseImagesLoader?
     
 
@@ -32,15 +33,7 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
     
     func searchTextDidChange(_ text: String) {
         searchModel.changeSearch(name: text)
-        
-        switch activeFitlerTab {
-        case .all:
-            refresh()
-        case .my:
-            clear()
-            let courses = models.map { $0.course }
-            handleLoadedCourses(.success(courses))
-        }
+        refresh()
     }
     
     func downloadCourseImages(for model: CourseCellModel) {
@@ -98,7 +91,11 @@ class CoursesViewModelImpl: CoursesViewModel, CoursesViewModelInput, CoursesView
             case .all:
                 loadedCoursesSlice = coursesBatch
             case .my:
-                loadedCoursesSlice = coursesBatch.filter { $0.name.contains(searchModel.name) }
+                if searchModel.name.isEmpty {
+                    loadedCoursesSlice = coursesBatch
+                } else {
+                    loadedCoursesSlice = coursesBatch.filter { $0.name.contains(searchModel.name) }
+                }
             }
         case .failure:
             loadedCoursesSlice = []

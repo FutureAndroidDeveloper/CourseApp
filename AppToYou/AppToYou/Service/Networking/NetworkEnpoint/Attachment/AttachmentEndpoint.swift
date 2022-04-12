@@ -37,7 +37,14 @@ enum AttachmentEndpoint: Endpoint {
             fallthrough
             
         case .delete(let filePath):
-            let pathParameter = Parameter(name: "path", value: filePath)
+            var path: String
+            if let fileName = filePath.split(separator: "/").last {
+                path = String(fileName)
+            } else {
+                path = filePath
+            }
+            
+            let pathParameter = Parameter(name: "path", value: path)
             return RequestWithParameters(urlParameters: [pathParameter])
         }
     }

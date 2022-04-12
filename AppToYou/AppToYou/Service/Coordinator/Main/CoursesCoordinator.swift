@@ -30,10 +30,9 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
     }
     
     override func prepareTransition(for route: CoursesRoute) -> NavigationTransition {
-        configureNavBar()
-        
         switch route {
         case .courses:
+            configureContainer(hideNavBar: true)
             let coursesViewController = CoursesViewController()
             let coursesViewModel = CoursesViewModelImpl(coursesRouter: unownedRouter)
             coursesViewController.bind(to: coursesViewModel)
@@ -43,6 +42,7 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
             return .push(coursesViewController)
             
         case .preview(let course):
+            configureContainer(hideNavBar: true)
             let previewCourseCoordinator = PreviewCourseCoordinator(course: course, coursesRouter: unownedRouter)
             let config = BottomSheetConfiguration(maxTopOffset: 0, pullBarHeight: 0, cornerRadius: nil)
             let bottomSheetCoordinator = BottomSheetCoordinator(content: previewCourseCoordinator, config: config)
@@ -60,6 +60,7 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
             ])
             
         case .createEdit(let course):
+            configureContainer(hideNavBar: false)
             let createCourseViewController = CreateCourseViewController()
             createCourseViewController.hidesBottomBarWhenPushed = true
             
@@ -90,22 +91,18 @@ class CoursesCoordinator: NavigationCoordinator<CoursesRoute> {
     
     private func configureContainer() {
         rootViewController.tabBarItem = UITabBarItem(title: R.string.localizable.courses(),
-                                                     image: R.image.profileNotActive(),
-                                                     selectedImage: R.image.profileNotActive())
-    }
-
-    private func configureNavBar() {
-        let backButton = UIBarButtonItem()
-        backButton.title = ""
-        backButton.tintColor = R.color.lineViewBackgroundColor()
-        rootViewController.navigationBar.topItem?.backBarButtonItem = backButton
-
-        rootViewController.hidesBarsOnSwipe = false
-        rootViewController.navigationBar.isHidden = false
-//        rootViewController.navigationBar.isHidden = true
-        rootViewController.navigationBar.isTranslucent = false
-        rootViewController.setNavigationBarHidden(false, animated: false)
+                                                     image: R.image.rocketNotActive(),
+                                                     selectedImage: R.image.rocketActive())
     }
     
+    private func configureContainer(hideNavBar: Bool) {
+        rootViewController.navigationBar.tintColor = R.color.lineViewBackgroundColor()
+        rootViewController.navigationBar.topItem?.title = String()
+        
+        rootViewController.hidesBarsOnSwipe = false
+        rootViewController.navigationBar.isHidden = hideNavBar
+        rootViewController.navigationBar.isTranslucent = hideNavBar
+        rootViewController.setNavigationBarHidden(hideNavBar, animated: false)
+    }
 }
 

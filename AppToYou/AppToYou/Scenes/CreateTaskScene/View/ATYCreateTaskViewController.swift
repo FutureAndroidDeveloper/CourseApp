@@ -100,22 +100,4 @@ class ATYCreateTaskViewController: UIViewController, BindableType {
     private func saveTapped() {
         viewModel.input.saveDidTapped()
     }
-    
-    
-    // TODO: - Remove
-    
-    private func configureNavBar() {
-        self.navigationItem.title = R.string.localizable.creatingNewTask()
-        
-        let backButton = UIBarButtonItem()
-        backButton.title = ""
-        backButton.tintColor = R.color.lineViewBackgroundColor()
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-    }
-
-    private func openPenaltyForFailureController() {
-        let child = ATYPenaltyForFailureViewController()
-        present(child, animated: true)
-    }
-    
 }

@@ -97,5 +97,4 @@ class InfoModelConstructor {
             self?.delegate?.laterTapped()
         }
     }
-    
 }

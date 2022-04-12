@@ -2,19 +2,14 @@ import UIKit
 
 
 class CreateCourseViewController: UIViewController, BindableType {
-    
     private struct Constants {
         static let saveInsets = UIEdgeInsets(top: 0, left: 20, bottom: 13, right: 20)
     }
     
     var viewModel: CreateCourseViewModel!
     
-    private var imagePicker: ATYImagePicker?
-
-    var typeCellSelect: ATYCourseType?
-    var image : UIImage?
-
     private let createCourseTableView = ContentSizedTableView()
+    private let contentContainer = TopBottomBlocksContainerView()
     private let inflater: UITableViewIflater
 
     
@@ -29,8 +24,6 @@ class CreateCourseViewController: UIViewController, BindableType {
         return button
     }()
     
-    private let contentContainer = TopBottomBlocksContainerView()
-    
     
     init() {
         self.inflater = UITableViewIflater(createCourseTableView)
@@ -43,8 +36,6 @@ class CreateCourseViewController: UIViewController, BindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        imagePicker = ATYImagePicker(presentationController: self, delegate: self)
         configure()
         configureInflater()
     }
@@ -97,40 +88,5 @@ class CreateCourseViewController: UIViewController, BindableType {
     
     @objc func saveTapped() {
         viewModel.input.doneDidTapped()
-    }
-    
-}
-
-
-extension CreateCourseViewController: ATYImagePickerDelegate {
-    func deleteCurrentImage() {
-//        self.image = nil
-//        self.viewModel.course.picPath = nil
-//        createCourseTableView.reloadData()
-    }
-
-    func showCurrentImage() {
-        if let image = self.image {
-            let presentingViewController = ATYDetailImageViewController(image: image)
-            present(presentingViewController, animated: true)
-        }
-    }
-
-    func didSelect(image: UIImage?, withPath path: String?) {
-//        if let newImage = image {
-//            self.image = newImage
-//            self.viewModel.course.picPath = path
-//            createCourseTableView.reloadData()
-//        }
-    }
-}
-
-extension CreateCourseViewController : ATYUpCreateCourseViewModelDelegate {
-    func checkProperty(errorMessage: String?) {
-        self.showAlertCountSelectedCourseCategory(text: errorMessage ?? "")
-    }
-
-    func createCourse(course: ATYCourse) {
-//        self.callbackCreateCourse?(course)
     }
 }

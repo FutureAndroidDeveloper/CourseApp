@@ -10,6 +10,8 @@ protocol Database {
     func update(task: Task, state: TaskProgress, date: Date)
     func update(task: Task)
     
+    func isCourseTaskExist(_ task: CourseTaskResponse) -> Bool
+    
     func set(task: Task, id: Int?)
     func setSynchronized(task: Task, value: Bool)
     

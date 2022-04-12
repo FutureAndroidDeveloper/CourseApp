@@ -2,8 +2,11 @@ import Foundation
 
 
 protocol CourseViewModelInput: AnyObject {
-    func editCourseTask(index: Int)
+    func editCourseTask(_ task: CourseTaskResponse)
     func refresh()
+    func deleteTask()
+    func addAllTasks()
+    func resetContainerAppearance()
 }
 
 protocol CourseViewModelOutput: AnyObject {

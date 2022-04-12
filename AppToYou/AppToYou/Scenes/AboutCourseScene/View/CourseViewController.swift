@@ -28,6 +28,7 @@ class CourseViewController: UIViewController, BindableType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.input.refresh()
+        viewModel.input.resetContainerAppearance()
     }
     
     private func configure() {
@@ -81,8 +82,11 @@ class CourseViewController: UIViewController, BindableType {
     }
     
     private func handleRowSelection() {
-        inflater.addRowHandler(for: TaskCellModel.self) { [weak self] model, indexPath in
-            self?.viewModel.input.editCourseTask(index: indexPath.row)
+        inflater.addRowHandler(for: CourseTaskCellModel.self) { [weak self] model, indexPath in
+            self?.viewModel.input.editCourseTask(model.courseTaskResponse)
+        }
+        inflater.addRowHandler(for: CourseCounterTaskCellModel.self) { [weak self] model, indexPath in
+            self?.viewModel.input.editCourseTask(model.courseTaskResponse)
         }
     }
     

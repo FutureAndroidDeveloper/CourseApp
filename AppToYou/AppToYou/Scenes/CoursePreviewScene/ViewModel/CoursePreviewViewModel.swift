@@ -32,7 +32,6 @@ class CoursePreviewViewModellImpl: CoursePreviewViewModel, CoursePreviewViewMode
     private let router: UnownedRouter<PreviewCourseTaskRoute>
     private let coursesService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
     private let attachmentService = AttachmentManager(deviceIdentifierService: DeviceIdentifierService())
-    private let adapter = TaskAdapter()
     private let course: CourseResponse
     
     private lazy var constructor = CoursePreviewConstructor(courseType: course.courseType)
@@ -88,9 +87,7 @@ class CoursePreviewViewModellImpl: CoursePreviewViewModel, CoursePreviewViewMode
         coursesService.getTasks(for: course.id) { [weak self] result in
             switch result {
             case .success(let courseTasks):
-                let tasks = courseTasks.compactMap { self?.adapter.convert(courseTaskResponse: $0) }
-                self?.constructor.handleTasksResponse(tasks)
-                
+                self?.constructor.handleTasksResponse(courseTasks)
             case .failure:
                 self?.constructor.tasksLoadingError()
             }
@@ -109,6 +106,7 @@ class CoursePreviewViewModellImpl: CoursePreviewViewModel, CoursePreviewViewMode
             case .failure:
                 break
             }
+            self?.update()
             self?.updateState()
         }
     }
@@ -124,6 +122,7 @@ class CoursePreviewViewModellImpl: CoursePreviewViewModel, CoursePreviewViewMode
             case .failure:
                 break
             }
+            self?.update()
             self?.updateState()
         }
     }

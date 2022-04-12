@@ -4,16 +4,16 @@ import Foundation
 enum CourseEndpoint: Endpoint {
     
     case create(course: CourseCreateRequest)
+    case update(course: CourseUpdateRequest)
     case createTask(courseId: Int, task: CourseTaskCreateRequest)
+    case addAllCourseTasks(courseId: Int)
     case addCourseTask(_ model: AddConfiguredCourseTaskModel)
     case getCourse(id: Int)
+    case getRequests(courseId: Int)
     case getTasks(courseId: Int)
     case remove(taskId: Int)
     
-    /**
-     Все курсы пользователя.
-     */
-    case userCourses
+    case members(pageModel: MembersPageModel)
     
     /**
      Курсы пользователя по его статусу в курсе.
@@ -39,14 +39,19 @@ enum CourseEndpoint: Endpoint {
         var result = "course"
         
         switch self {
-        case .create:
+        case .create, .update:
             break
         case .getCourse(let id):
             result.append("/id\(id)")
         case .createTask(let courseId, _):
             result.append("/id\(courseId)/task")
+            
+        case .addAllCourseTasks(let courseId):
+            result.append("/id\(courseId)/addAll")
         case .addCourseTask(let model):
             result.append("/id\(model.courseId)/add")
+        case .getRequests(let courseId):
+            result.append("/id\(courseId)/requests")
         case .getTasks(let courseId):
             result.append("/id\(courseId)/taskList")
         case .remove(let taskId):
@@ -54,12 +59,12 @@ enum CourseEndpoint: Endpoint {
             
         case .memebershipCourses:
             result.append("/list")
-        case .userCourses:
-            result.append("/list/courseUser")
         case .admin:
             result.append("/list/admin")
         case .search:
             result.append("/search")
+        case .members(let pageModel):
+            result.append("/id\(pageModel.courseId)/members")
         }
         
         return result
@@ -68,16 +73,19 @@ enum CourseEndpoint: Endpoint {
     var httpMethod: HTTPMethod {
         switch self {
         case .create: return .post
+        case .update: return .put
         case .createTask: return .post
         case .remove: return .delete
+        case .addAllCourseTasks: return .get
         case .addCourseTask: return .get
         case .getCourse: return .get
+        case .getRequests: return .get
         case .getTasks: return .get
             
         case .memebershipCourses: return .get
-        case .userCourses: return .get
         case .admin: return .get
         case .search: return .get
+        case .members: return .get
         }
     }
     
@@ -85,11 +93,18 @@ enum CourseEndpoint: Endpoint {
         switch self {
         case .create(let course):
             return RequestWithParameters(body: course)
+        case .update(let course):
+            return RequestWithParameters(body: course)
         case .createTask(_, let task):
             return RequestWithParameters(body: task)
+            
+        case .addAllCourseTasks:
+            return Request()
         case .addCourseTask(let model):
             return RequestWithParameters(urlParameters: model.getParameters())
         case .getCourse:
+            return Request()
+        case .getRequests:
             return Request()
         case .getTasks:
             return Request()
@@ -97,16 +112,18 @@ enum CourseEndpoint: Endpoint {
             return Request()
             
         case .memebershipCourses(let status):
-            let body = CourseUserStatusBody(status)
-            return RequestWithParameters(body: body)
-        case .userCourses:
-            return Request()
+            let statusParameter = Parameter(name: "courseUserStatus", value: status)
+            return RequestWithParameters(urlParameters: [statusParameter])
         case .admin(let id):
             let idParameter = Parameter(name: "id", value: id)
             return RequestWithParameters(urlParameters: [idParameter])
         case .search(let model):
             let parameters = model.parameters
             return RequestWithParameters(urlParameters: parameters)
+        case .members(let pageModel):
+            let pageParameter = Parameter(name: "page", value: pageModel.page)
+            let sizeParameter = Parameter(name: "pageSize", value: pageModel.pageSize)
+            return RequestWithParameters(urlParameters: [pageParameter, sizeParameter])
         }
     }
     

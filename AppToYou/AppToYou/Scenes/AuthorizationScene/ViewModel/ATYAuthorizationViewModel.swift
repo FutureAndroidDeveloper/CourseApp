@@ -125,10 +125,6 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
     }
     
     func useAppleAccount() {
-        let testTask = Task()
-        synchronizationService.create(task: testTask)
-        synchronizationService.remove(task: testTask)
-        synchronizationService.update(task: testTask)
         print("Apple")
     }
     

@@ -94,9 +94,6 @@ class CourseTaskCell: UITableViewCell, InflatableView {
     
     @objc
     private func stateChanged() {
-        guard let task = model?.progressModel.task else {
-            return
-        }
-        model?.selectionDidChange?(task, switchView.isOn)
+        model?.selectionChanged(switchView.isOn)
     }
 }

@@ -58,12 +58,6 @@ class CourseAdminMembersCell: UITableViewCell, InflatableView {
             $0.height.equalTo(Constants.height)
         }
         
-//        membersButton.addSubview(notificationsLabel)
-//        notificationsLabel.snp.makeConstraints {
-//            $0.trailing.equalToSuperview().inset(Constants.notificationInsets)
-//            $0.centerY.equalToSuperview()
-//        }
-        
         contentView.addSubview(notificationsLabel)
         notificationsLabel.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(Constants.notificationInsets)
@@ -78,7 +72,7 @@ class CourseAdminMembersCell: UITableViewCell, InflatableView {
             return
         }
         self.model = model
-        notificationsLabel.text = "(+\(model.newNotifications))"
+        notificationsLabel.text = model.newNotifications
     }
     
     @objc

@@ -176,6 +176,7 @@ class CourseHeaderCell: UITableViewCell, InflatableView {
         editButton.isHidden = !model.isEditable
         adminPhotoView.isHidden = model.isEditable
         adminPhotoView.image = model.adminPhoto
+        headerImageView.image = model.coursePhoto
     }
 
     @objc

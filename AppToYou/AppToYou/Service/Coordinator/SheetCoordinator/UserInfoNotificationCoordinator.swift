@@ -13,6 +13,8 @@ class UserInfoNotificationCoordinator: ViewCoordinator<UserInfoRoute> {
     private let notification: UserInfoNotification
     weak var flowDelegate: FlowEndHandlerDelegate?
     
+    var addAllTasksDidTap: (() -> Void)?
+    
     init(notification: UserInfoNotification) {
         self.notification = notification
         
@@ -27,6 +29,9 @@ class UserInfoNotificationCoordinator: ViewCoordinator<UserInfoRoute> {
     override func prepareTransition(for route: UserInfoRoute) -> ViewTransition {
         switch route {
         case .done:
+            if case .allCourseTasksAdded = notification {
+                addAllTasksDidTap?()
+            }
             flowDelegate?.flowDidEnd()
             
         case .pay:

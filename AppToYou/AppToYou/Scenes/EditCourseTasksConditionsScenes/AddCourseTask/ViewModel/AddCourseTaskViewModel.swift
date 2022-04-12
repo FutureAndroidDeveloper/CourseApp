@@ -38,6 +38,8 @@ class AddCourseTaskViewModelImpl: AddCourseTaskViewModel, AddCourseTaskViewModel
     private let courseService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
     private let constructor: AddCourseTaskConstructor
     private let validator = ConfiguredCourseTaskValidator()
+    private let database: Database = RealmDatabase()
+    private let adapter = TaskAdapter()
     
     private let courseTask: CourseTaskResponse
     
@@ -81,11 +83,19 @@ class AddCourseTaskViewModelImpl: AddCourseTaskViewModel, AddCourseTaskViewModel
         courseService.addCourseTask(configuredtaskModel) { [weak self] result in
             switch result {
             case .success(let userTask):
-                self?.addTaskRouter.trigger(.taskAdded)
+                self?.persistTask(userTask)
             case .failure(let error):
                 print(error)
             }
         }
+    }
+    
+    private func persistTask(_ response: UserTaskResponse) {
+        guard let task = adapter.convert(userTaskResponse: response) else {
+            return
+        }
+        database.save(task: task)
+        self.addTaskRouter.trigger(.taskAdded)
     }
     
     func showTimePicker(pickerType: TimePickerType, delegate: TaskNoticationDelegate?) {

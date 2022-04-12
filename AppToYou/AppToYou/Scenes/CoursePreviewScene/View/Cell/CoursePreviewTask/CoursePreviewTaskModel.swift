@@ -2,13 +2,21 @@ import UIKit
 
 
 class CoursePreviewTaskModel {
-    let progress: TaskProgressModel
+    var progressModel: TaskProgressModel
     let title: String
     let currencyIcon: UIImage?
     
-    init(progress: TaskProgressModel, title: String, currencyIcon: UIImage?) {
-        self.progress = progress
-        self.title = title
-        self.currencyIcon = currencyIcon
+    private(set) var task: Task?
+    private let adapter = TaskAdapter()
+    
+    init?(courseTaskResponse: CourseTaskResponse) {
+        guard let task = adapter.convert(courseTaskResponse: courseTaskResponse) else {
+            return nil
+        }
+        self.task = task
+        
+        progressModel = IconProgressModel(task: task, date: .distantFuture)
+        title = task.taskName
+        currencyIcon = task.taskSanction == 0 ? nil : R.image.coinImage()
     }
 }

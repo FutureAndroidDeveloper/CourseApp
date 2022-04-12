@@ -39,6 +39,7 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
     
     private let coursesRouter: UnownedRouter<CoursesRoute>
     private let courseService = CourseManager(deviceIdentifierService: DeviceIdentifierService())
+    private let attachmentService = AttachmentManager(deviceIdentifierService: DeviceIdentifierService())
     private let validator = CourseValidator()
     
     private var courseMode: CreateCourseMode
@@ -54,6 +55,7 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
         title = courseMode.title
         doneButtonTitle = courseMode.doneTitle
         
+        loadCourseImage()
         updateStructure()
     }
     
@@ -95,7 +97,7 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
     }
     
     func save() {
-        guard let course = courseRequest else {
+        guard let courseRequest = courseRequest else {
             return
         }
         let photoModel = courseConstructor.createCourseModel.photoModel
@@ -105,17 +107,63 @@ class CreateCourseViewModelImpl: CreateCourseViewModel, CreateCourseViewModelInp
             photo = MediaPhoto(data: imageData, fileName: path)
         }
         
-        courseService.createCourse(course, photo: photo) { [weak self] result in
-            switch result {
-            case .success(let newCourse):
-                self?.coursesRouter.trigger(.courseCreated(course: newCourse))
-
-            case .failure(let error):
-                print(error)
+        switch courseMode {
+        case .creation:
+            createCourse(courseRequest: courseRequest, new: photo)
+        case .editing:
+            if course?.picPath != photoModel?.path {
+                updateCourse(courseRequest: courseRequest, new: photo)
+            } else {
+                updateCourse(courseRequest: courseRequest)
             }
         }
     }
     
+    private func createCourse(courseRequest: CourseCreateRequest, new photo: MediaPhoto? = nil) {
+        courseService.createCourse(courseRequest, photo: photo, completion: handleCourseResult(_:))
+    }
+    
+    private func updateCourse(courseRequest: CourseCreateRequest, new photo: MediaPhoto? = nil) {
+        guard let courseId = course?.id else {
+            return
+        }
+        let updateRequest = CourseUpdateRequest(createCourseRequest: courseRequest, id: courseId)
+        courseService.updateCourse(updateRequest, photo: photo, completion: handleCourseResult(_:))
+    }
+    
+    private func removeExsistingCourse() {
+        prepare(model: courseConstructor.createCourseModel)
+        guard let courseRequest = courseRequest, let courseId = course?.id else {
+            return
+        }
+        let removeRequest = CourseUpdateRequest(createCourseRequest: courseRequest, id: courseId, open: false)
+        courseService.update(course: removeRequest, completion: handleCourseResult(_:))
+    }
+    
+    private func handleCourseResult(_ result: Result<CourseResponse, NetworkResponseError>) {
+        switch result {
+        case .success(let courseResponse):
+            coursesRouter.trigger(.courseCreated(course: courseResponse))
+        case .failure(let error):
+            print(error)
+        }
+    }
+    
+    private func loadCourseImage() {
+        guard let path = course?.picPath else {
+            return
+        }
+        attachmentService.download(path: path) { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.courseConstructor.setOwnerImage(UIImage(data: data))
+            case .failure:
+                break
+            }
+            self?.updateStructure()
+            self?.updateValue()
+        }
+    }
 }
 
 extension CreateCourseViewModelImpl: CreateCourseDelegate {
@@ -145,8 +193,7 @@ extension CreateCourseViewModelImpl: CreateCourseDelegate {
     }
     
     func removeCourse() {
-        print("remove")
-        //
+        removeExsistingCourse()
     }
     
     func getNameModel() -> TextFieldModel {
@@ -158,14 +205,6 @@ extension CreateCourseViewModelImpl: CreateCourseDelegate {
     
     func getDescriptionModel() -> PlaceholderTextViewModel {
         return PlaceholderTextViewModel(value: course?.description, placeholder: "Опишите цели или преимущества вашего курса")
-    }
-    
-    func getPhoto() -> (photo: UIImage?, placeholder: UIImage?) {
-        let defaultImage = R.image.coursePhotoExample()
-        // TODO - загрузка картинок
-        let image = course?.picPath
-        
-        return (nil, defaultImage)
     }
     
     func getCategoriesModel() -> CourseCategoryModel {

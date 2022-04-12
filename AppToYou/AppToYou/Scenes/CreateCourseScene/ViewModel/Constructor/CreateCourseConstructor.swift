@@ -2,10 +2,13 @@ import UIKit
 
 
 class CreateCourseConstructor {
-    
+    private struct Constants {
+        static let placeholderPhoto = R.image.coursePhotoExample()
+    }
     private weak var delegate: CreateCourseDelegate?
     private(set) var createCourseModel: CreateCourseModel
     private let mode: CreateCourseMode
+    private var loadedOwnerImage: UIImage?
     
     init(mode: CreateCourseMode, delegate: CreateCourseDelegate) {
         self.delegate = delegate
@@ -37,6 +40,14 @@ class CreateCourseConstructor {
         return createCourseModel.prepare()
     }
     
+    func setOwnerImage(_ image: UIImage?) {
+        loadedOwnerImage = image
+        guard let dataProvider = delegate else {
+            return
+        }
+        addPhoto(dataProvider)
+    }
+    
     private func addName(_ dataProvider: CreateCourseDataSource) {
         let nameModel = dataProvider.getNameModel()
         createCourseModel.addName(model: nameModel)
@@ -48,8 +59,7 @@ class CreateCourseConstructor {
     }
     
     private func addPhoto(_ dataProvider: CreateCourseDataSource) {
-        let (photo, placeholder) = dataProvider.getPhoto()
-        createCourseModel.addPhoto(photo, placeholder) { [weak self] in
+        createCourseModel.addPhoto(loadedOwnerImage, Constants.placeholderPhoto) { [weak self] in
             self?.delegate?.showPhotoPicker()
         }
     }
