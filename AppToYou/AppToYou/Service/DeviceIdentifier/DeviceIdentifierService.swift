@@ -10,7 +10,7 @@ protocol DeviceIdentifiable {
 class DeviceIdentifierService: DeviceIdentifiable {
     
     private struct Constants {
-        static let service = "com.qittiq.apptoyou.device-uuid"
+        static let service = "com.apptoyou.device-uuid"
         static let key = "deviceUUID"
     }
     

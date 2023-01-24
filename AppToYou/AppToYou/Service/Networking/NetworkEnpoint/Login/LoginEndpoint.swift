@@ -7,7 +7,7 @@ enum LoginEndpoint: Endpoint {
     case merge(_ credentials: Credentials, update: UpdateInfo)
     case oauth(_ model: OAuthModel)
     
-    private static let basePath = "https://apptoyou.qittiq.by:6699/"
+    private static let basePath = "https://..."
     
     var baseURL: URL {
         guard let url = URL(string: Self.basePath) else {

@@ -3,7 +3,7 @@
 //  AppToYou
 //
 //  Created by Philip Bratov on 20.07.2021.
-//  Copyright © 2021 QITTIQ. All rights reserved.
+//  Copyright © 2021 .... All rights reserved.
 //
 
 import UIKit

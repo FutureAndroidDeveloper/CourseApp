@@ -7,7 +7,7 @@ enum AttachmentEndpoint: Endpoint {
     case download(filePath: String)
     case delete(filePath: String)
     
-    private static let basePath = "https://apptoyou.qittiq.by:6699/"
+    private static let basePath = "https://..."
     
     var baseURL: URL {
         guard let url = URL(string: Self.basePath) else {

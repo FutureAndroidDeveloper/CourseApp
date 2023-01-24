@@ -10,7 +10,7 @@ protocol PhoneTaskIdGenerating {
 class TaskPhoneIdGenerator: PhoneTaskIdGenerating {
     private struct Constants {
         static let firstId = 0
-        static let service = "com.qittiq.apptoyou.phone-id"
+        static let service = "com.apptoyou.phone-id"
         static let key = "lastPhoneTaskId"
     }
     

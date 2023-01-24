@@ -3,7 +3,7 @@
 //  AppToYou
 //
 //  Created by mac on 17.12.21.
-//  Copyright © 2021 QITTIQ. All rights reserved.
+//  Copyright © 2021 .... All rights reserved.
 //
 
 import Foundation

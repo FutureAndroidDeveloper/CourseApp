@@ -5,7 +5,7 @@ import Foundation
  Асинхронная операция.
  */
 class AsyncOperation: Operation {
-    private let lockQueue = DispatchQueue(label: "com.qittiq.apptoyou.asyncoperation", attributes: .concurrent)
+    private let lockQueue = DispatchQueue(label: "com.apptoyou.asyncoperation", attributes: .concurrent)
 
     override var isAsynchronous: Bool {
         return true

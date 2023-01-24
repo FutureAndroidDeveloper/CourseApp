@@ -8,7 +8,7 @@ enum UserEndpoint: Endpoint {
     case delete
     case updateInfo(_ info: UpdateInfoRequest)
     
-    private static let basePath = "https://apptoyou.qittiq.by:6699/"
+    private static let basePath = "https://..."
     
     var baseURL: URL {
         guard let url = URL(string: Self.basePath) else {
