@@ -31,7 +31,6 @@ extension AuthorizationViewModel where Self: AuthorizationViewModelInput & Autho
 
 
 class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, AuthorizationViewModelOutput {
-    
     var emailModel: LoginEmailModel
     var passwordModel: LoginPasswordModel
     var isLoading: Observable<Bool> = Observable(false)
@@ -119,8 +118,9 @@ class LoginViewModelImpl: AuthorizationViewModel, AuthorizationViewModelInput, A
         router.trigger(.registration)
     }
     
+    /// Выполнить вход в приложение без регистрации.
     func continueFlow() {
-        synchronizationService.validateResults()
+//        synchronizationService.validateResults()
         router.trigger(.didLogin)
     }
     
